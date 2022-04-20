@@ -1,0 +1,379 @@
+// Copyright 2019 Aleksander Woźniak
+// SPDX-License-Identifier: Apache-2.0
+
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+import 'utils.dart';
+
+/// Class containing styling and configuration for `TableCalendar`'s content.
+class CalendarStyle {
+  /// Maximum amount of single event marker dots to be displayed.
+  final int markersMaxCount;
+
+  /// Specifies if event markers rendered for a day cell can overflow cell's boundaries.
+  /// * `true` - Event markers will be drawn over the cell boundaries
+  /// * `false` - Event markers will be clipped if they are too big
+  final bool canMarkersOverflow;
+
+  /// Determines if single event marker dots should be aligned automatically with `markersAnchor`.
+  /// If `false`, `markersOffset` will be used instead.
+  final bool markersAutoAligned;
+
+  /// Specifies the anchor point of single event markers if `markersAutoAligned` is `true`.
+  /// A value of `0.5` will center the markers at the bottom edge of day cell's decoration.
+  ///
+  /// Includes `cellMargin` for calculations.
+  final double markersAnchor;
+
+  /// The size of single event marker dot.
+  ///
+  /// By default `markerSizeScale` is used. To use `markerSize` instead, simply provide a non-null value.
+  final double? markerSize;
+
+  /// Proportion of single event marker dot size in relation to day cell size.
+  ///
+  /// Includes `cellMargin` for calculations.
+  final double markerSizeScale;
+
+  /// `PositionedOffset` for event markers. Allows to specify `top`, `bottom`, `start` and `end`.
+  final PositionedOffset markersOffset;
+
+  /// General `Alignment` for event markers.
+  /// Will have no effect on markers if `markersAutoAligned` or `markersOffset` is used.
+  final AlignmentGeometry markersAlignment;
+
+  /// Decoration of single event markers. Affects each marker dot.
+  final Decoration markerDecoration;
+
+  /// Margin of single event markers. Affects each marker dot.
+  final EdgeInsets markerMargin;
+
+  /// Margin of each individual day cell.
+  final EdgeInsets cellMargin;
+
+  /// Padding of each individual day cell.
+  final EdgeInsets cellPadding;
+
+  /// Alignment of each individual day cell.
+  final AlignmentGeometry cellAlignment;
+
+  /// Proportion of range selection highlight size in relation to day cell size.
+  ///
+  /// Includes `cellMargin` for calculations.
+  final double rangeHighlightScale;
+
+  /// Color of range selection highlight.
+  final Color rangeHighlightColor;
+
+  /// Determines if day cells that do not match the currently focused month should be visible.
+  ///
+  /// Affects only `CalendarFormat.month`.
+  final bool outsideDaysVisible;
+
+  /// Determines if a day cell that matches the current day should be highlighted.
+  final bool isTodayHighlighted;
+
+  /// TextStyle for a day cell that matches the current day.
+  final TextStyle todayTextStyle;
+
+  /// Decoration for a day cell that matches the current day.
+  final Decoration todayDecoration;
+
+  /// TextStyle for day cells that are currently marked as selected by `selectedDayPredicate`.
+  final TextStyle selectedTextStyle;
+
+  /// Decoration for day cells that are currently marked as selected by `selectedDayPredicate`.
+  final Decoration selectedDecoration;
+
+  /// TextStyle for a day cell that is the start of current range selection.
+  final TextStyle rangeStartTextStyle;
+
+  /// Decoration for a day cell that is the start of current range selection.
+  final Decoration rangeStartDecoration;
+
+  /// TextStyle for a day cell that is the end of current range selection.
+  final TextStyle rangeEndTextStyle;
+
+  /// Decoration for a day cell that is the end of current range selection.
+  final Decoration rangeEndDecoration;
+
+  /// TextStyle for day cells that fall within the currently selected range.
+  final TextStyle withinRangeTextStyle;
+
+  /// Decoration for day cells that fall within the currently selected range.
+  final Decoration withinRangeDecoration;
+
+  /// TextStyle for day cells, of which the `day.month` is different than `focusedDay.month`.
+  /// This will affect day cells that do not match the currently focused month.
+  final TextStyle outsideTextStyle;
+
+  /// Decoration for day cells, of which the `day.month` is different than `focusedDay.month`.
+  /// This will affect day cells that do not match the currently focused month.
+  final Decoration outsideDecoration;
+
+  /// TextStyle for day cells that have been disabled.
+  ///
+  /// This refers to dates disabled by returning false in `enabledDayPredicate`,
+  /// as well as dates that are outside of the bounds set up by `firstDay` and `lastDay`.
+  final TextStyle disabledTextStyle;
+
+  /// Decoration for day cells that have been disabled.
+  ///
+  /// This refers to dates disabled by returning false in `enabledDayPredicate`,
+  /// as well as dates that are outside of the bounds set up by `firstDay` and `lastDay`.
+  final Decoration disabledDecoration;
+
+  /// TextStyle for day cells that are marked as holidays by `holidayPredicate`.
+  final TextStyle holidayTextStyle;
+
+  /// Decoration for day cells that are marked as holidays by `holidayPredicate`.
+  final Decoration holidayDecoration;
+
+  /// TextStyle for day cells that match `weekendDay` list.
+  final TextStyle weekendTextStyle;
+
+  /// Decoration for day cells that match `weekendDay` list.
+  final Decoration weekendDecoration;
+
+  /// TextStyle for day cells that do not match any other styles.
+  final TextStyle defaultTextStyle;
+
+  /// Decoration for day cells that do not match any other styles.
+  final Decoration defaultDecoration;
+
+  /// Decoration for each interior row of day cells.
+  final Decoration rowDecoration;
+
+  /// Border for the internal `Table` widget.
+  final TableBorder tableBorder;
+
+  /// Creates a `CalendarStyle` used by `TableCalendar` widget.
+  const CalendarStyle({
+    this.isTodayHighlighted = true,
+    this.canMarkersOverflow = true,
+    this.outsideDaysVisible = true,
+    this.markersAutoAligned = true,
+    this.markerSize,
+    this.markerSizeScale = 0.2,
+    this.markersAnchor = 0.7,
+    this.rangeHighlightScale = 1.0,
+    this.markerMargin = const EdgeInsets.symmetric(horizontal: 0.3),
+    this.markersAlignment = Alignment.bottomCenter,
+    this.markersMaxCount = 4,
+    this.cellMargin = const EdgeInsets.all(6.0),
+    this.cellPadding = const EdgeInsets.all(0),
+    this.cellAlignment = Alignment.center,
+    this.markersOffset = const PositionedOffset(),
+    this.rangeHighlightColor = const Color(0xFFBBDDFF),
+    this.markerDecoration = const BoxDecoration(
+      color: const Color(0xFF263238),
+      shape: BoxShape.circle,
+    ),
+    this.todayTextStyle = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 16.0,
+    ), //
+    this.todayDecoration = const BoxDecoration(
+      color: const Color(0xFF9FA8DA),
+      shape: BoxShape.circle,
+    ),
+    this.selectedTextStyle = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 16.0,
+    ),
+    this.selectedDecoration = const BoxDecoration(
+      color: const Color(0xFF5C6BC0),
+      shape: BoxShape.circle,
+    ),
+    this.rangeStartTextStyle = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 16.0,
+    ),
+    this.rangeStartDecoration = const BoxDecoration(
+      color: const Color(0xFF6699FF),
+      shape: BoxShape.circle,
+    ),
+    this.rangeEndTextStyle = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 16.0,
+    ),
+    this.rangeEndDecoration = const BoxDecoration(
+      color: const Color(0xFF6699FF),
+      shape: BoxShape.circle,
+    ),
+    this.withinRangeTextStyle = const TextStyle(),
+    this.withinRangeDecoration = const BoxDecoration(shape: BoxShape.circle),
+    this.outsideTextStyle = const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 18,
+        color: const Color(0xFFAEAEAE)),
+    this.outsideDecoration = const BoxDecoration(shape: BoxShape.circle),
+    this.disabledTextStyle = const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 18,
+        color: const Color(0xFFBFBFBF)),
+    this.disabledDecoration = const BoxDecoration(shape: BoxShape.circle),
+    this.holidayTextStyle = const TextStyle(color: const Color(0xFF5C6BC0)),
+    this.holidayDecoration = const BoxDecoration(
+      border: const Border.fromBorderSide(
+        const BorderSide(color: const Color(0xFF9FA8DA), width: 1.4),
+      ),
+      shape: BoxShape.circle,
+    ),
+    this.weekendTextStyle = const TextStyle(color: const Color(0xFF5A5A5A)),
+    this.weekendDecoration = const BoxDecoration(shape: BoxShape.circle),
+    this.defaultTextStyle = const TextStyle(),
+    this.defaultDecoration = const BoxDecoration(shape: BoxShape.circle),
+    this.rowDecoration = const BoxDecoration(),
+    this.tableBorder = const TableBorder(),
+  });
+}
+
+/// Helper class containing data for internal `Positioned` widget.
+class PositionedOffset {
+  /// Distance from the top edge.
+  final double? top;
+
+  /// Distance from the bottom edge.
+  final double? bottom;
+
+  /// Distance from the leading edge.
+  final double? start;
+
+  /// Distance from the trailing edge.
+  final double? end;
+
+  /// Creates a `PositionedOffset`. Values are set to `null` by default.
+  const PositionedOffset({this.top, this.bottom, this.start, this.end});
+}
+
+class DaysOfWeekStyle {
+  /// Use to customize days of week panel text (e.g. with different `DateFormat`).
+  /// You can use `String` transformations to further customize the text.
+  /// Defaults to simple `'E'` format (i.e. Mon, Tue, Wed, etc.).
+  ///
+  /// Example usage:
+  /// ```dart
+  /// dowTextFormatter: (date, locale) => DateFormat.E(locale).format(date)[0],
+  /// ```
+  final TextFormatter? dowTextFormatter;
+
+  /// Decoration for the top row of the table
+  final Decoration decoration;
+
+  /// Style for weekdays on the top of calendar.
+  final TextStyle weekdayStyle;
+
+  /// Style for weekend days on the top of calendar.
+  final TextStyle weekendStyle;
+
+  /// Creates a `DaysOfWeekStyle` used by `TableCalendar` widget.
+  const DaysOfWeekStyle({
+    this.dowTextFormatter,
+    this.decoration = const BoxDecoration(),
+    this.weekdayStyle = const TextStyle(color: const Color(0xFF4F4F4F)),
+    this.weekendStyle = const TextStyle(color: const Color(0xFF6A6A6A)),
+  });
+}
+
+class HeaderStyle {
+  /// Responsible for making title Text centered.
+  final bool titleCentered;
+
+  /// Responsible for FormatButton visibility.
+  final bool formatButtonVisible;
+
+  /// Controls the text inside FormatButton.
+  /// * `true` - the button will show next CalendarFormat
+  /// * `false` - the button will show current CalendarFormat
+  final bool formatButtonShowsNext;
+
+  /// Use to customize header's title text (e.g. with different `DateFormat`).
+  /// You can use `String` transformations to further customize the text.
+  /// Defaults to simple `'yMMMM'` format (i.e. January 2019, February 2019, March 2019, etc.).
+  ///
+  /// Example usage:
+  /// ```dart
+  /// titleTextFormatter: (date, locale) => DateFormat.yM(locale).format(date),
+  /// ```
+  final TextFormatter? titleTextFormatter;
+
+  /// Style for title Text (month-year) displayed in header.
+  final TextStyle titleTextStyle;
+
+  /// Style for FormatButton `Text`.
+  final TextStyle formatButtonTextStyle;
+
+  /// Background `Decoration` for FormatButton.
+  final Decoration formatButtonDecoration;
+
+  /// Internal padding of the whole header.
+  final EdgeInsets headerPadding;
+
+  /// External margin of the whole header.
+  final EdgeInsets headerMargin;
+
+  /// Internal padding of FormatButton.
+  final EdgeInsets formatButtonPadding;
+
+  /// Internal padding of left chevron.
+  /// Determines how much of ripple animation is visible during taps.
+  final EdgeInsets leftChevronPadding;
+
+  /// Internal padding of right chevron.
+  /// Determines how much of ripple animation is visible during taps.
+  final EdgeInsets rightChevronPadding;
+
+  /// External margin of left chevron.
+  final EdgeInsets leftChevronMargin;
+
+  /// External margin of right chevron.
+  final EdgeInsets rightChevronMargin;
+
+  /// Widget used for left chevron.
+  ///
+  /// Tapping on it will navigate to previous calendar page.
+  final Widget leftChevronIcon;
+
+  /// Widget used for right chevron.
+  ///
+  /// Tapping on it will navigate to next calendar page.
+  final Widget rightChevronIcon;
+
+  /// Determines left chevron's visibility.
+  final bool leftChevronVisible;
+
+  /// Determines right chevron's visibility.
+  final bool rightChevronVisible;
+
+  /// Decoration of the header.
+  final Decoration decoration;
+
+  /// Creates a `HeaderStyle` used by `TableCalendar` widget.
+  const HeaderStyle({
+    this.titleCentered = false,
+    this.formatButtonVisible = true,
+    this.formatButtonShowsNext = true,
+    this.titleTextFormatter,
+    this.titleTextStyle = const TextStyle(fontSize: 17.0),
+    this.formatButtonTextStyle = const TextStyle(),
+    this.formatButtonDecoration = const BoxDecoration(
+      border: const Border.fromBorderSide(BorderSide()),
+      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+    ),
+    this.headerMargin = const EdgeInsets.all(0.0),
+    this.headerPadding = const EdgeInsets.symmetric(vertical: 8.0),
+    this.formatButtonPadding =
+        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+    this.leftChevronPadding = const EdgeInsets.all(12.0),
+    this.rightChevronPadding = const EdgeInsets.all(12.0),
+    this.leftChevronMargin = const EdgeInsets.symmetric(horizontal: 8.0),
+    this.rightChevronMargin = const EdgeInsets.symmetric(horizontal: 8.0),
+    this.leftChevronIcon = const Icon(Icons.chevron_left),
+    this.rightChevronIcon = const Icon(Icons.chevron_right),
+    this.leftChevronVisible = true,
+    this.rightChevronVisible = true,
+    this.decoration = const BoxDecoration(),
+  });
+}
