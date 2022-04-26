@@ -22,6 +22,12 @@ class ThemeTextStyle {
     fontFamily: ('SFProDisplay'),
     color: Colors.black,
   );
+  static const textStyle20w600 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    fontFamily: ('SFProDisplay'),
+    color: Colors.black,
+  );
   static const textStyle20w400 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
