@@ -39,6 +39,7 @@ class AppTextField extends StatefulWidget {
     this.onTap,
     this.onFieldSubmitted,
     this.textCapitalization = TextCapitalization.sentences,
+    this.capitalize = true,
     Duration? debounce,
     this.enabledBorder,
     this.disabledBorder,
@@ -90,6 +91,7 @@ class AppTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final String? suffixText;
   final bool? autofocus;
+  final bool capitalize;
 
   late final Debounce? _debounce;
   final _enabled = <bool>[];
@@ -168,7 +170,7 @@ class _AppTextFieldState extends State<AppTextField> {
               TextFormField(
                 autofocus: widget.autofocus ?? false,
                 textAlign: widget.textAlign ?? TextAlign.left,
-                textCapitalization: widget.textCapitalization,
+                textCapitalization: widget.capitalize ?  widget.textCapitalization : TextCapitalization.none,
                 readOnly: widget.readonly,
                 controller: widget.controller,
                 obscureText: widget.obscureText,
@@ -184,7 +186,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 minLines: widget.minLines,
                 maxLines: widget.maxLines,
                 focusNode: widget.focusNode,
-                style: widget.style ?? ProjectTextStyles.ui_16Medium,
+                style: widget.style ?? ThemeTextStyle.textStyle14w400,
                 buildCounter: (
                   context, {
                   required int currentLength,
@@ -195,7 +197,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 },
                 decoration: InputDecoration(
                   suffixText: widget.suffixText,
-                  suffixStyle: ProjectTextStyles.ui_16Medium,
+                  suffixStyle: ThemeTextStyle.textStyle16w400,
                   suffixIcon: widget.isVisibleObscureButton
                       ? IconButton(
                           icon: widget.obscureText
@@ -217,22 +219,22 @@ class _AppTextFieldState extends State<AppTextField> {
                   ),
                   prefixIcon: widget.prefixIcon,
                   prefixIconConstraints: const BoxConstraints(
-                    minHeight: 36.0,
-                    minWidth: 36.0,
+                    minHeight: 14.0,
+                    minWidth: 40.0,
                   ),
-                  fillColor: widget.fillColor ?? ColorPalette.lightGrey,
+                  fillColor: widget.fillColor ?? ColorPalette.white,
                   filled: true,
                   isDense: true,
                   contentPadding: widget.contentPadding,
                   hintStyle: widget.hintStyle ??
-                      ProjectTextStyles.ui_16Medium.copyWith(
+                      ThemeTextStyle.textStyle16w400.copyWith(
                         color: ColorPalette.commonGrey,
                       ),
                   hintText: widget.hintText,
                   counterText: '',
                   disabledBorder: widget.disabledBorder ??
                       OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(16.0),
                         borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
@@ -241,7 +243,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       ),
                   enabledBorder: widget.enabledBorder ??
                       OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
                           color: (state is StateError)
                               ? ColorPalette.errorRed
@@ -251,7 +253,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       ),
                   focusedBorder: widget.focusedBorder ??
                       OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
                           color: (state is StateError)
                               ? ColorPalette.errorRed
@@ -313,8 +315,7 @@ class _AppTextFieldState extends State<AppTextField> {
                                               Flexible(
                                                 child: Text(
                                                   error,
-                                                  style: ProjectTextStyles
-                                                      .ui_16Medium
+                                                  style: ThemeTextStyle.textStyle16w400
                                                       .copyWith(
                                                           color: ColorPalette
                                                               .errorRed),

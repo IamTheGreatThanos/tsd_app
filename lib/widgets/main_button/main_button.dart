@@ -18,7 +18,7 @@ class MainButton extends StatelessWidget {
   final bool isEnabled;
 
   ///On tap callback
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   ///Color of external border
   final Color? borderColor;
@@ -92,20 +92,23 @@ class MainButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon != null
-                    ? Align(
-                        alignment: Alignment.centerRight,
-                        child: SvgPicture.asset(
-                          icon!,
-                          color: iconColor,
-                          width: 20,
-                          height: 20,
+                    ? Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: SvgPicture.asset(
+                            icon!,
+                            color: iconColor,
+                            width: 20,
+                            height: 20,
+                          ),
                         ),
-                      )
+                    )
                     : const SizedBox.shrink(),
                 title != null
                     ? Text(
                         title!,
-                        style: ProjectTextStyles.ui_16Semi.copyWith(
+                        style: ThemeTextStyle.textStyle14w600.copyWith(
                           color: !isEnabled && disabledBackgroundColor != null
                               ? disabledTextColor
                               : textColor,

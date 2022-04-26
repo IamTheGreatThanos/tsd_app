@@ -42,7 +42,7 @@ Flushbar _buildCustomSnackBarWidget(BuildContext context, String content,
           Expanded(
             child: Text(
               content,
-              style: ProjectTextStyles.ui_14Semi.copyWith(color: color),
+              style: ThemeTextStyle.textStyle14w400.copyWith(color: color),
             ),
           ),
           Icon(

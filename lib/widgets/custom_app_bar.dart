@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title,
-        style: ProjectTextStyles.ui_20Medium,
+        style: ThemeTextStyle.textStyle20w400,
       ),
       bottom: bottom,
       leading: IconButton(

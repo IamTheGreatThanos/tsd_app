@@ -16,13 +16,11 @@ class AppListTile extends StatelessWidget {
     this.contentPadding = const EdgeInsets.all(16.0),
     this.leadingPadding = const EdgeInsets.only(right: 16.0),
     this.color = ColorPalette.white,
-    this.titleStyle = ProjectTextStyles.ui_16Medium,
+    this.titleStyle = ThemeTextStyle.textStyle16w400,
     this.chevronVisible = true,
     TextStyle? subtitleStyle,
   })  : subtitleStyle = subtitleStyle ??
-      ProjectTextStyles.ui_14Medium.copyWith(
-        color: ColorPalette.black,
-      ),
+      ThemeTextStyle.textStyle14w400,
         super(key: key);
 
   final Color color;

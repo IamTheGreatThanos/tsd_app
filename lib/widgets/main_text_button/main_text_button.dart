@@ -42,12 +42,12 @@ class MainTextButton extends StatelessWidget {
 
   TextStyle isCenteredButton() {
     if (isCentered) {
-      return ProjectTextStyles.ui_16Semi.copyWith(
+      return ThemeTextStyle.textStyle16w400.copyWith(
         color: isButtonEnabled
             ? ColorPalette.black
             : ColorPalette.gray.withOpacity(0.25),);
     } else {
-      return ProjectTextStyles.ui_14Semi.copyWith(
+      return ThemeTextStyle.textStyle14w400.copyWith(
         color: isButtonEnabled
             ? ColorPalette.main
             : ColorPalette.gray.withOpacity(0.25),);

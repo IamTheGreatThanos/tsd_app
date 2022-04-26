@@ -45,12 +45,12 @@ class TwoButtonsDialog extends StatelessWidget {
         children: [
           Text(
             title,
-            style: ProjectTextStyles.ui_20Medium,
+            style: ThemeTextStyle.textStyle20w400,
           ),
           const SizedBox(height: 8.0),
           Text(
             subtitle,
-            style: ProjectTextStyles.ui_14Regular
+            style: ThemeTextStyle.textStyle14w400
                 .copyWith(color: ColorPalette.gray),
           ),
           const SizedBox(height: 16.0),

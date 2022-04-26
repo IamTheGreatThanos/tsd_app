@@ -4,7 +4,9 @@ class ColorPalette {
   static const Color dark = Color(0xFF166F5D);
 
   static const Color secondaryMain = Color(0xFF803FE5);
-  static const Color main = Color(0xFF28A745);
+  static const Color main = Color(0xFFF6F8FA);
+  static const Color purple = Color(0xFF6F42C1);
+  static const Color purpleLight = Color(0xFFc08cf4);
   static const Color commonBlue = Color(0xFFE0E9FA);
   static const Color background = Color(0xFFf2f2f9);
   // static const Color grey = Color(0xFFE5E5E5);

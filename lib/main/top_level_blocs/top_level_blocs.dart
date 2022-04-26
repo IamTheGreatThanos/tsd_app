@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/screens/auth/bloc/bloc_auth.dart';
 
 import '../../network/repository/global_repository.dart';
 import '../../network/tokens_repository/tokens_repository.dart';
@@ -20,6 +21,7 @@ class TopLevelBlocs extends StatelessWidget {
             context.read<TokensRepository>(),
           )..add(InitialLoginEvent()),
         ),
+        BlocProvider(create: (context) => BlocAuth()),
       ],
       child: child,
     );

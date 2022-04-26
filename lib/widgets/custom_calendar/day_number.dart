@@ -49,7 +49,7 @@ class DayNumber extends StatelessWidget {
           child: Text(
             day < 1 ? '' : day.toString(),
             textAlign: TextAlign.center,
-            style: ProjectTextStyles.ui_14Medium.copyWith(color: color != null ? Colors.white : Colors.black),
+            style: ThemeTextStyle.textStyle14w400.copyWith(color: color != null ? Colors.white : Colors.black),
           ),
         ),
       ),

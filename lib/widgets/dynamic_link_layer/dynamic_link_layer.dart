@@ -1,4 +1,6 @@
 import 'package:pharmacy_arrival/network/repository/hive_repository.dart';
+import 'package:pharmacy_arrival/screens/auth/ui/sign_in/signin_screen.dart';
+import 'package:pharmacy_arrival/screens/menu/main_menu_screen.dart';
 import 'package:pharmacy_arrival/widgets/after_login_layer/after_login_layer.dart';
 import 'package:pharmacy_arrival/widgets/after_login_layer/after_login_layer.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +28,13 @@ class DynamicLinkLayer extends StatelessWidget {
         buildWhen: (p, c) => c is AuthorizedState || c is NotAuthorizedState,
         builder: (context, state) {
           if (state is NotAuthorizedState) {
-            // return OnBoardingScreen();            // return MapControlsPage();
-            return Container();
+            // return OnBoardingScreen();
+            // return MapControlsPage();
+            return SignInScreen();
           }
           if (state is AuthorizedState) {
-            // return BottomNavigationBarScreen();            // return MapControlsPage();
-            return Container();
+            // return BottomNavigationBarScreen();
+            return MainMenuScreen();
           }
           return const SizedBox.shrink();
         },

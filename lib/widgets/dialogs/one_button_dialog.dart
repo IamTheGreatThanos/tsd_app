@@ -36,7 +36,7 @@ class OneButtonDialog extends StatelessWidget {
                 Flexible(
                   child: Text(
                     title,
-                    style: ProjectTextStyles.ui_20Medium,
+                    style: ThemeTextStyle.textStyle20w400,
                   ),
                 ),
                 const SizedBox(width: 8.0),
@@ -46,7 +46,7 @@ class OneButtonDialog extends StatelessWidget {
             const SizedBox(height: 8.0),
             Text(
               subtitle,
-              style: ProjectTextStyles.ui_14Regular.copyWith(
+              style: ThemeTextStyle.textStyle14w400.copyWith(
                 color: ColorPalette.gray,
               ),
             ),

@@ -92,7 +92,7 @@ void main() async {
               appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.white,
               ),
-              scaffoldBackgroundColor: ColorPalette.white,
+              scaffoldBackgroundColor: ColorPalette.main,
               fontFamily: 'Gilroy',
               textSelectionTheme: const TextSelectionThemeData().copyWith(
                 cursorColor: ColorPalette.black,
@@ -123,7 +123,7 @@ class MainAuthorization extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthorizedState) {
           // Navigator.of(context).pushAndRemoveUntil(
-          //     MaterialPageRoute(builder: (_) => MainAuthorization()),
+          //     MaterialPageRoute(builder: (_) => MainAuthorization()), 
           //     (route) => route.isFirst);
           // Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
           Navigator.of(context).popUntil((route) => route.isFirst);
