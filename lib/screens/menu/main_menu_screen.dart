@@ -41,6 +41,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
       backgroundColor: ColorPalette.purpleLight,
       body: Stack(
         children: [
+          Image.asset(
+            "assets/images/png/noise.png",
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
           Positioned(
               top: 55,
               left: 12,
@@ -167,11 +172,6 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                   // ),
                 ],
               )),
-          Image.asset(
-            "assets/images/png/noise.png",
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
           SizedBox.expand(
             child: DraggableScrollableSheet(
                 initialChildSize: 0.3,

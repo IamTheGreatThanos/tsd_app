@@ -9,6 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool rootNavigator;
   final PreferredSizeWidget? bottom;
   final double height;
+
   const CustomAppBar({
     Key? key,
     required this.title,
@@ -21,17 +22,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: ColorPalette.white,
-      elevation: 0,
+      elevation: 0.5,
       centerTitle: true,
       title: Text(
         title,
-        style: ThemeTextStyle.textStyle20w400,
+        style: ThemeTextStyle.textTitleDella16w400,
       ),
       bottom: bottom,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0),
+          child: SvgPicture.asset(
+            "assets/images/svg/europharm_logo.svg",
+            height: 22,
+          ),
+        ),
+      ],
       leading: IconButton(
         icon: SvgPicture.asset(
-          "assets/images/svg/arrow_back.svg",
-          color: ColorPalette.black,
+          "assets/images/svg/cross.svg",
         ),
         onPressed: () {
           Navigator.of(context, rootNavigator: rootNavigator).pop();

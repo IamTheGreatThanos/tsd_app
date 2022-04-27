@@ -53,12 +53,11 @@ class ThemeTextStyle {
     color: Colors.black,
   );
 
-  // static const textTitleDella24w400 = TextStyle(
-  //   fontSize: 24,
-  //   fontWeight: FontWeight.w400,
-  //   fontFamily: ('DelaGothicOne'),
-  //   color: Colors.black,
-  // );
+  static TextStyle textTitleDella16w400 = GoogleFonts.delaGothicOne(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
   static TextStyle textTitleDella24w400 = GoogleFonts.delaGothicOne(
     fontSize: 24,
     fontWeight: FontWeight.w400,
