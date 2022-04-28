@@ -245,7 +245,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                          color: (state is StateError)
+                          color: (state is StateError && widget.showErrorMessages)
                               ? ColorPalette.errorRed
                               : Colors.transparent,
                         ),
@@ -255,7 +255,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                          color: (state is StateError)
+                          color: (state is StateError && widget.showErrorMessages)
                               ? ColorPalette.errorRed
                               : Colors.transparent,
                           width: 1.0,

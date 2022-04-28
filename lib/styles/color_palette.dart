@@ -8,9 +8,8 @@ class ColorPalette {
   static const Color purple = Color(0xFF6F42C1);
   static const Color purpleLight = Color(0xFFc08cf4);
   static const Color commonBlue = Color(0xFFE0E9FA);
-  static const Color background = Color(0xFFf2f2f9);
-  // static const Color grey = Color(0xFFE5E5E5);
   static const Color grey400 = Color(0xFF959DA5);
+  static const Color dashGrey = Color(0xFFD1D5DA);
   static const Color commonGrey = Color(0xFFACACAC);
   static const Color darkGrey = Color(0xFF707070);
   static const Color lightGrey = Color(0xFFF2F2F8);
@@ -18,8 +17,16 @@ class ColorPalette {
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color red = Color(0xFFE74C3C);
+  static const Color background = Color(0xFFF6F8FA);
   static const Color backgroundLightGray = Color(0xFFF8F8F8);
   static const Color green = Color(0xFF1BB55C);
+  static const Color lightGreen = Color(0xFFDCFFE4);
+  static const Color textGreen = Color(0xFF22863A);
+  static const Color borderGreen = Color(0xFF34D058);
+  static const Color borderGrey = Color(0xFFE1E4E8);
+  static const Color lightYellow = Color(0xFFFFFDEF);
+  static const Color textYellow = Color(0xFFDBAB09);
+  static const Color borderYellow = Color(0xFFFFEA7F);
   static const Color gray = Color(0xFF727F88);
   static const Color black = Color(0xFF000000);
   static const Color warning = Color(0xFFFBBB05);

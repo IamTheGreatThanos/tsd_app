@@ -70,6 +70,12 @@ class ThemeTextStyle {
     fontFamily: ('SFProDisplay'),
     color: Colors.black,
   );
+  static const textStyle16w500 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    fontFamily: ('SFProDisplay'),
+    color: Colors.black,
+  );
   static const textStyle16w700 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
@@ -147,7 +153,14 @@ class ThemeTextStyle {
     fontWeight: FontWeight.w300,
     fontFamily: ('SFProDisplay'),
     color: Colors.black,
-  );  static const textStyle12w600 = TextStyle(
+  );
+  static const textStyle12w400 = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    fontFamily: ('SFProDisplay'),
+    color: Colors.black,
+  );
+  static const textStyle12w600 = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w600,
     fontFamily: ('SFProDisplay'),
