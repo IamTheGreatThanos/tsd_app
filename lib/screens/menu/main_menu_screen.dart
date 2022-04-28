@@ -174,7 +174,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
               )),
           SizedBox.expand(
             child: DraggableScrollableSheet(
-                initialChildSize: 0.3,
+                initialChildSize: 0.24,
                 minChildSize: 0.2,
                 maxChildSize: 0.9,
                 builder: (context, controller) {

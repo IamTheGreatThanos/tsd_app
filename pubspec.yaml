@@ -46,7 +46,7 @@ dependencies:
   image_picker: ^0.8.4+4
   cached_network_image: ^3.1.0
   dotted_line: ^3.0.0
-  syncfusion_flutter_datepicker: ^20.1.51
+  syncfusion_flutter_datepicker: ^19.4.54
   firebase_core: ^1.6.0
   firebase_crashlytics: ^2.2.1
   firebase_analytics: ^8.3.2

@@ -7,8 +7,10 @@ class ColorPalette {
   static const Color main = Color(0xFFF6F8FA);
   static const Color purple = Color(0xFF6F42C1);
   static const Color purpleLight = Color(0xFFc08cf4);
+  static const Color purpleInactive = Color(0xFFD1BCF9);
   static const Color commonBlue = Color(0xFFE0E9FA);
   static const Color grey400 = Color(0xFF959DA5);
+  static const Color greyDark = Color(0xFF24292E);
   static const Color dashGrey = Color(0xFFD1D5DA);
   static const Color commonGrey = Color(0xFFACACAC);
   static const Color darkGrey = Color(0xFF707070);

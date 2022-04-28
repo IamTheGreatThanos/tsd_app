@@ -24,16 +24,28 @@ class FillInvoiceVModel {
     contentPadding: const EdgeInsets.all(12),
     hintText: "Контрагент поставщика(БИН)",
     hintStyle:
-    ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grey400),
+        ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grey400),
     keyboardType: TextInputType.number,
     showErrorMessages: false,
   );
-  final TextEditingController incomeNumberDateController = TextEditingController();
+  late final recipient = AppTextField(
+    contentPadding: EdgeInsets.zero,
+    capitalize: false,
+    textAlign: TextAlign.right,
+    showErrorMessages: false,
+  );
+  final TextEditingController incomeNumberDateController =
+      TextEditingController();
+  final TextEditingController invoiceDate = TextEditingController();
+
   FillInvoiceVModel();
 
   bool isValidated() {
     return incomeNumber.validated &&
         incomeNumberDate.validated &&
+        recipient.validated &&
+        incomeNumberDateController.text.isNotEmpty &&
+        invoiceDate.text.isNotEmpty &&
         bin.validated;
   }
 }
