@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/bloc/bloc_pharmacy_arrival.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 import '../../../network/models/dto_models/response/dto_order_details_response.dart';
 import '../../../styles/color_palette.dart';
@@ -291,11 +293,15 @@ class _BuildOrderData extends StatelessWidget {
               height: 12,
             ),
             GestureDetector(
-              onTap: () => AppRouter.push(
-                  context,
-                  FillInvoiceScreen(
-                    orderData: orderData,
-                  )),
+              onTap: ()
+              {
+                context.read<FillInvoiceVModel>().init();
+                AppRouter.push(
+                    context,
+                    FillInvoiceScreen(
+                      orderData: orderData,
+                    ));
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 decoration: BoxDecoration(

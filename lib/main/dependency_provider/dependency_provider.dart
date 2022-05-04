@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
 import 'package:provider/provider.dart';
 
 import '../../main.dart';
@@ -56,6 +57,8 @@ class DependenciesProvider extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => UserStore(),
+        ),ChangeNotifierProvider(
+          create: (_) => FillInvoiceVModel()..init(),
         ),
       ],
       child: child,

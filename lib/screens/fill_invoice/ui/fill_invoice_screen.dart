@@ -2,32 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_order_details_response.dart';
+import 'package:pharmacy_arrival/screens/digital_signature_load/digital_signature_load_screen.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
+import 'package:pharmacy_arrival/screens/signature/signature_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/main_button/main_button.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../styles/text_styles.dart';
 
-class FillInvoiceScreen extends StatefulWidget {
+class FillInvoiceScreen extends StatelessWidget {
   final DTOOrderDetails orderData;
 
   const FillInvoiceScreen({Key? key, required this.orderData})
       : super(key: key);
 
   @override
-  State<FillInvoiceScreen> createState() => _FillInvoiceScreenState();
-}
-
-class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
-  final FillInvoiceVModel _vmodel = FillInvoiceVModel();
-
-  @override
   Widget build(BuildContext context) {
+    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.orderData.orderName!.toUpperCase(),
+        title: orderData.orderName!.toUpperCase(),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 16.5),
@@ -147,7 +146,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
               height: 16,
             ),
             _vmodel.bin,
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Container(
@@ -169,7 +168,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Container(
@@ -248,13 +247,21 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             GestureDetector(
-              onTap: null,
+              // onTap: _vmodel.incomeNumber.validated ? () {
+              //   AppRouter.push(context, DigitalSignatureLoadScreen());
+              // } : null,
+              ///todo
+              onTap: () {
+                AppRouter.push(context, const DigitalSignatureLoadScreen());
+              },
               child: Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  color: _vmodel.isValidated() ?  ColorPalette.purple : ColorPalette.purpleInactive,
+                  color: _vmodel.incomeNumber.validated
+                      ? ColorPalette.purple
+                      : ColorPalette.purpleInactive,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(

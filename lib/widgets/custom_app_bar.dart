@@ -9,6 +9,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool rootNavigator;
   final PreferredSizeWidget? bottom;
   final double height;
+  final bool showLogo;
+  final bool isChevrone;
+  final Color? backgroundColor;
 
   const CustomAppBar({
     Key? key,
@@ -16,12 +19,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.bottom,
     this.height = 60,
     this.rootNavigator = false,
+    this.showLogo = true,
+    this.isChevrone = false,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: ColorPalette.white,
+      backgroundColor: backgroundColor ?? ColorPalette.white,
       elevation: 0.5,
       centerTitle: true,
       title: Text(
@@ -30,17 +36,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       bottom: bottom,
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20.0),
-          child: SvgPicture.asset(
-            "assets/images/svg/europharm_logo.svg",
-            height: 22,
+        if (showLogo)
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: SvgPicture.asset(
+              "assets/images/svg/europharm_logo.svg",
+              height: 22,
+            ),
           ),
-        ),
       ],
       leading: IconButton(
         icon: SvgPicture.asset(
-          "assets/images/svg/cross.svg",
+          "assets/images/svg/${isChevrone ? "chevron_left" : "cross"}.svg",
         ),
         onPressed: () {
           Navigator.of(context, rootNavigator: rootNavigator).pop();
