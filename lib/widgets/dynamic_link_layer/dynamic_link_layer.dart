@@ -1,12 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/network/repository/hive_repository.dart';
 import 'package:pharmacy_arrival/screens/auth/ui/sign_in/signin_screen.dart';
 import 'package:pharmacy_arrival/screens/menu/main_menu_screen.dart';
-import 'package:pharmacy_arrival/widgets/after_login_layer/after_login_layer.dart';
-import 'package:pharmacy_arrival/widgets/after_login_layer/after_login_layer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/dynamic_link_layer_bloc.dart';
+import 'package:pharmacy_arrival/widgets/dynamic_link_layer/bloc/dynamic_link_layer_bloc.dart';
 
 class DynamicLinkLayer extends StatelessWidget {
   final bool isAuthenticated;
@@ -18,8 +16,9 @@ class DynamicLinkLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DynamicLinkLayerBloc>(
       create: (context) => DynamicLinkLayerBloc(
-          context.read<HiveRepository>(), isAuthenticated)
-        ..add(InitialDynamicLinkLayerEvent()),
+        context.read<HiveRepository>(),
+        isAuthenticated,
+      )..add(InitialDynamicLinkLayerEvent()),
       child: BlocConsumer<DynamicLinkLayerBloc, DynamicLinkLayerState>(
         listener: (context, state) {
           if (state is CreateNewPasswordState) {}
@@ -30,11 +29,11 @@ class DynamicLinkLayer extends StatelessWidget {
           if (state is NotAuthorizedState) {
             // return OnBoardingScreen();
             // return MapControlsPage();
-            return SignInScreen();
+            return const SignInScreen();
           }
           if (state is AuthorizedState) {
             // return BottomNavigationBarScreen();
-            return MainMenuScreen();
+            return const MainMenuScreen();
           }
           return const SizedBox.shrink();
         },
@@ -44,8 +43,11 @@ class DynamicLinkLayer extends StatelessWidget {
 }
 
 Future openDialog(ctx, dynamic dialog) =>
-    Navigator.of(ctx, rootNavigator: true).push(MaterialPageRoute<bool>(
+    Navigator.of(ctx as BuildContext, rootNavigator: true).push(
+      MaterialPageRoute<bool>(
         builder: (BuildContext context) {
-          return dialog;
+          return dialog as Widget;
         },
-        fullscreenDialog: true));
+        fullscreenDialog: true,
+      ),
+    );

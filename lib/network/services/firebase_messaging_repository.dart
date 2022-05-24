@@ -48,7 +48,7 @@ class FirebaseMessagingRepository {
         onData?.call(message);
       },
       onError: (error) {
-        _logException("on Message Opened App", error);
+        _logException("on Message Opened App", error as String);
       },
     );
   }

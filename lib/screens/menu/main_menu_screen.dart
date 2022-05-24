@@ -96,17 +96,17 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           _BuildMenuOption(
                             icon: "stock_arrival_logo",
                             title: "Приход\n на склад",
-                            color: Color(0xFFD73A49).withOpacity(0.52),
+                            color: const Color(0xFFD73A49).withOpacity(0.52),
                             onTap: () =>
-                                AppRouter.push(context, StockArrivalScreen()),
+                                AppRouter.push(context, const StockArrivalScreen()),
                             pad: true,
                           ),
                           _BuildMenuOption(
                             icon: "pharmacy_arrival_logo",
                             title: "Приход\nАптека",
-                            color: Color(0xFF28A745).withOpacity(0.52),
+                            color: const Color(0xFF28A745).withOpacity(0.52),
                             onTap: () => AppRouter.push(
-                                context, PharmacyArrivalScreen()),
+                                context, const PharmacyArrivalScreen()),
                           ),
                         ],
                       ),
@@ -116,17 +116,17 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           _BuildMenuOption(
                             icon: "move_logo",
                             title: "Перемещение",
-                            color: Color(0xFFFFD33D).withOpacity(0.52),
+                            color: const Color(0xFFFFD33D).withOpacity(0.52),
                             onTap: () =>
-                                AppRouter.push(context, MoveDataScreen()),
+                                AppRouter.push(context, const MoveDataScreen()),
                             pad: true,
                           ),
                           _BuildMenuOption(
                             icon: "return_logo",
                             title: "Возврат",
-                            color: Color(0xFF6F42C1).withOpacity(0.52),
+                            color: const Color(0xFF6F42C1).withOpacity(0.52),
                             onTap: () =>
-                                AppRouter.push(context, ReturnDataScreen()),
+                                AppRouter.push(context, const ReturnDataScreen()),
                           ),
                         ],
                       ),
@@ -183,14 +183,14 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                       maxHeight: MediaQuery.of(context).size.height,
                     ),
                     child: Container(
-                      padding: EdgeInsets.only(top: 45, left: 16, right: 16),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.only(top: 45, left: 16, right: 16),
+                      decoration: const BoxDecoration(
                         color: ColorPalette.white,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Наши аптеки",
                             style: ThemeTextStyle.textStyle20w600,
                           ),
@@ -249,7 +249,7 @@ class _BuildMenuOption extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset("assets/images/png/$icon.png"),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Text(

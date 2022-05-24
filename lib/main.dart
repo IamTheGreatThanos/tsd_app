@@ -1,5 +1,5 @@
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/utils/scroll_glow_disable.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,20 +8,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'generated/l10n.dart';
-import 'main/dependency_initializer/dependency_initializer.dart';
-import 'main/dependency_provider/dependency_provider.dart';
-import 'main/login_bloc/login_bloc.dart';
-import 'main/top_level_blocs/top_level_blocs.dart';
-import 'managers/secure_storage_manager/secure_storage_manager.dart';
-import 'managers/user_store.dart';
-import 'network/dio_wrapper/dio_wrapper.dart';
-import 'network/repository/global_repository.dart';
-import 'network/repository/hive_repository.dart';
-import 'network/services/network_service.dart';
-import 'network/tokens_repository/tokens_repository.dart';
-import 'widgets/dynamic_link_layer/dynamic_link_layer.dart';
+import 'package:pharmacy_arrival/generated/l10n.dart';
+import 'package:pharmacy_arrival/locator_serviece.dart';
+import 'package:pharmacy_arrival/main/dependency_initializer/dependency_initializer.dart';
+import 'package:pharmacy_arrival/main/dependency_provider/dependency_provider.dart';
+import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/main/top_level_blocs/top_level_blocs.dart';
+import 'package:pharmacy_arrival/managers/secure_storage_manager/secure_storage_manager.dart';
+import 'package:pharmacy_arrival/managers/user_store.dart';
+import 'package:pharmacy_arrival/network/dio_wrapper/dio_wrapper.dart';
+import 'package:pharmacy_arrival/network/repository/global_repository.dart';
+import 'package:pharmacy_arrival/network/repository/hive_repository.dart';
+import 'package:pharmacy_arrival/network/services/network_service.dart';
+import 'package:pharmacy_arrival/network/tokens_repository/tokens_repository.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/utils/scroll_glow_disable.dart';
+import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.dart';
 
 const String baseUrl = 'http://185.129.50.172/api/v1/';
 
@@ -32,7 +34,11 @@ String get projectBaseUrl {
 
 void main() async {
   ///Global managers initialization
+  WidgetsFlutterBinding.ensureInitialized();
+    await initLocator();
+
   Future<bool> _initialize(BuildContext context) async {
+
     try {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
@@ -50,10 +56,11 @@ void main() async {
           .init(context.read<HiveRepository>());
       // await context.read<FirebaseMessagingRepository>().init();
       await context.read<DioWrapper>().init(
-          baseURL: projectBaseUrl,
-          tokensRepository: context.read<TokensRepository>(),
-          globalRepository: context.read<GlobalRepository>(),
-          loginBloc: context.read<LoginBloc>());
+            baseURL: projectBaseUrl,
+            tokensRepository: context.read<TokensRepository>(),
+            globalRepository: context.read<GlobalRepository>(),
+            loginBloc: context.read<LoginBloc>(),
+          );
 
       context.read<NetworkService>().init(context.read<DioWrapper>());
       context
@@ -100,6 +107,7 @@ void main() async {
             ),
             home: DependenciesInitializer(
               loadingIndicatorScreen: const Scaffold(
+                backgroundColor: Colors.white,
                 body: Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -123,15 +131,16 @@ class MainAuthorization extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthorizedState) {
           // Navigator.of(context).pushAndRemoveUntil(
-          //     MaterialPageRoute(builder: (_) => MainAuthorization()), 
+          //     MaterialPageRoute(builder: (_) => MainAuthorization()),
           //     (route) => route.isFirst);
           // Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },
-      buildWhen: (p, c) => (c is LoadingLoginState ||
+      buildWhen: (p, c) =>
+          c is LoadingLoginState ||
           c is UnauthorizedState ||
-          c is AuthorizedState),
+          c is AuthorizedState,
       builder: (context, state) {
         if (state is LoadingLoginState) {
           return const Material(
@@ -144,13 +153,13 @@ class MainAuthorization extends StatelessWidget {
         }
         if (state is UnauthorizedState) {
           return const Application(
-            false,
+            isAuthenticated: false,
             key: ValueKey(0),
           );
         }
         if (state is AuthorizedState) {
           return const Application(
-            true,
+            isAuthenticated: true,
             key: ValueKey(1),
           );
         }
@@ -163,8 +172,8 @@ class MainAuthorization extends StatelessWidget {
 class Application extends StatelessWidget {
   final bool isAuthenticated;
 
-  const Application(
-    this.isAuthenticated, {
+  const Application({
+    required this.isAuthenticated,
     Key? key,
   }) : super(key: key);
 

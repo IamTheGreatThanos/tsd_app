@@ -9,8 +9,8 @@ class DTOTokensResponse {
 
   factory DTOTokensResponse.fromJson(Map<String, dynamic> json) {
     return DTOTokensResponse(
-        accessToken: json["accessToken"],
-        refreshToken: json["refreshToken"],
+        accessToken: json["accessToken"] as String,
+        refreshToken: json["refreshToken"] as String,
       );
   }
 

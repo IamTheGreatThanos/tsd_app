@@ -66,7 +66,7 @@ class InputCubit<T> extends Cubit<StateInputCubit> {
 
   List<String> _defaultValidatorString(dynamic value) {
     final output = <String>[];
-    if (value == null || value.isEmpty) {
+    if (value == null || value.isEmpty as bool) {
       output.add(S.current.inputErrorGeneral);
     }
     return output;

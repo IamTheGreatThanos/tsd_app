@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'utils/screen_sizes.dart';
 
 class YearTitle extends StatelessWidget {
-  const YearTitle(
+   const YearTitle(
     this.year,
   );
 

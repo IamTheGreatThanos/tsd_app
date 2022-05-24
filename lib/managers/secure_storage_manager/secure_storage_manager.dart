@@ -13,7 +13,7 @@ class SecureStorage {
 
   Future<String?> read(String key) async {
     var readData = await _storage.read(key: key);
-    return readData;
+    return readData as Future<String>;
   }
 
   Future<void> delete(String key) async {

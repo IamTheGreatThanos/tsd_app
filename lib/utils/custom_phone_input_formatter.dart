@@ -167,7 +167,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
   }) {
     assert(alternativeMasks.isNotEmpty);
     final countryData = _findCountryDataByCountryCode(countryCode);
-    String currentMask = countryData['phoneMask'];
+    String currentMask = countryData['phoneMask'] as String;
     alternativeMasks.sort((a, b) => a.length.compareTo(b.length));
     if (alternativeMasks.first.length < currentMask.length) {
       countryData['phoneMask'] = alternativeMasks.first;
@@ -180,7 +180,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
         countryData['altMasks'] = alternativeMasks;
       } else {
         final existingList = countryData['altMasks'];
-        alternativeMasks.forEach(existingList.add);
+      //  alternativeMasks.forEach(existingList.add);
       }
     }
     // ignore: prefer_adjacent_string_concatenation
@@ -388,11 +388,11 @@ class PhoneCountryData {
   });
   factory PhoneCountryData.fromMap(Map value) {
     return PhoneCountryData._init(
-      country: value['country'],
-      phoneCode: value['phoneCode'],
-      countryCode: value['countryCode'],
-      phoneMask: value['phoneMask'],
-      altMasks: value['altMasks'],
+      country: value['country'] as String?,
+      phoneCode: value['phoneCode']  as String?,
+      countryCode: value['countryCode']  as String?,
+      phoneMask: value['phoneMask']  as String?,
+      altMasks: value['altMasks']  as List<String>?,
     );
   }
   final String? country;
@@ -437,7 +437,7 @@ class _PhoneCodes {
     if (subscringLength < 1) return null;
     var phoneCode = phone.substring(0, subscringLength);
 
-    var rawData = _data.firstWhere((data) => toNumericString(data!['phoneCode']) == phoneCode,
+    var rawData = _data.firstWhere((data) => toNumericString(data!['phoneCode'] as String) == phoneCode,
         orElse: () => null);
     if (rawData != null) {
       return PhoneCountryData.fromMap(rawData);
@@ -450,7 +450,7 @@ class _PhoneCodes {
   ) {
     var list = <PhoneCountryData>[];
     for (var data in _data) {
-      var c = toNumericString(data!['phoneCode']);
+      var c = toNumericString(data!['phoneCode'] as String?);
       if (c == phoneCode) {
         list.add(PhoneCountryData.fromMap(data));
       }

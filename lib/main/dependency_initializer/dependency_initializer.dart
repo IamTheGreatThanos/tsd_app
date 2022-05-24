@@ -42,7 +42,14 @@ class _DependenciesInitializerState<T extends Object>
             return widget.loadingIndicatorScreen;
           }
         } else {
-          return const SizedBox.shrink();
+          return const Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Colors.indigo,
+              ),
+            ),
+          );
         }
       },
     );

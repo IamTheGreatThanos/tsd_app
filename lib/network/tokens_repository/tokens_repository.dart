@@ -1,4 +1,6 @@
 
+import 'package:pharmacy_arrival/data/model/user.dart';
+
 import '../repository/hive_repository.dart';
 
 class TokensRepository {

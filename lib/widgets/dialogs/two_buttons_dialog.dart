@@ -39,7 +39,7 @@ class TwoButtonsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainDialogContainer(
-      padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

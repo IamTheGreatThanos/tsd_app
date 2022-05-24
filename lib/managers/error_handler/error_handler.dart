@@ -16,7 +16,7 @@ class ErrorHandler {
     try {
       if (error is DioError) {
         int responseCode = error.response?.statusCode ?? 9999;
-        String errorMessage = error.response?.data['message'] ?? '';
+        String errorMessage = error.response?.data['message'] as String? ?? '';
         if (error.type == DioErrorType.receiveTimeout || error.type == DioErrorType.connectTimeout) {
           return _lang.server_is_not_reachable;
         }

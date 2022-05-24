@@ -298,7 +298,7 @@ class AuthInterceptor extends InterceptorsWrapper {
     try {
       final response = await dioRefresher
           .get('auth/refresh', queryParameters: {"token": refreshToken});
-      return DTOTokensResponse.fromJson(response.data);
+      return DTOTokensResponse.fromJson(response.data as Map<String,dynamic>);
     } catch (e) {
       if (e is DioError &&
           e.response?.statusCode == 404) {

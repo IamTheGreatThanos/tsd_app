@@ -11,20 +11,21 @@ class CallTimer extends StatefulWidget {
 }
 
 class _CallTimerState extends State<CallTimer> {
-  Duration duration = Duration();
+  Duration duration = const Duration();
   Timer? timer;
 
+  @override
   void initState() {
     startTimer();
     super.initState();
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) => addTime());
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) => addTime());
   }
 
   void addTime() {
-    final addSeconds = 1;
+    const addSeconds = 1;
     if (!mounted) return;
     setState(() {
       final seconds = duration.inSeconds + addSeconds;

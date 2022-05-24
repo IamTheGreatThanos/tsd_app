@@ -1,10 +1,8 @@
-import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:flutter/material.dart';
 
 import 'day_number.dart';
 import 'month_title.dart';
 import 'utils/dates.dart';
-import 'utils/screen_sizes.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({
@@ -85,28 +83,24 @@ class MonthView extends StatelessWidget {
   Widget buildMonthView(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0, right: 0),
-      child: Container(
-        // width: MediaQuery.of(context).size.width / 2,
-        // margin: EdgeInsets.all(padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            MonthTitle(
-              month: month,
-              monthNames: monthNames,
-              style: titleStyle!,
-            ),
-            Container(
-              // padding: const EdgeInsets.all(8),
-              // decoration: BoxDecoration(
-              //   color: ColorPalette.blue,
-              //   borderRadius: BorderRadius.circular(50)
-              // ),
-              margin: const EdgeInsets.only(top: 8.0),
-              child: buildMonthDays(context),
-            ),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          MonthTitle(
+            month: month,
+            monthNames: monthNames,
+            style: titleStyle!,
+          ),
+          Container(
+            // padding: const EdgeInsets.all(8),
+            // decoration: BoxDecoration(
+            //   color: ColorPalette.blue,
+            //   borderRadius: BorderRadius.circular(50)
+            // ),
+            margin: const EdgeInsets.only(top: 8.0),
+            child: buildMonthDays(context),
+          ),
+        ],
       ),
     );
   }

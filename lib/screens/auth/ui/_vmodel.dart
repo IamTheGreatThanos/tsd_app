@@ -1,4 +1,4 @@
-import '../../../widgets/main_text_field/app_text_field.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 
 class SignInVModel {
   // SignInVModel();
