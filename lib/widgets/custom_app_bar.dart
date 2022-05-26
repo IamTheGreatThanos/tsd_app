@@ -12,6 +12,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showLogo;
   final bool isChevrone;
   final Color? backgroundColor;
+  final TextStyle? textStyle;
+  final Color? leadingColor;
 
   const CustomAppBar({
     Key? key,
@@ -22,6 +24,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showLogo = true,
     this.isChevrone = false,
     this.backgroundColor,
+    this.textStyle,
+    this.leadingColor,
   }) : super(key: key);
 
   @override
@@ -32,7 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title,
-        style: ThemeTextStyle.textTitleDella16w400,
+        style: textStyle ?? ThemeTextStyle.textTitleDella16w400,
       ),
       bottom: bottom,
       actions: [
@@ -48,6 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: SvgPicture.asset(
           "assets/images/svg/${isChevrone ? "chevron_left" : "cross"}.svg",
+          color: leadingColor ?? Colors.black,
         ),
         onPressed: () {
           Navigator.of(context, rootNavigator: rootNavigator).pop();

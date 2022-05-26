@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/utils/scroll_glow_disable.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,7 @@ const String baseUrl = 'http://185.129.50.172/api/v1/';
 
 void main() async {
   ///Global managers initialization
+  WidgetsFlutterBinding.ensureInitialized();
   Future<bool> _initialize(BuildContext context) async {
     try {
       SystemChrome.setPreferredOrientations([
@@ -67,12 +69,15 @@ void main() async {
       child: DependenciesProvider(
         child: TopLevelBlocs(
           child: MaterialApp(
-            builder: (context, child) {
-              return ScrollConfiguration(
-                behavior: DisableGlowScrollBehavior(),
-                child: child!,
-              );
-            },
+            builder: BotToastInit(),
+
+            // builder: (context, child) {
+            //   return ScrollConfiguration(
+            //     behavior: DisableGlowScrollBehavior(),
+            //     child: child!,
+            //   );
+            //
+            // },
             title: 'Europharm',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const [
