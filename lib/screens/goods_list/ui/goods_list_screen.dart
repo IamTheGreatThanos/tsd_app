@@ -29,7 +29,7 @@ class GoodsListScreen extends StatelessWidget {
             child: BlocConsumer<BlocGoodsList, StateBlocGoodsList>(
               builder: (context, state) {
                 if (state is StateGoodsListLoadData) {
-                  return _BuildBody(goodsResponse: state.goodsResponse);
+                  return _BuildBody(goodsResponse: state.goods);
                 }
                 return const SizedBox.shrink();
               },
@@ -40,7 +40,7 @@ class GoodsListScreen extends StatelessWidget {
                   context.loaderOverlay.hide();
                 }
               },
-              buildWhen: (p, c) => c is! StateGoodsListLoading,
+              buildWhen: (p, c) => c is StateGoodsListLoadData,
             ),
           ),
         ),
@@ -112,7 +112,7 @@ class _BuildBodyState extends State<_BuildBody> {
                             color: ColorPalette.borderGrey,
                             borderRadius: BorderRadius.circular(100)),
                         child: Text(
-                          "146",
+                          "${goods.goods.length}",
                           style: ThemeTextStyle.textStyle12w600.copyWith(
                             color: ColorPalette.black,
                           ),
@@ -159,7 +159,7 @@ class _BuildBodyState extends State<_BuildBody> {
                             color: ColorPalette.borderGrey,
                             borderRadius: BorderRadius.circular(100)),
                         child: Text(
-                          "146",
+                          "${goods.scannedGoods.length}",
                           style: ThemeTextStyle.textStyle12w600.copyWith(
                             color: ColorPalette.black,
                           ),
@@ -172,22 +172,46 @@ class _BuildBodyState extends State<_BuildBody> {
             ],
           ),
         ),
-        ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(
-                left: 12.5, right: 12.5, top: 20, bottom: 50),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: goods.goods.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                  onTap: () {
-                    AppRouter.push(context, BarcodeScannerScreen());
-                    // await FlutterBarcodeScanner.scanBarcode(
-                    //     "F87615", "Cancel", false, ScanMode.BARCODE);
-                    // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
-                  },
-                  child: _BuildGoodDetails(good: goods.goods[index]));
-            }),
+        if (currentIndex == 0)
+          ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: goods.goods.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                    onTap: () {
+                      AppRouter.push(
+                          context,
+                          BlocProvider.value(
+                              value: context.read<BlocGoodsList>(),
+                              child: const BarcodeScannerScreen()));
+                      // await FlutterBarcodeScanner.scanBarcode(
+                      //     "F87615", "Cancel", false, ScanMode.BARCODE);
+                      // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
+                    },
+                    child: _BuildGoodDetails(good: goods.goods[index]));
+              }),
+        if (currentIndex == 1)
+          goods.scannedGoods.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: const Center(
+                    child: Text("Отсканированных товаров нет"),
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  padding:
+                      const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: goods.scannedGoods.length,
+                  itemBuilder: (context, index) {
+                    return _BuildGoodDetails(good: goods.scannedGoods[index]);
+                  }),
+        const SizedBox(
+          height: 90,
+        ),
         IntrinsicHeight(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -206,7 +230,7 @@ class _BuildBodyState extends State<_BuildBody> {
                   Text(
                     NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
                         .format(
-                      goods.price,
+                      goods.totalPrice,
                     ),
                     style: ThemeTextStyle.textStyle24w400,
                   ),
@@ -232,7 +256,7 @@ class _BuildBodyState extends State<_BuildBody> {
                   Text(
                     NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
                         .format(
-                      56000,
+                      goods.totalScannedPrice,
                     ),
                     style: ThemeTextStyle.textStyle24w400,
                   ),
@@ -241,30 +265,6 @@ class _BuildBodyState extends State<_BuildBody> {
             ],
           ),
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Text(
-        //       NumberFormat.simpleCurrency(
-        //               locale: 'kk', decimalDigits: 0)
-        //           .format(
-        //         goods.price,
-        //       ),
-        //       style: ThemeTextStyle.textStyle24w400,
-        //     ),
-        //     VerticalDivider(
-        //       color: ColorPalette.dashGrey,
-        //     ),
-        //     Text(
-        //       NumberFormat.simpleCurrency(
-        //               locale: 'kk', decimalDigits: 0)
-        //           .format(
-        //         56000,
-        //       ),
-        //       style: ThemeTextStyle.textStyle24w400,
-        //     ),
-        //   ],
-        // ),
         const SizedBox(
           height: 90,
         ),

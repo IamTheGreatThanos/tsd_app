@@ -5,8 +5,8 @@ class DTORegisterResponse {
       this.user,});
 
   DTORegisterResponse.fromJson(dynamic json) {
-    accessToken = json['access_token'];
-    tokenType = json['token_type'];
+    accessToken = json['access_token'] as String;
+    tokenType = json['token_type'] as String;
     user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
   String? accessToken;
@@ -34,11 +34,11 @@ class User {
       this.id,});
 
   User.fromJson(dynamic json) {
-    login = json['login'];
-    name = json['name'];
-    phone = json['phone'];
-    createdAt = json['created_at'];
-    id = json['id'];
+    login = json['login'] as String;
+    name = json['name'] as String;
+    phone = json['phone'] as String;
+    createdAt = json['created_at'] as String;
+    id = json['id'] as int;
   }
   String? login;
   String? name;

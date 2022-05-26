@@ -1,5 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
-
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ import 'package:pharmacy_arrival/network/repository/hive_repository.dart';
 import 'package:pharmacy_arrival/network/services/network_service.dart';
 import 'package:pharmacy_arrival/network/tokens_repository/tokens_repository.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/utils/scroll_glow_disable.dart';
 import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.dart';
 
 const String baseUrl = 'http://185.129.50.172/api/v1/';
@@ -30,10 +28,8 @@ const String baseUrl = 'http://185.129.50.172/api/v1/';
 void main() async {
   ///Global managers initialization
   WidgetsFlutterBinding.ensureInitialized();
-    await initLocator();
-
+  await initLocator();
   Future<bool> _initialize(BuildContext context) async {
-
     try {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
@@ -51,12 +47,10 @@ void main() async {
           .init(context.read<HiveRepository>());
       // await context.read<FirebaseMessagingRepository>().init();
       await context.read<DioWrapper>().init(
-
           baseURL: baseUrl,
           tokensRepository: context.read<TokensRepository>(),
           globalRepository: context.read<GlobalRepository>(),
           loginBloc: context.read<LoginBloc>());
-
 
       context.read<NetworkService>().init(context.read<DioWrapper>());
       context
@@ -75,12 +69,15 @@ void main() async {
       child: DependenciesProvider(
         child: TopLevelBlocs(
           child: MaterialApp(
-            builder: (context, child) {
-              return ScrollConfiguration(
-                behavior: DisableGlowScrollBehavior(),
-                child: child!,
-              );
-            },
+            builder: BotToastInit(),
+
+            // builder: (context, child) {
+            //   return ScrollConfiguration(
+            //     behavior: DisableGlowScrollBehavior(),
+            //     child: child!,
+            //   );
+            //
+            // },
             title: 'Europharm',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const [

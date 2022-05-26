@@ -5,8 +5,8 @@ class DTOLoginResponse {
       this.user,});
 
   DTOLoginResponse.fromJson(dynamic json) {
-    accessToken = json['access_token'];
-    tokenType = json['token_type'];
+    accessToken = json['access_token'] as String;
+    tokenType = json['token_type'] as String;
     user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
   String? accessToken;
@@ -43,20 +43,20 @@ class User {
       this.createdAt,});
 
   User.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    login = json['login'];
-    phone = json['phone'];
+    id = json['id'] as int;
+    name = json['name'] as String;
+    login = json['login'] as String;
+    phone = json['phone'] as String;
     birthday = json['birthday'];
     startJob = json['start_job'];
     scheduleWork = json['schedule_work'];
     iin = json['iin'];
-    avatar = json['avatar'];
+    avatar = json['avatar'] as String;
     status = json['status'];
     position = json['position'];
     groupWarehouse = json['group_warehouse'];
-    administrator = json['administrator'];
-    createdAt = json['created_at'];
+    administrator = json['administrator'] as int;
+    createdAt = json['created_at'] as String;
   }
   int? id;
   String? name;

@@ -8,32 +8,47 @@ part 'events.dart';
 
 part 'states.dart';
 
+part 'parts/_read.dart';
+
+part 'parts/_scan.dart';
+
 class BlocGoodsList extends Bloc<EventBlocGoodsList, StateBlocGoodsList> {
   BlocGoodsList() : super(StateGoodsListLoading()) {
-    on<EventInitialGoodsList>((event, emit) {
-      List<GoodDetails> goods = [];
-      for (int i = 0; i < 15; i++) {
-        goods.add(
-          GoodDetails(
-              image:
-                  "assets/images/png/goos_sample_${Random().nextBool() ? "1" : "2"}.png",
-              title:
-                  "${Random().nextBool() ? "Акнекутан капс. 16мг №30" : "Оптинол Глубокое увлажнение 0,4% 10мл"}",
-              company: "Jadran",
-              count: Random().nextInt(250),
-              number: "${Random().nextBool() ? "292U10" : "110115"}"),
-        );
-      }
-      emit(StateGoodsListLoadData(goodsResponse: GoodsResponse(goods: goods)));
-    });
+    on<EventInitialGoodsList>(_read);
+    on<EventScanItem>(_scan);
   }
+
+  List<GoodDetails> goods = [];
+  List<GoodDetails> scannedGoods = [];
 }
 
 class GoodsResponse {
-  int price;
-  List<GoodDetails> goods;
+  int get totalPrice {
+    int total = 0;
+    for (var element in goods) {
+      total += element.price;
+    }
+    for (var element in scannedGoods) {
+      total += element.price;
+    }
+    return total;
+  }
 
-  GoodsResponse({required this.goods, this.price = 255000});
+  int get totalScannedPrice {
+    int total = 0;
+    for (var element in scannedGoods) {
+      total += element.price;
+    }
+    return total;
+  }
+
+  List<GoodDetails> goods;
+  List<GoodDetails> scannedGoods;
+
+  GoodsResponse({
+    required this.goods,
+    required this.scannedGoods,
+  });
 }
 
 class GoodDetails {
@@ -42,7 +57,7 @@ class GoodDetails {
   final String company;
   final int count;
   final String number;
-  int price;
+  final int price;
 
   GoodDetails({
     required this.image,
@@ -50,6 +65,6 @@ class GoodDetails {
     required this.company,
     required this.count,
     required this.number,
-    this.price = 5000,
+    required this.price,
   });
 }
