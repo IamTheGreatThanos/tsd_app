@@ -64,7 +64,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    var isErasing = newValue.text.length < oldValue.text.length;
+    final isErasing = newValue.text.length < oldValue.text.length;
     _lastValue = newValue.text;
 
     var onlyNumbers = toNumericString(newValue.text);
@@ -133,7 +133,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
     if (numericString.isEmpty) {
       _updateCountryData(null);
     } else {
-      var countryData = _PhoneCodes.getCountryDataByPhone(numericString);
+      final countryData = _PhoneCodes.getCountryDataByPhone(numericString);
       if (countryData != null) {
         _updateCountryData(countryData);
       }
@@ -167,7 +167,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
   }) {
     assert(alternativeMasks.isNotEmpty);
     final countryData = _findCountryDataByCountryCode(countryCode);
-    String currentMask = countryData['phoneMask'] as String;
+    final String currentMask = countryData['phoneMask'] as String;
     alternativeMasks.sort((a, b) => a.length.compareTo(b.length));
     if (alternativeMasks.first.length < currentMask.length) {
       countryData['phoneMask'] = alternativeMasks.first;
@@ -186,7 +186,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
     // ignore: prefer_adjacent_string_concatenation
     // ignore: avoid_print
     print('Alternative masks for country "${countryData['country']}"'
-        ' is now ${countryData['altMasks']}');
+        ' is now ${countryData['altMasks']}',);
   }
 
   /// Replaces an existing phone mask for the given country
@@ -203,7 +203,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
   }) {
     checkMask(newMask);
     final countryData = _findCountryDataByCountryCode(countryCode);
-    var currentMask = countryData['phoneMask'];
+    final currentMask = countryData['phoneMask'];
     if (currentMask != newMask) {
       // ignore: avoid_print
       print(
@@ -220,7 +220,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
   ) {
     assert(countryCode.length == 2);
     countryCode = countryCode.toUpperCase();
-    var countryData = _PhoneCodes._data.firstWhere(
+    final countryData = _PhoneCodes._data.firstWhere(
       ((m) => m!['countryCode'] == countryCode),
       orElse: () => null,
     );
@@ -242,28 +242,28 @@ bool isPhoneValid(
   if (phone.isEmpty) {
     return false;
   }
-  var countryData = _PhoneCodes.getCountryDataByPhone(
+  final countryData = _PhoneCodes.getCountryDataByPhone(
     phone,
   );
   if (countryData == null) {
     return false;
   }
-  var formatted = _formatByMask(
+  final formatted = _formatByMask(
     phone,
     countryData.phoneMask!,
     countryData.altMasks,
     0,
     allowEndlessPhone,
   );
-  var rpeprocessed = toNumericString(
+  final rpeprocessed = toNumericString(
     formatted,
     allowHyphen: false,
   );
   if (allowEndlessPhone) {
-    var contains = phone.contains(rpeprocessed);
+    final contains = phone.contains(rpeprocessed);
     return contains;
   }
-  var correctLength = formatted.length == countryData.phoneMask!.length;
+  final correctLength = formatted.length == countryData.phoneMask!.length;
   if (correctLength != true && countryData.altMasks != null) {
     return countryData.altMasks!.any(
       (altMask) => formatted.length == altMask.length,
@@ -293,7 +293,7 @@ String? formatAsPhoneNumber(
     }
   }
   phone = toNumericString(phone);
-  var countryData = _PhoneCodes.getCountryDataByPhone(phone)!;
+  final countryData = _PhoneCodes.getCountryDataByPhone(phone)!;
   return _formatByMask(
     phone,
     countryData.phoneMask!,
@@ -312,15 +312,15 @@ String _formatByMask(
 ]) {
   text = toNumericString(text, allowHyphen: false);
   // print("TEXT $text, MASK $mask");
-  var result = <String>[];
+  final result = <String>[];
   var indexInText = 0;
   for (var i = 0; i < mask.length; i++) {
     if (indexInText >= text.length) {
       break;
     }
-    var curMaskChar = mask[i];
+    final curMaskChar = mask[i];
     if (curMaskChar == '0') {
-      var curChar = text[indexInText];
+      final curChar = text[indexInText];
       if (isDigit(curChar)) {
         result.add(curChar);
         indexInText++;
@@ -332,13 +332,13 @@ String _formatByMask(
     }
   }
 
-  var actualDigitsInMask = toNumericString(
+  final actualDigitsInMask = toNumericString(
     mask,
     allowHyphen: false,
   ).replaceAll(',', '');
   if (actualDigitsInMask.length < text.length) {
     if (altMasks != null && altMaskIndex < altMasks.length) {
-      var formatResult = _formatByMask(
+      final formatResult = _formatByMask(
         text,
         altMasks[altMaskIndex],
         altMasks,
@@ -374,7 +374,7 @@ List<PhoneCountryData> getCountryDatasByPhone(String phone) {
   if (phone.isEmpty || phone.length < 11) {
     return <PhoneCountryData>[];
   }
-  var phoneCode = phone.substring(0, phone.length - 10);
+  final phoneCode = phone.substring(0, phone.length - 10);
   return _PhoneCodes.getAllCountryDatasByPhoneCode(phoneCode);
 }
 
@@ -435,10 +435,10 @@ class _PhoneCodes {
     subscringLength = subscringLength ?? phone.length;
 
     if (subscringLength < 1) return null;
-    var phoneCode = phone.substring(0, subscringLength);
+    final phoneCode = phone.substring(0, subscringLength);
 
-    var rawData = _data.firstWhere((data) => toNumericString(data!['phoneCode'] as String) == phoneCode,
-        orElse: () => null);
+    final rawData = _data.firstWhere((data) => toNumericString(data!['phoneCode'] as String) == phoneCode,
+        orElse: () => null,);
     if (rawData != null) {
       return PhoneCountryData.fromMap(rawData);
     }
@@ -448,9 +448,9 @@ class _PhoneCodes {
   static List<PhoneCountryData> getAllCountryDatasByPhoneCode(
     String phoneCode,
   ) {
-    var list = <PhoneCountryData>[];
+    final list = <PhoneCountryData>[];
     for (var data in _data) {
-      var c = toNumericString(data!['phoneCode'] as String?);
+      final c = toNumericString(data!['phoneCode'] as String?);
       if (c == phoneCode) {
         list.add(PhoneCountryData.fromMap(data));
       }

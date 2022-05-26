@@ -167,61 +167,63 @@ class CalendarStyle {
     this.markersOffset = const PositionedOffset(),
     this.rangeHighlightColor = const Color(0xFFBBDDFF),
     this.markerDecoration = const BoxDecoration(
-      color: const Color(0xFF263238),
+      color: Color(0xFF263238),
       shape: BoxShape.circle,
     ),
     this.todayTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ), //
     this.todayDecoration = const BoxDecoration(
-      color: const Color(0xFF9FA8DA),
+      color: Color(0xFF9FA8DA),
       shape: BoxShape.circle,
     ),
     this.selectedTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
     this.selectedDecoration = const BoxDecoration(
-      color: const Color(0xFF5C6BC0),
+      color: Color(0xFF5C6BC0),
       shape: BoxShape.circle,
     ),
     this.rangeStartTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
     this.rangeStartDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
+      color: Color(0xFF6699FF),
       shape: BoxShape.circle,
     ),
     this.rangeEndTextStyle = const TextStyle(
-      color: const Color(0xFFFAFAFA),
+      color: Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
     this.rangeEndDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
+      color: Color(0xFF6699FF),
       shape: BoxShape.circle,
     ),
     this.withinRangeTextStyle = const TextStyle(),
     this.withinRangeDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.outsideTextStyle = const TextStyle(
-        fontWeight: FontWeight.w400,
-        fontSize: 18,
-        color: const Color(0xFFAEAEAE)),
+      fontWeight: FontWeight.w400,
+      fontSize: 18,
+      color: Color(0xFFAEAEAE),
+    ),
     this.outsideDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.disabledTextStyle = const TextStyle(
-        fontWeight: FontWeight.w400,
-        fontSize: 18,
-        color: const Color(0xFFBFBFBF)),
+      fontWeight: FontWeight.w400,
+      fontSize: 18,
+      color: Color(0xFFBFBFBF),
+    ),
     this.disabledDecoration = const BoxDecoration(shape: BoxShape.circle),
-    this.holidayTextStyle = const TextStyle(color: const Color(0xFF5C6BC0)),
+    this.holidayTextStyle = const TextStyle(color: Color(0xFF5C6BC0)),
     this.holidayDecoration = const BoxDecoration(
-      border: const Border.fromBorderSide(
-        const BorderSide(color: const Color(0xFF9FA8DA), width: 1.4),
+      border: Border.fromBorderSide(
+        BorderSide(color: Color(0xFF9FA8DA), width: 1.4),
       ),
       shape: BoxShape.circle,
     ),
-    this.weekendTextStyle = const TextStyle(color: const Color(0xFF5A5A5A)),
+    this.weekendTextStyle = const TextStyle(color: Color(0xFF5A5A5A)),
     this.weekendDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.defaultTextStyle = const TextStyle(),
     this.defaultDecoration = const BoxDecoration(shape: BoxShape.circle),
@@ -272,8 +274,8 @@ class DaysOfWeekStyle {
   const DaysOfWeekStyle({
     this.dowTextFormatter,
     this.decoration = const BoxDecoration(),
-    this.weekdayStyle = const TextStyle(color: const Color(0xFF4F4F4F)),
-    this.weekendStyle = const TextStyle(color: const Color(0xFF6A6A6A)),
+    this.weekdayStyle = const TextStyle(color: Color(0xFF4F4F4F)),
+    this.weekendStyle = const TextStyle(color: Color(0xFF6A6A6A)),
   });
 }
 
@@ -359,8 +361,8 @@ class HeaderStyle {
     this.titleTextStyle = const TextStyle(fontSize: 17.0),
     this.formatButtonTextStyle = const TextStyle(),
     this.formatButtonDecoration = const BoxDecoration(
-      border: const Border.fromBorderSide(BorderSide()),
-      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+      border: Border.fromBorderSide(BorderSide()),
+      borderRadius: BorderRadius.all(Radius.circular(12.0)),
     ),
     this.headerMargin = const EdgeInsets.all(0.0),
     this.headerPadding = const EdgeInsets.symmetric(vertical: 8.0),

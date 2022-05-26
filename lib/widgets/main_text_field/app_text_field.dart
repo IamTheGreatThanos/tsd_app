@@ -1,12 +1,11 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../styles/color_palette.dart';
-import '../../styles/text_styles.dart';
-import 'debouncer.dart';
-import 'vmodel/input_cubit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/debouncer.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/vmodel/input_cubit.dart';
 
 class AppTextField extends StatefulWidget {
   AppTextField({
@@ -170,7 +169,9 @@ class _AppTextFieldState extends State<AppTextField> {
               TextFormField(
                 autofocus: widget.autofocus ?? false,
                 textAlign: widget.textAlign ?? TextAlign.left,
-                textCapitalization: widget.capitalize ?  widget.textCapitalization : TextCapitalization.none,
+                textCapitalization: widget.capitalize
+                    ? widget.textCapitalization
+                    : TextCapitalization.none,
                 readOnly: widget.readonly,
                 controller: widget.controller,
                 obscureText: widget.obscureText,
@@ -245,9 +246,10 @@ class _AppTextFieldState extends State<AppTextField> {
                       OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                          color: (state is StateError && widget.showErrorMessages)
-                              ? ColorPalette.errorRed
-                              : Colors.transparent,
+                          color:
+                              (state is StateError && widget.showErrorMessages)
+                                  ? ColorPalette.errorRed
+                                  : Colors.transparent,
                         ),
                         gapPadding: 0.0,
                       ),
@@ -255,10 +257,11 @@ class _AppTextFieldState extends State<AppTextField> {
                       OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                          color: (state is StateError && widget.showErrorMessages)
-                              ? ColorPalette.errorRed
-                              : Colors.transparent,
-                          width: 1.0,
+                          color:
+                              (state is StateError && widget.showErrorMessages)
+                                  ? ColorPalette.errorRed
+                                  : Colors.transparent,
+                        
                         ),
                         gapPadding: 0.0,
                       ),
@@ -274,6 +277,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       widget.onChanged?.call(value);
                     });
                   }
+                  setState(() {});
                 },
                 onTap: () => widget.onTap?.call(widget.controller),
                 onEditingComplete: () {
@@ -298,35 +302,39 @@ class _AppTextFieldState extends State<AppTextField> {
                         )
                       : Padding(
                           padding: const EdgeInsets.only(top: 2.0),
-                          child:
-                              Column(mainAxisSize: MainAxisSize.min, children: [
-                            errorMessages.isEmpty
-                                ? const SizedBox(
-                                    width: 1.0,
-                                    height: 1.0,
-                                  )
-                                : Column(
-                                    children: errorMessages
-                                        .map<Widget>(
-                                          (error) => Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Flexible(
-                                                child: Text(
-                                                  error,
-                                                  style: ThemeTextStyle.textStyle16w400
-                                                      .copyWith(
-                                                          color: ColorPalette
-                                                              .errorRed),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (errorMessages.isEmpty)
+                                const SizedBox(
+                                  width: 1.0,
+                                  height: 1.0,
+                                )
+                              else
+                                Column(
+                                  children: errorMessages
+                                      .map<Widget>(
+                                        (error) => Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                error,
+                                                style: ThemeTextStyle
+                                                    .textStyle16w400
+                                                    .copyWith(
+                                                  color: ColorPalette.errorRed,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        )
-                                        .toList(),
-                                  ),
-                          ]),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                            ],
+                          ),
                         ),
                 ),
             ],

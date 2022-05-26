@@ -4,6 +4,7 @@ import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_data_screen.dart';
 import 'package:pharmacy_arrival/screens/stock_arrival/ui/stock_arrival_screen.dart';
+import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -99,7 +100,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           color: const Color(0xFFD73A49).withOpacity(0.52),
                           onTap: () => AppRouter.push(
                             context,
-                            const StockArrivalScreen(),
+                            const WarehouseArrivalScreen(),
                           ),
                           pad: true,
                         ),
@@ -200,18 +201,20 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           "Наши аптеки",
                           style: ThemeTextStyle.textStyle20w600,
                         ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          controller: controller,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Center(
-                              child: Text(
-                                "Аптека $index",
-                                style: ThemeTextStyle.textStyle16w400,
-                              ),
-                            );
-                          },
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            controller: controller,
+                            itemCount: 9,
+                            itemBuilder: (context, index) {
+                              return Center(
+                                child: Text(
+                                  "Аптека $index",
+                                  style: ThemeTextStyle.textStyle16w400,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

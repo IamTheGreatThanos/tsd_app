@@ -29,8 +29,10 @@ class PushNotificationsBloc
   StreamSubscription<RemoteMessage>? messageOpenedAppSub;
   StreamSubscription<String>? tokenRefreshSub;
 
-  PushNotificationsBloc(this._repository, this._hiveRepository,)
-      : super(PushNotificationsInitial()) {
+  PushNotificationsBloc(
+    this._repository,
+    this._hiveRepository,
+  ) : super(PushNotificationsInitial()) {
     on<NavigateToScreenPushNotifyEvent>(_onNavigateToScreenPushNotifyEvent);
     on<InitialPushNotifyEvent>(_onInitialPushNotifyEvent);
   }
@@ -45,13 +47,16 @@ class PushNotificationsBloc
   }
 
   void _subscribeChangeToken() {
-    tokenRefreshSub = _firebaseMessaging.onTokenRefresh.listen((event) async {
-      // await _repository.setFcmToken(event);
-    }, onError: (error) {
-      if (kDebugMode) {
-        print(error);
-      }
-    });
+    tokenRefreshSub = _firebaseMessaging.onTokenRefresh.listen(
+      (event) async {
+        // await _repository.setFcmToken(event);
+      },
+      onError: (error) {
+        if (kDebugMode) {
+          print(error);
+        }
+      },
+    );
   }
 
   @override
@@ -65,18 +70,24 @@ class PushNotificationsBloc
   }
 
   FutureOr<void> _onNavigateToScreenPushNotifyEvent(
-      NavigateToScreenPushNotifyEvent event,
-      Emitter<PushNotificationsState> emit) {
+    NavigateToScreenPushNotifyEvent event,
+    Emitter<PushNotificationsState> emit,
+  ) {
     // emit(NavigateToScreenState(event.notification));
   }
 
-  FutureOr<void> _onInitialPushNotifyEvent(InitialPushNotifyEvent event,
-      Emitter<PushNotificationsState> emit) async {
+  FutureOr<void> _onInitialPushNotifyEvent(
+    InitialPushNotifyEvent event,
+    Emitter<PushNotificationsState> emit,
+  ) async {
     final SharedPreferences _preferences =
         await SharedPreferences.getInstance();
     if (Platform.isIOS) {
       await _firebaseMessaging.requestPermission(
-          sound: true, alert: true, badge: true);
+        sound: true,
+        alert: true,
+        badge: true,
+      );
     }
     messageSub = FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       log('Push Notification received', name: _TAG);

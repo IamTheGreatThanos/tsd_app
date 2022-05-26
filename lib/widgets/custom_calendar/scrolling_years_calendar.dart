@@ -16,17 +16,26 @@ class ScrollingYearsCalendar extends StatefulWidget {
     this.monthNames,
     this.onMonthTap,
     this.monthTitleStyle,
-  })  : assert(!initialDate.isBefore(firstDate),
-            'initialDate must be on or after firstDate'),
-        assert(!initialDate.isAfter(lastDate),
-            'initialDate must be on or before lastDate'),
-        assert(!firstDate.isAfter(lastDate),
-            'lastDate must be on or after firstDate'),
-        assert(highlightedDates == null || highlightedDateColor != null,
-            'highlightedDateColor is required if highlightedDates is not null'),
+  })  : assert(
+          !initialDate.isBefore(firstDate),
+          'initialDate must be on or after firstDate',
+        ),
         assert(
-            monthNames == null || monthNames.length == DateTime.monthsPerYear,
-            'monthNames must contain all months of the year'),
+          !initialDate.isAfter(lastDate),
+          'initialDate must be on or before lastDate',
+        ),
+        assert(
+          !firstDate.isAfter(lastDate),
+          'lastDate must be on or after firstDate',
+        ),
+        assert(
+          highlightedDates == null || highlightedDateColor != null,
+          'highlightedDateColor is required if highlightedDates is not null',
+        ),
+        assert(
+          monthNames == null || monthNames.length == DateTime.monthsPerYear,
+          'monthNames must contain all months of the year',
+        ),
         super(key: key);
 
   final BuildContext context;

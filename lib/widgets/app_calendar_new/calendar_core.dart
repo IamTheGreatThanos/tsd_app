@@ -7,7 +7,7 @@ import 'calendar_page.dart';
 import 'utils.dart';
 
 typedef _OnCalendarPageChanged = void Function(
-    int pageIndex, DateTime focusedDay);
+    int pageIndex, DateTime focusedDay,);
 
 class CalendarCore extends StatelessWidget {
   final DateTime? focusedDay;
@@ -143,7 +143,7 @@ class CalendarCore extends StatelessWidget {
           ),
         );
       },
-    ).toList());
+    ).toList(),);
   }
 
   int _getPageCount(CalendarFormat format, DateTime first, DateTime last) {
@@ -175,7 +175,7 @@ class CalendarCore extends StatelessWidget {
   }
 
   DateTime _getFocusedDay(
-      CalendarFormat format, DateTime prevFocusedDay, int pageIndex) {
+      CalendarFormat format, DateTime prevFocusedDay, int pageIndex,) {
     if (pageIndex == previousIndex) {
       return prevFocusedDay;
     }
@@ -189,11 +189,11 @@ class CalendarCore extends StatelessWidget {
         break;
       case CalendarFormat.twoWeeks:
         day = DateTime.utc(prevFocusedDay.year, prevFocusedDay.month,
-            prevFocusedDay.day + pageDif * 14);
+            prevFocusedDay.day + pageDif * 14,);
         break;
       case CalendarFormat.week:
         day = DateTime.utc(prevFocusedDay.year, prevFocusedDay.month,
-            prevFocusedDay.day + pageDif * 7);
+            prevFocusedDay.day + pageDif * 7,);
         break;
     }
 
@@ -215,11 +215,11 @@ class CalendarCore extends StatelessWidget {
         break;
       case CalendarFormat.twoWeeks:
         day = DateTime.utc(
-            firstDay.year, firstDay.month, firstDay.day + pageIndex * 14);
+            firstDay.year, firstDay.month, firstDay.day + pageIndex * 14,);
         break;
       case CalendarFormat.week:
         day = DateTime.utc(
-            firstDay.year, firstDay.month, firstDay.day + pageIndex * 7);
+            firstDay.year, firstDay.month, firstDay.day + pageIndex * 7,);
         break;
     }
 

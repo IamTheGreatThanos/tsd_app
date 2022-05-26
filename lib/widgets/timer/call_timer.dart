@@ -40,12 +40,12 @@ class _CallTimerState extends State<CallTimer> {
         Container(
           decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.38),
-              borderRadius: BorderRadius.circular(10)),
+              borderRadius: BorderRadius.circular(10),),
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Text(
             "${showTime(duration.inHours..remainder(24))}:${showTime(duration.inMinutes.remainder(60))}:${showTime(duration.inSeconds.remainder(60))}",
             style: const TextStyle(
-                fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),
+                fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400,),
           ),
         )
       ],

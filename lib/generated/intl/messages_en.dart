@@ -62,11 +62,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "enter": MessageLookupByLibrary.simpleMessage("Вход"),
         "enter_phone_correctly": MessageLookupByLibrary.simpleMessage(
-            "Введите номер телефона корректно"),
+            "Введите номер телефона корректно",),
         "enter_phone_number":
             MessageLookupByLibrary.simpleMessage("Введите свой номер телефона"),
         "enter_sms_code": MessageLookupByLibrary.simpleMessage(
-            "Введите SMS код подтверждения"),
+            "Введите SMS код подтверждения",),
         "enter_to": MessageLookupByLibrary.simpleMessage("Войдите в "),
         "errorGeneral":
             MessageLookupByLibrary.simpleMessage("Что то пошло не так"),
@@ -83,18 +83,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "from_facial_side":
             MessageLookupByLibrary.simpleMessage("с лицевой стороны"),
         "get_access": MessageLookupByLibrary.simpleMessage(
-            "Получите доступ на исполнение заказов"),
+            "Получите доступ на исполнение заказов",),
         "government_number":
             MessageLookupByLibrary.simpleMessage("Государственный номер"),
         "help": MessageLookupByLibrary.simpleMessage("Помощь"),
         "how_to_change_password":
             MessageLookupByLibrary.simpleMessage("Как изменить пароль?"),
         "how_to_enter_payment_info": MessageLookupByLibrary.simpleMessage(
-            "Как ввести платежные данные?"),
+            "Как ввести платежные данные?",),
         "how_to_pass_verification":
             MessageLookupByLibrary.simpleMessage("Как пройти верификацию?"),
         "iDontHaveReferalCode": MessageLookupByLibrary.simpleMessage(
-            "У меня нет реферального кода"),
+            "У меня нет реферального кода",),
         "iin": MessageLookupByLibrary.simpleMessage("ИИН"),
         "inputErrorGeneral":
             MessageLookupByLibrary.simpleMessage("Проверьте ввод"),
@@ -105,15 +105,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Не менее 8 символов"),
         "load_data": MessageLookupByLibrary.simpleMessage("Загрузить"),
         "load_photo": MessageLookupByLibrary.simpleMessage(
-            "Загрузите фотографии транспорта"),
+            "Загрузите фотографии транспорта",),
         "log_out": MessageLookupByLibrary.simpleMessage("Выйти из аккаунта"),
         "make_photo": MessageLookupByLibrary.simpleMessage("Сделайте фото "),
         "make_rights_photo": MessageLookupByLibrary.simpleMessage(
-            "Сфотографируйте водительское удостоверение "),
+            "Сфотографируйте водительское удостоверение ",),
         "make_rights_with_face_photo": MessageLookupByLibrary.simpleMessage(
-            "Сделайте фото с правами в руках, что бы ваше лицо было видно в кадре"),
+            "Сделайте фото с правами в руках, что бы ваше лицо было видно в кадре",),
         "message_contained_notification": MessageLookupByLibrary.simpleMessage(
-            "Message also contained a notification"),
+            "Message also contained a notification",),
         "message_data": MessageLookupByLibrary.simpleMessage("Message data"),
         "new_password": MessageLookupByLibrary.simpleMessage("Новый пароль"),
         "next": MessageLookupByLibrary.simpleMessage("Далее"),
@@ -130,21 +130,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "photo": MessageLookupByLibrary.simpleMessage("Фото"),
         "photograph": MessageLookupByLibrary.simpleMessage("Сфотографировать"),
         "policy_title": MessageLookupByLibrary.simpleMessage(
-            "Используя это приложение вы соглашаетесь с "),
+            "Используя это приложение вы соглашаетесь с ",),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "problem_connecting_to_the_server":
             MessageLookupByLibrary.simpleMessage(
-                "Problem connecting to the server. Please try again"),
+                "Problem connecting to the server. Please try again",),
         "push_foreground": MessageLookupByLibrary.simpleMessage(
-            "Got a message whilst in the foreground!"),
+            "Got a message whilst in the foreground!",),
         "ratings": MessageLookupByLibrary.simpleMessage("Рейтинги"),
         "referalCode": MessageLookupByLibrary.simpleMessage("Реферальный код"),
         "referalCodeExample":
             MessageLookupByLibrary.simpleMessage("Например: AQN43653876"),
         "referal_code": MessageLookupByLibrary.simpleMessage("Реферальный код"),
         "referal_code_dialog": MessageLookupByLibrary.simpleMessage(
-            " - это личный код приглашения от вашего менеджера."),
+            " - это личный код приглашения от вашего менеджера.",),
         "registration": MessageLookupByLibrary.simpleMessage("Регистрация"),
         "registration_certificate":
             MessageLookupByLibrary.simpleMessage("Свидетельство о регистрации"),
@@ -154,10 +154,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "satti": MessageLookupByLibrary.simpleMessage("Satti"),
         "schedule": MessageLookupByLibrary.simpleMessage("Расписание"),
         "server_is_not_reachable": MessageLookupByLibrary.simpleMessage(
-            "Server is not reachable. Please verify your internet connection and try again"),
+            "Server is not reachable. Please verify your internet connection and try again",),
         "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
         "side_of_rights": MessageLookupByLibrary.simpleMessage(
-            "стороны водительского удостоверения"),
+            "стороны водительского удостоверения",),
         "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
         "steps_count": m2,
         "terms_of_use": MessageLookupByLibrary.simpleMessage("Terms of Use"),
@@ -166,9 +166,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "user": MessageLookupByLibrary.simpleMessage("Профиль"),
         "verification": MessageLookupByLibrary.simpleMessage("Верификация"),
         "wait_for_account_confirmation": MessageLookupByLibrary.simpleMessage(
-            "Ожидайте подтверждения\nаккаунта в течении 24 часов!"),
+            "Ожидайте подтверждения\nаккаунта в течении 24 часов!",),
         "with_your_help_were_doing_logistics_better":
             MessageLookupByLibrary.simpleMessage(
-                "С вашей помощью мы\nделаем логистику лучше.")
+                "С вашей помощью мы\nделаем логистику лучше.",)
       };
 }

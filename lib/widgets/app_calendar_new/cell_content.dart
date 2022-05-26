@@ -4,8 +4,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-import 'calendar_builders.dart';
-import 'styles.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/calendar_builders.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/styles.dart';
 
 class CellContent extends StatelessWidget {
   final DateTime day;

@@ -36,7 +36,7 @@ class MonthView extends StatelessWidget {
       color = currentDateColor;
     } else if (highlightedDates != null &&
         isHighlightedDate(date, highlightedDates!)) {
-      color = highlightedDateColor!;
+      color = highlightedDateColor;
     }
     return color;
   }

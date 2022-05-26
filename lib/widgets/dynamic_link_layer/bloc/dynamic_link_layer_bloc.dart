@@ -15,14 +15,14 @@ class DynamicLinkLayerBloc
   final HiveRepository _hiveRepository;
 
   DynamicLinkLayerBloc(
-      this._hiveRepository, this.isAuthorized)
+      this._hiveRepository, this.isAuthorized,)
       : super(DynamicLinkLayerInitial()) {
     on<InitialDynamicLinkLayerEvent>(
-        (event, emit) => _buildInitialEvent(event, emit));
+        (event, emit) => _buildInitialEvent(event, emit),);
   }
 
   _buildInitialEvent(InitialDynamicLinkLayerEvent event,
-      Emitter<DynamicLinkLayerState> emit) async {
+      Emitter<DynamicLinkLayerState> emit,) async {
     if (isAuthorized) {
       emit(AuthorizedState());
     } else {

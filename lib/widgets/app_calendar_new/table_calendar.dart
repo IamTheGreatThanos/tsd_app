@@ -5,23 +5,21 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/calendar_builders.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/cell_content.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/styles.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/table_calendar_base.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
-
-import 'calendar_builders.dart';
-import 'calendar_header.dart';
-import 'styles.dart';
-import 'cell_content.dart';
-import 'table_calendar_base.dart';
-import 'utils.dart';
 
 /// Signature for `onDaySelected` callback. Contains the selected day and focused day.
 typedef OnDaySelected = void Function(
-    DateTime selectedDay, DateTime focusedDay);
+    DateTime selectedDay, DateTime focusedDay,);
 
 /// Signature for `onRangeSelected` callback.
 /// Contains start and end of the selected range, as well as currently focused day.
 typedef OnRangeSelected = void Function(
-    DateTime? start, DateTime? end, DateTime focusedDay);
+    DateTime? start, DateTime? end, DateTime focusedDay,);
 
 /// Modes that range selection can operate in.
 enum RangeSelectionMode { disabled, toggledOff, toggledOn, enforced }
@@ -258,8 +256,8 @@ class TableCalendar<T> extends StatefulWidget {
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays.isNotEmpty
             ? weekendDays.every(
-                (day) => day >= DateTime.monday && day <= DateTime.sunday)
-            : true),
+                (day) => day >= DateTime.monday && day <= DateTime.sunday,)
+            : true,),
         focusedDay = normalizeDate(focusedDay),
         firstDay = normalizeDate(firstDay),
         lastDay = normalizeDate(lastDay),

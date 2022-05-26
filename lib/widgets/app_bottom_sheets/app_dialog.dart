@@ -67,13 +67,17 @@ Future<T?> showAppDialog<T>(
                 if (showCancel)
                   Padding(
                     padding: const EdgeInsets.only(
-                        bottom: 20.0, left: 16, right: 16),
+                      bottom: 20.0,
+                      left: 16,
+                      right: 16,
+                    ),
                     child: MainButton(
-                        title: S.of(context).okay,
-                        onTap: () {
-                          Navigator.of(context).pop(true);
-                          onTap?.call();
-                        }),
+                      title: S.of(context).okay,
+                      onTap: () {
+                        Navigator.of(context).pop(true);
+                        onTap?.call();
+                      },
+                    ),
                   ),
                 if (!showCancel && actions != null) actions(context),
               ],

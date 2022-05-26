@@ -8,7 +8,7 @@ bool isCurrentDate(DateTime date) {
 bool isHighlightedDate(DateTime date, List<DateTime> highlightedDates) {
   return highlightedDates.any((DateTime highlightedDate) =>
       date.isAtSameMomentAs(DateTime(
-          highlightedDate.year, highlightedDate.month, highlightedDate.day)));
+          highlightedDate.year, highlightedDate.month, highlightedDate.day,),),);
 }
 
 /// Gets the number of days for the given month,

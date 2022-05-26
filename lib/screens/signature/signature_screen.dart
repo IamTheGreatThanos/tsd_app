@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:signature/signature.dart';
@@ -76,7 +77,8 @@ class _SignatureScreenState extends State<SignatureScreen> {
                   ),
                   _BuildButton(
                       onTap: () {
-                        AppRouter.push(context, const ReturnDataScreen());
+                        
+                        AppRouter.push(context,  GoodsListScreen());
                       },
                       title: "Отправить",
                       icon: "done_signature",

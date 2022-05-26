@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +14,19 @@ import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 
 import '../../../widgets/custom_app_bar.dart';
 
-class GoodsListScreen extends StatelessWidget {
+class GoodsListScreen extends StatefulWidget {
+  @override
+  State<GoodsListScreen> createState() => _GoodsListScreenState();
+}
+
+class _GoodsListScreenState extends State<GoodsListScreen> {
+  @override
+  void initState() {
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

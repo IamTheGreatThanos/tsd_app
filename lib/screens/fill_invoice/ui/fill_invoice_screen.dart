@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_arrival/network/models/dto_models/response/dto_order_details_response.dart';
+import 'package:intl/intl.dart';
+import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/digital_signature_load/digital_signature_load_screen.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
+import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:provider/provider.dart';
 
-import '../../../styles/text_styles.dart';
-
-class FillInvoiceScreen extends StatelessWidget {
-  final DTOOrderDetails orderData;
-
-  const FillInvoiceScreen({Key? key, required this.orderData})
-      : super(key: key);
+class FillInvoiceScreen extends StatefulWidget {
+  final bool isFromPharmacyPage;
+  final PharmacyOrderDTO? pharmacyOrder;
+  final WarehouseOrderDTO? warehouseOrder;
+  const FillInvoiceScreen({
+    Key? key,
+    this.warehouseOrder,
+    this.pharmacyOrder,
+    required this.isFromPharmacyPage,
+  }) : super(key: key);
 
   @override
+  State<FillInvoiceScreen> createState() => _FillInvoiceScreenState();
+}
+
+class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
+  TextEditingController numberController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
     return Scaffold(
       appBar: CustomAppBar(
-        title: orderData.orderName!.toUpperCase(),
+        title: widget.isFromPharmacyPage
+            ? '№.${widget.pharmacyOrder?.id} ${widget.pharmacyOrder?.number}'
+            : '№.${widget.warehouseOrder?.id} ${widget.warehouseOrder?.number}',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 16.5),
@@ -55,9 +71,7 @@ class FillInvoiceScreen extends StatelessWidget {
                       const SizedBox(
                         width: 16,
                       ),
-                      Flexible(
-                          child:
-                              context.watch<FillInvoiceVModel>().incomeNumber)
+                      Flexible(child: _vmodel.incomeNumber!)
                     ],
                   ),
                   const Padding(
@@ -79,64 +93,63 @@ class FillInvoiceScreen extends StatelessWidget {
                         width: 16,
                       ),
                       Flexible(
-                          child: AppTextField(
-                        contentPadding: EdgeInsets.zero,
-                        capitalize: false,
-                        controller: context
-                            .watch<FillInvoiceVModel>()
-                            .incomeNumberDateController,
-                        readonly: true,
-                        textAlign: TextAlign.right,
-                        showErrorMessages: false,
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: GestureDetector(
+                        child: AppTextField(
+                          contentPadding: EdgeInsets.zero,
+                          capitalize: false,
+                          controller: _vmodel.incomeNumberDateController,
+                          readonly: true,
+                          textAlign: TextAlign.right,
+                          showErrorMessages: false,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: GestureDetector(
                               onTap: () async {
                                 final DateTime? date = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2019),
-                                    lastDate: DateTime.now(),
-                                    helpText: "Дата входящего номера",
-                                    builder: (context, child) {
-                                      return Theme(
-                                        data: Theme.of(context).copyWith(
-                                          colorScheme: const ColorScheme.light(
-                                            primary: ColorPalette.greyDark,
-                                            onPrimary: ColorPalette.white,
-                                            onSurface: Colors.black,
-                                          ),
-                                          textTheme: TextTheme(
-                                            headline5: ThemeTextStyle
-                                                .textTitleDella24w400,
-                                            overline:
-                                                ThemeTextStyle.textStyle16w600,
-                                          ),
-                                          textButtonTheme: TextButtonThemeData(
-                                            style: TextButton.styleFrom(
-                                              primary: Colors.black,
-                                              textStyle: ThemeTextStyle
-                                                  .textStyle14w600
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2019),
+                                  lastDate: DateTime.now(),
+                                  helpText: "Дата входящего номера",
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: const ColorScheme.light(
+                                          primary: ColorPalette.greyDark,
+                                        ),
+                                        textTheme: TextTheme(
+                                          headline5: ThemeTextStyle
+                                              .textTitleDella24w400,
+                                          overline:
+                                              ThemeTextStyle.textStyle16w600,
+                                        ),
+                                        textButtonTheme: TextButtonThemeData(
+                                          style: TextButton.styleFrom(
+                                            primary: Colors.black,
+                                            textStyle: ThemeTextStyle
+                                                .textStyle14w600
+                                                .copyWith(
+                                              color: Colors.black,
                                             ),
                                           ),
                                         ),
-                                        child: child!,
-                                      );
-                                    });
+                                      ),
+                                      child: child!,
+                                    );
+                                  },
+                                );
                                 if (date != null) {
-                                  context
-                                      .read<FillInvoiceVModel>()
-                                      .setIncomeNumberDate(date);
+                                  _vmodel.incomeNumberDateController?.text =
+                                      DateFormat("dd.MM.yyyy").format(date);
                                 }
                               },
                               child: SvgPicture.asset(
                                 "assets/images/svg/calendar_circle_ic.svg",
                                 width: 24,
-                              )),
+                              ),
+                            ),
+                          ),
                         ),
-                      ))
+                      )
                     ],
                   ),
                 ],
@@ -145,7 +158,7 @@ class FillInvoiceScreen extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            context.watch<FillInvoiceVModel>().bin,
+            _vmodel.bin,
             const SizedBox(
               height: 16,
             ),
@@ -164,7 +177,7 @@ class FillInvoiceScreen extends StatelessWidget {
                       color: ColorPalette.grey400,
                     ),
                   ),
-                  Flexible(child: context.watch<FillInvoiceVModel>().recipient)
+                  Flexible(child: _vmodel.recipient)
                 ],
               ),
             ),
@@ -190,83 +203,93 @@ class FillInvoiceScreen extends StatelessWidget {
                     width: 16,
                   ),
                   Flexible(
-                      child: AppTextField(
-                    contentPadding: EdgeInsets.zero,
-                    capitalize: false,
-                    controller: context.watch<FillInvoiceVModel>().invoiceDate,
-                    readonly: true,
-                    textAlign: TextAlign.right,
-                    showErrorMessages: false,
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: GestureDetector(
+                    child: AppTextField(
+                      contentPadding: EdgeInsets.zero,
+                      capitalize: false,
+                      controller: _vmodel.invoiceDate,
+                      readonly: true,
+                      textAlign: TextAlign.right,
+                      showErrorMessages: false,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: GestureDetector(
                           onTap: () async {
                             final DateTime? date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2019),
-                                lastDate: DateTime.now(),
-                                helpText: "Дата входящего номера",
-                                builder: (context, child) {
-                                  return Theme(
-                                    data: Theme.of(context).copyWith(
-                                      colorScheme: const ColorScheme.light(
-                                        primary: ColorPalette.greyDark,
-                                        onPrimary: ColorPalette.white,
-                                        onSurface: Colors.black,
-                                      ),
-                                      textTheme: TextTheme(
-                                        headline5:
-                                            ThemeTextStyle.textTitleDella24w400,
-                                        overline:
-                                            ThemeTextStyle.textStyle16w600,
-                                      ),
-                                      textButtonTheme: TextButtonThemeData(
-                                        style: TextButton.styleFrom(
-                                          primary: Colors.black,
-                                          textStyle: ThemeTextStyle
-                                              .textStyle14w600
-                                              .copyWith(color: Colors.black),
-                                        ),
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2019),
+                              lastDate: DateTime.now(),
+                              helpText: "Дата входящего номера",
+                              builder: (context, child) {
+                                return Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: const ColorScheme.light(
+                                      primary: ColorPalette.greyDark,
+                                    ),
+                                    textTheme: TextTheme(
+                                      headline5:
+                                          ThemeTextStyle.textTitleDella24w400,
+                                      overline: ThemeTextStyle.textStyle16w600,
+                                    ),
+                                    textButtonTheme: TextButtonThemeData(
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.black,
+                                        textStyle: ThemeTextStyle
+                                            .textStyle14w600
+                                            .copyWith(color: Colors.black),
                                       ),
                                     ),
-                                    child: child!,
-                                  );
-                                });
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
                             if (date != null) {
-                              context
-                                  .read<FillInvoiceVModel>()
-                                  .setInvoiceDate(date);
+                              _vmodel.invoiceDate.text =
+                                  DateFormat("dd.MM.yyyy").format(date);
                             }
                           },
                           child: SvgPicture.asset(
                             "assets/images/svg/calendar_circle_ic.svg",
                             width: 24,
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
-                  ))
+                  )
                 ],
               ),
             ),
             const Spacer(),
-            GestureDetector(
-              onTap: context.read<FillInvoiceVModel>().validated ? () {
-                AppRouter.push(context, DigitalSignatureLoadScreen());
-              } : null,
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: context.watch<FillInvoiceVModel>().validated
-                      ? ColorPalette.orange
-                      : ColorPalette.orangeInactive,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    "ДАЛЕЕ",
-                    style: ThemeTextStyle.textStyle14w600
-                        .copyWith(color: ColorPalette.white),
-                  ),
+            MaterialButton(
+              height: 40,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              color: ColorPalette.orange,
+              disabledColor: ColorPalette.orangeInactive,
+              padding: EdgeInsets.zero,
+              // onTap: _vmodel.incomeNumber.validated ? () {
+              //   AppRouter.push(context, DigitalSignatureLoadScreen());
+              // } : null,
+              ///todo
+
+              onPressed: () {
+                // if (_vmodel.incomeNumberController.text.length < 2) {
+                //   print(_vmodel.incomeNumberController.text.length);
+                //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
+                // } else {
+                  AppRouter.push(
+                    context,
+                    const DigitalSignatureLoadScreen(),
+                  );
+                // }
+              },
+              child: Center(
+                child: Text(
+                  "ДАЛЕЕ",
+                  style: ThemeTextStyle.textStyle14w600
+                      .copyWith(color: ColorPalette.white),
                 ),
               ),
             )

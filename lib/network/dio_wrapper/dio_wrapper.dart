@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
-import '../../main/login_bloc/login_bloc.dart';
-import '../models/dto_models/encodable.dart';
-import '../models/dto_models/response/dto_tokens_reaponse.dart';
-import '../repository/global_repository.dart';
-import '../tokens_repository/tokens_repository.dart';
+import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/network/models/dto_models/encodable.dart';
+import 'package:pharmacy_arrival/network/models/dto_models/response/dto_tokens_reaponse.dart';
+import 'package:pharmacy_arrival/network/repository/global_repository.dart';
+import 'package:pharmacy_arrival/network/tokens_repository/tokens_repository.dart';
 
 enum NetworkMethod { get, post, put, patch, delete }
 
@@ -25,12 +25,7 @@ class DioWrapper {
   }) async {
     _dio.options.baseUrl = baseURL;
 
-    ///TODO must be removed
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    };
+
 
     _dio.interceptors.requestLock.lock();
     _dio.interceptors.clear();
@@ -148,7 +143,7 @@ class DioWrapper {
     Map<String, dynamic>? queryParameters,
   }) async {
     var response = _dio.put(
-      "$path",
+      path,
       data: data,
       queryParameters: queryParameters,
     );
@@ -162,7 +157,7 @@ class DioWrapper {
     Map<String, dynamic>? queryParameters,
   }) async {
     var response = _dio.delete(
-      "$path",
+      path,
       data: data,
       queryParameters: queryParameters,
     );
@@ -177,7 +172,7 @@ class DioWrapper {
     Options? options,
   }) async {
     var response = _dio.post(
-      "$path",
+      path,
       data: data,
       queryParameters: queryParameters,
       options: options,
@@ -192,7 +187,7 @@ class DioWrapper {
     Map<String, dynamic>? queryParameters,
   }) async {
     var response = _dio.patch(
-      "$path",
+      path,
       data: data,
       queryParameters: queryParameters,
     );
@@ -205,7 +200,7 @@ class DioWrapper {
     Map<String, dynamic>? queryParameters,
   }) async {
     var response = _dio.post(
-      "$path",
+      path,
       data: data,
       queryParameters: queryParameters,
     );
@@ -221,7 +216,8 @@ class DioWrapper {
     /// disables encoding of URI if false in accordance with header 'application/x-www-form-urlencoded'
   }) async {
     if (!isUrlEncoded && queryParameters != null) {
-      path = path + '?' + _transformQueryParametersToString(queryParameters);
+      // ignore: parameter_assignments
+      path = '$path?${_transformQueryParametersToString(queryParameters)}';
     }
     var response =
         _dio.get(path, queryParameters: isUrlEncoded ? queryParameters : null);
