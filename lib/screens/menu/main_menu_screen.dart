@@ -122,7 +122,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                             // onTap: () =>
                             //     AppRouter.push(context, MoveDataScreen()),
                             onTap: () =>
-                                AppRouter.push(context, GoodsListScreen()),
+                                AppRouter.push(context, MoveDataScreen()),
                             pad: true,
                           ),
                           _BuildMenuOption(

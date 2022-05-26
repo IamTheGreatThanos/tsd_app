@@ -7,7 +7,9 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:signature/signature.dart';
 
+import '../../utils/app_router.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../return_data/ui/return_data_screen.dart';
 
 class SignatureScreen extends StatefulWidget {
   const SignatureScreen({Key? key}) : super(key: key);
@@ -60,13 +62,25 @@ class _SignatureScreenState extends State<SignatureScreen> {
               right: 16,
               child: Row(
                 children: [
-                  _BuildButton(onTap: (){
-                    setState(() {
-                      _controller.clear();
-                    });
-                  }, title: "Очистить", icon: "clear_signature", color: ColorPalette.white),
-                  const SizedBox(width: 8,),
-                  _BuildButton(onTap: (){}, title: "Отправить", icon: "done_signature", color: ColorPalette.orange),
+                  _BuildButton(
+                      onTap: () {
+                        setState(() {
+                          _controller.clear();
+                        });
+                      },
+                      title: "Очистить",
+                      icon: "clear_signature",
+                      color: ColorPalette.white),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  _BuildButton(
+                      onTap: () {
+                        AppRouter.push(context, const ReturnDataScreen());
+                      },
+                      title: "Отправить",
+                      icon: "done_signature",
+                      color: ColorPalette.orange),
                 ],
               ))
         ],
