@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:pharmacy_arrival/screens/barcode_scanner/barcode_scanner_screen.dart';
-import 'package:pharmacy_arrival/screens/goods_list/bloc/bloc_goods_list.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/data/model/product_dto.dart';
+import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
-
-import '../../../widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class GoodsListScreen extends StatefulWidget {
   @override
@@ -22,40 +17,51 @@ class GoodsListScreen extends StatefulWidget {
 class _GoodsListScreenState extends State<GoodsListScreen> {
   @override
   void initState() {
-     SystemChrome.setPreferredOrientations([
+    BlocProvider.of<GoodsListScreenCubit>(context).getProducts(1);
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BlocGoodsList()..add(EventInitialGoodsList()),
-      child: AppLoaderOverlay(
-        child: Scaffold(
-          backgroundColor: ColorPalette.main,
-          appBar: CustomAppBar(
-            title: "Список товаров".toUpperCase(),
-            showLogo: false,
-          ),
-          body: SingleChildScrollView(
-            child: BlocConsumer<BlocGoodsList, StateBlocGoodsList>(
-              builder: (context, state) {
-                if (state is StateGoodsListLoadData) {
-                  return _BuildBody(goodsResponse: state.goods);
-                }
-                return const SizedBox.shrink();
+    return AppLoaderOverlay(
+      child: Scaffold(
+        backgroundColor: ColorPalette.main,
+        appBar: CustomAppBar(
+          title: "Список товаров".toUpperCase(),
+          showLogo: false,
+        ),
+        body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              loadedState: (scannedProducts,unscannedProducts) {
+                return SingleChildScrollView(
+                    child: _BuildBody(
+                  unscannedProducts: unscannedProducts,
+                  scannedProducts: scannedProducts,
+                ));
               },
-              listener: (context, state) {
-                if (state is StateGoodsListLoading) {
-                  context.loaderOverlay.show();
-                } else {
-                  context.loaderOverlay.hide();
-                }
+              orElse: () {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
+                  ),
+                );
               },
-              buildWhen: (p, c) => c is StateGoodsListLoadData,
-            ),
-          ),
+            );
+          },
+          listener: (context, state) {
+            state.when(
+              initialState: () {},
+              loadingState: () {},
+              loadedState: (unscannedProducts, scannedProducts) {},
+              errorState: (String message) {
+                buildErrorCustomSnackBar(context, message);
+              },
+            );
+          },
         ),
       ),
     );
@@ -63,9 +69,14 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
-  final GoodsResponse goodsResponse;
+  final List<ProductDTO> unscannedProducts;
+  final List<ProductDTO> scannedProducts;
 
-  const _BuildBody({Key? key, required this.goodsResponse}) : super(key: key);
+  const _BuildBody({
+    Key? key,
+    required this.scannedProducts,
+    required this.unscannedProducts,
+  }) : super(key: key);
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();
@@ -73,11 +84,8 @@ class _BuildBody extends StatefulWidget {
 
 class _BuildBodyState extends State<_BuildBody> {
   int currentIndex = 0;
-  late GoodsResponse goods;
-
   @override
   void initState() {
-    goods = widget.goodsResponse;
     super.initState();
   }
 
@@ -122,10 +130,11 @@ class _BuildBodyState extends State<_BuildBody> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         decoration: BoxDecoration(
-                            color: ColorPalette.borderGrey,
-                            borderRadius: BorderRadius.circular(100)),
+                          color: ColorPalette.borderGrey,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
                         child: Text(
-                          "${goods.goods.length}",
+                          "${widget.unscannedProducts.length}",
                           style: ThemeTextStyle.textStyle12w600.copyWith(
                             color: ColorPalette.black,
                           ),
@@ -169,10 +178,11 @@ class _BuildBodyState extends State<_BuildBody> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         decoration: BoxDecoration(
-                            color: ColorPalette.borderGrey,
-                            borderRadius: BorderRadius.circular(100)),
+                          color: ColorPalette.borderGrey,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
                         child: Text(
-                          "${goods.scannedGoods.length}",
+                          "${widget.scannedProducts.length}",
                           style: ThemeTextStyle.textStyle12w600.copyWith(
                             color: ColorPalette.black,
                           ),
@@ -187,29 +197,33 @@ class _BuildBodyState extends State<_BuildBody> {
         ),
         if (currentIndex == 0)
           ListView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: goods.goods.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                    onTap: () {
-                      AppRouter.push(
-                          context,
-                          BlocProvider.value(
-                              value: context.read<BlocGoodsList>(),
-                              child: const BarcodeScannerScreen()));
-                      // await FlutterBarcodeScanner.scanBarcode(
-                      //     "F87615", "Cancel", false, ScanMode.BARCODE);
-                      // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
-                    },
-                    child: _BuildGoodDetails(good: goods.goods[index]));
-              }),
+            shrinkWrap: true,
+            padding: const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.unscannedProducts.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  // AppRouter.push(
+                  //   context,
+                  //   BlocProvider.value(
+                  //     value: context.read<BlocGoodsList>(),
+                  //     child: const BarcodeScannerScreen(),
+                  //   ),
+                  // );
+                  // await FlutterBarcodeScanner.scanBarcode(
+                  //     "F87615", "Cancel", false, ScanMode.BARCODE);
+                  // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
+                },
+                child: _BuildGoodDetails(good: widget.unscannedProducts[index]),
+              );
+            },
+          ),
         if (currentIndex == 1)
-          goods.scannedGoods.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: const Center(
+          widget.scannedProducts.isEmpty
+              ? const Padding(
+                  padding: EdgeInsets.only(top: 40.0),
+                  child: Center(
                     child: Text("Отсканированных товаров нет"),
                   ),
                 )
@@ -218,66 +232,68 @@ class _BuildBodyState extends State<_BuildBody> {
                   padding:
                       const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: goods.scannedGoods.length,
+                  itemCount: widget.scannedProducts.length,
                   itemBuilder: (context, index) {
-                    return _BuildGoodDetails(good: goods.scannedGoods[index]);
-                  }),
+                    return _BuildGoodDetails(
+                        good: widget.scannedProducts[index]);
+                  },
+                ),
         const SizedBox(
           height: 90,
         ),
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Заказ",
-                    style: ThemeTextStyle.textStyle14w600
-                        .copyWith(color: ColorPalette.grayText),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
-                        .format(
-                      goods.totalPrice,
-                    ),
-                    style: ThemeTextStyle.textStyle24w400,
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 21.0),
-                child: VerticalDivider(
-                  color: ColorPalette.dashGrey,
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Поступление",
-                    style: ThemeTextStyle.textStyle14w600
-                        .copyWith(color: ColorPalette.grayText),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
-                        .format(
-                      goods.totalScannedPrice,
-                    ),
-                    style: ThemeTextStyle.textStyle24w400,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        // IntrinsicHeight(
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: [
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         children: [
+        //           Text(
+        //             "Заказ",
+        //             style: ThemeTextStyle.textStyle14w600
+        //                 .copyWith(color: ColorPalette.grayText),
+        //           ),
+        //           const SizedBox(
+        //             height: 8,
+        //           ),
+        //           Text(
+        //             NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
+        //                 .format(
+        //               widget.totalPrice,
+        //             ),
+        //             style: ThemeTextStyle.textStyle24w400,
+        //           ),
+        //         ],
+        //       ),
+        //       const Padding(
+        //         padding: EdgeInsets.only(top: 21.0),
+        //         child: VerticalDivider(
+        //           color: ColorPalette.dashGrey,
+        //         ),
+        //       ),
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         children: [
+        //           Text(
+        //             "Поступление",
+        //             style: ThemeTextStyle.textStyle14w600
+        //                 .copyWith(color: ColorPalette.grayText),
+        //           ),
+        //           const SizedBox(
+        //             height: 8,
+        //           ),
+        //           Text(
+        //             NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
+        //                 .format(
+        //               goods.totalScannedPrice,
+        //             ),
+        //             style: ThemeTextStyle.textStyle24w400,
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
         const SizedBox(
           height: 90,
         ),
@@ -287,7 +303,7 @@ class _BuildBodyState extends State<_BuildBody> {
 }
 
 class _BuildGoodDetails extends StatelessWidget {
-  final GoodDetails good;
+  final ProductDTO good;
 
   const _BuildGoodDetails({Key? key, required this.good}) : super(key: key);
 
@@ -305,8 +321,8 @@ class _BuildGoodDetails extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.asset(
-                  good.image,
+                Image.network(
+                  good.image ?? 'null',
                   width: 104,
                   height: 104,
                 ),
@@ -317,15 +333,18 @@ class _BuildGoodDetails extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: ColorPalette.white,
-                        border: Border.all(
-                          color: ColorPalette.red,
-                        )),
-                    child: Text("${good.count} шт.",
-                        style: ThemeTextStyle.textStyle12w600.copyWith(
-                          color: ColorPalette.red,
-                        )),
+                      borderRadius: BorderRadius.circular(100),
+                      color: ColorPalette.white,
+                      border: Border.all(
+                        color: ColorPalette.red,
+                      ),
+                    ),
+                    child: Text(
+                      "${good.totalCount} шт.",
+                      style: ThemeTextStyle.textStyle12w600.copyWith(
+                        color: ColorPalette.red,
+                      ),
+                    ),
                   ),
                 )
               ],
@@ -342,12 +361,12 @@ class _BuildGoodDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${good.count}x",
+                        "${good.totalCount}x",
                         style: ThemeTextStyle.textStyle14w400
                             .copyWith(color: ColorPalette.black),
                       ),
                       Text(
-                        good.number,
+                        good.barcode ?? 'null',
                         style: ThemeTextStyle.textStyle14w600
                             .copyWith(color: ColorPalette.grayText),
                       ),
@@ -357,7 +376,7 @@ class _BuildGoodDetails extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    good.title,
+                    '${good.name}',
                     overflow: TextOverflow.fade,
                     style: ThemeTextStyle.textStyle20w600,
                   ),
@@ -365,7 +384,7 @@ class _BuildGoodDetails extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    good.company,
+                    "${good.producer}",
                     style: ThemeTextStyle.textStyle14w400.copyWith(
                       color: ColorPalette.grayText,
                     ),

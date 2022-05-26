@@ -5,6 +5,7 @@ import 'package:pharmacy_arrival/core/platform/network_info.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/auth_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/pharmacy_arrival_remote_ds.dart';
+import 'package:pharmacy_arrival/data/datasource/remote/products_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/warehouse_arrival_remote_ds.dart';
 import 'package:pharmacy_arrival/data/repositories/auth_repository_impl.dart';
 import 'package:pharmacy_arrival/data/repositories/pharmacy_repository_impl.dart';
@@ -14,9 +15,11 @@ import 'package:pharmacy_arrival/domain/repositories/pharmacy_repository.dart';
 import 'package:pharmacy_arrival/domain/repositories/warehouse_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
 import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
+import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +31,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => SignInCubit(sl()));
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl()));
+  sl.registerFactory(() => GoodsListScreenCubit(sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -48,6 +52,8 @@ Future<void> initLocator() async {
   ///Warehouse usecases
   sl.registerLazySingleton(() => GetWarehouseArrivalOrders(sl()));
   sl.registerLazySingleton(() => GetPharmacyArrivalOrders(sl()));
+  sl.registerLazySingleton(() => GetProductsPharmacyArrival(sl()));
+
   ///
   ///
   /// Repository
@@ -58,18 +64,19 @@ Future<void> initLocator() async {
       networkInfo: sl(),
     ),
   );
-    sl.registerLazySingleton<WarehouseRepository>(
+  sl.registerLazySingleton<WarehouseRepository>(
     () => WarehouseRepositoryImpl(
       authLocalDS: sl(),
       warehouseArrivalRemoteDS: sl(),
       networkInfo: sl(),
     ),
   );
-     sl.registerLazySingleton<PharmacyRepository>(
+  sl.registerLazySingleton<PharmacyRepository>(
     () => PharmacyRepositoryImpl(
       authLocalDS: sl(),
       arrivalRemoteDS: sl(),
       networkInfo: sl(),
+      productsRemoteDS: sl(),
     ),
   );
 
@@ -79,11 +86,14 @@ Future<void> initLocator() async {
   sl.registerLazySingleton<AuthRemoteDS>(
     () => AuthRemoteDSImpl(sl()),
   );
-    sl.registerLazySingleton<WarehouseArrivalRemoteDS>(
+  sl.registerLazySingleton<WarehouseArrivalRemoteDS>(
     () => WarehouseArrivalRemoteDSImpl(sl()),
   );
-    sl.registerLazySingleton<PharmacyArrivalRemoteDS>(
+  sl.registerLazySingleton<PharmacyArrivalRemoteDS>(
     () => PharmacyArrivalRemoteDSImpl(sl()),
+  );
+  sl.registerLazySingleton<ProductsRemoteDS>(
+    () => ProductsRemoteDSImpl(sl()),
   );
 
   ///

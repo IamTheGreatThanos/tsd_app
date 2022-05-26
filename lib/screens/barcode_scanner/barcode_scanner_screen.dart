@@ -48,17 +48,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
           textStyle: ThemeTextStyle.textStyle16w600,
           showLogo: false,
         ),
-        body: BlocConsumer<BlocGoodsList, StateBlocGoodsList>(
-          listener: (context, state) {
-            if (state is StateGoodNotFound) {
-              toastServiceSuccess("Товар с кодом ${state.code} не найден");
-            }
-            if (state is StateGoodScanned) {
-              toastServiceSuccess("Товар с кодом ${state.code} отсканирован");
-            }
-          },
-          builder: (context, state) {
-            return Stack(
+        body:  Stack(
               children: [
                 MobileScanner(
                   allowDuplicates: false,
@@ -68,10 +58,10 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
                     } else {
                       final String code = barcode.rawValue!;
                       if (!codes.contains(code)) {
-                        codes.add(code);
-                        context
-                            .read<BlocGoodsList>()
-                            .add(EventScanItem(code: code));
+                        // codes.add(code);
+                        // context
+                        //     .read<BlocGoodsList>()
+                        //     .add(EventScanItem(code: code));
                       }
                     }
                   },
@@ -96,9 +86,9 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
                       ),
                     )),
               ],
-            );
-          },
-        ));
+            ),
+          
+        );
   }
 }
 

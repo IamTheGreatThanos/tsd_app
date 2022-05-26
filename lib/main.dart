@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -27,6 +29,7 @@ const String baseUrl = 'http://185.129.50.172/api/v1/';
 
 void main() async {
   ///Global managers initialization
+  HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await initLocator();
   Future<bool> _initialize(BuildContext context) async {
@@ -204,5 +207,13 @@ class _RestartWidgetState extends State<RestartWidget> {
       key: key,
       child: widget.child,
     );
+  }
+}
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
