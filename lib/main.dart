@@ -25,11 +25,6 @@ import 'widgets/dynamic_link_layer/dynamic_link_layer.dart';
 
 const String baseUrl = 'http://185.129.50.172/api/v1/';
 
-String get projectBaseUrl {
-  if (kDebugMode) return baseUrl;
-  return "http://185.129.50.172/api/v1/";
-}
-
 void main() async {
   ///Global managers initialization
   Future<bool> _initialize(BuildContext context) async {
@@ -50,7 +45,7 @@ void main() async {
           .init(context.read<HiveRepository>());
       // await context.read<FirebaseMessagingRepository>().init();
       await context.read<DioWrapper>().init(
-          baseURL: projectBaseUrl,
+          baseURL: baseUrl,
           tokensRepository: context.read<TokensRepository>(),
           globalRepository: context.read<GlobalRepository>(),
           loginBloc: context.read<LoginBloc>());

@@ -171,7 +171,7 @@ class _BuildOrderData extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 6),
               decoration: BoxDecoration(
-                color: ColorPalette.purple,
+                color: ColorPalette.orange,
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Center(

@@ -66,7 +66,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
                     });
                   }, title: "Очистить", icon: "clear_signature", color: ColorPalette.white),
                   const SizedBox(width: 8,),
-                  _BuildButton(onTap: (){}, title: "Отправить", icon: "done_signature", color: ColorPalette.purple),
+                  _BuildButton(onTap: (){}, title: "Отправить", icon: "done_signature", color: ColorPalette.orange),
                 ],
               ))
         ],

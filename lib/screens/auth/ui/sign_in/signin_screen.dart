@@ -99,7 +99,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         width: 8,
                       ),
                       MainButton(
-                        color: ColorPalette.purple,
+                        color: ColorPalette.orange,
                         width: 120,
                         onTap: () {
                           _vmodel.login.validated;

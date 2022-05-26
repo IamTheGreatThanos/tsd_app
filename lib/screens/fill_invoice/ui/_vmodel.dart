@@ -1,115 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../../styles/color_palette.dart';
 import '../../../styles/text_styles.dart';
 import '../../../widgets/main_text_field/app_text_field.dart';
 
 class FillInvoiceVModel extends ChangeNotifier {
-  AppTextField? _incomeNumber;
+  late AppTextField incomeNumber;
+  late AppTextField incomeNumberDate;
+  late AppTextField bin;
+  late AppTextField recipient;
+  late AppTextField authPassword;
+  late AppTextField certificatePassword;
+  late TextEditingController incomeNumberDateController;
+  late TextEditingController invoiceDate;
+  late String auth;
+  late String cert;
+  late bool isTwoPassword;
 
-  AppTextField get incomeNumber => _incomeNumber!;
-  AppTextField? _incomeNumberDate;
+  void setIncomeNumberDate(DateTime value) {
+    incomeNumberDateController.text = DateFormat("dd.MM.yyyy").format(value);
+    notifyListeners();
+  }
 
-  AppTextField get incomeNumberDate => _incomeNumberDate!;
-
-  AppTextField? _bin;
-
-  AppTextField get bin => _bin!;
-
-  AppTextField? _recipient;
-
-  AppTextField get recipient => _recipient!;
-
-  AppTextField? _authPassword;
-
-  AppTextField get authPassword => _authPassword!;
-
-  AppTextField? _certificatePassword;
-
-  AppTextField get certificatePassword => _certificatePassword!;
-
-  TextEditingController? _incomeNumberDateController;
-
-  TextEditingController get incomeNumberDateController =>
-      _incomeNumberDateController!;
-
-  TextEditingController? _invoiceDate;
-
-  TextEditingController get invoiceDate => _invoiceDate!;
-
-  String? _auth;
-
-  String get auth => _auth!;
-
-  String? _cert;
-
-  String get cert => _cert!;
-
-  bool? _isOnePassword;
-
-  bool get isOnePassword => _isOnePassword!;
+  void setInvoiceDate(DateTime value) {
+    invoiceDate.text = DateFormat("dd.MM.yyyy").format(value);
+    notifyListeners();
+  }
 
   void init() {
-    _incomeNumber = AppTextField(
+    incomeNumber = AppTextField(
       contentPadding: EdgeInsets.zero,
       capitalize: false,
       textAlign: TextAlign.right,
       showErrorMessages: false,
-      onChanged: (value) => notifyListeners(),
+      onChanged: onChanged,
     );
-    _incomeNumberDate = AppTextField(
+    incomeNumberDate = AppTextField(
       contentPadding: EdgeInsets.zero,
       capitalize: false,
       readonly: true,
       textAlign: TextAlign.right,
       showErrorMessages: false,
-      suffixIcon: SvgPicture.asset("assets/images/svg/calendar_circle_ic.svg"),
+      onChanged: onChanged,
+      suffixIcon: SvgPicture.asset("assets/images/svg/calendarcircleic.svg"),
     );
-    _bin = AppTextField(
+    bin = AppTextField(
       contentPadding: const EdgeInsets.all(12),
       hintText: "Контрагент поставщика(БИН)",
       hintStyle:
           ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grey400),
       keyboardType: TextInputType.number,
       showErrorMessages: false,
+      onChanged: onChanged,
     );
-    _recipient = AppTextField(
+    recipient = AppTextField(
       contentPadding: EdgeInsets.zero,
       capitalize: false,
       textAlign: TextAlign.right,
       showErrorMessages: false,
+      onChanged: onChanged,
     );
-    _authPassword = AppTextField(
+    authPassword = AppTextField(
       capitalize: false,
       showErrorMessages: false,
       hintText: "Пароль AUTH",
-      onChanged: (value) => notifyListeners(),
+      onChanged: onChanged,
     );
-    _certificatePassword = AppTextField(
+    certificatePassword = AppTextField(
       capitalize: false,
       showErrorMessages: false,
       hintText: "Пароль RSA/GOST",
-      onChanged: (value) => notifyListeners(),
+      onChanged: onChanged,
     );
-    _incomeNumberDateController = TextEditingController();
-    _invoiceDate = TextEditingController();
-    _auth = "";
-    _cert = "";
-    _isOnePassword = false;
+    incomeNumberDateController = TextEditingController();
+    invoiceDate = TextEditingController();
+    auth = "";
+    cert = "";
+    isTwoPassword = false;
+  }
+
+  void onChanged(String value) {
+    notifyListeners();
+  }
+
+  bool get validated =>
+      incomeNumber.controller.text.isNotEmpty &&
+      bin.controller.text.isNotEmpty &&
+      recipient.controller.text.isNotEmpty &&
+      incomeNumberDateController.text.isNotEmpty &&
+      invoiceDate.text.isNotEmpty;
+
+  bool digitalSignatureFillValidated() {
+    if (!isTwoPassword) {
+      return auth.isNotEmpty &&
+          cert.isNotEmpty &&
+          authPassword.controller.text.isNotEmpty;
+    } else {
+      return auth.isNotEmpty &&
+          cert.isNotEmpty &&
+          authPassword.controller.text.isNotEmpty &&
+          certificatePassword.controller.text.isNotEmpty;
+    }
   }
 
   void setCertName(String value, {bool isAuth = true}) {
     if (isAuth) {
-      _auth = value;
+      auth = value;
     } else {
-      _cert = value;
+      cert = value;
     }
     notifyListeners();
   }
 
   void changeSwitch(bool value) {
-    _isOnePassword = value;
+    isTwoPassword = value;
     notifyListeners();
   }
 }

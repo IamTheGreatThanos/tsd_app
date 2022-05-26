@@ -5,9 +5,9 @@ class ColorPalette {
 
   static const Color secondaryMain = Color(0xFF803FE5);
   static const Color main = Color(0xFFF6F8FA);
-  static const Color purple = Color(0xFF6F42C1);
+  static const Color orange = Color(0xFFF87615);
   static const Color purpleLight = Color(0xFFc08cf4);
-  static const Color purpleInactive = Color(0xFFD1BCF9);
+  static Color orangeInactive = const Color(0xFFF87615).withOpacity(0.4);
   static const Color commonBlue = Color(0xFFE0E9FA);
   static const Color grey400 = Color(0xFF959DA5);
   static const Color greyDark = Color(0xFF24292E);
@@ -18,7 +18,7 @@ class ColorPalette {
   static const Color pickColor = Color(0xFF83B1F4);
 
   static const Color white = Color(0xFFFFFFFF);
-  static const Color red = Color(0xFFE74C3C);
+  static const Color red = Color(0xFFFD4E36);
   static const Color background = Color(0xFFF6F8FA);
   static const Color backgroundLightGray = Color(0xFFF8F8F8);
   static const Color green = Color(0xFF1BB55C);
@@ -30,6 +30,8 @@ class ColorPalette {
   static const Color textYellow = Color(0xFFDBAB09);
   static const Color borderYellow = Color(0xFFFFEA7F);
   static const Color gray = Color(0xFF727F88);
+  static const Color grayText = Color(0xFF6A737D);
+  static const Color grayTextDisabled = Color(0xFF959DA5);
   static const Color black = Color(0xFF000000);
   static const Color warning = Color(0xFFFBBB05);
   static const Color errorRed = Color(0xFFE94335);

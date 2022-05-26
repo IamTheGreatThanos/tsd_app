@@ -53,7 +53,7 @@ class DependenciesProvider extends StatelessWidget {
           create: (_) => FirebaseMessagingRepository(),
         ),
         RepositoryProvider(
-          create: (_) => UrlManager(projectBaseUrl),
+          create: (_) => UrlManager(baseUrl),
         ),
         ChangeNotifierProvider(
           create: (_) => UserStore(),

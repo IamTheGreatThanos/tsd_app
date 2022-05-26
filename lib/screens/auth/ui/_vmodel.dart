@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 import '../../../widgets/main_text_field/app_text_field.dart';
 
-class SignInVModel {
+class SignInVModel extends ChangeNotifier {
   // SignInVModel();
 
   late final login = AppTextField(
@@ -9,6 +11,13 @@ class SignInVModel {
   );
   late final password = AppTextField(
     hintText: "Пароль",
+    capitalize: false,
+  );
+  late final name = AppTextField(
+    hintText: "Имя",
+  );
+  late final phone = AppTextField(
+    hintText: "Номер телефона",
     capitalize: false,
   );
 
