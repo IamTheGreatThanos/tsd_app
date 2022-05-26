@@ -225,7 +225,7 @@ class _BuildOrderData extends StatelessWidget {
                             color: ColorPalette.white,
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(
-                                width: 5, color: ColorPalette.purple)),
+                                width: 5, color: ColorPalette.orange)),
                       ),
                       SizedBox(
                         width: 15,
@@ -281,7 +281,7 @@ class _BuildOrderData extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: ColorPalette.purple,
+                    color: ColorPalette.orange,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   padding: const EdgeInsets.all(11),
@@ -293,19 +293,21 @@ class _BuildOrderData extends StatelessWidget {
               height: 12,
             ),
             GestureDetector(
-              onTap: ()
-              {
+              onTap: () {
                 context.read<FillInvoiceVModel>().init();
                 AppRouter.push(
                     context,
-                    FillInvoiceScreen(
-                      orderData: orderData,
+                    ChangeNotifierProvider(
+                      create: (_) => FillInvoiceVModel()..init(),
+                      child: FillInvoiceScreen(
+                        orderData: orderData,
+                      ),
                     ));
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 decoration: BoxDecoration(
-                  color: ColorPalette.purple,
+                  color: ColorPalette.orange,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Center(

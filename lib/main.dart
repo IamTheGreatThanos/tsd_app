@@ -27,11 +27,6 @@ import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.d
 
 const String baseUrl = 'http://185.129.50.172/api/v1/';
 
-String get projectBaseUrl {
-  if (kDebugMode) return baseUrl;
-  return "http://185.129.50.172/api/v1/";
-}
-
 void main() async {
   ///Global managers initialization
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,11 +51,12 @@ void main() async {
           .init(context.read<HiveRepository>());
       // await context.read<FirebaseMessagingRepository>().init();
       await context.read<DioWrapper>().init(
-            baseURL: projectBaseUrl,
-            tokensRepository: context.read<TokensRepository>(),
-            globalRepository: context.read<GlobalRepository>(),
-            loginBloc: context.read<LoginBloc>(),
-          );
+
+          baseURL: baseUrl,
+          tokensRepository: context.read<TokensRepository>(),
+          globalRepository: context.read<GlobalRepository>(),
+          loginBloc: context.read<LoginBloc>());
+
 
       context.read<NetworkService>().init(context.read<DioWrapper>());
       context

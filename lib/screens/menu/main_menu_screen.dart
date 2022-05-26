@@ -12,6 +12,8 @@ import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 
+import '../goods_list/ui/goods_list_screen.dart';
+
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen({Key? key}) : super(key: key);
 
@@ -116,9 +118,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           _BuildMenuOption(
                             icon: "move_logo",
                             title: "Перемещение",
+
                             color: const Color(0xFFFFD33D).withOpacity(0.52),
                             onTap: () =>
                                 AppRouter.push(context, const MoveDataScreen()),
+
                             pad: true,
                           ),
                           _BuildMenuOption(

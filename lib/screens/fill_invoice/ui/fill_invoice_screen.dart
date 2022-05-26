@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_order_details_response.dart';
 import 'package:pharmacy_arrival/screens/digital_signature_load/digital_signature_load_screen.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
-import 'package:pharmacy_arrival/screens/signature/signature_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/main_button/main_button.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../styles/text_styles.dart';
 
@@ -23,7 +19,6 @@ class FillInvoiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
     return Scaffold(
       appBar: CustomAppBar(
         title: orderData.orderName!.toUpperCase(),
@@ -60,7 +55,9 @@ class FillInvoiceScreen extends StatelessWidget {
                       const SizedBox(
                         width: 16,
                       ),
-                      Flexible(child: _vmodel.incomeNumber)
+                      Flexible(
+                          child:
+                              context.watch<FillInvoiceVModel>().incomeNumber)
                     ],
                   ),
                   const Padding(
@@ -85,7 +82,9 @@ class FillInvoiceScreen extends StatelessWidget {
                           child: AppTextField(
                         contentPadding: EdgeInsets.zero,
                         capitalize: false,
-                        controller: _vmodel.incomeNumberDateController,
+                        controller: context
+                            .watch<FillInvoiceVModel>()
+                            .incomeNumberDateController,
                         readonly: true,
                         textAlign: TextAlign.right,
                         showErrorMessages: false,
@@ -127,8 +126,9 @@ class FillInvoiceScreen extends StatelessWidget {
                                       );
                                     });
                                 if (date != null) {
-                                  _vmodel.incomeNumberDateController.text =
-                                      DateFormat("dd.MM.yyyy").format(date);
+                                  context
+                                      .read<FillInvoiceVModel>()
+                                      .setIncomeNumberDate(date);
                                 }
                               },
                               child: SvgPicture.asset(
@@ -145,7 +145,7 @@ class FillInvoiceScreen extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            _vmodel.bin,
+            context.watch<FillInvoiceVModel>().bin,
             const SizedBox(
               height: 16,
             ),
@@ -164,7 +164,7 @@ class FillInvoiceScreen extends StatelessWidget {
                       color: ColorPalette.grey400,
                     ),
                   ),
-                  Flexible(child: _vmodel.recipient)
+                  Flexible(child: context.watch<FillInvoiceVModel>().recipient)
                 ],
               ),
             ),
@@ -193,7 +193,7 @@ class FillInvoiceScreen extends StatelessWidget {
                       child: AppTextField(
                     contentPadding: EdgeInsets.zero,
                     capitalize: false,
-                    controller: _vmodel.invoiceDate,
+                    controller: context.watch<FillInvoiceVModel>().invoiceDate,
                     readonly: true,
                     textAlign: TextAlign.right,
                     showErrorMessages: false,
@@ -234,8 +234,9 @@ class FillInvoiceScreen extends StatelessWidget {
                                   );
                                 });
                             if (date != null) {
-                              _vmodel.invoiceDate.text =
-                                  DateFormat("dd.MM.yyyy").format(date);
+                              context
+                                  .read<FillInvoiceVModel>()
+                                  .setInvoiceDate(date);
                             }
                           },
                           child: SvgPicture.asset(
@@ -249,19 +250,15 @@ class FillInvoiceScreen extends StatelessWidget {
             ),
             const Spacer(),
             GestureDetector(
-              // onTap: _vmodel.incomeNumber.validated ? () {
-              //   AppRouter.push(context, DigitalSignatureLoadScreen());
-              // } : null,
-              ///todo
-              onTap: () {
-                AppRouter.push(context, const DigitalSignatureLoadScreen());
-              },
+              onTap: context.read<FillInvoiceVModel>().validated ? () {
+                AppRouter.push(context, DigitalSignatureLoadScreen());
+              } : null,
               child: Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  color: _vmodel.incomeNumber.validated
-                      ? ColorPalette.purple
-                      : ColorPalette.purpleInactive,
+                  color: context.watch<FillInvoiceVModel>().validated
+                      ? ColorPalette.orange
+                      : ColorPalette.orangeInactive,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
