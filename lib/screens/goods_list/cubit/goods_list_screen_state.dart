@@ -9,6 +9,7 @@ class GoodsListScreenState with _$GoodsListScreenState {
   const factory GoodsListScreenState.loadedState({
     required List<ProductDTO> scannedProducts,
     required List<ProductDTO> unscannedProducts,
+    required ProductDTO selectedProduct,
   }) = _LoadedState;
 
   const factory GoodsListScreenState.errorState({

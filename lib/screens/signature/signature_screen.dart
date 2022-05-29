@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -13,7 +15,11 @@ import '../../widgets/custom_app_bar.dart';
 import '../return_data/ui/return_data_screen.dart';
 
 class SignatureScreen extends StatefulWidget {
-  const SignatureScreen({Key? key}) : super(key: key);
+  
+  final bool isFromPharmacyPage;
+  final PharmacyOrderDTO? pharmacyOrder;
+  final WarehouseOrderDTO? warehouseOrder;
+  const SignatureScreen({Key? key, required this.isFromPharmacyPage, this.pharmacyOrder, this.warehouseOrder}) : super(key: key);
 
   @override
   State<SignatureScreen> createState() => _SignatureScreenState();
@@ -78,7 +84,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
                   _BuildButton(
                       onTap: () {
                         
-                        AppRouter.push(context,  GoodsListScreen());
+                        AppRouter.push(context,  GoodsListScreen(isFromPharmacyPage: widget.isFromPharmacyPage,pharmacyOrder: widget.pharmacyOrder,warehouseOrder: widget.warehouseOrder,));
                       },
                       title: "Отправить",
                       icon: "done_signature",
