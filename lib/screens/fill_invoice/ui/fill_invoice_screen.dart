@@ -32,6 +32,11 @@ class FillInvoiceScreen extends StatefulWidget {
 class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
   TextEditingController numberController = TextEditingController();
   @override
+  void dispose() {
+    numberController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
     return Scaffold(
@@ -385,7 +390,7 @@ class _TypeChooseBottomSheet extends StatelessWidget {
             disabledColor: ColorPalette.orangeInactive,
             padding: EdgeInsets.zero,
             onPressed: () {
-              AppRouter.push(
+              AppRouter.pushReplacement(
                 context,
                 DigitalSignatureLoadScreen(
                   isFromPharmacyPage: isFromPharmacyPage,
@@ -415,7 +420,7 @@ class _TypeChooseBottomSheet extends StatelessWidget {
             disabledColor: ColorPalette.orangeInactive,
             padding: EdgeInsets.zero,
             onPressed: () {
-              AppRouter.push(
+              AppRouter.pushReplacement(
                 context,
                 SignatureScreen(
                   isFromPharmacyPage: isFromPharmacyPage,

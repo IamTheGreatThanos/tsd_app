@@ -8,7 +8,8 @@ part 'pharmacy_arrival_screen_state.dart';
 part 'pharmacy_arrival_screen_cubit.freezed.dart';
 
 class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
- final GetPharmacyArrivalOrders _getPharmacyArrivalOrders;
+  List<PharmacyOrderDTO> activeOrders = [];
+  final GetPharmacyArrivalOrders _getPharmacyArrivalOrders;
   PharmacyArrivalScreenCubit(this._getPharmacyArrivalOrders)
       : super(const PharmacyArrivalScreenState.initialState());
 
@@ -21,7 +22,15 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
           message: mapFailureToMessage(l),
         ),
       ),
-      (r) => emit(PharmacyArrivalScreenState.loadedState(orders: r)),
+      (r) {
+        activeOrders = [];
+        for (final PharmacyOrderDTO orderDTO in r) {
+          if (orderDTO.status == 1 || orderDTO.status == 2) {
+            activeOrders.add(orderDTO);
+          }
+        }
+        emit(PharmacyArrivalScreenState.loadedState(orders: activeOrders));
+      },
     );
   }
 }

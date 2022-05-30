@@ -21,8 +21,13 @@ abstract class PharmacyRepository {
   });
 
   Future<Either<Failure, ProductDTO>> getPharmacySelectedProductFromCahce();
-  
+
   Future<Either<Failure, String>> savePharmacySelectedProductToCahce({
     required ProductDTO selectedProduct,
+  });
+
+  Future<Either<Failure, PharmacyOrderDTO>> updatePharmacyStatusOfOrder({
+    required int orderId,
+    required int status,
   });
 }

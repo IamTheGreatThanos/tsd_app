@@ -5,6 +5,9 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
+import 'package:pharmacy_arrival/screens/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -113,8 +116,12 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                     ),
                   );
                 },
-                loadedState: (scannedProducts, unscannedProducts,
-                    selectedProduct, discrepancy) {
+                loadedState: (
+                  scannedProducts,
+                  unscannedProducts,
+                  selectedProduct,
+                  discrepancy,
+                ) {
                   return _BuildBody(
                     orderId: widget.isFromPharmacyPage
                         ? widget.pharmacyOrder!.id
@@ -138,8 +145,12 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               state.when(
                 initialState: () {},
                 loadingState: () {},
-                loadedState: (unscannedProducts, scannedProducts,
-                    selectedProductId, discrepancy) {},
+                loadedState: (
+                  unscannedProducts,
+                  scannedProducts,
+                  selectedProductId,
+                  discrepancy,
+                ) {},
                 errorState: (String message) {
                   buildErrorCustomSnackBar(context, message);
                 },
@@ -387,7 +398,10 @@ class _BuildBodyState extends State<_BuildBody> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(
-                          left: 12.5, right: 12.5, top: 20),
+                        left: 12.5,
+                        right: 12.5,
+                        top: 20,
+                      ),
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: widget.scannedProducts.length,
                       itemBuilder: (context, index) {
@@ -414,7 +428,10 @@ class _BuildBodyState extends State<_BuildBody> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(
-                          left: 12.5, right: 12.5, top: 20),
+                        left: 12.5,
+                        right: 12.5,
+                        top: 20,
+                      ),
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: widget.discrepancy.length,
                       itemBuilder: (context, index) {
@@ -429,26 +446,54 @@ class _BuildBodyState extends State<_BuildBody> {
                 ),
         const Spacer(),
         if (widget.unscannedProducts.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-            ),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              height: 40,
-              color: ColorPalette.orange,
-              onPressed: () {
-                //TODO Завершить заказ
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Center(
+          BlocListener<SignatureScreenCubit, SignatureScreenState>(
+            listener: (context, state) {
+              state.when(
+                initialState: () {
+                  context.loaderOverlay.hide();
+                },
+                loadingState: () {
+                  context.loaderOverlay.show();
+                },
+                loadedState: () {
+                  context.loaderOverlay.hide();
+                  BlocProvider.of<PharmacyArrivalScreenCubit>(context)
+                      .getOrders();
+
+                  Navigator.pop(context);
+                },
+                errorState: (message) {
+                  context.loaderOverlay.hide();
+                  buildErrorCustomSnackBar(context, message);
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+              ),
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                height: 40,
+                color: ColorPalette.orange,
+                onPressed: () {
+                  BlocProvider.of<SignatureScreenCubit>(context)
+                      .updateOrderStatus(orderId: widget.orderId, status: 3);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
                     child: Text(
-                  "Завершить".toUpperCase(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w600, color: Colors.white),
-                )),
+                      "Завершить".toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           )

@@ -23,6 +23,12 @@ abstract class PharmacyArrivalRemoteDS {
     int? underachievement,
     int? reSorting,
   });
+
+  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
+    required String accessToken,
+    required int orderId,
+    required int status,
+  });
 }
 
 class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
@@ -86,6 +92,32 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
 
       log("##### updatePharmacyProductById api:: ${response.statusCode},${response.data}");
       return ProductDTO.fromJson(response.data as Map<String, dynamic>);
+    } on DioError catch (e) {
+      log('$e');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder(
+      {required String accessToken,
+      required int orderId,
+      required int status}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+    try {
+      final response = await dio.patch(
+        '$SERVER_/api/arrival-pharmacy/$orderId',
+        data: {
+          'status': status,
+        },
+      );
+
+      log("##### updatePharmacyStatusOfOrder api:: ${response.statusCode},${response.data}");
+      return PharmacyOrderDTO.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       log('$e');
       throw ServerException(

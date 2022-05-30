@@ -19,12 +19,14 @@ import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/save_pharmacy_selected_product.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_product_by_id.dart';
 import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,6 +38,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => SignatureScreenCubit(sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -63,6 +66,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => UpdatePharmacyProductById(sl()));
   sl.registerLazySingleton(() => SavePharmacySelectedProduct(sl()));
   sl.registerLazySingleton(() => GetPharmacySelectedProduct(sl()));
+  sl.registerLazySingleton(() => UpdatePharmacyOrderStatus(sl()));
 
   ///
   ///

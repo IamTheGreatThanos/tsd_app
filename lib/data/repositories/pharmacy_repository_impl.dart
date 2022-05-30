@@ -121,4 +121,27 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
       return Left(CacheFailure(message: e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, PharmacyOrderDTO>> updatePharmacyStatusOfOrder({
+    required int orderId,
+    required int status,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final PharmacyOrderDTO order =
+            await arrivalRemoteDS.updatePharmacyStatusOfOrder(
+          accessToken: user.accessToken!,
+          orderId: orderId,
+          status: status,
+        );
+        return Right(order);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
 }
