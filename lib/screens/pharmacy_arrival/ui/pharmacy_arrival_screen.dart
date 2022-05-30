@@ -31,10 +31,33 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
     BlocProvider.of<PharmacyArrivalScreenCubit>(context).getOrders();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+
+          onPressed: () {},
+          child:SizedBox(
+            height: 80,
+            width: 80,
+            child: Image.asset(
+                    'assets/images/png/scan_button.png',
+                    fit: BoxFit.fill,
+                  ),
+          )
+          //  Container(
+          //   decoration: const BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage(
+          //         'assets/images/png/scan_button.png',
+          //       ),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+        ),
         appBar: CustomAppBar(
           title: "Приход аптека".toUpperCase(),
         ),
@@ -137,16 +160,16 @@ class _BuildOrderData extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                 "№.${orderData.id} ${orderData.number}",
+                  "№.${orderData.id} ${orderData.number}",
                   style: ThemeTextStyle.textStyle20w600,
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: orderData.status==1
+                    color: orderData.status == 1
                         ? ColorPalette.lightGreen
                         : ColorPalette.lightYellow,
                     border: Border.all(
-                      color: orderData.status==1
+                      color: orderData.status == 1
                           ? ColorPalette.borderGreen
                           : ColorPalette.borderYellow,
                     ),
@@ -156,9 +179,9 @@ class _BuildOrderData extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Center(
                     child: Text(
-                      orderData.status==1 ? "Новый заказ" : "На расхождении",
+                      orderData.status == 1 ? "Новый заказ" : "На расхождении",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
-                        color: orderData.status==1
+                        color: orderData.status == 1
                             ? ColorPalette.textGreen
                             : ColorPalette.textYellow,
                       ),
@@ -170,7 +193,7 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 27,
             ),
-            if (orderData.status!=1)
+            if (orderData.status != 1)
               const _BuildOrderDetailItem(
                 icon: "divergence",
                 title: "Товары на расхождении",
@@ -192,7 +215,7 @@ class _BuildOrderData extends StatelessWidget {
             _BuildOrderDetailItem(
               icon: "user_star_ic",
               title: orderData.status == 1 ? "Отправитель" : "Контрагент",
-              data:  "No data(sender)",
+              data: "No data(sender)",
               hasImage: true,
             ),
             const SizedBox(
@@ -336,22 +359,22 @@ class _BuildOrderData extends StatelessWidget {
               onTap: () {
                 context.read<FillInvoiceVModel>().init();
                 if (orderData.status == 1) {
-                    AppRouter.push(
-                      context,
-                      FillInvoiceScreen(
-                        isFromPharmacyPage: true,
-                        pharmacyOrder: orderData,
-                      ),
-                    );
-                  } else {
-                    AppRouter.push(
-                      context,
-                      GoodsListScreen(
-                        isFromPharmacyPage: true,
-                        pharmacyOrder: orderData,
-                      ),
-                    );
-                  }
+                  AppRouter.push(
+                    context,
+                    FillInvoiceScreen(
+                      isFromPharmacyPage: true,
+                      pharmacyOrder: orderData,
+                    ),
+                  );
+                } else {
+                  AppRouter.push(
+                    context,
+                    GoodsListScreen(
+                      isFromPharmacyPage: true,
+                      pharmacyOrder: orderData,
+                    ),
+                  );
+                }
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 6),

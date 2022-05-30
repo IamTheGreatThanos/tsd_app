@@ -16,7 +16,7 @@ abstract class PharmacyArrivalRemoteDS {
   Future<ProductDTO> updatePharmacyProductById({
     required String accessToken,
     required int productId,
-    int? status,
+    String? status,
     int? scanCount,
     int? defective,
     int? surplus,
@@ -62,7 +62,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   Future<ProductDTO> updatePharmacyProductById({
     required String accessToken,
     required int productId,
-    int? status,
+    String? status,
     int? scanCount,
     int? defective,
     int? surplus,

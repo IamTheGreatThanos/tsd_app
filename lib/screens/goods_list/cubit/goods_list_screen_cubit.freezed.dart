@@ -20,8 +20,11 @@ mixin _$GoodsListScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)
+    required TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)
         loadedState,
     required TResult Function(String message) errorState,
   }) =>
@@ -30,8 +33,11 @@ mixin _$GoodsListScreenState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
   }) =>
@@ -40,8 +46,11 @@ mixin _$GoodsListScreenState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
@@ -134,8 +143,11 @@ class _$_InitialState implements _InitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)
+    required TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)
         loadedState,
     required TResult Function(String message) errorState,
   }) {
@@ -147,8 +159,11 @@ class _$_InitialState implements _InitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
   }) {
@@ -160,8 +175,11 @@ class _$_InitialState implements _InitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
@@ -257,8 +275,11 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)
+    required TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)
         loadedState,
     required TResult Function(String message) errorState,
   }) {
@@ -270,8 +291,11 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
   }) {
@@ -283,8 +307,11 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
@@ -345,7 +372,8 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
   $Res call(
       {List<ProductDTO> scannedProducts,
       List<ProductDTO> unscannedProducts,
-      ProductDTO selectedProduct});
+      ProductDTO selectedProduct,
+      List<ProductDTO> discrepancy});
 
   $ProductDTOCopyWith<$Res> get selectedProduct;
 }
@@ -366,6 +394,7 @@ class __$$_LoadedStateCopyWithImpl<$Res>
     Object? scannedProducts = freezed,
     Object? unscannedProducts = freezed,
     Object? selectedProduct = freezed,
+    Object? discrepancy = freezed,
   }) {
     return _then(_$_LoadedState(
       scannedProducts: scannedProducts == freezed
@@ -380,6 +409,10 @@ class __$$_LoadedStateCopyWithImpl<$Res>
           ? _value.selectedProduct
           : selectedProduct // ignore: cast_nullable_to_non_nullable
               as ProductDTO,
+      discrepancy: discrepancy == freezed
+          ? _value._discrepancy
+          : discrepancy // ignore: cast_nullable_to_non_nullable
+              as List<ProductDTO>,
     ));
   }
 
@@ -397,9 +430,11 @@ class _$_LoadedState implements _LoadedState {
   const _$_LoadedState(
       {required final List<ProductDTO> scannedProducts,
       required final List<ProductDTO> unscannedProducts,
-      required this.selectedProduct})
+      required this.selectedProduct,
+      required final List<ProductDTO> discrepancy})
       : _scannedProducts = scannedProducts,
-        _unscannedProducts = unscannedProducts;
+        _unscannedProducts = unscannedProducts,
+        _discrepancy = discrepancy;
 
   final List<ProductDTO> _scannedProducts;
   @override
@@ -417,10 +452,16 @@ class _$_LoadedState implements _LoadedState {
 
   @override
   final ProductDTO selectedProduct;
+  final List<ProductDTO> _discrepancy;
+  @override
+  List<ProductDTO> get discrepancy {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_discrepancy);
+  }
 
   @override
   String toString() {
-    return 'GoodsListScreenState.loadedState(scannedProducts: $scannedProducts, unscannedProducts: $unscannedProducts, selectedProduct: $selectedProduct)';
+    return 'GoodsListScreenState.loadedState(scannedProducts: $scannedProducts, unscannedProducts: $unscannedProducts, selectedProduct: $selectedProduct, discrepancy: $discrepancy)';
   }
 
   @override
@@ -433,7 +474,9 @@ class _$_LoadedState implements _LoadedState {
             const DeepCollectionEquality()
                 .equals(other._unscannedProducts, _unscannedProducts) &&
             const DeepCollectionEquality()
-                .equals(other.selectedProduct, selectedProduct));
+                .equals(other.selectedProduct, selectedProduct) &&
+            const DeepCollectionEquality()
+                .equals(other._discrepancy, _discrepancy));
   }
 
   @override
@@ -441,7 +484,8 @@ class _$_LoadedState implements _LoadedState {
       runtimeType,
       const DeepCollectionEquality().hash(_scannedProducts),
       const DeepCollectionEquality().hash(_unscannedProducts),
-      const DeepCollectionEquality().hash(selectedProduct));
+      const DeepCollectionEquality().hash(selectedProduct),
+      const DeepCollectionEquality().hash(_discrepancy));
 
   @JsonKey(ignore: true)
   @override
@@ -453,12 +497,16 @@ class _$_LoadedState implements _LoadedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)
+    required TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)
         loadedState,
     required TResult Function(String message) errorState,
   }) {
-    return loadedState(scannedProducts, unscannedProducts, selectedProduct);
+    return loadedState(
+        scannedProducts, unscannedProducts, selectedProduct, discrepancy);
   }
 
   @override
@@ -466,13 +514,16 @@ class _$_LoadedState implements _LoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
   }) {
     return loadedState?.call(
-        scannedProducts, unscannedProducts, selectedProduct);
+        scannedProducts, unscannedProducts, selectedProduct, discrepancy);
   }
 
   @override
@@ -480,14 +531,18 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
     if (loadedState != null) {
-      return loadedState(scannedProducts, unscannedProducts, selectedProduct);
+      return loadedState(
+          scannedProducts, unscannedProducts, selectedProduct, discrepancy);
     }
     return orElse();
   }
@@ -534,11 +589,13 @@ abstract class _LoadedState implements GoodsListScreenState {
   const factory _LoadedState(
       {required final List<ProductDTO> scannedProducts,
       required final List<ProductDTO> unscannedProducts,
-      required final ProductDTO selectedProduct}) = _$_LoadedState;
+      required final ProductDTO selectedProduct,
+      required final List<ProductDTO> discrepancy}) = _$_LoadedState;
 
   List<ProductDTO> get scannedProducts => throw _privateConstructorUsedError;
   List<ProductDTO> get unscannedProducts => throw _privateConstructorUsedError;
   ProductDTO get selectedProduct => throw _privateConstructorUsedError;
+  List<ProductDTO> get discrepancy => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -611,8 +668,11 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)
+    required TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)
         loadedState,
     required TResult Function(String message) errorState,
   }) {
@@ -624,8 +684,11 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
   }) {
@@ -637,8 +700,11 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
-            List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
         loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
