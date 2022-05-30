@@ -46,6 +46,12 @@ class ThemeTextStyle {
     fontFamily: 'SFProDisplay',
     color: Colors.white,
   );
+  static const textStyle48w300 = TextStyle(
+    fontSize: 48,
+    fontWeight: FontWeight.w300,
+    fontFamily: 'SFProDisplay',
+    color: Colors.white,
+  );
   static const textStyle18w500 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w500,

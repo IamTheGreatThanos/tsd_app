@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 import 'package:pharmacy_arrival/main.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/network/tokens_repository/tokens_repository.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/bloc_auth.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/ui/_vmodel.dart';
@@ -41,8 +42,9 @@ class _SignInScreenState extends State<SignInScreen> {
               initialState: () {
                 context.loaderOverlay.hide();
               },
-              loadedState: (User user) {
+              loadedState: (User user) async {
                 context.loaderOverlay.hide();
+                await context.read<TokensRepository>().save(user.accessToken!);
                 context.read<LoginBloc>().add(LogInEvent());
               },
               loadingState: () {

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/screens/barcode_scanner/barcode_scanner_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
+import 'package:pharmacy_arrival/screens/move_data_scanned/move_data_scanned_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
+
+import '../../../data/model/product_dto.dart';
+import '../../../widgets/toast_service.dart';
 
 class MoveDataScreen extends StatefulWidget {
   const MoveDataScreen({
@@ -129,6 +135,18 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
+                  onTap: () {
+                    AppRouter.push(
+                      context,
+                      BarcodeScannerScreen(
+                        title: "Отсканируйте  товары".toUpperCase(),
+                        callback: (code) {
+                          toastServiceSuccess(code);
+                          AppRouter.push(context, MoveDataScannedScreen());
+                        },
+                      ),
+                    );
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(28),
                     decoration: BoxDecoration(

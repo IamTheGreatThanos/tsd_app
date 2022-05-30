@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_login_response.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_register_response.dart';
@@ -5,6 +7,7 @@ import 'package:pharmacy_arrival/screens/auth/ui/_vmodel.dart';
 
 import '../dio_wrapper/dio_wrapper.dart';
 import '../dio_wrapper/side_dio_wrapper.dart';
+import '../models/dto_models/response/dto_move_data.dart';
 
 class NetworkService {
   late final DioWrapper _dioWrapper;
@@ -50,5 +53,13 @@ class NetworkService {
       }),
     );
     return DTOLoginResponse.fromJson(result.data);
+  }
+
+  Future<List<DTOMoveData>> getMoveData() async {
+    final result = await _dioWrapper.sendRequest(
+      path: "moving-product/1",
+      method: NetworkMethod.get,
+    );
+    return dtoMoveDataFromJson(jsonEncode(result.data));
   }
 }

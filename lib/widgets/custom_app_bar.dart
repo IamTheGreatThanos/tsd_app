@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? backgroundColor;
   final TextStyle? textStyle;
   final Color? leadingColor;
+  final List<Widget>? actions;
 
   const CustomAppBar({
     Key? key,
@@ -26,6 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.textStyle,
     this.leadingColor,
+    this.actions,
   }) : super(key: key);
 
   @override
@@ -39,16 +41,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: textStyle ?? ThemeTextStyle.textTitleDella16w400,
       ),
       bottom: bottom,
-      actions: [
-        if (showLogo)
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: SvgPicture.asset(
-              "assets/images/svg/europharm_logo.svg",
-              height: 22,
-            ),
-          ),
-      ],
+      actions: actions ??
+          [
+            if (showLogo)
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: SvgPicture.asset(
+                  "assets/images/svg/europharm_logo.svg",
+                  height: 22,
+                ),
+              ),
+          ],
       leading: IconButton(
         icon: SvgPicture.asset(
           "assets/images/svg/${isChevrone ? "chevron_left" : "cross"}.svg",

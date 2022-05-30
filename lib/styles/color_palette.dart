@@ -21,7 +21,6 @@ class ColorPalette {
   static const Color red = Color(0xFFFD4E36);
   static const Color background = Color(0xFFF6F8FA);
   static const Color backgroundLightGray = Color(0xFFF8F8F8);
-  static const Color green = Color(0xFF1BB55C);
   static const Color lightGreen = Color(0xFFDCFFE4);
   static const Color textGreen = Color(0xFF22863A);
   static const Color borderGreen = Color(0xFF34D058);
@@ -33,6 +32,7 @@ class ColorPalette {
   static const Color grayText = Color(0xFF6A737D);
   static const Color grayTextDisabled = Color(0xFF959DA5);
   static const Color black = Color(0xFF000000);
+  static const Color green = Color(0xFF18AA13);
   static const Color warning = Color(0xFFFBBB05);
   static const Color errorRed = Color(0xFFE94335);
 }

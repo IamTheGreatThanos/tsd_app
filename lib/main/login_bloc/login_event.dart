@@ -5,7 +5,6 @@ abstract class LoginEvent {}
 
 class InitialLoginEvent extends LoginEvent {}
 
-class LogInEvent extends LoginEvent {
-}
+class LogInEvent extends LoginEvent {}
 
 class LogOutEvent extends LoginEvent {}
