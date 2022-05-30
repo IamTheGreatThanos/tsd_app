@@ -13,18 +13,22 @@ abstract class ProductsRemoteDS {
   });
 }
 
-class ProductsRemoteDSImpl extends ProductsRemoteDS{
-    final Dio dio;
+class ProductsRemoteDSImpl extends ProductsRemoteDS {
+  final Dio dio;
 
   ProductsRemoteDSImpl(this.dio);
-    
+
   @override
-  Future<List<ProductDTO>> getProductsPharmacyArrival({required String accessToken, required int orderId,}) async {
+  Future<List<ProductDTO>> getProductsPharmacyArrival({
+    required String accessToken,
+    required int orderId,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio.get('$SERVER_/api/arrival-pharmacy-product/$orderId');
+      final response =
+          await dio.get('$SERVER_/api/arrival-pharmacy-product/$orderId');
       log('##### getProductsPharmacyArrival api:: ${response.statusCode}');
 
       return compute<List, List<ProductDTO>>(
@@ -43,5 +47,4 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS{
       );
     }
   }
-
 }
