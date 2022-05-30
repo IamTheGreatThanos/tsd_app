@@ -7,8 +7,10 @@ import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class GoodsListScreen extends StatefulWidget {
@@ -92,7 +94,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               BlocProvider.of<GoodsListScreenCubit>(context).scannerBarCode(
-               // '14455',
+                // '14455',
                 '1123312312',
                 widget.isFromPharmacyPage
                     ? widget.pharmacyOrder!.id
@@ -177,6 +179,7 @@ class _BuildBody extends StatefulWidget {
 
 class _BuildBodyState extends State<_BuildBody> {
   int currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -297,7 +300,11 @@ class _BuildBodyState extends State<_BuildBody> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                 //TODO Product Detailed Page
+                  AppRouter.push(
+                    context,
+                    DefectScreen(product: widget.unscannedProducts[index]),
+                  );
+                  //TODO Product Detailed Page
                   // AppRouter.push(
                   //   context,
                   //   BlocProvider.value(
@@ -407,6 +414,7 @@ class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO good;
   final ProductDTO selectedProduct;
   final int orderID;
+
   const _BuildGoodDetails({
     Key? key,
     required this.good,
@@ -562,6 +570,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
 class _SpecifyingNumberManually extends StatefulWidget {
   final ProductDTO productDTO;
   final int orderID;
+
   const _SpecifyingNumberManually({
     Key? key,
     required this.productDTO,
@@ -575,6 +584,7 @@ class _SpecifyingNumberManually extends StatefulWidget {
 
 class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
   TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(

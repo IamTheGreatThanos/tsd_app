@@ -40,6 +40,12 @@ class ThemeTextStyle {
     fontFamily: 'SFProDisplay',
     color: Colors.white,
   );
+  static const textStyle18w400 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'SFProDisplay',
+    color: Colors.white,
+  );
   static const textStyle18w500 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w500,
@@ -58,8 +64,18 @@ class ThemeTextStyle {
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
+  static TextStyle textTitleDella20w400 = GoogleFonts.delaGothicOne(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
   static TextStyle textTitleDella24w400 = GoogleFonts.delaGothicOne(
     fontSize: 24,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
+  static TextStyle textTitleDella40w400 = GoogleFonts.delaGothicOne(
+    fontSize: 40,
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
