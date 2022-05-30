@@ -12,7 +12,7 @@ abstract class PharmacyRepository {
 
   Future<Either<Failure, ProductDTO>> updatePharmacyProductById({
     required int productId,
-    int? status,
+    String? status,
     int? scanCount,
     int? defective,
     int? surplus,
