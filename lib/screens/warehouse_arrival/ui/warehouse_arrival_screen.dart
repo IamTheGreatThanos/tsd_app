@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_order_details_response.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/fill_invoice_screen.dart';
+import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/bloc/bloc_stock_arrival.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -31,6 +32,7 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
     BlocProvider.of<WarehouseArrivalScreenCubit>(context).getOrders();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +43,9 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
           WarehouseArrivalScreenState>(
         listener: (context, state) {
           state.when(
-            initialState: () {
-            },
-            loadingState: () {
-            },
-            loadedState: (orders) {
-            },
+            initialState: () {},
+            loadingState: () {},
+            loadedState: (orders) {},
             errorState: (String message) {
               buildErrorCustomSnackBar(context, message);
             },
@@ -54,7 +53,7 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
         },
         builder: (context, state) {
           return state.maybeWhen(
-            loadingState: (){
+            loadingState: () {
               return const Center(
                 child: CircularProgressIndicator(
                   color: Colors.amber,
@@ -145,11 +144,11 @@ class _BuildOrderData extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: orderData.status==1
+                    color: orderData.status == 1
                         ? ColorPalette.lightGreen
                         : ColorPalette.lightYellow,
                     border: Border.all(
-                      color: orderData.status==1
+                      color: orderData.status == 1
                           ? ColorPalette.borderGreen
                           : ColorPalette.borderYellow,
                     ),
@@ -159,9 +158,9 @@ class _BuildOrderData extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Center(
                     child: Text(
-                      orderData.status==1 ? "Новый заказ" : "На расхождении",
+                      orderData.status == 1 ? "Новый заказ" : "На расхождении",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
-                        color: orderData.status==1
+                        color: orderData.status == 1
                             ? ColorPalette.textGreen
                             : ColorPalette.textYellow,
                       ),
@@ -173,8 +172,8 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 27,
             ),
-            if (orderData.status!=1)
-               _BuildOrderDetailItem(
+            if (orderData.status != 1)
+              _BuildOrderDetailItem(
                 icon: "divergence",
                 title: "Товары на расхождении",
                 data: "${orderData.container}",
@@ -206,13 +205,23 @@ class _BuildOrderData extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(6),
                 onTap: () {
-                  AppRouter.push(
-                    context,
-                    FillInvoiceScreen(
-                      isFromPharmacyPage: false,
-                      warehouseOrder: orderData,
-                    ),
-                  );
+                  if (orderData.status == 1) {
+                    AppRouter.push(
+                      context,
+                      FillInvoiceScreen(
+                        isFromPharmacyPage: false,
+                        warehouseOrder: orderData,
+                      ),
+                    );
+                  } else {
+                    AppRouter.push(
+                      context,
+                      GoodsListScreen(
+                        isFromPharmacyPage: false,
+                        warehouseOrder: orderData,
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   height: 32,

@@ -1,14 +1,27 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_helper.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/product_dto.dart';
 
 abstract class PharmacyArrivalRemoteDS {
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
     required String accessToken,
+  });
+
+  Future<ProductDTO> updatePharmacyProductById({
+    required String accessToken,
+    required int productId,
+    int? status,
+    int? scanCount,
+    int? defective,
+    int? surplus,
+    int? underachievement,
+    int? reSorting,
   });
 }
 
@@ -18,8 +31,9 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   PharmacyArrivalRemoteDSImpl(this.dio);
 
   @override
-  Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders(
-      {required String accessToken}) async {
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
+    required String accessToken,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -37,6 +51,43 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
       );
     } on DioError catch (e) {
       log('##### getWarehouseArrivalOrders api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<ProductDTO> updatePharmacyProductById({
+    required String accessToken,
+    required int productId,
+    int? status,
+    int? scanCount,
+    int? defective,
+    int? surplus,
+    int? underachievement,
+    int? reSorting,
+  }) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+    try {
+      final response = await dio.patch(
+        '$SERVER_/api/arrival-pharmacy-product/$productId',
+        data: {
+          if (status != null) 'status': status,
+          if (scanCount != null) 'scan_count': scanCount,
+          if (defective != null) 'defective': defective,
+          if (surplus != null) 'surplus': surplus,
+          if (underachievement != null) 'underachievement': underachievement,
+          if (reSorting != null) 're_sorting': reSorting,
+        },
+      );
+
+      log("##### updatePharmacyProductById api:: ${response.statusCode},${response.data}");
+      return ProductDTO.fromJson(response.data as Map<String, dynamic>);
+    } on DioError catch (e) {
+      log('$e');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

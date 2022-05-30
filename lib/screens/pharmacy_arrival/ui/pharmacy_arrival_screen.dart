@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/fill_invoice_screen.dart';
+import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -334,13 +335,23 @@ class _BuildOrderData extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 context.read<FillInvoiceVModel>().init();
-                AppRouter.push(
-                  context,
-                  FillInvoiceScreen(
-                    isFromPharmacyPage: true,
-                    pharmacyOrder: orderData,
-                  ),
-                );
+                if (orderData.status == 1) {
+                    AppRouter.push(
+                      context,
+                      FillInvoiceScreen(
+                        isFromPharmacyPage: true,
+                        pharmacyOrder: orderData,
+                      ),
+                    );
+                  } else {
+                    AppRouter.push(
+                      context,
+                      GoodsListScreen(
+                        isFromPharmacyPage: true,
+                        pharmacyOrder: orderData,
+                      ),
+                    );
+                  }
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 6),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
+import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -10,14 +12,30 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class GoodsListScreen extends StatefulWidget {
+  final bool isFromPharmacyPage;
+  final PharmacyOrderDTO? pharmacyOrder;
+  final WarehouseOrderDTO? warehouseOrder;
+
+  const GoodsListScreen({
+    Key? key,
+    required this.isFromPharmacyPage,
+    this.pharmacyOrder,
+    this.warehouseOrder,
+  }) : super(key: key);
+
   @override
   State<GoodsListScreen> createState() => _GoodsListScreenState();
 }
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
+  String _currentScan = '';
+
   @override
   void initState() {
-    BlocProvider.of<GoodsListScreenCubit>(context).getProducts(1);
+    if (widget.isFromPharmacyPage) {
+      BlocProvider.of<GoodsListScreenCubit>(context)
+          .getPharmacyProducts(widget.pharmacyOrder!.id);
+    } else {}
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -27,41 +45,112 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
-      child: Scaffold(
-        backgroundColor: ColorPalette.main,
-        appBar: CustomAppBar(
-          title: "Список товаров".toUpperCase(),
-          showLogo: false,
-        ),
-        body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              loadedState: (scannedProducts,unscannedProducts) {
-                return SingleChildScrollView(
+      child: RawKeyboardListener(
+        autofocus: true,
+        focusNode: FocusNode(),
+        onKey: (event) async {
+          if (event.logicalKey.keyLabel != 'Enter') {
+            _currentScan += event.logicalKey.keyLabel;
+          } else if (_currentScan.isNotEmpty) {
+            _currentScan = _currentScan.replaceAll('Shift Left', '');
+            print('Current Scan: $_currentScan');
+            var scanResult = '';
+            for (var i = 0; i < _currentScan.length; i++) {
+              if (i % 2 == 0) {
+                scanResult += _currentScan[i];
+              }
+            }
+
+            scanResult = scanResult.replaceAll(' ', '').toLowerCase();
+            setState(() {
+              _currentScan = '';
+            });
+
+            // if (scannedCellId.isEmpty) {
+            //   scanCellBarCode(scanResult);
+            //   ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
+            //     SnackBar(
+            //       content: Text(
+            //         scanResult,
+            //         textAlign: TextAlign.center,
+            //         style: TextStyle(color: Colors.white),
+            //       ),
+            //       backgroundColor: Color.fromRGBO(
+            //         46,
+            //         164,
+            //         78,
+            //         1,
+            //       ),
+            //     ),
+            //   );
+            //   return;
+            // }
+
+          }
+        },
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<GoodsListScreenCubit>(context).scannerBarCode(
+               // '14455',
+                '1123312312',
+                widget.isFromPharmacyPage
+                    ? widget.pharmacyOrder!.id
+                    : widget.warehouseOrder!.id,
+                1,
+              );
+            },
+            child: const Icon(Icons.document_scanner_outlined),
+          ),
+          backgroundColor: ColorPalette.main,
+          appBar: CustomAppBar(
+            title: "Список товаров".toUpperCase(),
+            showLogo: false,
+          ),
+          body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                loadingState: () {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.amber,
+                    ),
+                  );
+                },
+                loadedState:
+                    (scannedProducts, unscannedProducts, selectedProduct) {
+                  return SingleChildScrollView(
                     child: _BuildBody(
-                  unscannedProducts: unscannedProducts,
-                  scannedProducts: scannedProducts,
-                ));
-              },
-              orElse: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                  ),
-                );
-              },
-            );
-          },
-          listener: (context, state) {
-            state.when(
-              initialState: () {},
-              loadingState: () {},
-              loadedState: (unscannedProducts, scannedProducts) {},
-              errorState: (String message) {
-                buildErrorCustomSnackBar(context, message);
-              },
-            );
-          },
+                      orderId: widget.isFromPharmacyPage
+                          ? widget.pharmacyOrder!.id
+                          : widget.warehouseOrder!.id,
+                      unscannedProducts: unscannedProducts,
+                      scannedProducts: scannedProducts,
+                      selectedProduct: selectedProduct,
+                    ),
+                  );
+                },
+                orElse: () {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.red,
+                    ),
+                  );
+                },
+              );
+            },
+            listener: (context, state) {
+              state.when(
+                initialState: () {},
+                loadingState: () {},
+                loadedState:
+                    (unscannedProducts, scannedProducts, selectedProductId) {},
+                errorState: (String message) {
+                  buildErrorCustomSnackBar(context, message);
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -69,13 +158,17 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final int orderId;
+  final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
 
   const _BuildBody({
     Key? key,
+    required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
+    required this.selectedProduct,
   }) : super(key: key);
 
   @override
@@ -204,6 +297,7 @@ class _BuildBodyState extends State<_BuildBody> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
+                 //TODO Product Detailed Page
                   // AppRouter.push(
                   //   context,
                   //   BlocProvider.value(
@@ -215,7 +309,11 @@ class _BuildBodyState extends State<_BuildBody> {
                   //     "F87615", "Cancel", false, ScanMode.BARCODE);
                   // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
                 },
-                child: _BuildGoodDetails(good: widget.unscannedProducts[index]),
+                child: _BuildGoodDetails(
+                  orderID: widget.orderId,
+                  good: widget.unscannedProducts[index],
+                  selectedProduct: widget.selectedProduct,
+                ),
               );
             },
           ),
@@ -235,7 +333,10 @@ class _BuildBodyState extends State<_BuildBody> {
                   itemCount: widget.scannedProducts.length,
                   itemBuilder: (context, index) {
                     return _BuildGoodDetails(
-                        good: widget.scannedProducts[index]);
+                      orderID: widget.orderId,
+                      selectedProduct: const ProductDTO(id: -1),
+                      good: widget.scannedProducts[index],
+                    );
                   },
                 ),
         const SizedBox(
@@ -302,11 +403,22 @@ class _BuildBodyState extends State<_BuildBody> {
   }
 }
 
-class _BuildGoodDetails extends StatelessWidget {
+class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO good;
+  final ProductDTO selectedProduct;
+  final int orderID;
+  const _BuildGoodDetails({
+    Key? key,
+    required this.good,
+    required this.selectedProduct,
+    required this.orderID,
+  }) : super(key: key);
 
-  const _BuildGoodDetails({Key? key, required this.good}) : super(key: key);
+  @override
+  State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();
+}
 
+class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -315,14 +427,16 @@ class _BuildGoodDetails extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: ColorPalette.white,
+          color: widget.good.id == widget.selectedProduct.id
+              ? const Color.fromARGB(255, 183, 244, 215)
+              : ColorPalette.white,
         ),
         child: Row(
           children: [
             Stack(
               children: [
                 Image.network(
-                  good.image ?? 'null',
+                  widget.good.image ?? 'null',
                   width: 104,
                   height: 104,
                 ),
@@ -340,7 +454,7 @@ class _BuildGoodDetails extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      "${good.totalCount} шт.",
+                      "${widget.good.totalCount} шт.",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
                         color: ColorPalette.red,
                       ),
@@ -361,12 +475,12 @@ class _BuildGoodDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${good.totalCount}x",
+                        "${widget.good.scanCount!}x",
                         style: ThemeTextStyle.textStyle14w400
                             .copyWith(color: ColorPalette.black),
                       ),
                       Text(
-                        good.barcode ?? 'null',
+                        widget.good.barcode ?? 'null',
                         style: ThemeTextStyle.textStyle14w600
                             .copyWith(color: ColorPalette.grayText),
                       ),
@@ -376,7 +490,7 @@ class _BuildGoodDetails extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    '${good.name}',
+                    '${widget.good.name}',
                     overflow: TextOverflow.fade,
                     style: ThemeTextStyle.textStyle20w600,
                   ),
@@ -384,16 +498,177 @@ class _BuildGoodDetails extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    "${good.producer}",
+                    "${widget.good.producer}",
                     style: ThemeTextStyle.textStyle14w400.copyWith(
                       color: ColorPalette.grayText,
                     ),
                   ),
+                  if (widget.good.id == widget.selectedProduct.id)
+                    MaterialButton(
+                      color: ColorPalette.orange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        _bottomSheet(
+                          _SpecifyingNumberManually(
+                            productDTO: widget.good,
+                            orderID: widget.orderID,
+                          ),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          'Указать вручную',
+                          style: TextStyle(
+                            color: ColorPalette.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox()
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Future _bottomSheet(Widget widget) {
+    return showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      context: context,
+      enableDrag: true,
+      isDismissible: false,
+      isScrollControlled: true,
+      builder: (context) {
+        return widget;
+      },
+    );
+  }
+}
+
+class _SpecifyingNumberManually extends StatefulWidget {
+  final ProductDTO productDTO;
+  final int orderID;
+  const _SpecifyingNumberManually({
+    Key? key,
+    required this.productDTO,
+    required this.orderID,
+  }) : super(key: key);
+
+  @override
+  State<_SpecifyingNumberManually> createState() =>
+      _SpecifyingNumberManuallyState();
+}
+
+class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
+  TextEditingController controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.3,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      padding: const EdgeInsets.only(
+        right: 16,
+        left: 16,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(
+              top: 14,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xffD9DBE9),
+              borderRadius: BorderRadius.circular(100),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          const Text(
+            'Укажите число вручную ',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const Spacer(),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: controller,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Укажите число вручную',
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          MaterialButton(
+            height: 40,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            color: ColorPalette.orange,
+            disabledColor: ColorPalette.orangeInactive,
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              if (controller.text.isEmpty) {
+                Navigator.pop(context);
+              } else {
+                if (int.parse(controller.text) >
+                    widget.productDTO.totalCount! -
+                        widget.productDTO.scanCount!) {
+                  Navigator.pop(context);
+                  buildErrorCustomSnackBar(
+                    context,
+                    'Укажите правильную количеству',
+                  );
+                } else {
+                  Navigator.pop(context);
+                  BlocProvider.of<GoodsListScreenCubit>(context).scannerBarCode(
+                    widget.productDTO.barcode!,
+                    widget.orderID,
+                    int.parse(controller.text),
+                  );
+                }
+              }
+            },
+            child: Center(
+              child: Text(
+                "Отправить",
+                style: ThemeTextStyle.textStyle14w600
+                    .copyWith(color: ColorPalette.white),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
+import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/signature/signature_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -11,7 +14,11 @@ import '../../utils/app_router.dart';
 import '../fill_invoice/ui/_vmodel.dart';
 
 class DigitalSignatureLoadScreen extends StatelessWidget {
-  const DigitalSignatureLoadScreen({Key? key}) : super(key: key);
+  
+  final bool isFromPharmacyPage;
+  final PharmacyOrderDTO? pharmacyOrder;
+  final WarehouseOrderDTO? warehouseOrder;
+  const DigitalSignatureLoadScreen({Key? key, required this.isFromPharmacyPage, this.pharmacyOrder, this.warehouseOrder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +183,7 @@ class DigitalSignatureLoadScreen extends StatelessWidget {
                     if (context
                         .read<FillInvoiceVModel>()
                         .digitalSignatureFillValidated()) {
-                      AppRouter.push(context, const SignatureScreen());
+                      AppRouter.push(context,  GoodsListScreen(isFromPharmacyPage: isFromPharmacyPage,pharmacyOrder: pharmacyOrder,warehouseOrder: warehouseOrder,));
                     }
                   },
                   child: Container(

@@ -5,6 +5,7 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/digital_signature_load/digital_signature_load_screen.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
+import 'package:pharmacy_arrival/screens/signature/signature_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -279,10 +280,18 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                 //   print(_vmodel.incomeNumberController.text.length);
                 //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
                 // } else {
-                  AppRouter.push(
-                    context,
-                    const DigitalSignatureLoadScreen(),
-                  );
+
+                _bottomSheet(
+                  _TypeChooseBottomSheet(
+                    isFromPharmacyPage: widget.isFromPharmacyPage,
+                    warehouseOrder: widget.warehouseOrder,
+                    pharmacyOrder: widget.pharmacyOrder,
+                  ),
+                );
+                // AppRouter.push(
+                //   context,
+                //   const DigitalSignatureLoadScreen(),
+                // );
                 // }
               },
               child: Center(
@@ -295,6 +304,139 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Future _bottomSheet(Widget widget) {
+    return showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      context: context,
+      enableDrag: true,
+      isDismissible: false,
+      isScrollControlled: true,
+      builder: (context) {
+        return widget;
+      },
+    );
+  }
+}
+
+class _TypeChooseBottomSheet extends StatelessWidget {
+  final bool isFromPharmacyPage;
+  final PharmacyOrderDTO? pharmacyOrder;
+  final WarehouseOrderDTO? warehouseOrder;
+  const _TypeChooseBottomSheet(
+      {Key? key,
+      required this.isFromPharmacyPage,
+      this.pharmacyOrder,
+      this.warehouseOrder})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.3,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      padding: const EdgeInsets.only(
+        right: 16,
+        left: 16,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(
+              top: 14,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xffD9DBE9),
+              borderRadius: BorderRadius.circular(100),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          const Text(
+            'Выберите способ подтверждения ',
+            style: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+          ),
+          const Spacer(),
+          MaterialButton(
+            height: 40,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            color: ColorPalette.orange,
+            disabledColor: ColorPalette.orangeInactive,
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              AppRouter.push(
+                context,
+                DigitalSignatureLoadScreen(
+                  isFromPharmacyPage: isFromPharmacyPage,
+                  warehouseOrder: warehouseOrder,
+                  pharmacyOrder: pharmacyOrder,
+                ),
+              );
+              // }
+            },
+            child: Center(
+              child: Text(
+                "Подписать с ЭЦП",
+                style: ThemeTextStyle.textStyle14w600
+                    .copyWith(color: ColorPalette.white),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          MaterialButton(
+            height: 40,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            color: ColorPalette.orange,
+            disabledColor: ColorPalette.orangeInactive,
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              AppRouter.push(
+                context,
+                SignatureScreen(
+                  isFromPharmacyPage: isFromPharmacyPage,
+                  warehouseOrder: warehouseOrder,
+                  pharmacyOrder: pharmacyOrder,
+                ),
+              );
+              // }
+            },
+            child: Center(
+              child: Text(
+                "Подписать вручную",
+                style: ThemeTextStyle.textStyle14w600
+                    .copyWith(color: ColorPalette.white),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
   }

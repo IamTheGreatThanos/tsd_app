@@ -1,6 +1,7 @@
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_info.dart';
 import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
+import 'package:pharmacy_arrival/data/datasource/local/products_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/pharmacy_arrival_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/products_remote_ds.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
@@ -15,11 +16,13 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   final AuthLocalDS authLocalDS;
   final NetworkInfo networkInfo;
   final ProductsRemoteDS productsRemoteDS;
+  final ProductsLoacalDS productsLoacalDS;
   PharmacyRepositoryImpl({
     required this.arrivalRemoteDS,
     required this.authLocalDS,
     required this.networkInfo,
     required this.productsRemoteDS,
+    required this.productsLoacalDS,
   });
 
   @override
@@ -40,8 +43,9 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductDTO>>> getProductsPharmacyArrival(
-      {required int orderId}) async {
+  Future<Either<Failure, List<ProductDTO>>> getProductsPharmacyArrival({
+    required int orderId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
@@ -56,6 +60,65 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
       }
     } else {
       return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductDTO>> updatePharmacyProductById({
+    required int productId,
+    int? status,
+    int? scanCount,
+    int? defective,
+    int? surplus,
+    int? underachievement,
+    int? reSorting,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final ProductDTO product =
+            await arrivalRemoteDS.updatePharmacyProductById(
+          accessToken: user.accessToken!,
+          productId: productId,
+          status: status,
+          scanCount: scanCount,
+          defective: defective,
+          surplus: surplus,
+          underachievement: underachievement,
+          reSorting: reSorting,
+        );
+        return Right(product);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductDTO>>
+      getPharmacySelectedProductFromCahce() async {
+    try {
+      final ProductDTO selectedProduct =
+          await productsLoacalDS.getPharmacySelectedProductFromCahce();
+      return Right(selectedProduct);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> savePharmacySelectedProductToCahce({
+    required ProductDTO selectedProduct,
+  }) async {
+    try {
+      await productsLoacalDS.setPharmacySelectedProductToCahce(
+        selectedProduct: selectedProduct,
+      );
+      return const Right('Selected Product Succesfully saved to cache');
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
     }
   }
 }
