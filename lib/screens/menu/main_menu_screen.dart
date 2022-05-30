@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_data_screen.dart';
-import 'package:pharmacy_arrival/screens/stock_arrival/ui/stock_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
+import 'package:provider/provider.dart';
 
 import '../goods_list/ui/goods_list_screen.dart';
 
@@ -122,8 +120,13 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           icon: "move_logo",
                           title: "Перемещение",
                           color: const Color(0xFFFFD33D).withOpacity(0.52),
-                          onTap: () =>
-                              AppRouter.push(context, const MoveDataScreen()),
+                          onTap: () => AppRouter.push(
+                            context,
+                            ChangeNotifierProvider(
+                              create: (context) => MoveDataVModel()..init(),
+                              child: const MoveDataScreen(),
+                            ),
+                          ),
                           pad: true,
                         ),
                         _BuildMenuOption(

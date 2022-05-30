@@ -7,7 +7,12 @@ import 'package:pharmacy_arrival/widgets/camera/camera_shape.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
 class BarcodeScannerScreen extends StatefulWidget {
-  const BarcodeScannerScreen({Key? key}) : super(key: key);
+  final String title;
+  final Function(String) callback;
+
+  const BarcodeScannerScreen(
+      {Key? key, required this.title, required this.callback})
+      : super(key: key);
 
   @override
   State<BarcodeScannerScreen> createState() => _BarcodeScannerScreenState();
@@ -19,9 +24,9 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "Отсканируйте все товары",
-        leadingColor: Color(0xFF28A745),
+      appBar: CustomAppBar(
+        title: widget.title,
+        leadingColor: const Color(0xFF28A745),
         textStyle: ThemeTextStyle.textStyle16w600,
         showLogo: false,
       ),
@@ -35,6 +40,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
                 final String code = barcode.rawValue!;
                 if (!codes.contains(code)) {
                   codes.add(code);
+                  widget.callback.call(code);
                   // context
                   //     .read<BlocGoodsList>()
                   //     .add(EventScanItem(code: code));

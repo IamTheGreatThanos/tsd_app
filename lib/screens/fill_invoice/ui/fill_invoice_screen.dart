@@ -72,7 +72,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                       const SizedBox(
                         width: 16,
                       ),
-                      Flexible(child: _vmodel.incomeNumber!)
+                      Flexible(child: _vmodel.incomeNumber)
                     ],
                   ),
                   const Padding(
@@ -139,7 +139,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                   },
                                 );
                                 if (date != null) {
-                                  _vmodel.incomeNumberDateController?.text =
+                                  _vmodel.incomeNumberDateController.text =
                                       DateFormat("dd.MM.yyyy").format(date);
                                 }
                               },

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class ColorPalette {
   static const Color dark = Color(0xFF166F5D);
-
   static const Color secondaryMain = Color(0xFF803FE5);
   static const Color main = Color(0xFFF6F8FA);
   static const Color orange = Color(0xFFF87615);
+  static const Color orangeButton = Color.fromRGBO(27, 31, 36, 0.15);
   static const Color purpleLight = Color(0xFFc08cf4);
   static Color orangeInactive = const Color(0xFFF87615).withOpacity(0.4);
   static const Color commonBlue = Color(0xFFE0E9FA);
