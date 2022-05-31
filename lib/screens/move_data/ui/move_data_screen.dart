@@ -22,7 +22,6 @@ class MoveDataScreen extends StatefulWidget {
 }
 
 class _MoveDataScreenState extends State<MoveDataScreen> {
-  TextEditingController numberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

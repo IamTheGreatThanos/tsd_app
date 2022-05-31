@@ -1,4 +1,5 @@
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_move_data.dart';
+import 'package:pharmacy_arrival/network/models/dto_models/response/dto_return_data.dart';
 import 'package:pharmacy_arrival/screens/auth/ui/_vmodel.dart';
 
 import '../services/network_service.dart';
@@ -22,4 +23,7 @@ class GlobalRepository {
 
   Future<List<DTOMoveData>> getMoveData() async =>
       _networkService.getMoveData();
+
+  Future<List<DTOReturnData>> getReturnData() async =>
+      _networkService.getReturnData();
 }
