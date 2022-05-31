@@ -6,9 +6,9 @@ import 'package:pharmacy_arrival/network/dio_wrapper/dio_extension.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_move_data.dart';
 import 'package:pharmacy_arrival/network/repository/global_repository.dart';
 
-part 'bloc_move_data_event.dart';
+part 'events.dart';
 
-part 'bloc_move_data_state.dart';
+part 'states.dart';
 
 class BlocMoveData extends Bloc<EventBlocMoveData, StateBlocMoveData> {
   BlocMoveData({

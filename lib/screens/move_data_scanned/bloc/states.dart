@@ -1,4 +1,4 @@
-part of 'bloc_move_data_bloc.dart';
+part of 'bloc_move_data.dart';
 
 @immutable
 abstract class StateBlocMoveData {}

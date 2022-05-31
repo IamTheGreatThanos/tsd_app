@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_data_screen.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -133,8 +134,13 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           icon: "return_logo",
                           title: "Возврат",
                           color: const Color(0xFF6F42C1).withOpacity(0.52),
-                          onTap: () =>
-                              AppRouter.push(context, const ReturnDataScreen()),
+                          onTap: () => AppRouter.push(
+                            context,
+                            ChangeNotifierProvider(
+                              create: (context) => ReturnDataVModel()..init(),
+                              child: const ReturnDataScreen(),
+                            ),
+                          ),
                         ),
                       ],
                     ),

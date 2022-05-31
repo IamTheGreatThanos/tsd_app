@@ -25,6 +25,7 @@ class MoveDataScreen extends StatefulWidget {
 }
 
 class _MoveDataScreenState extends State<MoveDataScreen> {
+
   List<DropdownMenuItem<CounteragentDTO>> senders = [];
 
   String sender = 'Не выбран';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_move_data.dart';
-import 'package:pharmacy_arrival/screens/move_data_scanned/bloc/bloc_move_data_bloc.dart';
+import 'package:pharmacy_arrival/screens/move_data_scanned/bloc/bloc_move_data.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_login_response.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_register_response.dart';
+import 'package:pharmacy_arrival/network/models/dto_models/response/dto_return_data.dart';
 import 'package:pharmacy_arrival/screens/auth/ui/_vmodel.dart';
 
 import '../dio_wrapper/dio_wrapper.dart';
@@ -61,5 +62,13 @@ class NetworkService {
       method: NetworkMethod.get,
     );
     return dtoMoveDataFromJson(jsonEncode(result.data));
+  }
+
+  Future<List<DTOReturnData>> getReturnData() async {
+    final result = await _dioWrapper.sendRequest(
+      path: "refund-product/1",
+      method: NetworkMethod.get,
+    );
+    return dtoReturnDataFromJson(jsonEncode(result.data));
   }
 }
