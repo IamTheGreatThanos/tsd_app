@@ -37,27 +37,26 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
     return AppLoaderOverlay(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-
-          onPressed: () {},
-          child:SizedBox(
-            height: 80,
-            width: 80,
-            child: Image.asset(
-                    'assets/images/png/scan_button.png',
-                    fit: BoxFit.fill,
-                  ),
-          )
-          //  Container(
-          //   decoration: const BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage(
-          //         'assets/images/png/scan_button.png',
-          //       ),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-        ),
+            onPressed: () {},
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: Image.asset(
+                'assets/images/png/scan_button.png',
+                fit: BoxFit.fill,
+              ),
+            )
+            //  Container(
+            //   decoration: const BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage(
+            //         'assets/images/png/scan_button.png',
+            //       ),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
+            ),
         appBar: CustomAppBar(
           title: "Приход аптека".toUpperCase(),
         ),
@@ -215,7 +214,7 @@ class _BuildOrderData extends StatelessWidget {
             _BuildOrderDetailItem(
               icon: "user_star_ic",
               title: orderData.status == 1 ? "Отправитель" : "Контрагент",
-              data: "No data(sender)",
+              data: "${orderData.sender?.name}",
               hasImage: true,
             ),
             const SizedBox(
@@ -316,7 +315,19 @@ class _BuildOrderData extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset("assets/images/png/driver_stock.png"),
+                SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40),
+                      child: Image.network(
+                        (orderData.driver != null &&
+                                orderData.driver!.avatar != null)
+                            ? orderData.driver!.avatar!
+                            : 'https://i.stack.imgur.com/l60Hf.png',
+                        fit: BoxFit.cover,
+                      ),
+                    )),
                 const SizedBox(
                   width: 12,
                 ),

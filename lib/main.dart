@@ -11,9 +11,11 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pharmacy_arrival/generated/l10n.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/dependency_initializer/dependency_initializer.dart';
 import 'package:pharmacy_arrival/main/dependency_provider/dependency_provider.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/main/top_level_blocs/top_level_blocs.dart';
 import 'package:pharmacy_arrival/managers/secure_storage_manager/secure_storage_manager.dart';
 import 'package:pharmacy_arrival/managers/user_store.dart';
@@ -118,8 +120,20 @@ void main() async {
   );
 }
 
-class MainAuthorization extends StatelessWidget {
+class MainAuthorization extends StatefulWidget {
   const MainAuthorization({Key? key}) : super(key: key);
+
+  @override
+  State<MainAuthorization> createState() => _MainAuthorizationState();
+}
+
+class _MainAuthorizationState extends State<MainAuthorization> {
+  @override
+  void initState() {
+    BlocProvider.of<OrganizationCubit>(context).loadOrganizations();
+    BlocProvider.of<CounteragentsCubit>(context).loadCounteragents();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -210,10 +224,11 @@ class _RestartWidgetState extends State<RestartWidget> {
   }
 }
 
- class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

@@ -34,7 +34,7 @@ class GoodsListScreen extends StatefulWidget {
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
   String _currentScan = '';
-
+  FocusNode focusNode = FocusNode();
   @override
   void initState() {
     if (widget.isFromPharmacyPage) {
@@ -52,7 +52,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
     return AppLoaderOverlay(
       child: RawKeyboardListener(
         autofocus: true,
-        focusNode: FocusNode(),
+        focusNode: focusNode,
         onKey: (event) async {
           if (event.logicalKey.keyLabel != 'Enter') {
             _currentScan += event.logicalKey.keyLabel;
@@ -733,6 +733,13 @@ class _SpecifyingNumberManually extends StatefulWidget {
 
 class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
   TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
+  @override
+  void dispose() {
+    controller.clear();
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -779,6 +786,7 @@ class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
             ),
             const Spacer(),
             TextField(
+              focusNode: focusNode,
               keyboardType: TextInputType.number,
               controller: controller,
               decoration: const InputDecoration(
@@ -810,13 +818,15 @@ class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
                       'Укажите правильную количеству',
                     );
                   } else {
-                    Navigator.pop(context);
                     BlocProvider.of<GoodsListScreenCubit>(context)
                         .scannerBarCode(
                       widget.productDTO.barcode!,
                       widget.orderID,
                       int.parse(controller.text),
                     );
+                    controller.clear();
+                    focusNode.dispose();
+                    Navigator.pop(context);
                   }
                 }
               },

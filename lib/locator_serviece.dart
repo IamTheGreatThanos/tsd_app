@@ -15,6 +15,8 @@ import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 import 'package:pharmacy_arrival/domain/repositories/pharmacy_repository.dart';
 import 'package:pharmacy_arrival/domain/repositories/warehouse_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
+import 'package:pharmacy_arrival/domain/usecases/get_countragents.dart';
+import 'package:pharmacy_arrival/domain/usecases/get_organizations.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
@@ -23,6 +25,8 @@ import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharma
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_product_by_id.dart';
 import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
@@ -39,6 +43,8 @@ Future<void> initLocator() async {
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => SignatureScreenCubit(sl()));
+  sl.registerFactory(() => OrganizationCubit(sl()));
+  sl.registerFactory(() => CounteragentsCubit(sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -55,6 +61,9 @@ Future<void> initLocator() async {
 
   sl.registerLazySingleton(() => AuthCheck(sl()));
   sl.registerLazySingleton(() => SignInUser(sl()));
+  sl.registerLazySingleton(() => GetOrganizations(sl()));
+  sl.registerLazySingleton(() => GetCountragents(sl()));
+
 
   ///Warehouse usecases
   sl.registerLazySingleton(() => GetWarehouseArrivalOrders(sl()));

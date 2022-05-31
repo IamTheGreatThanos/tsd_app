@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_helper.dart';
+import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 
 abstract class AuthRemoteDS {
@@ -10,6 +12,9 @@ abstract class AuthRemoteDS {
     required String login,
     required String password,
   });
+
+  Future<List<CounteragentDTO>> getOrganizations();
+  Future<List<CounteragentDTO>> getCountragents();
 }
 
 class AuthRemoteDSImpl extends AuthRemoteDS {
@@ -35,9 +40,58 @@ class AuthRemoteDSImpl extends AuthRemoteDS {
       );
       log('signIn method in authremoteds:: ${response.statusCode}, ${response.data}, $login, $password');
       return user;
-      
     } on DioError catch (e) {
       log('##### signIn api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<CounteragentDTO>> getOrganizations() async {
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get('$SERVER_/api/organization');
+      log('##### getOrganizations api:: ${response.statusCode}');
+
+      return compute<List, List<CounteragentDTO>>(
+        (List list) {
+          return list
+              .map((e) => CounteragentDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        response.data as List<dynamic>,
+      );
+    } on DioError catch (e) {
+      log('##### getWarehouseArrivalOrders api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+  
+  @override
+  Future<List<CounteragentDTO>> getCountragents() async {
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get('$SERVER_/api/counteragent');
+      log('##### getCountragents api:: ${response.statusCode}');
+
+      return compute<List, List<CounteragentDTO>>(
+        (List list) {
+          return list
+              .map((e) => CounteragentDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        response.data as List<dynamic>,
+      );
+    } on DioError catch (e) {
+      log('##### getWarehouseArrivalOrders api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

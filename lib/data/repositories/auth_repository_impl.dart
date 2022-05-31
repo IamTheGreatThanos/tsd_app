@@ -6,6 +6,7 @@ import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/core/platform/network_info.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/auth_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
+import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 
@@ -19,7 +20,6 @@ class AuthRepositoryImpl extends AuthRepository {
     required this.remoteDS,
     required this.networkInfo,
   });
-
 
   @override
   Future<Either<Failure, User>> signInUser({
@@ -45,7 +45,7 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-    @override
+  @override
   Future<Either<Failure, User>> authCheck() async {
     try {
       final user = await localDS.getUserFromCache();
@@ -57,6 +57,36 @@ class AuthRepositoryImpl extends AuthRepository {
       return Right(user);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CounteragentDTO>>> getOrganizations() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<CounteragentDTO> organizations =
+            await remoteDS.getOrganizations();
+        return Right(organizations);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<CounteragentDTO>>> getCountragents() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<CounteragentDTO> organizations =
+            await remoteDS.getCountragents();
+        return Right(organizations);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
     }
   }
 }

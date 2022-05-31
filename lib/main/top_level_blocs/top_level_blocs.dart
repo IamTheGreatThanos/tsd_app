@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/bloc_auth.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
@@ -39,6 +41,12 @@ class TopLevelBlocs extends StatelessWidget {
         ),
          BlocProvider<SignatureScreenCubit>(
           create: (context) => sl<SignatureScreenCubit>(),
+        ),
+         BlocProvider<OrganizationCubit>(
+          create: (context) => sl<OrganizationCubit>(),
+        ),
+         BlocProvider<CounteragentsCubit>(
+          create: (context) => sl<CounteragentsCubit>(),
         ),
       ],
       child: child,

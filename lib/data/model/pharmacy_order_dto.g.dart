@@ -30,6 +30,12 @@ _$_PharmacyOrderDTO _$$_PharmacyOrderDTOFromJson(Map<String, dynamic> json) =>
       driver: json['driver'] == null
           ? null
           : User.fromJson(json['driver'] as Map<String, dynamic>),
+      sender: json['sender'] == null
+          ? null
+          : CounteragentDTO.fromJson(json['sender'] as Map<String, dynamic>),
+      recipient: json['recipient'] == null
+          ? null
+          : CounteragentDTO.fromJson(json['recipient'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_PharmacyOrderDTOToJson(_$_PharmacyOrderDTO instance) =>
@@ -54,4 +60,6 @@ Map<String, dynamic> _$$_PharmacyOrderDTOToJson(_$_PharmacyOrderDTO instance) =>
       'invoice_date': instance.invoiceDate,
       'created_at': instance.createdAt,
       'driver': instance.driver,
+      'sender': instance.sender,
+      'recipient': instance.recipient,
     };

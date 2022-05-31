@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 
 part 'pharmacy_order_dto.freezed.dart';
@@ -31,6 +32,8 @@ class PharmacyOrderDTO with _$PharmacyOrderDTO {
     @JsonKey(name: 'invoice_date') String? invoiceDate,
     @JsonKey(name: 'created_at') String? createdAt,
     User? driver,
+    CounteragentDTO? sender,
+    CounteragentDTO? recipient,
   }) = _PharmacyOrderDTO;
 
   factory PharmacyOrderDTO.fromJson(Map<String, dynamic> json) => _$PharmacyOrderDTOFromJson(json);

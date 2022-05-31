@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
+    as countragents;
+import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart' as organization;
 import 'package:pharmacy_arrival/screens/barcode_scanner/barcode_scanner_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data_scanned/move_data_scanned_screen.dart';
@@ -7,10 +12,8 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/toast_service.dart';
 import 'package:provider/provider.dart';
-
-import '../../../data/model/product_dto.dart';
-import '../../../widgets/toast_service.dart';
 
 class MoveDataScreen extends StatefulWidget {
   const MoveDataScreen({
@@ -22,6 +25,25 @@ class MoveDataScreen extends StatefulWidget {
 }
 
 class _MoveDataScreenState extends State<MoveDataScreen> {
+  List<DropdownMenuItem<CounteragentDTO>> senders = [];
+
+  String sender = 'Не выбран';
+  int senderId = -1;
+  String recipient = 'Не выбран';
+  int recipientId = -1;
+  String organizationName = "Организация не выбрана";
+  int organizationId = -1;
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("USA"), value: "USA"),
+      DropdownMenuItem(child: Text("Canada"), value: "Canada"),
+      DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
+      DropdownMenuItem(child: Text("England"), value: "England"),
+    ];
+    return menuItems;
+  }
+
+  String selectedValue = "USA";
   TextEditingController numberController = TextEditingController();
 
   @override
@@ -37,7 +59,8 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                 decoration: BoxDecoration(
                   color: ColorPalette.white,
                   borderRadius: BorderRadius.circular(16),
@@ -56,14 +79,59 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                         const SizedBox(
                           width: 16,
                         ),
-                        Flexible(child: _vmodel.sender)
+                        BlocBuilder<countragents.CounteragentsCubit,
+                            countragents.CounteragentState>(
+                          builder: (context, state) {
+                            return state.maybeWhen(
+                              loadingState: () =>
+                                  const CircularProgressIndicator(
+                                color: Colors.amber,
+                              ),
+                              loadedState: (counteragents) {
+                                return DropdownButton(
+                                  underline: const SizedBox(),
+                                  value: sender,
+                                  icon: SvgPicture.asset(
+                                    "assets/images/svg/chevron_right.svg",
+                                  ),
+                                  onChanged: (String? newValue) {
+                                    sender = newValue!;
+                                    for (int i = 0;
+                                        i < counteragents.length;
+                                        i++) {
+                                      if (sender == counteragents[i].name &&
+                                          counteragents[i].id != -1) {
+                                        senderId = counteragents[i].id;
+                                      }
+                                    }
+                                    setState(() {});
+                                  },
+                                  items: counteragents
+                                      .map((e) => e.name)
+                                      .toList()
+                                      .map<DropdownMenuItem<String>>(
+                                          (String? value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        "$value",
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                              orElse: () {
+                                return const CircularProgressIndicator(
+                                  color: Colors.red,
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Divider(
-                        color: ColorPalette.borderGrey,
-                      ),
+                    const Divider(
+                      color: ColorPalette.borderGrey,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +145,55 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                         const SizedBox(
                           width: 16,
                         ),
-                        Flexible(child: _vmodel.recipient)
+                        BlocBuilder<countragents.CounteragentsCubit,
+                            countragents.CounteragentState>(
+                          builder: (context, state) {
+                            return state.maybeWhen(
+                              loadingState: () =>
+                                  const CircularProgressIndicator(
+                                color: Colors.amber,
+                              ),
+                              loadedState: (counteragents) {
+                                return DropdownButton(
+                                  underline: const SizedBox(),
+                                  value: recipient,
+                                  icon: SvgPicture.asset(
+                                    "assets/images/svg/chevron_right.svg",
+                                  ),
+                                  onChanged: (String? newValue) {
+                                    recipient = newValue!;
+                                    for (int i = 0;
+                                        i < counteragents.length;
+                                        i++) {
+                                      if (recipient == counteragents[i].name &&
+                                          counteragents[i].id != -1) {
+                                        recipientId = counteragents[i].id;
+                                      }
+                                    }
+                                    setState(() {});
+                                  },
+                                  items: counteragents
+                                      .map((e) => e.name)
+                                      .toList()
+                                      .map<DropdownMenuItem<String>>(
+                                          (String? value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        "$value",
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                              orElse: () {
+                                return const CircularProgressIndicator(
+                                  color: Colors.red,
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ],
@@ -87,7 +203,8 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                 height: 16,
               ),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                 decoration: BoxDecoration(
                   color: ColorPalette.white,
                   borderRadius: BorderRadius.circular(16),
@@ -101,8 +218,56 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                         color: ColorPalette.grey400,
                       ),
                     ),
-                    Flexible(child: _vmodel.organization),
-                    SvgPicture.asset("assets/images/svg/chevron_right.svg"),
+                      BlocBuilder<organization.OrganizationCubit,
+                            organization.OrganizationState>(
+                          builder: (context, state) {
+                            return state.maybeWhen(
+                              loadingState: () =>
+                                  const CircularProgressIndicator(
+                                color: Colors.amber,
+                              ),
+                              loadedState: (organizations) {
+                                return DropdownButton(
+                                  underline: const SizedBox(),
+                                  value: organizationName,
+                                  icon: SvgPicture.asset(
+                                    "assets/images/svg/chevron_right.svg",
+                                  ),
+                                  onChanged: (String? newValue) {
+                                    organizationName = newValue!;
+                                    for (int i = 0;
+                                        i < organizations.length;
+                                        i++) {
+                                      if (organizationName == organizations[i].name &&
+                                          organizations[i].id != -1) {
+                                        organizationId = organizations[i].id;
+                                      }
+                                    }
+                                    setState(() {});
+                                  },
+                                  items: organizations
+                                      .map((e) => e.name)
+                                      .toList()
+                                      .map<DropdownMenuItem<String>>(
+                                          (String? value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        "$value",
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                              orElse: () {
+                                return const CircularProgressIndicator(
+                                  color: Colors.red,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                     
                   ],
                 ),
               ),
@@ -110,7 +275,8 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                 height: 16,
               ),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                 decoration: BoxDecoration(
                   color: ColorPalette.white,
                   borderRadius: BorderRadius.circular(16),
@@ -124,8 +290,18 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                         color: ColorPalette.grey400,
                       ),
                     ),
-                    Flexible(child: _vmodel.moveType),
-                    SvgPicture.asset("assets/images/svg/chevron_right.svg"),
+                    DropdownButton(
+                      menuMaxHeight: 20,
+                      icon: SvgPicture.asset(
+                        "assets/images/svg/chevron_right.svg",
+                      ),
+                      underline: const SizedBox(),
+                      value: selectedValue,
+                      items: dropdownItems,
+                      onChanged: (String? value) {
+                        selectedValue = value!;
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -142,7 +318,10 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                         title: "Отсканируйте  товары".toUpperCase(),
                         callback: (code) {
                           toastServiceSuccess(code);
-                          AppRouter.push(context, MoveDataScannedScreen());
+                          AppRouter.push(
+                            context,
+                            const MoveDataScannedScreen(),
+                          );
                         },
                       ),
                     );

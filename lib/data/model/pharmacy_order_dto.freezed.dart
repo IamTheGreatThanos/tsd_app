@@ -53,6 +53,8 @@ mixin _$PharmacyOrderDTO {
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
   User? get driver => throw _privateConstructorUsedError;
+  CounteragentDTO? get sender => throw _privateConstructorUsedError;
+  CounteragentDTO? get recipient => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -85,9 +87,13 @@ abstract class $PharmacyOrderDTOCopyWith<$Res> {
       String? bin,
       @JsonKey(name: 'invoice_date') String? invoiceDate,
       @JsonKey(name: 'created_at') String? createdAt,
-      User? driver});
+      User? driver,
+      CounteragentDTO? sender,
+      CounteragentDTO? recipient});
 
   $UserCopyWith<$Res>? get driver;
+  $CounteragentDTOCopyWith<$Res>? get sender;
+  $CounteragentDTOCopyWith<$Res>? get recipient;
 }
 
 /// @nodoc
@@ -121,6 +127,8 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res>
     Object? invoiceDate = freezed,
     Object? createdAt = freezed,
     Object? driver = freezed,
+    Object? sender = freezed,
+    Object? recipient = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -203,6 +211,14 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res>
           ? _value.driver
           : driver // ignore: cast_nullable_to_non_nullable
               as User?,
+      sender: sender == freezed
+          ? _value.sender
+          : sender // ignore: cast_nullable_to_non_nullable
+              as CounteragentDTO?,
+      recipient: recipient == freezed
+          ? _value.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as CounteragentDTO?,
     ));
   }
 
@@ -214,6 +230,28 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res>
 
     return $UserCopyWith<$Res>(_value.driver!, (value) {
       return _then(_value.copyWith(driver: value));
+    });
+  }
+
+  @override
+  $CounteragentDTOCopyWith<$Res>? get sender {
+    if (_value.sender == null) {
+      return null;
+    }
+
+    return $CounteragentDTOCopyWith<$Res>(_value.sender!, (value) {
+      return _then(_value.copyWith(sender: value));
+    });
+  }
+
+  @override
+  $CounteragentDTOCopyWith<$Res>? get recipient {
+    if (_value.recipient == null) {
+      return null;
+    }
+
+    return $CounteragentDTOCopyWith<$Res>(_value.recipient!, (value) {
+      return _then(_value.copyWith(recipient: value));
     });
   }
 }
@@ -245,10 +283,16 @@ abstract class _$$_PharmacyOrderDTOCopyWith<$Res>
       String? bin,
       @JsonKey(name: 'invoice_date') String? invoiceDate,
       @JsonKey(name: 'created_at') String? createdAt,
-      User? driver});
+      User? driver,
+      CounteragentDTO? sender,
+      CounteragentDTO? recipient});
 
   @override
   $UserCopyWith<$Res>? get driver;
+  @override
+  $CounteragentDTOCopyWith<$Res>? get sender;
+  @override
+  $CounteragentDTOCopyWith<$Res>? get recipient;
 }
 
 /// @nodoc
@@ -284,6 +328,8 @@ class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
     Object? invoiceDate = freezed,
     Object? createdAt = freezed,
     Object? driver = freezed,
+    Object? sender = freezed,
+    Object? recipient = freezed,
   }) {
     return _then(_$_PharmacyOrderDTO(
       id: id == freezed
@@ -366,6 +412,14 @@ class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
           ? _value.driver
           : driver // ignore: cast_nullable_to_non_nullable
               as User?,
+      sender: sender == freezed
+          ? _value.sender
+          : sender // ignore: cast_nullable_to_non_nullable
+              as CounteragentDTO?,
+      recipient: recipient == freezed
+          ? _value.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as CounteragentDTO?,
     ));
   }
 }
@@ -393,7 +447,9 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
       this.bin,
       @JsonKey(name: 'invoice_date') this.invoiceDate,
       @JsonKey(name: 'created_at') this.createdAt,
-      this.driver});
+      this.driver,
+      this.sender,
+      this.recipient});
 
   factory _$_PharmacyOrderDTO.fromJson(Map<String, dynamic> json) =>
       _$$_PharmacyOrderDTOFromJson(json);
@@ -452,10 +508,14 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
   final String? createdAt;
   @override
   final User? driver;
+  @override
+  final CounteragentDTO? sender;
+  @override
+  final CounteragentDTO? recipient;
 
   @override
   String toString() {
-    return 'PharmacyOrderDTO(id: $id, userId: $userId, driverId: $driverId, senderId: $senderId, recipientId: $recipientId, status: $status, number: $number, container: $container, departureTime: $departureTime, fromAddress: $fromAddress, fromCityName: $fromCityName, toAddress: $toAddress, toCityName: $toCityName, amount: $amount, incomingNumber: $incomingNumber, incomingDate: $incomingDate, bin: $bin, invoiceDate: $invoiceDate, createdAt: $createdAt, driver: $driver)';
+    return 'PharmacyOrderDTO(id: $id, userId: $userId, driverId: $driverId, senderId: $senderId, recipientId: $recipientId, status: $status, number: $number, container: $container, departureTime: $departureTime, fromAddress: $fromAddress, fromCityName: $fromCityName, toAddress: $toAddress, toCityName: $toCityName, amount: $amount, incomingNumber: $incomingNumber, incomingDate: $incomingDate, bin: $bin, invoiceDate: $invoiceDate, createdAt: $createdAt, driver: $driver, sender: $sender, recipient: $recipient)';
   }
 
   @override
@@ -490,7 +550,9 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
             const DeepCollectionEquality()
                 .equals(other.invoiceDate, invoiceDate) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.driver, driver));
+            const DeepCollectionEquality().equals(other.driver, driver) &&
+            const DeepCollectionEquality().equals(other.sender, sender) &&
+            const DeepCollectionEquality().equals(other.recipient, recipient));
   }
 
   @JsonKey(ignore: true)
@@ -516,7 +578,9 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
         const DeepCollectionEquality().hash(bin),
         const DeepCollectionEquality().hash(invoiceDate),
         const DeepCollectionEquality().hash(createdAt),
-        const DeepCollectionEquality().hash(driver)
+        const DeepCollectionEquality().hash(driver),
+        const DeepCollectionEquality().hash(sender),
+        const DeepCollectionEquality().hash(recipient)
       ]);
 
   @JsonKey(ignore: true)
@@ -551,7 +615,9 @@ abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
       final String? bin,
       @JsonKey(name: 'invoice_date') final String? invoiceDate,
       @JsonKey(name: 'created_at') final String? createdAt,
-      final User? driver}) = _$_PharmacyOrderDTO;
+      final User? driver,
+      final CounteragentDTO? sender,
+      final CounteragentDTO? recipient}) = _$_PharmacyOrderDTO;
 
   factory _PharmacyOrderDTO.fromJson(Map<String, dynamic> json) =
       _$_PharmacyOrderDTO.fromJson;
@@ -609,6 +675,10 @@ abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
   String? get createdAt => throw _privateConstructorUsedError;
   @override
   User? get driver => throw _privateConstructorUsedError;
+  @override
+  CounteragentDTO? get sender => throw _privateConstructorUsedError;
+  @override
+  CounteragentDTO? get recipient => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PharmacyOrderDTOCopyWith<_$_PharmacyOrderDTO> get copyWith =>
