@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
     as countragents;
-import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart' as organization;
+import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart'
+    as organization;
 import 'package:pharmacy_arrival/screens/barcode_scanner/barcode_scanner_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data_scanned/move_data_scanned_screen.dart';
@@ -25,7 +26,6 @@ class MoveDataScreen extends StatefulWidget {
 }
 
 class _MoveDataScreenState extends State<MoveDataScreen> {
-
   List<DropdownMenuItem<CounteragentDTO>> senders = [];
 
   String sender = 'Не выбран';
@@ -34,17 +34,16 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
   int recipientId = -1;
   String organizationName = "Организация не выбрана";
   int organizationId = -1;
+  String moveType = "Между аптеками";
+
   List<DropdownMenuItem<String>> get dropdownItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("USA"), value: "USA"),
-      DropdownMenuItem(child: Text("Canada"), value: "Canada"),
-      DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
-      DropdownMenuItem(child: Text("England"), value: "England"),
+    const List<DropdownMenuItem<String>> moveTypes = [
+      DropdownMenuItem(value: "Между аптеками", child: Text("Между аптеками")),
+      DropdownMenuItem(value: "Между складами", child: Text("Между складами")),
     ];
-    return menuItems;
+    return moveTypes;
   }
 
-  String selectedValue = "USA";
   TextEditingController numberController = TextEditingController();
 
   @override
@@ -92,6 +91,7 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                                 return DropdownButton(
                                   underline: const SizedBox(),
                                   value: sender,
+                                  alignment: AlignmentDirectional.centerEnd,
                                   icon: SvgPicture.asset(
                                     "assets/images/svg/chevron_right.svg",
                                   ),
@@ -158,6 +158,7 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                                 return DropdownButton(
                                   underline: const SizedBox(),
                                   value: recipient,
+                                  alignment: AlignmentDirectional.centerEnd,
                                   icon: SvgPicture.asset(
                                     "assets/images/svg/chevron_right.svg",
                                   ),
@@ -219,56 +220,54 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                         color: ColorPalette.grey400,
                       ),
                     ),
-                      BlocBuilder<organization.OrganizationCubit,
-                            organization.OrganizationState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              loadingState: () =>
-                                  const CircularProgressIndicator(
-                                color: Colors.amber,
+                    BlocBuilder<organization.OrganizationCubit,
+                        organization.OrganizationState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          loadingState: () => const CircularProgressIndicator(
+                            color: Colors.amber,
+                          ),
+                          loadedState: (organizations) {
+                            return DropdownButton(
+                              underline: const SizedBox(),
+                              value: organizationName,
+                              alignment: AlignmentDirectional.centerEnd,
+                              icon: SvgPicture.asset(
+                                "assets/images/svg/chevron_right.svg",
                               ),
-                              loadedState: (organizations) {
-                                return DropdownButton(
-                                  underline: const SizedBox(),
-                                  value: organizationName,
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svg/chevron_right.svg",
+                              onChanged: (String? newValue) {
+                                organizationName = newValue!;
+                                for (int i = 0; i < organizations.length; i++) {
+                                  if (organizationName ==
+                                          organizations[i].name &&
+                                      organizations[i].id != -1) {
+                                    organizationId = organizations[i].id;
+                                  }
+                                }
+                                setState(() {});
+                              },
+                              items: organizations
+                                  .map((e) => e.name)
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>(
+                                      (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    "$value",
                                   ),
-                                  onChanged: (String? newValue) {
-                                    organizationName = newValue!;
-                                    for (int i = 0;
-                                        i < organizations.length;
-                                        i++) {
-                                      if (organizationName == organizations[i].name &&
-                                          organizations[i].id != -1) {
-                                        organizationId = organizations[i].id;
-                                      }
-                                    }
-                                    setState(() {});
-                                  },
-                                  items: organizations
-                                      .map((e) => e.name)
-                                      .toList()
-                                      .map<DropdownMenuItem<String>>(
-                                          (String? value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        "$value",
-                                      ),
-                                    );
-                                  }).toList(),
                                 );
-                              },
-                              orElse: () {
-                                return const CircularProgressIndicator(
-                                  color: Colors.red,
-                                );
-                              },
+                              }).toList(),
                             );
                           },
-                        ),
-                     
+                          orElse: () {
+                            return const CircularProgressIndicator(
+                              color: Colors.red,
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -292,15 +291,15 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
                       ),
                     ),
                     DropdownButton(
-                      menuMaxHeight: 20,
                       icon: SvgPicture.asset(
                         "assets/images/svg/chevron_right.svg",
                       ),
                       underline: const SizedBox(),
-                      value: selectedValue,
+                      value: moveType,
                       items: dropdownItems,
+                      alignment: AlignmentDirectional.centerEnd,
                       onChanged: (String? value) {
-                        selectedValue = value!;
+                        moveType = value!;
                       },
                     ),
                   ],
