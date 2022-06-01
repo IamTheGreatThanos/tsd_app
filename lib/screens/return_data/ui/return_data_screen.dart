@@ -118,7 +118,6 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                     AppRouter.push(
                       context,
                       BarcodeScannerScreen(
-                        title: "Отсканируйте  товары".toUpperCase(),
                         callback: (code) {
                           toastServiceSuccess(code);
                           AppRouter.push(

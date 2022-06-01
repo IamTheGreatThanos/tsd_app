@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/network/models/dto_models/response/dto_return_data.dart';
 import 'package:pharmacy_arrival/network/repository/global_repository.dart';
-import 'package:pharmacy_arrival/screens/move_data_scanned/bloc/bloc_move_data.dart';
 import 'package:pharmacy_arrival/screens/return_data_scanned/bloc/bloc_return_data.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';

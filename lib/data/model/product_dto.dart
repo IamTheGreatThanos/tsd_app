@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product_dto.freezed.dart';
@@ -13,7 +15,7 @@ class ProductDTO with _$ProductDTO {
     String? name,
     String? image,
     String? barcode,
-    String? status,
+    int? status,
     @JsonKey(name:'total_count') int? totalCount,
     @JsonKey(name: 'scan_count') int? scanCount,
     String? producer,
@@ -24,7 +26,17 @@ class ProductDTO with _$ProductDTO {
     @JsonKey(name: 're_sorting') int? reSorting,
     @JsonKey(name: 'created_at') String? createdAt,
     @JsonKey(name: 'updated_at') String? updatedAt,
+    bool? isReady,
   }) = _ProductDTO;
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) => _$ProductDTOFromJson(json);
+
+    static String encode(List<ProductDTO> list) => jsonEncode(
+        list.map<Map<String, dynamic>>((ProductDTO e) => e.toJson()).toList(),
+      );
+
+  static List<ProductDTO> decode(String list) => (jsonDecode(list) as List<dynamic>)
+      .map<ProductDTO>((e) => ProductDTO.fromJson(e as Map<String, dynamic>))
+      .toList();
+
 }

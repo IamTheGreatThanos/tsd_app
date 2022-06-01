@@ -26,7 +26,7 @@ mixin _$ProductDTO {
   String? get name => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   String? get barcode => throw _privateConstructorUsedError;
-  String? get status => throw _privateConstructorUsedError;
+  int? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_count')
   int? get totalCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'scan_count')
@@ -42,6 +42,7 @@ mixin _$ProductDTO {
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  bool? get isReady => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,7 +61,7 @@ abstract class $ProductDTOCopyWith<$Res> {
       String? name,
       String? image,
       String? barcode,
-      String? status,
+      int? status,
       @JsonKey(name: 'total_count') int? totalCount,
       @JsonKey(name: 'scan_count') int? scanCount,
       String? producer,
@@ -70,7 +71,8 @@ abstract class $ProductDTOCopyWith<$Res> {
       int? underachievement,
       @JsonKey(name: 're_sorting') int? reSorting,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? isReady});
 }
 
 /// @nodoc
@@ -99,6 +101,7 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
     Object? reSorting = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? isReady = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -124,7 +127,7 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       totalCount: totalCount == freezed
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -165,6 +168,10 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      isReady: isReady == freezed
+          ? _value.isReady
+          : isReady // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -182,7 +189,7 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       String? name,
       String? image,
       String? barcode,
-      String? status,
+      int? status,
       @JsonKey(name: 'total_count') int? totalCount,
       @JsonKey(name: 'scan_count') int? scanCount,
       String? producer,
@@ -192,7 +199,8 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       int? underachievement,
       @JsonKey(name: 're_sorting') int? reSorting,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? isReady});
 }
 
 /// @nodoc
@@ -223,6 +231,7 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
     Object? reSorting = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? isReady = freezed,
   }) {
     return _then(_$_ProductDTO(
       id: id == freezed
@@ -248,7 +257,7 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       totalCount: totalCount == freezed
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -289,6 +298,10 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      isReady: isReady == freezed
+          ? _value.isReady
+          : isReady // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -312,7 +325,8 @@ class _$_ProductDTO implements _ProductDTO {
       this.underachievement,
       @JsonKey(name: 're_sorting') this.reSorting,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt});
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      this.isReady});
 
   factory _$_ProductDTO.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDTOFromJson(json);
@@ -329,7 +343,7 @@ class _$_ProductDTO implements _ProductDTO {
   @override
   final String? barcode;
   @override
-  final String? status;
+  final int? status;
   @override
   @JsonKey(name: 'total_count')
   final int? totalCount;
@@ -355,10 +369,12 @@ class _$_ProductDTO implements _ProductDTO {
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  @override
+  final bool? isReady;
 
   @override
   String toString() {
-    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady)';
   }
 
   @override
@@ -384,7 +400,8 @@ class _$_ProductDTO implements _ProductDTO {
                 .equals(other.underachievement, underachievement) &&
             const DeepCollectionEquality().equals(other.reSorting, reSorting) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
+            const DeepCollectionEquality().equals(other.isReady, isReady));
   }
 
   @JsonKey(ignore: true)
@@ -406,7 +423,8 @@ class _$_ProductDTO implements _ProductDTO {
       const DeepCollectionEquality().hash(underachievement),
       const DeepCollectionEquality().hash(reSorting),
       const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(updatedAt));
+      const DeepCollectionEquality().hash(updatedAt),
+      const DeepCollectionEquality().hash(isReady));
 
   @JsonKey(ignore: true)
   @override
@@ -426,7 +444,7 @@ abstract class _ProductDTO implements ProductDTO {
       final String? name,
       final String? image,
       final String? barcode,
-      final String? status,
+      final int? status,
       @JsonKey(name: 'total_count') final int? totalCount,
       @JsonKey(name: 'scan_count') final int? scanCount,
       final String? producer,
@@ -436,7 +454,8 @@ abstract class _ProductDTO implements ProductDTO {
       final int? underachievement,
       @JsonKey(name: 're_sorting') final int? reSorting,
       @JsonKey(name: 'created_at') final String? createdAt,
-      @JsonKey(name: 'updated_at') final String? updatedAt}) = _$_ProductDTO;
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final bool? isReady}) = _$_ProductDTO;
 
   factory _ProductDTO.fromJson(Map<String, dynamic> json) =
       _$_ProductDTO.fromJson;
@@ -453,7 +472,7 @@ abstract class _ProductDTO implements ProductDTO {
   @override
   String? get barcode => throw _privateConstructorUsedError;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  int? get status => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'total_count')
   int? get totalCount => throw _privateConstructorUsedError;
@@ -479,6 +498,8 @@ abstract class _ProductDTO implements ProductDTO {
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  @override
+  bool? get isReady => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDTOCopyWith<_$_ProductDTO> get copyWith =>

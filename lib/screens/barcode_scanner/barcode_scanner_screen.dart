@@ -7,11 +7,10 @@ import 'package:pharmacy_arrival/widgets/camera/camera_shape.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
 class BarcodeScannerScreen extends StatefulWidget {
-  final String title;
   final Function(String) callback;
 
   const BarcodeScannerScreen(
-      {Key? key, required this.title, required this.callback})
+      {Key? key, required this.callback})
       : super(key: key);
 
   @override
@@ -25,7 +24,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.title,
+        title: "Отсканируйте  товары".toUpperCase(),
         leadingColor: const Color(0xFF28A745),
         textStyle: ThemeTextStyle.textStyle16w600,
         showLogo: false,

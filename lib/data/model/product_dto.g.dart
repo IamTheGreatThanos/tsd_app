@@ -13,7 +13,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String?,
       image: json['image'] as String?,
       barcode: json['barcode'] as String?,
-      status: json['status'] as String?,
+      status: json['status'] as int?,
       totalCount: json['total_count'] as int?,
       scanCount: json['scan_count'] as int?,
       producer: json['producer'] as String?,
@@ -24,6 +24,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       reSorting: json['re_sorting'] as int?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
+      isReady: json['isReady'] as bool?,
     );
 
 Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
@@ -44,4 +45,5 @@ Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
       're_sorting': instance.reSorting,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
+      'isReady': instance.isReady,
     };
