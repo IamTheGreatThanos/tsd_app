@@ -13,6 +13,9 @@ import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data_products/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 
@@ -40,31 +43,39 @@ class TopLevelBlocs extends StatelessWidget {
         BlocProvider<PharmacyArrivalScreenCubit>(
           create: (context) => sl<PharmacyArrivalScreenCubit>(),
         ),
-         BlocProvider<GoodsListScreenCubit>(
+        BlocProvider<GoodsListScreenCubit>(
           create: (context) => sl<GoodsListScreenCubit>(),
         ),
-         BlocProvider<SignatureScreenCubit>(
+        BlocProvider<SignatureScreenCubit>(
           create: (context) => sl<SignatureScreenCubit>(),
         ),
-         BlocProvider<OrganizationCubit>(
+        BlocProvider<OrganizationCubit>(
           create: (context) => sl<OrganizationCubit>(),
         ),
-         BlocProvider<CounteragentsCubit>(
+        BlocProvider<CounteragentsCubit>(
           create: (context) => sl<CounteragentsCubit>(),
         ),
         BlocProvider<MoveCubit>(
           create: (context) => sl<MoveCubit>(),
         ),
-         BlocProvider<MoveDataScreenCubit>(
+        BlocProvider<MoveDataScreenCubit>(
           create: (context) => sl<MoveDataScreenCubit>(),
         ),
-         BlocProvider<MoveBarcodeScreenCubit>(
+        BlocProvider<MoveBarcodeScreenCubit>(
           create: (context) => sl<MoveBarcodeScreenCubit>(),
         ),
-         BlocProvider<MoveProductsScreenCubit>(
+        BlocProvider<MoveProductsScreenCubit>(
           create: (context) => sl<MoveProductsScreenCubit>(),
         ),
-        
+        BlocProvider<ReturnCubit>(
+          create: (context) => sl<ReturnCubit>(),
+        ),
+        BlocProvider<ReturnDataScreenCubit>(
+          create: (context) => sl<ReturnDataScreenCubit>(),
+        ),
+        BlocProvider<ReturnProductsScreenCubit>(
+          create: (context) => sl<ReturnProductsScreenCubit>(),
+        ),
       ],
       child: child,
     );

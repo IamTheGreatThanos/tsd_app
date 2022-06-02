@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/move_data_products/move_products_screen.dart';
+import 'package:pharmacy_arrival/screens/return_data_products/return_products_cubit/return_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data_products/return_products_screen.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
@@ -12,24 +11,10 @@ import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
-class MoveBarcodeScreen extends StatefulWidget {
+class ReturnBarcodeScreen extends StatelessWidget {
   final bool isFromProductsPage;
-  final MoveDataDTO moveDataDTO;
-  const MoveBarcodeScreen({
-    required this.moveDataDTO,
-    Key? key,
-    required this.isFromProductsPage,
-  }) : super(key: key);
-
-  @override
-  State<MoveBarcodeScreen> createState() => _MoveBarcodeScreenState();
-}
-
-class _MoveBarcodeScreenState extends State<MoveBarcodeScreen> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  const ReturnBarcodeScreen({Key? key, required this.isFromProductsPage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +36,14 @@ class _MoveBarcodeScreenState extends State<MoveBarcodeScreen> {
                 context.loaderOverlay.show();
               },
               loadedState: (ProductDTO product) {
-                if (widget.isFromProductsPage) {
-                  BlocProvider.of<MoveProductsScreenCubit>(context)
-                      .getProducts(moveOrderId: widget.moveDataDTO.id);
+                if (isFromProductsPage) {
+                  BlocProvider.of<ReturnProductsScreenCubit>(context)
+                      .getProducts();
                   Navigator.pop(context);
                 } else {
                   AppRouter.pushReplacement(
                     context,
-                    MoveProductsScreen(
-                      moveDataDTO: widget.moveDataDTO,
-                    ),
+                   const ReturnProductsScreen(),
                   );
                 }
                 context.loaderOverlay.hide();
@@ -75,7 +58,7 @@ class _MoveBarcodeScreenState extends State<MoveBarcodeScreen> {
             return BarcodeScannerWidget(
               callback: (barcode) {
                 BlocProvider.of<MoveBarcodeScreenCubit>(context)
-                    .getProductByBarcode(barcode: barcode, isMoveProduct: true);
+                    .getProductByBarcode(barcode: barcode,isMoveProduct: false);
               },
             );
           },

@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/screens/fill_move_details/fill_number.dart';
-import 'package:pharmacy_arrival/screens/move_data/ui/move_barcode_screen.dart';
-import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/return_barcode_screen.dart';
+import 'package:pharmacy_arrival/screens/return_data_products/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
-import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:pharmacy_arrival/widgets/successfully_send_screen.dart';
 
-class MoveProductsScreen extends StatefulWidget {
-  final MoveDataDTO moveDataDTO;
-  const MoveProductsScreen({Key? key, required this.moveDataDTO})
-      : super(key: key);
+class ReturnProductsScreen extends StatefulWidget {
+  const ReturnProductsScreen({Key? key}) : super(key: key);
 
   @override
-  State<MoveProductsScreen> createState() => _MoveProductsScreenState();
+  State<ReturnProductsScreen> createState() => _ReturnProductsScreenState();
 }
 
-class _MoveProductsScreenState extends State<MoveProductsScreen> {
+class _ReturnProductsScreenState extends State<ReturnProductsScreen> {
   @override
   void initState() {
-    BlocProvider.of<MoveProductsScreenCubit>(context)
-        .getProducts(moveOrderId: widget.moveDataDTO.id);
+    BlocProvider.of<ReturnProductsScreenCubit>(context).getProducts();
     super.initState();
   }
 
@@ -44,8 +39,7 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
               onPressed: () {
                 AppRouter.push(
                   context,
-                  MoveBarcodeScreen(
-                    moveDataDTO: widget.moveDataDTO,
+                  const ReturnBarcodeScreen(
                     isFromProductsPage: true,
                   ),
                 );
@@ -56,30 +50,36 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
           ),
         ),
         appBar: CustomAppBar(
-          title: "Отсканированные".toUpperCase(),
-          // actions: [
-          //   Padding(
-          //     padding: const EdgeInsets.only(right: 12.0),
-          //     child: GestureDetector(
-          //       child: SvgPicture.asset("assets/images/svg/delete_scanned.svg"),
-          //     ),
-          //   ),
-          // ],
+          title: "на  расхождении".toUpperCase(),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 12.0),
+              child: GestureDetector(
+                child: SvgPicture.asset("assets/images/svg/delete_scanned.svg"),
+              ),
+            ),
+          ],
         ),
-        body: BlocConsumer<MoveProductsScreenCubit, MoveProductsScreenState>(
+        body:
+            BlocConsumer<ReturnProductsScreenCubit, ReturnProductsScreenState>(
           listener: (context, state) {
             state.maybeWhen(
-              
               finishedState: () {
-                Navigator.pop(context);
-                buildSuccessCustomSnackBar(context, "Успешно завершен");
+                AppRouter.pushAndRemoveUntilRoot(
+                  context,
+                  const SuccessfullySend(),
+                );
               },
               orElse: () {},
             );
           },
           builder: (context, state) {
             return state.maybeWhen(
-              loadedState: (products, isFinishable) {
+              loadedState: (
+                List<ProductDTO> products,
+                refundOrder,
+                isFinishable,
+              ) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12.0,
@@ -89,12 +89,13 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
                     children: [
                       Expanded(
                         child: ListView.builder(
+                          // physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 16.0),
                               child: _BuildGoodDetails(
                                 good: products[index],
-                                moveDataId: widget.moveDataDTO.id,
+                                refundDataDTO: refundOrder,
                               ),
                             );
                           },
@@ -112,10 +113,10 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
                         padding: EdgeInsets.zero,
                         onPressed: isFinishable == true
                             ? () {
-                                BlocProvider.of<MoveProductsScreenCubit>(
+                                BlocProvider.of<ReturnProductsScreenCubit>(
                                   context,
                                 ).updateMovingOrderStatus(
-                                  moveOrderId: widget.moveDataDTO.id,
+                                  refundOrderId: refundOrder.id,
                                   status: 2,
                                 );
                               }
@@ -134,12 +135,16 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
               },
               loadingState: () {
                 return const Center(
-                  child: CircularProgressIndicator(color: Colors.amber),
+                  child: CircularProgressIndicator(
+                    color: Colors.amber,
+                  ),
                 );
               },
               orElse: () {
                 return const Center(
-                  child: CircularProgressIndicator(color: Colors.red),
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
+                  ),
                 );
               },
             );
@@ -152,12 +157,12 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
 
 class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO good;
-  final int moveDataId;
+  final RefundDataDTO refundDataDTO;
 
   const _BuildGoodDetails({
     Key? key,
     required this.good,
-    required this.moveDataId,
+    required this.refundDataDTO,
   }) : super(key: key);
 
   @override
@@ -250,11 +255,10 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          AppRouter.push(
-                            context,
-                            FillNumberScreen(
-                              moveData: widget.good,
-                              moveOrderId: widget.moveDataId,
+                          _bottomSheet(
+                            _SpecifyQuantity(
+                              refundDataDTO: widget.refundDataDTO,
+                              productDTO: widget.good,
                             ),
                           );
                         },
@@ -268,7 +272,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            'Ввести серию',
+                            'Ввести количества',
                             style: ThemeTextStyle.textStyle14w600
                                 .copyWith(color: const Color(0xFF5CA7FF)),
                           ),
@@ -301,6 +305,120 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
       builder: (context) {
         return widget;
       },
+    );
+  }
+}
+
+class _SpecifyQuantity extends StatefulWidget {
+  final RefundDataDTO refundDataDTO;
+  final ProductDTO productDTO;
+  const _SpecifyQuantity({
+    Key? key,
+    required this.refundDataDTO,
+    required this.productDTO,
+  }) : super(key: key);
+
+  @override
+  State<_SpecifyQuantity> createState() => __SpecifyQuantityState();
+}
+
+class __SpecifyQuantityState extends State<_SpecifyQuantity> {
+  TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.3,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+        ),
+        padding: const EdgeInsets.only(
+          right: 16,
+          left: 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(
+                top: 14,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xffD9DBE9),
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'Укажите число вручную ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const Spacer(),
+            TextField(
+              focusNode: focusNode,
+              keyboardType: TextInputType.number,
+              controller: controller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Укажите число',
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            MaterialButton(
+              height: 40,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              color: ColorPalette.orange,
+              disabledColor: ColorPalette.orangeInactive,
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                if (controller.text.isEmpty) {
+                  Navigator.pop(context);
+                } else {
+                  BlocProvider.of<ReturnProductsScreenCubit>(context)
+                      .addRefundDataProduct(
+                    refundOrderId: widget.refundDataDTO.id,
+                    addingProduct: widget.productDTO.copyWith(
+                      totalCount: int.parse(controller.text),
+                    ),
+                  );
+                  Navigator.pop(context);
+                }
+              },
+              child: Center(
+                child: Text(
+                  "Отправить",
+                  style: ThemeTextStyle.textStyle14w600
+                      .copyWith(color: ColorPalette.white),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

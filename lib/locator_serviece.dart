@@ -2,21 +2,25 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pharmacy_arrival/core/platform/network_info.dart';
+import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/move_data_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/products_local_ds.dart';
+import 'package:pharmacy_arrival/data/datasource/local/refund_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/auth_remote_ds.dart';
-import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/move_data_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/pharmacy_arrival_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/products_remote_ds.dart';
+import 'package:pharmacy_arrival/data/datasource/remote/refund_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/warehouse_arrival_remote_ds.dart';
 import 'package:pharmacy_arrival/data/repositories/auth_repository_impl.dart';
 import 'package:pharmacy_arrival/data/repositories/move_data_repository_impl.dart';
 import 'package:pharmacy_arrival/data/repositories/pharmacy_repository_impl.dart';
+import 'package:pharmacy_arrival/data/repositories/refund_repository_impl.dart';
 import 'package:pharmacy_arrival/data/repositories/warehouse_repository_impl.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 import 'package:pharmacy_arrival/domain/repositories/move_data_repository.dart';
 import 'package:pharmacy_arrival/domain/repositories/pharmacy_repository.dart';
+import 'package:pharmacy_arrival/domain/repositories/refund_repository.dart';
 import 'package:pharmacy_arrival/domain/repositories/warehouse_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 import 'package:pharmacy_arrival/domain/usecases/get_countragents.dart';
@@ -38,6 +42,16 @@ import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/save_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_product_by_id.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/delete_refund_order_from_cache.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/delete_refund_products_from_cahce.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/get_refund_order_from_cache.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/get_refund_products_from_cache.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/add_refund_data_product.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/create_refund_order.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/get_products_refund.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/update_moving_order_status.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/save_redund_products_to_cahce.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/save_refund_order_to_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
@@ -49,6 +63,9 @@ import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data_products/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,9 +83,34 @@ Future<void> initLocator() async {
   sl.registerFactory(() => CounteragentsCubit(sl()));
   sl.registerFactory(() => MoveCubit(sl(), sl()));
   sl.registerFactory(() => MoveDataScreenCubit(sl(), sl()));
-  sl.registerFactory(() => MoveBarcodeScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(
-      () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(),sl(),sl()));
+      () => MoveBarcodeScreenCubit(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(
+    () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl()),
+  );
+  sl.registerFactory(
+    () => ReturnDataScreenCubit(
+      sl(),
+      sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => ReturnCubit(
+      sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => ReturnProductsScreenCubit(
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+    ),
+  );
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -113,6 +155,18 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => AddMoveDataProduct(sl()));
   sl.registerLazySingleton(() => UpdateMovingOrderStatus(sl()));
 
+  ///Refund usecases
+  sl.registerLazySingleton(() => CreateRefundOrder(sl()));
+  sl.registerLazySingleton(() => DeleteRefundOrderFromCache(sl()));
+  sl.registerLazySingleton(() => DeleteRefundProductsFromCache(sl()));
+  sl.registerLazySingleton(() => GetRefundOrderFromCache(sl()));
+  sl.registerLazySingleton(() => GetRefundProductsFromCache(sl()));
+  sl.registerLazySingleton(() => SaveRefundOrderToCache(sl()));
+  sl.registerLazySingleton(() => SaveRefundProductsToCache(sl()));
+  sl.registerLazySingleton(() => GetProductsRefund(sl()));
+  sl.registerLazySingleton(() => AddRefundDataProduct(sl()));
+  sl.registerLazySingleton(() => UpdateRefundOrderStatus(sl()));
+
   ///
   ///
   /// Repository
@@ -148,6 +202,15 @@ Future<void> initLocator() async {
       sl(),
     ),
   );
+  sl.registerLazySingleton<RefundRepository>(
+    () => RefundRepositoryImpl(
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+    ),
+  );
 
   ///
   ///
@@ -167,6 +230,9 @@ Future<void> initLocator() async {
   sl.registerLazySingleton<MoveDataRemoteDS>(
     () => MoveDataRemoteDSImpl(sl()),
   );
+  sl.registerLazySingleton<RefundRemoteDS>(
+    () => RefundRemoteDSImpl(sl()),
+  );
 
   ///
   ///
@@ -174,11 +240,14 @@ Future<void> initLocator() async {
   sl.registerLazySingleton<AuthLocalDS>(
     () => AuthLocalDSImpl(sharedPreferences: sl()),
   );
-  sl.registerLazySingleton<ProductsLoacalDS>(
-    () => ProductsLoacalDSImpl(sl()),
+  sl.registerLazySingleton<ProductsLocalDS>(
+    () => ProductsLocalDSImpl(sl()),
   );
   sl.registerLazySingleton<MoveDataLocalDS>(
     () => MoveDataLocalDSImpl(sl()),
+  );
+  sl.registerLazySingleton<RefundLocalDS>(
+    () => RefundLocalDSImpl(sl()),
   );
 
   ///

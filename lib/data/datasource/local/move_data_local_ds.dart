@@ -84,7 +84,7 @@ class MoveDataLocalDSImpl extends MoveDataLocalDS {
   }
 
   @override
-  Future<void> saveMoveProductsToCache({required List<ProductDTO> products}) {
+  Future<void> saveMoveProductsToCache({required List<ProductDTO> products}) async {
     final List<String> jsonCitiesList =
         products.map((person) => json.encode(person.toJson())).toList();
 

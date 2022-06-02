@@ -15,6 +15,7 @@ class MoveDataDTO with _$MoveDataDTO {
     @JsonKey(name: 'moving_type') int? movingType,
     @JsonKey(name: 'created_at') String? createdAt,
     @JsonKey(name: 'updated_at') String? updatedAt,
+    int? status,
     
   }) = _MoveDataDTO;
 

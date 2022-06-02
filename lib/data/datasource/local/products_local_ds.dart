@@ -7,7 +7,7 @@ import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class ProductsLoacalDS {
+abstract class ProductsLocalDS {
   Future<ProductDTO> getPharmacySelectedProductFromCahce();
 
   Future<void> setPharmacySelectedProductToCahce({
@@ -17,10 +17,10 @@ abstract class ProductsLoacalDS {
 
 const PHARMACY_SELECTED_PRODUCT = 'PHARMACY_SELECTED_PRODUCT';
 
-class ProductsLoacalDSImpl extends ProductsLoacalDS {
+class ProductsLocalDSImpl extends ProductsLocalDS {
   final SharedPreferences sharedPreferences;
 
-  ProductsLoacalDSImpl(this.sharedPreferences);
+  ProductsLocalDSImpl(this.sharedPreferences);
   @override
   Future<ProductDTO> getPharmacySelectedProductFromCahce() async {
     try {

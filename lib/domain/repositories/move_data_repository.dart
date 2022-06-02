@@ -4,6 +4,7 @@ import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 
 abstract class MoveDataRepository {
+  ///local methods
   Future<Either<Failure, MoveDataDTO>> getMoveDataFromCache();
   Future<Either<Failure, String>> saveMoveDataToCache({
     required MoveDataDTO moveDataDTO,
@@ -16,6 +17,7 @@ abstract class MoveDataRepository {
   });
   Future<Either<Failure, String>> deleteMoveProductsFromCache();
 
+  ///remote methods
   Future<Either<Failure, MoveDataDTO>> createMovingOrder({
     required int senderId,
     required int recipientId,
@@ -36,7 +38,7 @@ abstract class MoveDataRepository {
     required String barcode,
   });
 
-  Future<Either<Failure,MoveDataDTO>> updateMovingOrderStatus({
+  Future<Either<Failure, MoveDataDTO>> updateMovingOrderStatus({
     required int moveOrderId,
     required int status,
   });

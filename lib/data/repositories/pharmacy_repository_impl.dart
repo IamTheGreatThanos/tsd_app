@@ -16,7 +16,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   final AuthLocalDS authLocalDS;
   final NetworkInfo networkInfo;
   final ProductsRemoteDS productsRemoteDS;
-  final ProductsLoacalDS productsLoacalDS;
+  final ProductsLocalDS productsLoacalDS;
   PharmacyRepositoryImpl({
     required this.arrivalRemoteDS,
     required this.authLocalDS,

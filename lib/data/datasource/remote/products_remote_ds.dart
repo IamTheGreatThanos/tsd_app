@@ -17,9 +17,20 @@ abstract class ProductsRemoteDS {
     required int moveOrderId,
   });
 
+  Future<List<ProductDTO>> getProductsRefund({
+    required String accessToken,
+    required int refundOrderId,
+  });
+
   Future<ProductDTO> addMoveDataProduct({
     required String accessToken,
     required int moveOrderId,
+    required ProductDTO addingProduct,
+  });
+
+  Future<ProductDTO> addRefundDataProduct({
+    required String accessToken,
+    required int refundOrderId,
     required ProductDTO addingProduct,
   });
 }
@@ -115,6 +126,66 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
       return ProductDTO.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       log('##### addMoveDataProduct api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<ProductDTO>> getProductsRefund(
+      {required String accessToken, required int refundOrderId}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response =
+          await dio.get('$SERVER_/api/refund-product/$refundOrderId');
+      log('##### getProductsRefund api:: ${response.statusCode}');
+
+      return compute<List, List<ProductDTO>>(
+        (List list) {
+          return list
+              .map((e) => ProductDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        response.data as List<dynamic>,
+      );
+    } on DioError catch (e) {
+      log('##### getProductsRefund api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<ProductDTO> addRefundDataProduct(
+      {required String accessToken,
+      required int refundOrderId,
+      required ProductDTO addingProduct}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.post(
+        '$SERVER_/api/refund-product/$refundOrderId',
+        data: {
+          "name": addingProduct.name,
+          "image": addingProduct.image,
+          "barcode": addingProduct.barcode,
+          "total_count": addingProduct.totalCount,
+          "producer": addingProduct.producer,
+          "series": addingProduct.series,
+        },
+      );
+      log('##### addRefundDataProduct api:: ${response.statusCode}');
+
+      return ProductDTO.fromJson(response.data as Map<String, dynamic>);
+    } on DioError catch (e) {
+      log('##### addRefundDataProduct api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
