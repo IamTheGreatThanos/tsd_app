@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -14,20 +16,30 @@ class BarcodeScannerWidget extends StatefulWidget {
 }
 
 class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
+  MobileScannerController controller = MobileScannerController();
   List<String> codes = [];
+
+  @override
+  void dispose() {
+    controller.stop();
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         MobileScanner(
+          controller: controller,
           onDetect: (barcode, args) {
             if (barcode.rawValue == null) {
               debugPrint('Failed to scan Barcode');
             } else {
               final String code = barcode.rawValue!;
+              log("BARCODE CODE::::: ${code.substring(3)}");
               if (!codes.contains(code)) {
                 codes.add(code);
-                widget.callback.call(code);
+                widget.callback.call(code.substring(3));
                 // context
                 //     .read<BlocGoodsList>()
                 //     .add(EventScanItem(code: code));

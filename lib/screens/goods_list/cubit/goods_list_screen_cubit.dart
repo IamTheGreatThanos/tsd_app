@@ -97,7 +97,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       final List<ProductDTO> unscanned = [];
       final List<ProductDTO> discrepancy1 = [];
       for (final ProductDTO product in r) {
-        if (product.status == '1') {
+        if (product.status == 1) {
           if (product.totalCount == product.scanCount) {
             scanned.add(product);
           } else {

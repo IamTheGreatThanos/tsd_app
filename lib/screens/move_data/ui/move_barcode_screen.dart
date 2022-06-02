@@ -27,6 +27,11 @@ class MoveBarcodeScreen extends StatefulWidget {
 
 class _MoveBarcodeScreenState extends State<MoveBarcodeScreen> {
   @override
+  void dispose() {
+    
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(

@@ -28,8 +28,10 @@ import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/delete_move_
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_move_data_from_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_move_data_products.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_move_products_from_cache.dart';
+import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_product_by_barcode.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/save_move_data_to_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/save_move_products_to_cahce.dart';
+import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/update_moving_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
@@ -63,9 +65,10 @@ Future<void> initLocator() async {
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));
   sl.registerFactory(() => MoveCubit(sl(), sl()));
-  sl.registerFactory(() => MoveDataScreenCubit(sl(),sl()));
-  sl.registerFactory(() => MoveBarcodeScreenCubit());
-  sl.registerFactory(() => MoveProductsScreenCubit(sl(),sl(),sl(),sl(),sl()));
+  sl.registerFactory(() => MoveDataScreenCubit(sl(), sl()));
+  sl.registerFactory(() => MoveBarcodeScreenCubit(sl(), sl(), sl()));
+  sl.registerFactory(
+      () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(),sl(),sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -101,13 +104,14 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => GetMoveDataFromCache(sl()));
   sl.registerLazySingleton(() => GetMoveProductsFromCache(sl()));
   sl.registerLazySingleton(() => GetMoveDataProducts(sl()));
+  sl.registerLazySingleton(() => GetProductByBarcode(sl()));
   sl.registerLazySingleton(() => SaveMoveDataToCache(sl()));
   sl.registerLazySingleton(() => SaveMoveProductsToCache(sl()));
   sl.registerLazySingleton(() => DeleteMoveDataFromCache(sl()));
   sl.registerLazySingleton(() => DeleteMoveProductsFromCache(sl()));
   sl.registerLazySingleton(() => CreateMovingOrder(sl()));
   sl.registerLazySingleton(() => AddMoveDataProduct(sl()));
-
+  sl.registerLazySingleton(() => UpdateMovingOrderStatus(sl()));
 
   ///
   ///

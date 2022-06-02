@@ -162,4 +162,56 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
       return Left(ServerFailure(message: 'Нету интернета!'));
     }
   }
+
+  @override
+  Future<Either<Failure, ProductDTO>> getProductByBarcode({
+    required String barcode,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final List<ProductDTO> products =
+            await _moveDataRemoteDS.getProductByBarcode(
+          accessToken: user.accessToken!,
+          barcode: barcode,
+        );
+        if (products.isEmpty) {
+          return Left(
+            ServerFailure(
+              message: 'Нет такого товара из поступления в аптеку',
+            ),
+          );
+        } else {
+          return Right(products.first);
+        }
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MoveDataDTO>> updateMovingOrderStatus({
+    required int moveOrderId,
+    required int status,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final MoveDataDTO moveDataDTO =
+            await _moveDataRemoteDS.updateMovingOrderStatus(
+          accessToken: user.accessToken!,
+          moveOrderId: moveOrderId,
+          status: status,
+        );
+        return Right(moveDataDTO);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
 }

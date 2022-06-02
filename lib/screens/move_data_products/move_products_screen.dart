@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/network/models/dto_models/response/dto_move_data.dart';
 import 'package:pharmacy_arrival/screens/fill_move_details/fill_number.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
@@ -11,7 +10,9 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
+import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class MoveProductsScreen extends StatefulWidget {
   final MoveDataDTO moveDataDTO;
@@ -43,7 +44,10 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
               onPressed: () {
                 AppRouter.push(
                   context,
-                  MoveBarcodeScreen(moveDataDTO: widget.moveDataDTO,isFromProductsPage: true,),
+                  MoveBarcodeScreen(
+                    moveDataDTO: widget.moveDataDTO,
+                    isFromProductsPage: true,
+                  ),
                 );
               },
               backgroundColor: ColorPalette.orange,
@@ -63,10 +67,18 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
           // ],
         ),
         body: BlocConsumer<MoveProductsScreenCubit, MoveProductsScreenState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            state.maybeWhen(
+              
+              finishedState: () {
+                Navigator.pop(context);
+              },
+              orElse: () {},
+            );
+          },
           builder: (context, state) {
             return state.maybeWhen(
-              loadedState: (products,isFinishable) {
+              loadedState: (products, isFinishable) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12.0,
@@ -97,7 +109,16 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
                         color: ColorPalette.orange,
                         disabledColor: ColorPalette.orangeInactive,
                         padding: EdgeInsets.zero,
-                        onPressed: isFinishable==true?() {}:null,
+                        onPressed: isFinishable == true
+                            ? () {
+                                BlocProvider.of<MoveProductsScreenCubit>(
+                                  context,
+                                ).updateMovingOrderStatus(
+                                  moveOrderId: widget.moveDataDTO.id,
+                                  status: 2,
+                                );
+                              }
+                            : null,
                         child: Center(
                           child: Text(
                             "Завершить",
@@ -222,11 +243,12 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       color: ColorPalette.grayText,
                     ),
                   ),
-                 
                   if (widget.good.isReady == true)
                     Column(
                       children: [
-                        const SizedBox(height: 14,),
+                        const SizedBox(
+                          height: 14,
+                        ),
                         GestureDetector(
                           onTap: () {
                             AppRouter.push(

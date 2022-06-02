@@ -37,6 +37,12 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   }
 
   @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorPalette.purpleLight,

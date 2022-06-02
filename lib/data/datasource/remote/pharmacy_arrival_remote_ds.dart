@@ -102,10 +102,11 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   }
 
   @override
-  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder(
-      {required String accessToken,
-      required int orderId,
-      required int status}) async {
+  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
+    required String accessToken,
+    required int orderId,
+    required int status,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {

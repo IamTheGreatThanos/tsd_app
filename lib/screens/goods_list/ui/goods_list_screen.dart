@@ -734,10 +734,12 @@ class _SpecifyingNumberManually extends StatefulWidget {
 class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
+
   @override
   void dispose() {
     controller.clear();
     controller.dispose();
+    focusNode.dispose();
     super.dispose();
   }
   @override

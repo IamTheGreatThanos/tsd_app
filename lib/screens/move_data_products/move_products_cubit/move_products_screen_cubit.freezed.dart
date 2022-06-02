@@ -22,6 +22,7 @@ mixin _$MoveProductsScreenState {
     required TResult Function() loadingState,
     required TResult Function(List<ProductDTO> products, bool isFinishable)
         loadedState,
+    required TResult Function() finishedState,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,6 +31,7 @@ mixin _$MoveProductsScreenState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,6 +40,7 @@ mixin _$MoveProductsScreenState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -47,6 +50,7 @@ mixin _$MoveProductsScreenState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_FinishedState value) finishedState,
     required TResult Function(_ErrorState value) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +59,7 @@ mixin _$MoveProductsScreenState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -63,6 +68,7 @@ mixin _$MoveProductsScreenState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) =>
@@ -131,6 +137,7 @@ class _$_InitialState implements _InitialState {
     required TResult Function() loadingState,
     required TResult Function(List<ProductDTO> products, bool isFinishable)
         loadedState,
+    required TResult Function() finishedState,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -142,6 +149,7 @@ class _$_InitialState implements _InitialState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -153,6 +161,7 @@ class _$_InitialState implements _InitialState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -168,6 +177,7 @@ class _$_InitialState implements _InitialState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_FinishedState value) finishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return initialState(this);
@@ -179,6 +189,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return initialState?.call(this);
@@ -190,6 +201,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -249,6 +261,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function() loadingState,
     required TResult Function(List<ProductDTO> products, bool isFinishable)
         loadedState,
+    required TResult Function() finishedState,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -260,6 +273,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -271,6 +285,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -286,6 +301,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_FinishedState value) finishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadingState(this);
@@ -297,6 +313,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
@@ -308,6 +325,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -409,6 +427,7 @@ class _$_LoadedState implements _LoadedState {
     required TResult Function() loadingState,
     required TResult Function(List<ProductDTO> products, bool isFinishable)
         loadedState,
+    required TResult Function() finishedState,
     required TResult Function(String message) errorState,
   }) {
     return loadedState(products, isFinishable);
@@ -420,6 +439,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
   }) {
     return loadedState?.call(products, isFinishable);
@@ -431,6 +451,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -446,6 +467,7 @@ class _$_LoadedState implements _LoadedState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_FinishedState value) finishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadedState(this);
@@ -457,6 +479,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadedState?.call(this);
@@ -468,6 +491,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -488,6 +512,130 @@ abstract class _LoadedState implements MoveProductsScreenState {
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_FinishedStateCopyWith<$Res> {
+  factory _$$_FinishedStateCopyWith(
+          _$_FinishedState value, $Res Function(_$_FinishedState) then) =
+      __$$_FinishedStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_FinishedStateCopyWithImpl<$Res>
+    extends _$MoveProductsScreenStateCopyWithImpl<$Res>
+    implements _$$_FinishedStateCopyWith<$Res> {
+  __$$_FinishedStateCopyWithImpl(
+      _$_FinishedState _value, $Res Function(_$_FinishedState) _then)
+      : super(_value, (v) => _then(v as _$_FinishedState));
+
+  @override
+  _$_FinishedState get _value => super._value as _$_FinishedState;
+}
+
+/// @nodoc
+
+class _$_FinishedState implements _FinishedState {
+  const _$_FinishedState();
+
+  @override
+  String toString() {
+    return 'MoveProductsScreenState.finishedState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_FinishedState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialState,
+    required TResult Function() loadingState,
+    required TResult Function(List<ProductDTO> products, bool isFinishable)
+        loadedState,
+    required TResult Function() finishedState,
+    required TResult Function(String message) errorState,
+  }) {
+    return finishedState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
+    TResult Function(String message)? errorState,
+  }) {
+    return finishedState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (finishedState != null) {
+      return finishedState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialState value) initialState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_FinishedState value) finishedState,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return finishedState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
+    TResult Function(_ErrorState value)? errorState,
+  }) {
+    return finishedState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (finishedState != null) {
+      return finishedState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FinishedState implements MoveProductsScreenState {
+  const factory _FinishedState() = _$_FinishedState;
 }
 
 /// @nodoc
@@ -559,6 +707,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function() loadingState,
     required TResult Function(List<ProductDTO> products, bool isFinishable)
         loadedState,
+    required TResult Function() finishedState,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -570,6 +719,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -581,6 +731,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<ProductDTO> products, bool isFinishable)? loadedState,
+    TResult Function()? finishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -596,6 +747,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_FinishedState value) finishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return errorState(this);
@@ -607,6 +759,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
@@ -618,6 +771,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_FinishedState value)? finishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {

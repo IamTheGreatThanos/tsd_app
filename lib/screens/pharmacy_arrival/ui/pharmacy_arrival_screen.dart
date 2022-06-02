@@ -33,6 +33,13 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
   }
 
   @override
+  void dispose() {
+    searchController.dispose();
+    FocusNode().dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(

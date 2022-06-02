@@ -62,6 +62,9 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                 buildErrorCustomSnackBar(context, message);
                 context.loaderOverlay.hide();
               },
+              finishedState: () {
+                context.loaderOverlay.hide();
+              },
             );
           },
           builder: (context, state) {
@@ -153,9 +156,9 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    if (count < widget.moveData.totalCount!) {
-                                      count++;
-                                    }
+                                    //if (count < widget.moveData.totalCount!) {
+                                    count++;
+                                    //}
                                   });
                                 },
                                 child: Image.asset(

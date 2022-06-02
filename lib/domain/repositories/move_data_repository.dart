@@ -31,4 +31,13 @@ abstract class MoveDataRepository {
     required int moveOrderId,
     required ProductDTO addingProduct,
   });
+
+  Future<Either<Failure, ProductDTO>> getProductByBarcode({
+    required String barcode,
+  });
+
+  Future<Either<Failure,MoveDataDTO>> updateMovingOrderStatus({
+    required int moveOrderId,
+    required int status,
+  });
 }

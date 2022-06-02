@@ -11,6 +11,8 @@ class MoveProductsScreenState with _$MoveProductsScreenState {
     required bool isFinishable,
   }) = _LoadedState;
 
+  const factory MoveProductsScreenState.finishedState() = _FinishedState;
+
   const factory MoveProductsScreenState.errorState({
     required String message,
   }) = _ErrorState;
