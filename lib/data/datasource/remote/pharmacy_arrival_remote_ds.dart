@@ -13,6 +13,10 @@ abstract class PharmacyArrivalRemoteDS {
     required String accessToken,
   });
 
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({
+    required String accessToken,
+  });
+
   Future<ProductDTO> updatePharmacyProductById({
     required String accessToken,
     required int productId,
@@ -45,7 +49,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
 
     try {
       final response = await dio.get('$SERVER_/api/arrival-pharmacy');
-      log('##### getWarehouseArrivalOrders api:: ${response.statusCode}');
+      log('##### getPharmacyArrivalOrders api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(
         (List list) {
@@ -56,7 +60,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
         response.data as List<dynamic>,
       );
     } on DioError catch (e) {
-      log('##### getWarehouseArrivalOrders api error::: ${e.response}, ${e.error}');
+      log('##### getPharmacyArrivalOrders api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -121,6 +125,32 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
       return PharmacyOrderDTO.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       log('$e');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+  
+  @override
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({required String accessToken})async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get('$SERVER_/api/arrival-pharmacy/history');
+      log('##### getPharmacyArrivalHistory api:: ${response.statusCode}');
+
+      return compute<List, List<PharmacyOrderDTO>>(
+        (List list) {
+          return list
+              .map((e) => PharmacyOrderDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        response.data as List<dynamic>,
+      );
+    } on DioError catch (e) {
+      log('##### getPharmacyArrivalHistory api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

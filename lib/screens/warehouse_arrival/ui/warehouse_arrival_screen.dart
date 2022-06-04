@@ -3,19 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
-import 'package:pharmacy_arrival/network/models/dto_models/response/dto_order_details_response.dart';
 import 'package:pharmacy_arrival/screens/fill_invoice/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
-import 'package:pharmacy_arrival/screens/warehouse_arrival/bloc/bloc_stock_arrival.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
-import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
-
-import '../../../widgets/main_text_field/app_text_field.dart';
 
 class WarehouseArrivalScreen extends StatefulWidget {
   const WarehouseArrivalScreen({Key? key}) : super(key: key);

@@ -198,7 +198,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "",
+                                  "$defective",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),
@@ -226,7 +226,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "",
+                                  "$surplus",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),
@@ -254,7 +254,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "",
+                                  "$underachievement",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),
@@ -282,7 +282,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "",
+                                  "$reSorting",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),

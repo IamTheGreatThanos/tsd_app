@@ -42,4 +42,6 @@ abstract class MoveDataRepository {
     required int moveOrderId,
     required int status,
   });
+
+  Future<Either<Failure,List<MoveDataDTO>>> getMovingHistory();
 }

@@ -34,4 +34,22 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
       return Left(ServerFailure(message: 'Нету интернета!'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<WarehouseOrderDTO>>>
+      getWarehouseArrivalHistory() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final List<WarehouseOrderDTO> historyOrders =
+            await warehouseArrivalRemoteDS.getWarehouseArrivalHistory(
+                accessToken: user.accessToken!);
+        return Right(historyOrders);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
 }

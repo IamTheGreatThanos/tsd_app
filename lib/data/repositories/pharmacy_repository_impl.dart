@@ -144,4 +144,20 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
       return Left(ServerFailure(message: 'Нету интернета!'));
     }
   }
+  
+  @override
+  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final List<PharmacyOrderDTO> historyOrders = await arrivalRemoteDS
+            .getPharmacyArrivalHistory(accessToken: user.accessToken!);
+        return Right(historyOrders);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
 }

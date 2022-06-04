@@ -16,6 +16,7 @@ class ColorPalette {
   static const Color darkGrey = Color(0xFF707070);
   static const Color lightGrey = Color(0xFFF2F2F8);
   static const Color pickColor = Color(0xFF83B1F4);
+  static const Color backgroundColor = Color(0xff5CA7FF);
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color red = Color(0xFFFD4E36);

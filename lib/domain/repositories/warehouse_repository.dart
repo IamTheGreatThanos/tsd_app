@@ -4,4 +4,6 @@ import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 
 abstract class WarehouseRepository{
   Future<Either<Failure, List<WarehouseOrderDTO>>> getWarehouseArrivalOrders();
+
+  Future<Either<Failure, List<WarehouseOrderDTO>>> getWarehouseArrivalHistory();
 }

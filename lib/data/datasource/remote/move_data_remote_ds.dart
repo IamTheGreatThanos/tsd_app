@@ -21,6 +21,10 @@ abstract class MoveDataRemoteDS {
     required String barcode,
   });
 
+  Future<List<MoveDataDTO>> getMovingHistory({
+    required String accessToken,
+  });
+
   Future<MoveDataDTO> updateMovingOrderStatus({
     required String accessToken,
     required int moveOrderId,
@@ -110,6 +114,32 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
       return MoveDataDTO.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       log('$e');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+  
+  @override
+  Future<List<MoveDataDTO>> getMovingHistory({required String accessToken}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get('$SERVER_/api/moving/history');
+      log('##### getMovingHistory api:: ${response.statusCode}');
+
+      return compute<List, List<MoveDataDTO>>(
+        (List list) {
+          return list
+              .map((e) => MoveDataDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        response.data as List<dynamic>,
+      );
+    } on DioError catch (e) {
+      log('##### getMovingHistory api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

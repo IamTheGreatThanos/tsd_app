@@ -37,4 +37,6 @@ abstract class RefundRepository {
     required int refundOrderId,
     required int status,
   });
+
+  Future<Either<Failure,List<RefundDataDTO>>> getRefundHistory();
 }

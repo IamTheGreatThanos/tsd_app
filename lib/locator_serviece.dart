@@ -32,10 +32,12 @@ import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/delete_move_
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_move_data_from_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_move_data_products.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_move_products_from_cache.dart';
+import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_moving_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_product_by_barcode.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/save_move_data_to_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/save_move_products_to_cahce.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/update_moving_order_status.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
@@ -49,15 +51,19 @@ import 'package:pharmacy_arrival/domain/usecases/refund_usecases/get_refund_prod
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/add_refund_data_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/create_refund_order.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/get_products_refund.dart';
+import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/get_refund_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/update_moving_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/save_redund_products_to_cahce.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/save_refund_order_to_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
+import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
@@ -111,6 +117,8 @@ Future<void> initLocator() async {
       sl(),
     ),
   );
+  sl.registerFactory(() => HistoryCatCubit());
+  sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -132,6 +140,7 @@ Future<void> initLocator() async {
 
   ///Warehouse usecases
   sl.registerLazySingleton(() => GetWarehouseArrivalOrders(sl()));
+  sl.registerLazySingleton(() => GetWarehouseArrivalHistory(sl()));
 
   ///Pharmacy usecases
 
@@ -141,6 +150,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => SavePharmacySelectedProduct(sl()));
   sl.registerLazySingleton(() => GetPharmacySelectedProduct(sl()));
   sl.registerLazySingleton(() => UpdatePharmacyOrderStatus(sl()));
+  sl.registerLazySingleton(() => GetPharmacyArrivalHistory(sl()));
 
   ///Move Data usecases
   sl.registerLazySingleton(() => GetMoveDataFromCache(sl()));
@@ -154,6 +164,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => CreateMovingOrder(sl()));
   sl.registerLazySingleton(() => AddMoveDataProduct(sl()));
   sl.registerLazySingleton(() => UpdateMovingOrderStatus(sl()));
+  sl.registerLazySingleton(() => GetMovingHistory(sl()));
 
   ///Refund usecases
   sl.registerLazySingleton(() => CreateRefundOrder(sl()));
@@ -166,6 +177,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => GetProductsRefund(sl()));
   sl.registerLazySingleton(() => AddRefundDataProduct(sl()));
   sl.registerLazySingleton(() => UpdateRefundOrderStatus(sl()));
+  sl.registerLazySingleton(() => GetRefundHistory(sl()));
 
   ///
   ///

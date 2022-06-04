@@ -214,4 +214,16 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
       return Left(ServerFailure(message: 'Нету интернета!'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<MoveDataDTO>>> getMovingHistory() async {
+    if (await networkInfo.isConnected) {
+      final User user = await authLocalDS.getUserFromCache();
+      final List<MoveDataDTO> history = await _moveDataRemoteDS
+          .getMovingHistory(accessToken: user.accessToken!);
+      return Right(history);
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
 }

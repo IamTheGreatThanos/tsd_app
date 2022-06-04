@@ -57,7 +57,8 @@ class RefundRepositoryImpl extends RefundRepository {
       return const Right("Deleted Refund Order From Cache Successfully");
     } on CacheException {
       return Left(
-          CacheFailure(message: 'Delete Reduns Order failed from cahce'));
+        CacheFailure(message: 'Delete Reduns Order failed from cahce'),
+      );
     }
   }
 
@@ -91,7 +92,8 @@ class RefundRepositoryImpl extends RefundRepository {
     try {
       await refundLocalDS.deleteRefundProductsFromCache();
       return const Right(
-          "Deleted RefundOrder Products From Cache Successfully");
+        "Deleted RefundOrder Products From Cache Successfully",
+      );
     } on CacheException {
       return Left(
         CacheFailure(message: 'Delete RefundOrder Products failed from cahce'),
@@ -123,8 +125,9 @@ class RefundRepositoryImpl extends RefundRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductDTO>>> getProductsRefund(
-      {required int refundOrderId}) async {
+  Future<Either<Failure, List<ProductDTO>>> getProductsRefund({
+    required int refundOrderId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
@@ -143,8 +146,10 @@ class RefundRepositoryImpl extends RefundRepository {
   }
 
   @override
-  Future<Either<Failure, ProductDTO>> addRefundDataProduct(
-      {required int refundOrderId, required ProductDTO addingProduct}) async {
+  Future<Either<Failure, ProductDTO>> addRefundDataProduct({
+    required int refundOrderId,
+    required ProductDTO addingProduct,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
@@ -177,6 +182,23 @@ class RefundRepositoryImpl extends RefundRepository {
           status: status,
         );
         return Right(moveDataDTO);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<RefundDataDTO>>> getRefundHistory() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final history = await refundRemoteDS.getRefundHistory(
+          accessToken: user.accessToken!,
+        );
+        return Right(history);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

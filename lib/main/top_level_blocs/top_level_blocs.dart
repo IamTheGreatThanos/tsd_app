@@ -8,6 +8,8 @@ import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart
 import 'package:pharmacy_arrival/screens/auth/bloc/bloc_auth.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
@@ -75,6 +77,12 @@ class TopLevelBlocs extends StatelessWidget {
         ),
         BlocProvider<ReturnProductsScreenCubit>(
           create: (context) => sl<ReturnProductsScreenCubit>(),
+        ),
+        BlocProvider<HistoryCatCubit>(
+          create: (context) => sl<HistoryCatCubit>(),
+        ),
+        BlocProvider<HistoryCubit>(
+          create: (context) => sl<HistoryCubit>(),
         ),
       ],
       child: child,
