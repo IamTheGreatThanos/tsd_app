@@ -47,7 +47,7 @@ class YearView extends StatelessWidget {
         ),
       );
 
-      if (month % 2 == 0) {
+      if (month.isEven) {
         monthRows.add(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

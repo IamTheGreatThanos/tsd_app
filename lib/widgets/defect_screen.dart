@@ -169,7 +169,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "${productInfo.totalCount! - productInfo.scanCount! ?? 0}",
+                                  "${productInfo.totalCount??0 - (productInfo.scanCount??0)}",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),

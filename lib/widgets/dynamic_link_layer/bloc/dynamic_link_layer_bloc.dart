@@ -8,9 +8,9 @@ class DynamicLinkLayerBloc
     extends Bloc<DynamicLinkLayerEvent, DynamicLinkLayerState> {
   bool isAuthorized;
 
-  DynamicLinkLayerBloc(
-    this.isAuthorized,
-  ) : super(DynamicLinkLayerInitial()) {
+  DynamicLinkLayerBloc({
+    required this.isAuthorized,
+  }) : super(DynamicLinkLayerInitial()) {
     on<InitialDynamicLinkLayerEvent>(
       (event, emit) => _buildInitialEvent(event, emit),
     );

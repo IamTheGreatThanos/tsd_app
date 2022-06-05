@@ -27,10 +27,9 @@ Flushbar _buildCustomSnackBarWidget(
 }) {
   return Flushbar(
     backgroundColor: Colors.transparent,
-    padding: const EdgeInsets.all(0),
+    padding: EdgeInsets.zero,
     margin: const EdgeInsets.only(top: 60),
     flushbarPosition: FlushbarPosition.TOP,
-    flushbarStyle: FlushbarStyle.FLOATING,
     duration: const Duration(seconds: 2),
     messageText: Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),

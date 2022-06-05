@@ -51,14 +51,6 @@ class _ReturnProductsScreenState extends State<ReturnProductsScreen> {
         ),
         appBar: CustomAppBar(
           title: "на  расхождении".toUpperCase(),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12.0),
-              child: GestureDetector(
-                child: SvgPicture.asset("assets/images/svg/delete_scanned.svg"),
-              ),
-            ),
-          ],
         ),
         body:
             BlocConsumer<ReturnProductsScreenCubit, ReturnProductsScreenState>(
@@ -208,7 +200,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     ),
                   ),
                   child: Text(
-                    "${widget.good.totalCount} шт.",
+                    "${widget.good.totalCount??0} шт.",
                     style: ThemeTextStyle.textStyle12w600.copyWith(
                       color: ColorPalette.green,
                     ),

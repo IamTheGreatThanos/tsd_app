@@ -81,14 +81,12 @@ class AppListTile extends StatelessWidget {
               ),
             ),
             if (trailing != null) trailing!,
-            (chevronVisible && onTap != null)
-                ? Padding(
+            if (chevronVisible && onTap != null) Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: SvgPicture.asset(
                 "assets/images/svg/arrow_right.svg",
               ),
-            )
-                : const SizedBox.shrink()
+            ) else const SizedBox.shrink()
           ],
         ),
       ),

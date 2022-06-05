@@ -6,7 +6,7 @@ void toastServiceSuccess(String msg) {
   BotToast.showCustomText(
     duration: const Duration(seconds: 4),
     toastBuilder: (textCancel) => Align(
-      alignment: const Alignment(0, -1),
+      alignment:  Alignment.topCenter,
       child: Container(
         width: 414,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

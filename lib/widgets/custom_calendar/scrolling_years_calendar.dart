@@ -78,7 +78,7 @@ class _ScrollingYearsCalendarState extends State<ScrollingYearsCalendar> {
 
     return ListView.builder(
       shrinkWrap: true,
-      padding: const EdgeInsets.only(bottom: 0.0),
+      padding:  EdgeInsets.zero,
       controller: _scrollController,
       itemCount: _itemCount,
       itemBuilder: (BuildContext context, int index) {

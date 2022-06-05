@@ -1,7 +1,7 @@
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
 
 ///Base button which can be one of design button
 class MainButton extends StatelessWidget {
@@ -91,8 +91,7 @@ class MainButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                icon != null
-                    ? Padding(
+                if (icon != null) Padding(
                       padding: const EdgeInsets.only(right: 10.0),
                       child: Align(
                           alignment: Alignment.centerRight,
@@ -103,10 +102,8 @@ class MainButton extends StatelessWidget {
                             height: 20,
                           ),
                         ),
-                    )
-                    : const SizedBox.shrink(),
-                title != null
-                    ? Text(
+                    ) else const SizedBox.shrink(),
+                if (title != null) Text(
                         title!,
                         style: ThemeTextStyle.textStyle14w600.copyWith(
                           color: !isEnabled && disabledBackgroundColor != null
@@ -115,8 +112,7 @@ class MainButton extends StatelessWidget {
                           height: 1.5,
                           fontSize: fontSize,
                         ),
-                      )
-                    : const SizedBox.shrink(),
+                      ) else const SizedBox.shrink(),
               ],
             ),
           ),

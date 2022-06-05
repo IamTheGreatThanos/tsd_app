@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy_arrival/widgets/app_calendar_new/calendar_page.dart';
 import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 
-typedef _OnCalendarPageChanged = void Function(
+typedef OnCalendarPageChanged = void Function(
     int pageIndex, DateTime focusedDay,);
 
 class CalendarCore extends StatelessWidget {
@@ -28,7 +28,7 @@ class CalendarCore extends StatelessWidget {
   final StartingDayOfWeek startingDayOfWeek;
   final PageController? pageController;
   final ScrollPhysics? scrollPhysics;
-  final _OnCalendarPageChanged onPageChanged;
+  final OnCalendarPageChanged onPageChanged;
 
   const CalendarCore({
     Key? key,
@@ -137,7 +137,7 @@ class CalendarCore extends StatelessWidget {
           child: ExcludeSemantics(
             child: Text(
               weekDays[index],
-              style: TextStyle(),
+              style: const TextStyle(),
             ),
           ),
         );
@@ -295,36 +295,17 @@ class CalendarCore extends StatelessWidget {
   DateTime _lastDayOfMonth(DateTime month) {
     final date = month.month < 12
         ? DateTime.utc(month.year, month.month + 1)
-        : DateTime.utc(month.year + 1, 1);
+        : DateTime.utc(month.year + 1, );
     return date.subtract(const Duration(days: 1));
   }
 
-  int _getRowCount(CalendarFormat format, DateTime focusedDay) {
-    if (format == CalendarFormat.twoWeeks) {
-      return 2;
-    } else if (format == CalendarFormat.week) {
-      return 1;
-    } else if (sixWeekMonthsEnforced) {
-      return 6;
-    }
-
-    final first = _firstDayOfMonth(focusedDay);
-    final daysBefore = _getDaysBefore(first);
-    final firstToDisplay = first.subtract(Duration(days: daysBefore));
-
-    final last = _lastDayOfMonth(focusedDay);
-    final daysAfter = _getDaysAfter(last);
-    final lastToDisplay = last.add(Duration(days: daysAfter));
-
-    return (lastToDisplay.difference(firstToDisplay).inDays + 1) ~/ 7;
-  }
 
   int _getDaysBefore(DateTime firstDay) {
     return (firstDay.weekday + 7 - getWeekdayNumber(startingDayOfWeek)) % 7;
   }
 
   int _getDaysAfter(DateTime lastDay) {
-    int invertedStartingWeekday = 8 - getWeekdayNumber(startingDayOfWeek);
+    final int invertedStartingWeekday = 8 - getWeekdayNumber(startingDayOfWeek);
 
     int daysAfter = 7 - ((lastDay.weekday + invertedStartingWeekday) % 7);
     if (daysAfter == 7) {

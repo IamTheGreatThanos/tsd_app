@@ -202,7 +202,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     ),
                   ),
                   child: Text(
-                    "${widget.good.totalCount} шт.",
+                    "${widget.good.totalCount??0} шт.",
                     style: ThemeTextStyle.textStyle12w600.copyWith(
                       color: ColorPalette.green,
                     ),

@@ -117,7 +117,7 @@ class AppTextField extends StatefulWidget {
 
   bool get validated => cubit.validate(controller.text);
 
-  updateValidator(List<String> Function(dynamic) validator) {
+  void updateValidator(List<String> Function(dynamic) validator) {
     cubit.validator = validator;
   }
 
@@ -238,7 +238,6 @@ class _AppTextFieldState extends State<AppTextField> {
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: const BorderSide(
                           color: Colors.transparent,
-                          width: 1.0,
                         ),
                         gapPadding: 0.0,
                       ),

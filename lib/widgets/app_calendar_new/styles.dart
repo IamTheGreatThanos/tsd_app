@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 
@@ -162,7 +161,7 @@ class CalendarStyle {
     this.markersAlignment = Alignment.bottomCenter,
     this.markersMaxCount = 4,
     this.cellMargin = const EdgeInsets.all(6.0),
-    this.cellPadding = const EdgeInsets.all(0),
+    this.cellPadding = EdgeInsets.zero,
     this.cellAlignment = Alignment.center,
     this.markersOffset = const PositionedOffset(),
     this.rangeHighlightColor = const Color(0xFFBBDDFF),
@@ -364,7 +363,7 @@ class HeaderStyle {
       border: Border.fromBorderSide(BorderSide()),
       borderRadius: BorderRadius.all(Radius.circular(12.0)),
     ),
-    this.headerMargin = const EdgeInsets.all(0.0),
+    this.headerMargin = EdgeInsets.zero,
     this.headerPadding = const EdgeInsets.symmetric(vertical: 8.0),
     this.formatButtonPadding =
         const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),

@@ -269,7 +269,6 @@ class TableCalendar<T> extends StatefulWidget {
 }
 
 class _TableCalendarState<T> extends State<TableCalendar<T>> {
-  late final PageController _pageController;
   late final ValueNotifier<DateTime> _focusedDay;
   late RangeSelectionMode _rangeSelectionMode;
   DateTime? _firstSelectedDay;
@@ -423,19 +422,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
-  void _onLeftChevronTap() {
-    _pageController.previousPage(
-      duration: widget.pageAnimationDuration,
-      curve: widget.pageAnimationCurve,
-    );
-  }
 
-  void _onRightChevronTap() {
-    _pageController.nextPage(
-      duration: widget.pageAnimationDuration,
-      curve: widget.pageAnimationCurve,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -443,7 +430,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
       children: [
         TableCalendarBase(
           onCalendarCreated: (pageController) {
-            _pageController = pageController;
             widget.onCalendarCreated?.call(pageController);
           },
           focusedDay: _focusedDay.value,
@@ -560,7 +546,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         final isDisabled = _isDayDisabled(day);
         final isWeekend = _isWeekend(day, weekendDays: widget.weekendDays);
 
-        Widget content = CellContent(
+        final Widget content = CellContent(
           day: day,
           focusedDay: focusedDay,
           calendarStyle: widget.calendarStyle,
@@ -626,10 +612,10 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         return Stack(
           alignment: widget.calendarStyle.markersAlignment,
-          children: children,
           clipBehavior: widget.calendarStyle.canMarkersOverflow
               ? Clip.none
               : Clip.hardEdge,
+          children: children,
         );
       },
     );
@@ -665,9 +651,11 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   }
 
   bool _isDayAvailable(DateTime day) {
-    return widget.enabledDayPredicate == null
-        ? true
-        : widget.enabledDayPredicate!(day);
+    if (widget.enabledDayPredicate == null) {
+      return true;
+    } else {
+      return widget.enabledDayPredicate!(day);
+    }
   }
 
   DateTime _firstDayOfMonth(DateTime month) {
@@ -677,7 +665,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   DateTime _lastDayOfMonth(DateTime month) {
     final date = month.month < 12
         ? DateTime.utc(month.year, month.month + 1,)
-        : DateTime.utc(month.year + 1, 1, 1);
+        : DateTime.utc(month.year + 1,);
     return date.subtract(const Duration(days: 1));
   }
 

@@ -15,7 +15,7 @@ class DynamicLinkLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DynamicLinkLayerBloc>(
       create: (context) => DynamicLinkLayerBloc(
-        isAuthenticated,
+       isAuthorized: isAuthenticated,
       )..add(InitialDynamicLinkLayerEvent()),
       child: BlocConsumer<DynamicLinkLayerBloc, DynamicLinkLayerState>(
         listener: (context, state) {

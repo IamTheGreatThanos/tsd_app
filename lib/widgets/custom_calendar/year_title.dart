@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'utils/screen_sizes.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/utils/screen_sizes.dart';
 
 class YearTitle extends StatelessWidget {
    const YearTitle(

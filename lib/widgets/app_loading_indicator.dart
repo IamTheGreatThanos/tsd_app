@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
 
 class AppLoadingIndicator extends StatelessWidget {
   const AppLoadingIndicator({

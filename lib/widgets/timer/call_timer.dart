@@ -11,7 +11,7 @@ class CallTimer extends StatefulWidget {
 }
 
 class _CallTimerState extends State<CallTimer> {
-  Duration duration = const Duration();
+  Duration duration = Duration.zero;
   Timer? timer;
 
   @override

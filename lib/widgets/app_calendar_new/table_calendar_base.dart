@@ -82,7 +82,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
   late final PageController _pageController;
   late DateTime _focusedDay;
   late int _previousIndex;
-  late bool _pageCallbackDisabled;
 
   @override
   void initState() {
@@ -99,7 +98,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
     widget.onCalendarCreated?.call(_pageController);
 
     _previousIndex = initialPage;
-    _pageCallbackDisabled = false;
   }
 
   @override
@@ -149,7 +147,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
     if (currentIndex != _previousIndex ||
         currentIndex == 0 ||
         currentIndex == endIndex) {
-      _pageCallbackDisabled = true;
     }
 
     if (shouldAnimate && widget.pageAnimationEnabled) {
@@ -173,7 +170,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
     final rowCount = _getRowCount(widget.calendarFormat, _focusedDay);
     _pageHeight.value = _getPageHeight(rowCount);
 
-    _pageCallbackDisabled = false;
   }
 
   @override
@@ -185,7 +181,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
         valueListenable: _pageHeight,
         builder: (context, value, child) {
           return AnimatedSize(
-            vsync: this,
             duration: widget.formatAnimationDuration,
             curve: widget.formatAnimationCurve,
             alignment: Alignment.topCenter,
@@ -303,7 +298,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
   }
 
   int _getDaysAfter(DateTime lastDay) {
-    int invertedStartingWeekday =
+    final int invertedStartingWeekday =
         8 - getWeekdayNumber(widget.startingDayOfWeek);
 
     int daysAfter = 7 - ((lastDay.weekday + invertedStartingWeekday) % 7);
@@ -326,7 +321,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
   DateTime _lastDayOfMonth(DateTime month) {
     final date = month.month < 12
         ? DateTime.utc(month.year, month.month + 1)
-        : DateTime.utc(month.year + 1, 1);
+        : DateTime.utc(month.year + 1,);
     return date.subtract(const Duration(days: 1));
   }
 }

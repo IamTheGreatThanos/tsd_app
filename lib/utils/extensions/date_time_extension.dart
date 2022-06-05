@@ -9,4 +9,3 @@ extension StringExtensions on DateTime {
         date.year == year;
   }
 }
-

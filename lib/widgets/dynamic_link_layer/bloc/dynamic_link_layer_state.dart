@@ -8,7 +8,7 @@ class DynamicLinkLayerInitial extends DynamicLinkLayerState {}
 class CreateNewPasswordState extends DynamicLinkLayerState {
   final bool isAuthorized;
   final String token;
-  CreateNewPasswordState(this.isAuthorized, this.token);
+  CreateNewPasswordState({required this.isAuthorized,required this.token});
 }
 
 class NotAuthorizedState extends DynamicLinkLayerState {

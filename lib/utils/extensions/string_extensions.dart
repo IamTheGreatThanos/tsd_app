@@ -64,7 +64,7 @@ extension StringUtils on String {
   }
 
   bool get containsLetters {
-    return contains(RegExp(r'[a-zA-Z]'));
+    return contains(RegExp('[a-zA-Z]'));
   }
 
   String get toCapitalized {
@@ -85,7 +85,7 @@ extension StringUtils on String {
       '#',
     )
         .split('.')
-        .join('')
+        .join()
         .replaceFirst(
       '#',
       '.',
@@ -118,7 +118,7 @@ extension StringNullUtils on String? {
     if (this == null) return '';
     if (this!.isEmpty) return '';
     output = this!.removeTrailingDots;
-    if (output[0] == '.') output = '0' + output;
+    if (output[0] == '.') output = '0$output';
     final chunks = output.split('.');
     chunks.first = chunks.first.separateThousands;
     if (decimals == 0 || chunks.length == 1) return chunks.first;

@@ -16,7 +16,6 @@ class AppLoaderOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoaderOverlay(
-      disableBackButton: true,
       useDefaultLoading: false,
       overlayWidget: const AppLoadingIndicator(),
       child: child,

@@ -1,3 +1,5 @@
+// ignore_for_file: parameter_assignments
+
 /*
 (c) Copyright 2020 Serov Konstantin.
 
