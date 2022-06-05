@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/app/generated/l10n.dart';
 
-import '../../../generated/l10n.dart';
 
 class InputCubit<T> extends Cubit<StateInputCubit> {
   InputCubit({

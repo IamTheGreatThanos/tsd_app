@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../styles/color_palette.dart';
-import '../../styles/text_styles.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
 
 ///Main text button
 class MainTextButton extends StatelessWidget {

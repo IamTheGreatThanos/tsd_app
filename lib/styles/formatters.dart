@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pharmacy_arrival/app/generated/l10n.dart';
 
-import '../generated/l10n.dart';
 
 class Formatters {
   static String mainTime(DateTime dateTime) {
@@ -9,7 +8,7 @@ class Formatters {
   }
 
   static String callsScheduledDateTime(DateTime dateTime) {
-    return DateFormat(r'''MMM d 'at' hh:mm a''').format(dateTime.toLocal());
+    return DateFormat('''MMM d 'at' hh:mm a''').format(dateTime.toLocal());
   }
 
   static String callsDateTime(DateTime dateTime) {

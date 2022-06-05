@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'utils/dates.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/utils/dates.dart';
 
 class MonthTitle extends StatelessWidget {
   const MonthTitle({
@@ -18,29 +18,27 @@ class MonthTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        getMonthName(month,
-            monthNames: monthNames ??
-                [
-                  'Jan',
-                  'Feb',
-                  'Mar',
-                  'Apr',
-                  'May',
-                  'Jun',
-                  'Jul',
-                  'Aug',
-                  'Sep',
-                  'Oct',
-                  'Nov',
-                  'Dec',
-                ]),
-        style: style,
-        maxLines: 1,
-        overflow: TextOverflow.fade,
-        softWrap: false,
-      ),
+    return Text(
+      getMonthName(month,
+          monthNames: monthNames ??
+              [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+              ],),
+      style: style,
+      maxLines: 1,
+      overflow: TextOverflow.fade,
+      softWrap: false,
     );
   }
 }

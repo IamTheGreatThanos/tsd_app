@@ -179,7 +179,6 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
       if (!mergeWithExisting || countryData['altMasks'] == null) {
         countryData['altMasks'] = alternativeMasks;
       } else {
-        final existingList = countryData['altMasks'];
       //  alternativeMasks.forEach(existingList.add);
       }
     }
@@ -221,7 +220,7 @@ class CustomPhoneInputFormatter extends TextInputFormatter {
     assert(countryCode.length == 2);
     countryCode = countryCode.toUpperCase();
     final countryData = _PhoneCodes._data.firstWhere(
-      ((m) => m!['countryCode'] == countryCode),
+      (m) => m!['countryCode'] == countryCode,
       orElse: () => null,
     );
     if (countryData == null) {
@@ -449,7 +448,7 @@ class _PhoneCodes {
     String phoneCode,
   ) {
     final list = <PhoneCountryData>[];
-    for (var data in _data) {
+    for (final data in _data) {
       final c = toNumericString(data!['phoneCode'] as String?);
       if (c == phoneCode) {
         list.add(PhoneCountryData.fromMap(data));
@@ -1674,7 +1673,7 @@ class _PhoneCodes {
       'phoneMask': '+000 00 000 0000',
     },
     {
-      'country': 'Cote d\'Ivoire',
+      'country': "Cote d'Ivoire",
       'phoneCode': '225',
       'countryCode': 'CI',
       'phoneMask': '+000 00000000',
@@ -1704,7 +1703,7 @@ class _PhoneCodes {
       'phoneMask': '+00 000 000 0000',
     },
     {
-      'country': 'Korea, Democratic People\'s Republic of',
+      'country': "Korea, Democratic People's Republic of",
       'phoneCode': '850',
       'countryCode': 'KP',
       'phoneMask': '+000 0 000 0000',
@@ -1716,7 +1715,7 @@ class _PhoneCodes {
       'phoneMask': '+00 0 000 0000',
     },
     {
-      'country': '(Laos) Lao People\'s Democratic Republic',
+      'country': "(Laos) Lao People's Democratic Republic",
       'phoneCode': '856',
       'countryCode': 'LA',
       'phoneMask': '+000 00 0000 0000',

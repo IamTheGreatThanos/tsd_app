@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 
-import '../../../styles/color_palette.dart';
-import '../../../styles/text_styles.dart';
-import '../../../widgets/main_text_field/app_text_field.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 
 class MoveDataVModel extends ChangeNotifier {
   late AppTextField sender;

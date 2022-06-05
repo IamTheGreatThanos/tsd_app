@@ -35,9 +35,9 @@ extension StringUtils on String {
   }
 
   String get separateByThousands {
-    var text = extractDigits;
-    var length = text.length;
-    var subChunks = <String>[];
+    final text = extractDigits;
+    final length = text.length;
+    final subChunks = <String>[];
     var subChunk = '';
     for (var i = length - 1; i >= 0; i--) {
       subChunk = text[i] + subChunk;
@@ -93,9 +93,9 @@ extension StringUtils on String {
   }
 
   String get separateThousands {
-    var text = replaceAll(' ', '');
-    var length = text.length;
-    var subChunks = <String>[];
+    final text = replaceAll(' ', '');
+    final length = text.length;
+    final subChunks = <String>[];
     String subChunk = '';
     for (int i = length - 1; i >= 0; i--) {
       subChunk = text[i] + subChunk;
@@ -119,7 +119,7 @@ extension StringNullUtils on String? {
     if (this!.isEmpty) return '';
     output = this!.removeTrailingDots;
     if (output[0] == '.') output = '0' + output;
-    var chunks = output.split('.');
+    final chunks = output.split('.');
     chunks.first = chunks.first.separateThousands;
     if (decimals == 0 || chunks.length == 1) return chunks.first;
     chunks[1] = chunks[1].limitSymbols(decimals);

@@ -8,7 +8,6 @@ import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart
     as organization;
 import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_barcode_screen.dart';
-import 'package:pharmacy_arrival/screens/return_data_products/return_products_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';

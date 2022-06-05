@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'utils/screen_sizes.dart';
-import 'year_view.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/utils/screen_sizes.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/year_view.dart';
 
 class ScrollingYearsCalendar extends StatefulWidget {
   ScrollingYearsCalendar({

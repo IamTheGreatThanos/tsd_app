@@ -36,7 +36,7 @@ class MoveBarcodeScreenCubit extends Cubit<MoveBarcodeScreenState> {
     result.fold(
       (l) {
         emit(
-            MoveBarcodeScreenState.errorState(message: mapFailureToMessage(l)));
+            MoveBarcodeScreenState.errorState(message: mapFailureToMessage(l)),);
         log(mapFailureToMessage(l));
       },
       (r) async {

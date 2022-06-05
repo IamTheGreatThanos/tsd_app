@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/screens/fill_invoice/ui/_vmodel.dart';
-import 'package:pharmacy_arrival/screens/fill_invoice/ui/fill_invoice_screen.dart';
-import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
+import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
+import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -52,7 +52,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                 'assets/images/png/scan_button.png',
                 fit: BoxFit.fill,
               ),
-            )
+            ),
             //  Container(
             //   decoration: const BoxDecoration(
             //     image: DecorationImage(
@@ -334,7 +334,7 @@ class _BuildOrderData extends StatelessWidget {
                             : 'https://i.stack.imgur.com/l60Hf.png',
                         fit: BoxFit.cover,
                       ),
-                    )),
+                    ),),
                 const SizedBox(
                   width: 12,
                 ),
@@ -435,7 +435,6 @@ class _BuildOrderDetailItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset("assets/images/svg/$icon.svg"),
           const SizedBox(

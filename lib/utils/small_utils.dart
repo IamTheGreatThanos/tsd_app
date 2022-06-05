@@ -7,8 +7,8 @@ class SmallUtils {
       return str[0].toUpperCase() + str.substring(1).toLowerCase();
     }
 
-    final symbols = r'/\([^()]*\)/g';
-    final symbols2 = r'/;/g';
+    const symbols = r'/\([^()]*\)/g';
+    const symbols2 = '/;/g';
     name = name.replaceAllMapped(symbols, (match) => '');
     name = name.replaceAllMapped(symbols2, (match) => ',');
 

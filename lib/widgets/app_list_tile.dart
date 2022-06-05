@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../styles/color_palette.dart';
-import '../styles/text_styles.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
 
 class AppListTile extends StatelessWidget {
   ///typically [leading] is a CircleAvatar with radius 30.0
-  AppListTile({
+  const AppListTile({
     Key? key,
     required this.title,
     this.subtitle,
@@ -52,7 +52,7 @@ class AppListTile extends StatelessWidget {
             if (leading != null)
               Padding(
                 padding: leadingPadding,
-                child: leading!,
+                child: leading,
               ),
             Expanded(
               child: Column(

@@ -35,7 +35,7 @@ class RefundRemoteDSImpl extends RefundRemoteDS {
       {required String accessToken,
       required int counteragentId,
       required int fromCounteragentId,
-      required int organizationId}) async {
+      required int organizationId,}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {
@@ -63,7 +63,7 @@ class RefundRemoteDSImpl extends RefundRemoteDS {
   Future<RefundDataDTO> updateRefundOrderStatus(
       {required String accessToken,
       required int refundOrderId,
-      required int status}) async {
+      required int status,}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {
@@ -87,7 +87,7 @@ class RefundRemoteDSImpl extends RefundRemoteDS {
 
   @override
   Future<List<RefundDataDTO>> getRefundHistory(
-      {required String accessToken}) async {
+      {required String accessToken,}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 

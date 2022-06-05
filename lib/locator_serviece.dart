@@ -61,18 +61,18 @@ import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehous
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
-import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/return_data_products/return_products_cubit/return_products_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/signature/cubit/signature_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,7 +90,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => MoveCubit(sl(), sl()));
   sl.registerFactory(() => MoveDataScreenCubit(sl(), sl()));
   sl.registerFactory(
-      () => MoveBarcodeScreenCubit(sl(), sl(), sl(), sl(), sl()));
+      () => MoveBarcodeScreenCubit(sl(), sl(), sl(), sl(), sl()),);
   sl.registerFactory(
     () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl()),
   );

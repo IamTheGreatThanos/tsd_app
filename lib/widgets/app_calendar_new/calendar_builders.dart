@@ -3,7 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart' show DayBuilder, FocusedDayBuilder;
+import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart' show DayBuilder, FocusedDayBuilder;
 
 /// Signature for a function that creates a single event marker for a given `day`.
 /// Contains a single `event` associated with that `day`.

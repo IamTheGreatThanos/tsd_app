@@ -7,14 +7,12 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:pharmacy_arrival/app/network/repository/global_repository.dart';
+import 'package:pharmacy_arrival/app/network/repository/hive_repository.dart';
+import 'package:pharmacy_arrival/main/push_notifications_bloc/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../network/repository/global_repository.dart';
-import '../../network/repository/hive_repository.dart';
-import 'constants/constants.dart';
-
 part 'push_notifications_event.dart';
-
 part 'push_notifications_state.dart';
 
 const String _TAG = 'PushNotificationsBloc';
@@ -84,9 +82,7 @@ class PushNotificationsBloc
         await SharedPreferences.getInstance();
     if (Platform.isIOS) {
       await _firebaseMessaging.requestPermission(
-        sound: true,
-        alert: true,
-        badge: true,
+        
       );
     }
     messageSub = FirebaseMessaging.onMessage.listen((RemoteMessage message) {

@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
-import 'package:pharmacy_arrival/main.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
-import 'package:pharmacy_arrival/network/tokens_repository/tokens_repository.dart';
-import 'package:pharmacy_arrival/screens/auth/bloc/bloc_auth.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
-import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
+import 'package:pharmacy_arrival/widgets/main_button/main_button.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
-
-import '../../../../widgets/main_button/main_button.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -44,7 +39,6 @@ class _SignInScreenState extends State<SignInScreen> {
               },
               loadedState: (User user) async {
                 context.loaderOverlay.hide();
-                await context.read<TokensRepository>().save(user.accessToken!);
                 context.read<LoginBloc>().add(LogInEvent());
               },
               loadingState: () {
@@ -100,13 +94,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       Expanded(
                         child: MainButton(
-                            color: ColorPalette.white,
-                            // width: 204,
-                            icon: "assets/images/svg/scan.svg",
-                            title: "Сканировать QR",
-                            borderRadius: 8,
-                            textColor: Colors.black,
-                            onTap: () {},),
+                          color: ColorPalette.white,
+                          // width: 204,
+                          icon: "assets/images/svg/scan.svg",
+                          title: "Сканировать QR",
+                          borderRadius: 8,
+                          textColor: Colors.black,
+                          onTap: () {},
+                        ),
                       ),
                       const SizedBox(
                         width: 8,
@@ -115,18 +110,20 @@ class _SignInScreenState extends State<SignInScreen> {
                         color: ColorPalette.orange,
                         width: 120,
                         onTap: () {
-                           _vmodel.login.validated;
-                           _vmodel.password.validated;
-                           if (_vmodel.isValidated) {
-                            
-                          context.read<SignInCubit>().signIn(phone: _vmodel.login.controller.text, password: _vmodel.password.controller.text,);
-                          // context.read<BlocAuth>().add(
-                          //       EventSignIn(
-                          //         login: _vmodel.login.controller.text,
-                          //         password: _vmodel.password.controller.text,
-                          //       ),
-                          //     );
-                           }
+                          _vmodel.login.validated;
+                          _vmodel.password.validated;
+                          if (_vmodel.isValidated) {
+                            context.read<SignInCubit>().signIn(
+                                  phone: _vmodel.login.controller.text,
+                                  password: _vmodel.password.controller.text,
+                                );
+                            // context.read<BlocAuth>().add(
+                            //       EventSignIn(
+                            //         login: _vmodel.login.controller.text,
+                            //         password: _vmodel.password.controller.text,
+                            //       ),
+                            //     );
+                          }
                         },
                         borderRadius: 8,
                         title: "Войти",

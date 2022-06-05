@@ -135,7 +135,7 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
 
   @override
   Future<List<ProductDTO>> getProductsRefund(
-      {required String accessToken, required int refundOrderId}) async {
+      {required String accessToken, required int refundOrderId,}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -165,7 +165,7 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
   Future<ProductDTO> addRefundDataProduct(
       {required String accessToken,
       required int refundOrderId,
-      required ProductDTO addingProduct}) async {
+      required ProductDTO addingProduct,}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 

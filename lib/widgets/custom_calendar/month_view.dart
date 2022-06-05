@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'day_number.dart';
-import 'month_title.dart';
-import 'utils/dates.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/day_number.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/month_title.dart';
+import 'package:pharmacy_arrival/widgets/custom_calendar/utils/dates.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({
@@ -46,7 +46,7 @@ class MonthView extends StatelessWidget {
     final List<DayNumber> dayRowChildren = <DayNumber>[];
 
     final int daysInMonth = getDaysInMonth(year, month);
-    final int firstWeekdayOfMonth = DateTime(year, month, 1).weekday;
+    final int firstWeekdayOfMonth = DateTime(year, month).weekday;
 
     for (int day = 2 - firstWeekdayOfMonth; day <= daysInMonth; day++) {
       Color? color;
@@ -82,7 +82,7 @@ class MonthView extends StatelessWidget {
 
   Widget buildMonthView(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0, right: 0),
+      padding: const EdgeInsets.only(bottom: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

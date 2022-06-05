@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../styles/color_palette.dart';
-import '../styles/text_styles.dart';
+import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

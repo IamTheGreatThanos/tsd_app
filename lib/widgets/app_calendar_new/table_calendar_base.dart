@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/calendar_core.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
-
-import 'calendar_core.dart';
-import 'utils.dart';
 
 class TableCalendarBase extends StatefulWidget {
   final DateTime firstDay;

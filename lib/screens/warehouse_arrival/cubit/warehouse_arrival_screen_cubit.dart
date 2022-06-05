@@ -8,7 +8,7 @@ part 'warehouse_arrival_screen_state.dart';
 part 'warehouse_arrival_screen_cubit.freezed.dart';
 
 class WarehouseArrivalScreenCubit extends Cubit<WarehouseArrivalScreenState> {
-  GetWarehouseArrivalOrders _getWarehouseArrivalOrders;
+  final GetWarehouseArrivalOrders _getWarehouseArrivalOrders;
   WarehouseArrivalScreenCubit(this._getWarehouseArrivalOrders)
       : super(const WarehouseArrivalScreenState.initialState());
 

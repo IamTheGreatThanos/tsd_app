@@ -10,7 +10,6 @@ import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
-import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class MainMenuScreen extends StatefulWidget {

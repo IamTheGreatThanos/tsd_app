@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/network/repository/hive_repository.dart';
 import 'package:pharmacy_arrival/screens/auth/ui/sign_in/signin_screen.dart';
 import 'package:pharmacy_arrival/screens/menu/main_menu_screen.dart';
 
@@ -16,7 +15,6 @@ class DynamicLinkLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DynamicLinkLayerBloc>(
       create: (context) => DynamicLinkLayerBloc(
-        context.read<HiveRepository>(),
         isAuthenticated,
       )..add(InitialDynamicLinkLayerEvent()),
       child: BlocConsumer<DynamicLinkLayerBloc, DynamicLinkLayerState>(

@@ -5,20 +5,19 @@ import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
-import 'package:pharmacy_arrival/screens/auth/bloc/bloc_auth.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
-import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/move_data_products/move_products_cubit/move_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/return_data_products/return_products_cubit/return_products_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/signature/cubit/signature_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 
 ///Providers for global blocs
@@ -35,7 +34,6 @@ class TopLevelBlocs extends StatelessWidget {
           create: (context) =>
               LoginBloc(sl<AuthCheck>())..add(InitialLoginEvent()),
         ),
-        BlocProvider(create: (context) => BlocAuth()),
         BlocProvider<SignInCubit>(
           create: (context) => sl<SignInCubit>(),
         ),

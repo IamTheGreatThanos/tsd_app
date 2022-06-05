@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 
 /// Class containing styling and configuration for `TableCalendar`'s content.
 class CalendarStyle {

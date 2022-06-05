@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pharmacy_arrival/generated/l10n.dart';
+import 'package:pharmacy_arrival/app/generated/l10n.dart';
+import 'package:pharmacy_arrival/app/network/dio_wrapper/dio_wrapper.dart';
+import 'package:pharmacy_arrival/app/network/services/network_service.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/dependency_initializer/dependency_initializer.dart';
@@ -17,13 +17,6 @@ import 'package:pharmacy_arrival/main/dependency_provider/dependency_provider.da
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/main/top_level_blocs/top_level_blocs.dart';
-import 'package:pharmacy_arrival/managers/secure_storage_manager/secure_storage_manager.dart';
-import 'package:pharmacy_arrival/managers/user_store.dart';
-import 'package:pharmacy_arrival/network/dio_wrapper/dio_wrapper.dart';
-import 'package:pharmacy_arrival/network/repository/global_repository.dart';
-import 'package:pharmacy_arrival/network/repository/hive_repository.dart';
-import 'package:pharmacy_arrival/network/services/network_service.dart';
-import 'package:pharmacy_arrival/network/tokens_repository/tokens_repository.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.dart';
 
@@ -42,25 +35,11 @@ void main() async {
       ]);
       await Firebase.initializeApp();
       // context.read<ErrorHandler>().initialize(S.of(context));
-      final docDir = await getApplicationDocumentsDirectory();
-      Hive.init(docDir.path);
-      await context.read<SecureStorage>().init();
-      await context.read<HiveRepository>().init();
-      await context.read<UserStore>().init(context.read<HiveRepository>());
-      await context
-          .read<TokensRepository>()
-          .init(context.read<HiveRepository>());
+
+
       // await context.read<FirebaseMessagingRepository>().init();
-      await context.read<DioWrapper>().init(
-          baseURL: baseUrl,
-          tokensRepository: context.read<TokensRepository>(),
-          globalRepository: context.read<GlobalRepository>(),
-          loginBloc: context.read<LoginBloc>());
 
       context.read<NetworkService>().init(context.read<DioWrapper>());
-      context
-          .read<GlobalRepository>()
-          .init(context.read<NetworkService>(), context.read<HiveRepository>());
     } catch (e) {
       if (kDebugMode) {
         print(e);

@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'calendar_page.dart';
-import 'utils.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/calendar_page.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 
 typedef _OnCalendarPageChanged = void Function(
     int pageIndex, DateTime focusedDay,);
@@ -73,7 +73,6 @@ class CalendarCore extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            scrollDirection: Axis.vertical,
             controller: pageController,
             // physics: NeverScrollableScrollPhysics(),
             itemCount: _getPageCount(calendarFormat, firstDay, lastDay),
@@ -290,13 +289,13 @@ class CalendarCore extends StatelessWidget {
   }
 
   DateTime _firstDayOfMonth(DateTime month) {
-    return DateTime.utc(month.year, month.month, 1);
+    return DateTime.utc(month.year, month.month);
   }
 
   DateTime _lastDayOfMonth(DateTime month) {
     final date = month.month < 12
-        ? DateTime.utc(month.year, month.month + 1, 1)
-        : DateTime.utc(month.year + 1, 1, 1);
+        ? DateTime.utc(month.year, month.month + 1)
+        : DateTime.utc(month.year + 1, 1);
     return date.subtract(const Duration(days: 1));
   }
 

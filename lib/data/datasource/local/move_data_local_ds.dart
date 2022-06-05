@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, void_checks
 
 import 'dart:convert';
 import 'dart:developer';

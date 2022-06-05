@@ -70,7 +70,7 @@ class CalendarPage extends StatelessWidget {
                 7,
                 (id) => dayBuilder(context, visibleDays[index + id]),
               ),
-            ))
+            ),)
         .toList();
   }
 }

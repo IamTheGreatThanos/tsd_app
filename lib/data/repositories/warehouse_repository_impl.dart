@@ -25,7 +25,7 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
         final User user = await authLocalDS.getUserFromCache();
         final List<WarehouseOrderDTO> warehouseOrders =
             await warehouseArrivalRemoteDS.getWarehouseArrivalOrders(
-                accessToken: user.accessToken!);
+                accessToken: user.accessToken!,);
         return Right(warehouseOrders);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -43,7 +43,7 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
         final User user = await authLocalDS.getUserFromCache();
         final List<WarehouseOrderDTO> historyOrders =
             await warehouseArrivalRemoteDS.getWarehouseArrivalHistory(
-                accessToken: user.accessToken!);
+                accessToken: user.accessToken!,);
         return Right(historyOrders);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

@@ -7,7 +7,7 @@ class OrganizationState with _$OrganizationState {
   const factory OrganizationState.loadingState() = _LoadingState;
 
   const factory OrganizationState.loadedState({
-    required List<CounteragentDTO> organizations
+    required List<CounteragentDTO> organizations,
 
   }) = _LoadedState;
 

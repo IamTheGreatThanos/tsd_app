@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -283,7 +281,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     return orders.isEmpty
                         ? Center(
                             child:
-                                Lottie.asset('assets/lotties/empty_box.json'))
+                                Lottie.asset('assets/lotties/empty_box.json'),)
                         : ListView.builder(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8,
@@ -298,7 +296,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     color: ColorPalette.white,
                                   ),
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 13, horizontal: 11),
+                                      vertical: 13, horizontal: 11,),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -315,16 +313,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           Container(
                                             decoration: BoxDecoration(
                                               color: const Color.fromARGB(
-                                                  255, 203, 211, 216),
+                                                  255, 203, 211, 216,),
                                               border: Border.all(
                                                 color: const Color.fromARGB(
-                                                    255, 94, 96, 97),
+                                                    255, 94, 96, 97,),
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(100),
                                             ),
                                             padding: const EdgeInsets.symmetric(
-                                                vertical: 4, horizontal: 8),
+                                                vertical: 4, horizontal: 8,),
                                             child: Center(
                                               child: Text(
                                                 "Завершенный",
@@ -332,7 +330,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                     .textStyle12w600
                                                     .copyWith(
                                                   color: const Color.fromARGB(
-                                                      255, 94, 96, 97),
+                                                      255, 94, 96, 97,),
                                                 ),
                                               ),
                                             ),
@@ -354,7 +352,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         data: orders[index].createdAt != null
                                             ? DateFormat("dd.MM.yyyy; hh:mm a")
                                                 .format(DateTime.parse(
-                                                    orders[index].createdAt!))
+                                                    orders[index].createdAt!,),)
                                             : "No data",
                                       ),
                                       _BuildOrderDetailItem(

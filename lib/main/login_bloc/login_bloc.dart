@@ -1,9 +1,7 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
-import 'package:pharmacy_arrival/widgets/dynamic_link_layer/bloc/dynamic_link_layer_bloc.dart';
 
-import '../../network/tokens_repository/tokens_repository.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -26,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   //   }
   // }
 
-  _onLogInEvent(LogInEvent event, Emitter<LoginState> emit) async {
+  Future<void> _onLogInEvent(LogInEvent event, Emitter<LoginState> emit) async {
     try {
       emit(AuthorizedState());
     } catch (e) {
@@ -36,7 +34,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  _onLogOutEvent(LogOutEvent event, Emitter<LoginState> emit) {
+  void _onLogOutEvent(LogOutEvent event, Emitter<LoginState> emit) {
     try {
       emit(UnauthorizedState());
     } catch (e) {

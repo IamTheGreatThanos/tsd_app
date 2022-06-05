@@ -1,10 +1,8 @@
-import 'package:pharmacy_arrival/utils/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-
-import 'styles.dart';
-import 'utils.dart';
+import 'package:pharmacy_arrival/utils/extensions/string_extensions.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/styles.dart';
+import 'package:pharmacy_arrival/widgets/app_calendar_new/utils.dart';
 
 class CalendarHeader extends StatelessWidget {
   final dynamic locale;

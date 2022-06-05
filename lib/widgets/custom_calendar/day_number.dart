@@ -1,7 +1,6 @@
-import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy_arrival/styles/text_styles.dart';
 
-import 'utils/screen_sizes.dart';
 
 class DayNumber extends StatelessWidget {
   const DayNumber({
@@ -19,7 +18,6 @@ class DayNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double size = getDayNumberSize(context);
     final sizes = MediaQuery.of(context).size;
     final double width = sizes.width < 365 ? 15 : sizes.width > 420 ? 21 : 18;
     return Padding(

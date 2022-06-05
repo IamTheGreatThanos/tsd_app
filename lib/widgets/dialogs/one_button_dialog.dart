@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/widgets/dialogs/main_dialog_container.dart';
 import 'package:pharmacy_arrival/widgets/main_button/main_button.dart';
-import 'package:flutter/material.dart';
-
-import 'main_dialog_container.dart';
 
 
 
@@ -20,7 +19,7 @@ class OneButtonDialog extends StatelessWidget {
       required this.subtitle,
       required this.buttonTitle,
       required this.buttonHandler,
-      this.iconAsset})
+      this.iconAsset,})
       : super(key: key);
 
   @override
