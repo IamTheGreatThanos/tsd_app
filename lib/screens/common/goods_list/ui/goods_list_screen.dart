@@ -3,13 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -35,6 +36,7 @@ class GoodsListScreen extends StatefulWidget {
 }
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
+  bool isFloatingButtonVisible = true;
   String _currentScan = '';
   FocusNode focusNode = FocusNode();
   @override
@@ -103,6 +105,46 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
           }
         },
         child: Scaffold(
+          floatingActionButton:
+              BlocBuilder<GoodsListScreenCubit, GoodsListScreenState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                loadedState: (
+                  scannedProducts,
+                  unscannedProducts,
+                  selectedProductId,
+                  discrepancy,
+                ) {
+                  if (unscannedProducts.isNotEmpty) {
+                    return SizedBox(
+                      height: 80,
+                      width: 80,
+                      child: FloatingActionButton(
+                        child: Image.asset(
+                          'assets/images/png/scan_floating.png',
+                        ),
+                        onPressed: () {
+                          AppRouter.push(
+                            context,
+                            GoodsBarcodeScreen(
+                              orderId: widget.isFromPharmacyPage
+                                  ? widget.pharmacyOrder!.id
+                                  : widget.warehouseOrder!.id,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+                orElse: () {
+                  return const SizedBox();
+                },
+              );
+            },
+          ),
           backgroundColor: ColorPalette.main,
           appBar: CustomAppBar(
             title: "Список товаров".toUpperCase(),
@@ -148,8 +190,8 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                 initialState: () {},
                 loadingState: () {},
                 loadedState: (
-                  unscannedProducts,
                   scannedProducts,
+                  unscannedProducts,
                   selectedProductId,
                   discrepancy,
                 ) {},
@@ -744,6 +786,7 @@ class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
     focusNode.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
