@@ -32,6 +32,11 @@ abstract class PharmacyArrivalRemoteDS {
     required int orderId,
     required int status,
   });
+
+  Future<List<PharmacyOrderDTO>> getOrderByNumber({
+    required String accessToken,
+    required String number,
+  });
 }
 
 class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
@@ -150,6 +155,32 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
       );
     } on DioError catch (e) {
       log('##### getPharmacyArrivalHistory api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+  
+  @override
+  Future<List<PharmacyOrderDTO>> getOrderByNumber({required String accessToken, required String number}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get('$SERVER_/api/arrival-pharmacy?number=$number');
+      log('##### getOrderByNumber api:: ${response.statusCode}');
+
+      return compute<List, List<PharmacyOrderDTO>>(
+        (List list) {
+          return list
+              .map((e) => PharmacyOrderDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        response.data as List<dynamic>,
+      );
+    } on DioError catch (e) {
+      log('##### getOrderByNumber api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

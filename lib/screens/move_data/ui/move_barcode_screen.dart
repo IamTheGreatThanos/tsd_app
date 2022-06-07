@@ -73,6 +73,10 @@ class _MoveBarcodeScreenState extends State<MoveBarcodeScreen> {
           },
           builder: (context, state) {
             return BarcodeScannerWidget(
+              topPos: MediaQuery.of(context).size.height / 4,
+              title: 'Отсканируйте штрихкод товара',
+              height: (MediaQuery.of(context).size.width - 26) / 1.5,
+              width: MediaQuery.of(context).size.width - 26,
               callback: (barcode) {
                 BlocProvider.of<MoveBarcodeScreenCubit>(context)
                     .getProductByBarcode(barcode: barcode, isMoveProduct: true);

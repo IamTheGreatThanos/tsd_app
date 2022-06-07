@@ -370,11 +370,102 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           );
                   },
                   refundHistoryState: (List<RefundDataDTO> orders) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.amber,
-                      ),
-                    );
+                 
+                    return orders.isEmpty
+                        ? Center(
+                            child:
+                                Lottie.asset('assets/lotties/empty_box.json'),)
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 11.5,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: ColorPalette.white,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 13, horizontal: 11,),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            '№.${orders[index].id}',
+                                            style:
+                                                ThemeTextStyle.textStyle20w600,
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 203, 211, 216,),
+                                              border: Border.all(
+                                                color: const Color.fromARGB(
+                                                    255, 94, 96, 97,),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4, horizontal: 8,),
+                                            child: Center(
+                                              child: Text(
+                                                "Завершенный",
+                                                style: ThemeTextStyle
+                                                    .textStyle12w600
+                                                    .copyWith(
+                                                  color: const Color.fromARGB(
+                                                      255, 94, 96, 97,),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 27,
+                                      ),
+                                      _BuildOrderDetailItem(
+                                        icon: "container_ic",
+                                        title: "Организация",
+                                        data: (orders[index].organizationId)
+                                            .toString(),
+                                      ),
+                                      _BuildOrderDetailItem(
+                                        icon: "calendar_ic",
+                                        title: "Дата создания",
+                                        data: orders[index].createdAt != null
+                                            ? DateFormat("dd.MM.yyyy; hh:mm a")
+                                                .format(DateTime.parse(
+                                                    orders[index].createdAt!,),)
+                                            : "No data",
+                                      ),
+                                      _BuildOrderDetailItem(
+                                        icon: "stock_ic",
+                                        title: "Контрагент",
+                                        data: orders[index].counteragentId.toString(),
+                                      ),
+                                      _BuildOrderDetailItem(
+                                        icon: "stock_ic",
+                                        title: "Склад с которого делается возврат",
+                                        data: orders[index].fromCounteragentId.toString(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: orders.length,
+                            shrinkWrap: true,
+                          );
                   },
                   errorState: (String message) {
                     return const Center(

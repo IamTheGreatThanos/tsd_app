@@ -32,4 +32,8 @@ abstract class PharmacyRepository {
     required int orderId,
     required int status,
   });
+
+  Future<Either<Failure, PharmacyOrderDTO>> getOrderByNumber({
+    required String number
+  });
 }

@@ -7,8 +7,17 @@ import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/camera/camera_shape.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
+  final double width;
+  final double height;
+  final String title;
+  final double topPos;
   final Function(String) callback;
-  const BarcodeScannerWidget({Key? key, required this.callback})
+  const BarcodeScannerWidget(
+      {Key? key,
+      required this.callback,
+      required this.width,
+      required this.height,
+      required this.title, required this.topPos})
       : super(key: key);
 
   @override
@@ -25,6 +34,7 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -52,17 +62,18 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
           alignment: Alignment.center,
           decoration: ShapeDecoration(
             shape: CameraShaper(
-              paintWidth: MediaQuery.of(context).size.width - 20,
-              paintHeight: 250,
+              paintHeight: widget.height,
+              paintWidth: widget.width,
             ),
           ),
         ),
         Positioned(
-          top: 210,
-          left: MediaQuery.of(context).size.width / 2 * 0.4,
+          left: 0,
+          right: 0,
+          top: widget.topPos,
           child: Center(
             child: Text(
-              "Отсканируйте штрихкод товара",
+              widget.title,
               style: ThemeTextStyle.textStyle16w600
                   .copyWith(color: ColorPalette.white),
             ),

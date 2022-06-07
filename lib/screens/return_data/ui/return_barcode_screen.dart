@@ -43,7 +43,7 @@ class ReturnBarcodeScreen extends StatelessWidget {
                 } else {
                   AppRouter.pushReplacement(
                     context,
-                   const ReturnProductsScreen(),
+                    const ReturnProductsScreen(),
                   );
                 }
                 context.loaderOverlay.hide();
@@ -56,9 +56,14 @@ class ReturnBarcodeScreen extends StatelessWidget {
           },
           builder: (context, state) {
             return BarcodeScannerWidget(
+              topPos: MediaQuery.of(context).size.height / 4,
+              title: 'Отсканируйте штрихкод товара',
+              height: (MediaQuery.of(context).size.width - 26) / 1.5,
+              width: MediaQuery.of(context).size.width - 26,
               callback: (barcode) {
                 BlocProvider.of<MoveBarcodeScreenCubit>(context)
-                    .getProductByBarcode(barcode: barcode,isMoveProduct: false);
+                    .getProductByBarcode(
+                        barcode: barcode, isMoveProduct: false);
               },
             );
           },

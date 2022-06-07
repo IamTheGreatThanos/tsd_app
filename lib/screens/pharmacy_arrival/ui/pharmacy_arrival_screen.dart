@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -43,15 +45,16 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: SizedBox(
-              height: 80,
-              width: 80,
-              child: Image.asset(
-                'assets/images/png/scan_button.png',
-                fit: BoxFit.fill,
-              ),
+        floatingActionButton: SizedBox(
+          height: 80,
+          width: 80,
+          child: FloatingActionButton(
+            onPressed: () {
+              AppRouter.push(context, const PharmacyQrScreen());
+            },
+            child: Image.asset(
+              'assets/images/png/scan_button.png',
+              fit: BoxFit.fill,
             ),
             //  Container(
             //   decoration: const BoxDecoration(
@@ -63,7 +66,8 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
             //     ),
             //   ),
             // ),
-            ),
+          ),
+        ),
         appBar: CustomAppBar(
           title: "Приход аптека".toUpperCase(),
         ),
@@ -87,47 +91,51 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                 );
               },
               loadedState: (orders) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 15,
-                    ),
-                    child: Column(
-                      children: [
-                        AppTextField(
-                          controller: searchController,
-                          hintText: "Искать по номеру заказа",
-                          hintStyle: ThemeTextStyle.textStyle14w400
-                              .copyWith(color: ColorPalette.grey400),
-                          fillColor: ColorPalette.white,
-                          prefixIcon: SvgPicture.asset(
-                            "assets/images/svg/search.svg",
-                            color: ColorPalette.grey400,
+                return orders.isEmpty
+                    ? Center(
+                        child: Lottie.asset('assets/lotties/empty_box.json'),
+                      )
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 13,
+                            vertical: 15,
                           ),
-                          contentPadding: const EdgeInsets.only(
-                            top: 17,
-                            bottom: 17,
-                            left: 13,
+                          child: Column(
+                            children: [
+                              AppTextField(
+                                controller: searchController,
+                                hintText: "Искать по номеру заказа",
+                                hintStyle: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grey400),
+                                fillColor: ColorPalette.white,
+                                prefixIcon: SvgPicture.asset(
+                                  "assets/images/svg/search.svg",
+                                  color: ColorPalette.grey400,
+                                ),
+                                contentPadding: const EdgeInsets.only(
+                                  top: 17,
+                                  bottom: 17,
+                                  left: 13,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: orders.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return _BuildOrderData(
+                                    orderData: orders[index],
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: orders.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return _BuildOrderData(
-                              orderData: orders[index],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
               },
               orElse: () {
                 return const Center(
@@ -323,18 +331,19 @@ class _BuildOrderData extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      child: Image.network(
-                        (orderData.driver != null &&
-                                orderData.driver!.avatar != null)
-                            ? orderData.driver!.avatar!
-                            : 'https://i.stack.imgur.com/l60Hf.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),),
+                  height: 40,
+                  width: 40,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.network(
+                      (orderData.driver != null &&
+                              orderData.driver!.avatar != null)
+                          ? orderData.driver!.avatar!
+                          : 'https://i.stack.imgur.com/l60Hf.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   width: 12,
                 ),

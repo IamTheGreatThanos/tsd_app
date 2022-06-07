@@ -144,15 +144,50 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
       return Left(ServerFailure(message: 'Нету интернета!'));
     }
   }
-  
+
   @override
-  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory() async {
+  Future<Either<Failure, List<PharmacyOrderDTO>>>
+      getPharmacyArrivalHistory() async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
         final List<PharmacyOrderDTO> historyOrders = await arrivalRemoteDS
             .getPharmacyArrivalHistory(accessToken: user.accessToken!);
         return Right(historyOrders);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PharmacyOrderDTO>> getOrderByNumber({
+    required String number,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final List<PharmacyOrderDTO> numberOrders = await arrivalRemoteDS
+            .getOrderByNumber(accessToken: user.accessToken!, number: number);
+        if (numberOrders.isEmpty) {
+          return Left(
+            ServerFailure(message: 'Нету такого заказа в поступлений!'),
+          );
+        } else {
+          if (numberOrders.first.status == 1 || numberOrders.first.status == 2) {
+            return Left(
+              ServerFailure(message: 'Данный заказ уже активен!'),
+            );
+          } else if (numberOrders.first.status == 3) {
+            return Left(
+              ServerFailure(message: 'Данный заказ уже завершенный!'),
+            );
+          } else {
+            return Right(numberOrders.first);
+          }
+        }
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
