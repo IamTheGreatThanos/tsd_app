@@ -52,7 +52,7 @@ class _DigitalSignatureLoadScreenState
               loadedState: () {
                 context.loaderOverlay.hide();
                 BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                    .getOrders();
+                    .onRefreshOrders();
                 AppRouter.pushReplacement(
                   context,
                   GoodsListScreen(

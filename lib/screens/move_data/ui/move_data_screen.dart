@@ -64,10 +64,11 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
           state.maybeWhen(
             activeState: (MoveDataDTO moveDataDTO, List<ProductDTO> products) {
               AppRouter.pushReplacement(
-                  context,
-                  MoveProductsScreen(
-                    moveDataDTO: moveDataDTO,
-                  ),);
+                context,
+                MoveProductsScreen(
+                  moveDataDTO: moveDataDTO,
+                ),
+              );
             },
             passiveState: () {
               return const _BuildMoveScreenBody();
@@ -150,7 +151,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                 children: [
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
@@ -160,64 +161,72 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Отправитель",
-                              style: ThemeTextStyle.textStyle14w400.copyWith(
-                                color: ColorPalette.grey400,
+                            Expanded(
+                              child: Text(
+                                "Отправитель",
+                                style: ThemeTextStyle.textStyle14w400.copyWith(
+                                  color: ColorPalette.grey400,
+                                ),
                               ),
                             ),
                             const SizedBox(
                               width: 16,
                             ),
-                            BlocBuilder<countragents.CounteragentsCubit,
-                                countragents.CounteragentState>(
-                              builder: (context, state) {
-                                return state.maybeWhen(
-                                  loadingState: () =>
-                                      const CircularProgressIndicator(
-                                    color: Colors.amber,
-                                  ),
-                                  loadedState: (counteragents) {
-                                    return DropdownButton(
-                                      underline: const SizedBox(),
-                                      value: sender,
-                                      alignment: AlignmentDirectional.centerEnd,
-                                      icon: SvgPicture.asset(
-                                        "assets/images/svg/chevron_right.svg",
-                                      ),
-                                      onChanged: (String? newValue) {
-                                        sender = newValue!;
-                                        for (int i = 0;
-                                            i < counteragents.length;
-                                            i++) {
-                                          if (sender == counteragents[i].name &&
-                                              counteragents[i].id != -1) {
-                                            senderId = counteragents[i].id;
+                            Expanded(
+                              child: BlocBuilder<
+                                  countragents.CounteragentsCubit,
+                                  countragents.CounteragentState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(
+                                    loadingState: () =>
+                                        const CircularProgressIndicator(
+                                      color: Colors.amber,
+                                    ),
+                                    loadedState: (counteragents) {
+                                      return DropdownButton(
+                                        isExpanded: true,
+                                        underline: const SizedBox(),
+                                        value: sender,
+                                        alignment:
+                                            AlignmentDirectional.centerEnd,
+                                        icon: SvgPicture.asset(
+                                          "assets/images/svg/chevron_right.svg",
+                                        ),
+                                        onChanged: (String? newValue) {
+                                          sender = newValue!;
+                                          for (int i = 0;
+                                              i < counteragents.length;
+                                              i++) {
+                                            if (sender ==
+                                                    counteragents[i].name &&
+                                                counteragents[i].id != -1) {
+                                              senderId = counteragents[i].id;
+                                            }
                                           }
-                                        }
-                                        setState(() {});
-                                      },
-                                      items: counteragents
-                                          .map((e) => e.name)
-                                          .toList()
-                                          .map<DropdownMenuItem<String>>(
-                                              (String? value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            "$value",
-                                          ),
-                                        );
-                                      }).toList(),
-                                    );
-                                  },
-                                  orElse: () {
-                                    return const CircularProgressIndicator(
-                                      color: Colors.red,
-                                    );
-                                  },
-                                );
-                              },
+                                          setState(() {});
+                                        },
+                                        items: counteragents
+                                            .map((e) => e.name)
+                                            .toList()
+                                            .map<DropdownMenuItem<String>>(
+                                                (String? value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              "$value",
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    },
+                                    orElse: () {
+                                      return const CircularProgressIndicator(
+                                        color: Colors.red,
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -227,65 +236,73 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Получатель",
-                              style: ThemeTextStyle.textStyle14w400.copyWith(
-                                color: ColorPalette.grey400,
+                            Expanded(
+                              child: Text(
+                                "Получатель",
+                                style: ThemeTextStyle.textStyle14w400.copyWith(
+                                  color: ColorPalette.grey400,
+                                ),
                               ),
                             ),
                             const SizedBox(
                               width: 16,
                             ),
-                            BlocBuilder<countragents.CounteragentsCubit,
-                                countragents.CounteragentState>(
-                              builder: (context, state) {
-                                return state.maybeWhen(
-                                  loadingState: () =>
-                                      const CircularProgressIndicator(
-                                    color: Colors.amber,
-                                  ),
-                                  loadedState: (counteragents) {
-                                    return DropdownButton(
-                                      underline: const SizedBox(),
-                                      value: recipient,
-                                      alignment: AlignmentDirectional.centerEnd,
-                                      icon: SvgPicture.asset(
-                                        "assets/images/svg/chevron_right.svg",
-                                      ),
-                                      onChanged: (String? newValue) {
-                                        recipient = newValue!;
-                                        for (int i = 0;
-                                            i < counteragents.length;
-                                            i++) {
-                                          if (recipient ==
-                                                  counteragents[i].name &&
-                                              counteragents[i].id != -1) {
-                                            recipientId = counteragents[i].id;
+                            Expanded(
+                              child: BlocBuilder<
+                                  countragents.CounteragentsCubit,
+                                  countragents.CounteragentState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(
+                                    loadingState: () =>
+                                        const CircularProgressIndicator(
+                                      color: Colors.amber,
+                                    ),
+                                    loadedState: (counteragents) {
+                                      return DropdownButton(
+                                        isExpanded: true,
+                                        underline: const SizedBox(),
+                                        value: recipient,
+                                        alignment:
+                                            AlignmentDirectional.center,
+                                        icon: SvgPicture.asset(
+                                          "assets/images/svg/chevron_right.svg",
+                                        ),
+                                        onChanged: (String? newValue) {
+                                          recipient = newValue!;
+                                          for (int i = 0;
+                                              i < counteragents.length;
+                                              i++) {
+                                            if (recipient ==
+                                                    counteragents[i].name &&
+                                                counteragents[i].id != -1) {
+                                              recipientId = counteragents[i].id;
+                                            }
                                           }
-                                        }
-                                        setState(() {});
-                                      },
-                                      items: counteragents
-                                          .map((e) => e.name)
-                                          .toList()
-                                          .map<DropdownMenuItem<String>>(
-                                              (String? value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            "$value",
-                                          ),
-                                        );
-                                      }).toList(),
-                                    );
-                                  },
-                                  orElse: () {
-                                    return const CircularProgressIndicator(
-                                      color: Colors.red,
-                                    );
-                                  },
-                                );
-                              },
+                                          setState(() {});
+                                        },
+                                        items: counteragents
+                                            .map((e) => e.name)
+                                            .toList()
+                                            .map<DropdownMenuItem<String>>(
+                                                (String? value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              "$value",
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    },
+                                    orElse: () {
+                                      return const CircularProgressIndicator(
+                                        color: Colors.red,
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -297,7 +314,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                   ),
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
@@ -311,56 +328,63 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                             color: ColorPalette.grey400,
                           ),
                         ),
-                        BlocBuilder<organization.OrganizationCubit,
-                            organization.OrganizationState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              loadingState: () =>
-                                  const CircularProgressIndicator(
-                                color: Colors.amber,
-                              ),
-                              loadedState: (organizations) {
-                                return DropdownButton(
-                                  underline: const SizedBox(),
-                                  value: organizationName,
-                                  alignment: AlignmentDirectional.centerEnd,
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svg/chevron_right.svg",
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    organizationName = newValue!;
-                                    for (int i = 0;
-                                        i < organizations.length;
-                                        i++) {
-                                      if (organizationName ==
-                                              organizations[i].name &&
-                                          organizations[i].id != -1) {
-                                        organizationId = organizations[i].id;
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        Expanded(
+                          child: BlocBuilder<organization.OrganizationCubit,
+                              organization.OrganizationState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                loadingState: () =>
+                                    const CircularProgressIndicator(
+                                  color: Colors.amber,
+                                ),
+                                loadedState: (organizations) {
+                                  return DropdownButton(
+                                    isExpanded: true,
+                                    underline: const SizedBox(),
+                                    value: organizationName,
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    icon: SvgPicture.asset(
+                                      "assets/images/svg/chevron_right.svg",
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      organizationName = newValue!;
+                                      for (int i = 0;
+                                          i < organizations.length;
+                                          i++) {
+                                        if (organizationName ==
+                                                organizations[i].name &&
+                                            organizations[i].id != -1) {
+                                          organizationId = organizations[i].id;
+                                        }
                                       }
-                                    }
-                                    setState(() {});
-                                  },
-                                  items: organizations
-                                      .map((e) => e.name)
-                                      .toList()
-                                      .map<DropdownMenuItem<String>>(
-                                          (String? value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        "$value",
-                                      ),
-                                    );
-                                  }).toList(),
-                                );
-                              },
-                              orElse: () {
-                                return const CircularProgressIndicator(
-                                  color: Colors.red,
-                                );
-                              },
-                            );
-                          },
+                                      setState(() {});
+                                    },
+                                    items: organizations
+                                        .map((e) => e.name)
+                                        .toList()
+                                        .map<DropdownMenuItem<String>>(
+                                            (String? value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          "$value",
+                                          textAlign: TextAlign.end,
+                                        ),
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                                orElse: () {
+                                  return const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -394,6 +418,9 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                           alignment: AlignmentDirectional.centerEnd,
                           onChanged: (String? value) {
                             moveType = value!;
+                            setState(() {
+                              
+                            });
                           },
                         ),
                       ],

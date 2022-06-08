@@ -65,7 +65,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
             },
             loadedState: () {
               context.loaderOverlay.hide();
-              BlocProvider.of<PharmacyArrivalScreenCubit>(context).getOrders();
+              BlocProvider.of<PharmacyArrivalScreenCubit>(context).onRefreshOrders();
               AppRouter.pushReplacement(
                 context,
                 GoodsListScreen(

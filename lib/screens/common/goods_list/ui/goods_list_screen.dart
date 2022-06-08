@@ -568,7 +568,7 @@ class _BuildBodyState extends State<_BuildBody> {
                 loadedState: () {
                   context.loaderOverlay.hide();
                   BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                      .getOrders();
+                      .onRefreshOrders();
 
                   Navigator.pop(context);
                 },

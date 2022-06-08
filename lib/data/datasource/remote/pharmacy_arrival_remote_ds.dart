@@ -10,6 +10,7 @@ import 'package:pharmacy_arrival/data/model/product_dto.dart';
 abstract class PharmacyArrivalRemoteDS {
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
     required String accessToken,
+    required int page,
   });
 
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({
@@ -47,12 +48,13 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   @override
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
     required String accessToken,
+    required int page,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio.get('$SERVER_/api/arrival-pharmacy');
+      final response = await dio.get('$SERVER_/api/arrival-pharmacy?page=$page');
       log('##### getPharmacyArrivalOrders api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(
@@ -61,7 +63,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
               .map((e) => PharmacyOrderDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getPharmacyArrivalOrders api error::: ${e.response}, ${e.error}');

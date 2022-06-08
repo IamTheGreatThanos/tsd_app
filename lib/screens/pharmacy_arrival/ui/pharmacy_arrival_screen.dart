@@ -32,7 +32,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<PharmacyArrivalScreenCubit>(context).getOrders();
+    BlocProvider.of<PharmacyArrivalScreenCubit>(context).onRefreshOrders();
     super.initState();
   }
 
@@ -94,10 +94,16 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
               },
               loadedState: (orders) {
                 return SmartRefresher(
+                  enablePullUp: true,
+                  onLoading: () {
+                    BlocProvider.of<PharmacyArrivalScreenCubit>(context)
+                        .onLoadOrders();
+                        refreshController.loadComplete();
+                  },
                   onRefresh: () {
                     BlocProvider.of<PharmacyArrivalScreenCubit>(
                       context,
-                    ).getOrders();
+                    ).onRefreshOrders();
                     refreshController.refreshCompleted();
                   },
                   controller: refreshController,
@@ -319,20 +325,22 @@ class _BuildOrderData extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "${orderData.toAddress}, ",
-                              style: ThemeTextStyle.textStyle14w400,
-                            ),
-                            TextSpan(
-                              text: orderData.toCityName,
-                              style: ThemeTextStyle.textStyle14w400.copyWith(
-                                color: ColorPalette.grey400,
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "${orderData.toAddress}, ",
+                                style: ThemeTextStyle.textStyle14w400,
                               ),
-                            )
-                          ],
+                              TextSpan(
+                                text: orderData.toCityName,
+                                style: ThemeTextStyle.textStyle14w400.copyWith(
+                                  color: ColorPalette.grey400,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],

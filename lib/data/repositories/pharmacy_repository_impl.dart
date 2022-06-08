@@ -27,12 +27,12 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
 
   @override
   Future<Either<Failure, List<PharmacyOrderDTO>>>
-      getPharmacyArrivalOrders() async {
+      getPharmacyArrivalOrders({required int page}) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
         final List<PharmacyOrderDTO> warehouseOrders = await arrivalRemoteDS
-            .getPharmacyArrivalOrders(accessToken: user.accessToken!);
+            .getPharmacyArrivalOrders(accessToken: user.accessToken!,page: page);
         return Right(warehouseOrders);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

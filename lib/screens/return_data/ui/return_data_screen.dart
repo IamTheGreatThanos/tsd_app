@@ -68,7 +68,7 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
@@ -84,56 +84,59 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                             ),
                           ),
                         ),
-                        BlocBuilder<organization.OrganizationCubit,
-                            organization.OrganizationState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              loadingState: () =>
-                                  const CircularProgressIndicator(
-                                color: Colors.amber,
-                              ),
-                              loadedState: (counteragents) {
-                                return DropdownButton(
-                                  underline: const SizedBox(),
-                                  value: organizationName,
-                                  alignment: AlignmentDirectional.centerEnd,
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svg/chevron_right.svg",
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    organizationName = newValue!;
-                                    for (int i = 0;
-                                        i < counteragents.length;
-                                        i++) {
-                                      if (organizationName ==
-                                              counteragents[i].name &&
-                                          counteragents[i].id != -1) {
-                                        organizationId = counteragents[i].id;
+                        Expanded(
+                          child: BlocBuilder<organization.OrganizationCubit,
+                              organization.OrganizationState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                loadingState: () =>
+                                    const CircularProgressIndicator(
+                                  color: Colors.amber,
+                                ),
+                                loadedState: (counteragents) {
+                                  return DropdownButton(
+                                    isExpanded: true,
+                                    underline: const SizedBox(),
+                                    value: organizationName,
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    icon: SvgPicture.asset(
+                                      "assets/images/svg/chevron_right.svg",
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      organizationName = newValue!;
+                                      for (int i = 0;
+                                          i < counteragents.length;
+                                          i++) {
+                                        if (organizationName ==
+                                                counteragents[i].name &&
+                                            counteragents[i].id != -1) {
+                                          organizationId = counteragents[i].id;
+                                        }
                                       }
-                                    }
-                                    setState(() {});
-                                  },
-                                  items: counteragents
-                                      .map((e) => e.name)
-                                      .toList()
-                                      .map<DropdownMenuItem<String>>(
-                                          (String? value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        "$value",
-                                      ),
-                                    );
-                                  }).toList(),
-                                );
-                              },
-                              orElse: () {
-                                return const CircularProgressIndicator(
-                                  color: Colors.red,
-                                );
-                              },
-                            );
-                          },
+                                      setState(() {});
+                                    },
+                                    items: counteragents
+                                        .map((e) => e.name)
+                                        .toList()
+                                        .map<DropdownMenuItem<String>>(
+                                            (String? value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          "$value",
+                                        ),
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                                orElse: () {
+                                  return const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -142,7 +145,7 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                     height: 16,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
@@ -158,56 +161,59 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                             ),
                           ),
                         ),
-                        BlocBuilder<countragents.CounteragentsCubit,
-                            countragents.CounteragentState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              loadingState: () =>
-                                  const CircularProgressIndicator(
-                                color: Colors.amber,
-                              ),
-                              loadedState: (counteragents) {
-                                return DropdownButton(
-                                  underline: const SizedBox(),
-                                  value: counteragent,
-                                  alignment: AlignmentDirectional.centerEnd,
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svg/chevron_right.svg",
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    counteragent = newValue!;
-                                    for (int i = 0;
-                                        i < counteragents.length;
-                                        i++) {
-                                      if (counteragent ==
-                                              counteragents[i].name &&
-                                          counteragents[i].id != -1) {
-                                        counteragentId = counteragents[i].id;
+                        Expanded(
+                          child: BlocBuilder<countragents.CounteragentsCubit,
+                              countragents.CounteragentState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                loadingState: () =>
+                                    const CircularProgressIndicator(
+                                  color: Colors.amber,
+                                ),
+                                loadedState: (counteragents) {
+                                  return DropdownButton(
+                                    isExpanded: true,
+                                    underline: const SizedBox(),
+                                    value: counteragent,
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    icon: SvgPicture.asset(
+                                      "assets/images/svg/chevron_right.svg",
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      counteragent = newValue!;
+                                      for (int i = 0;
+                                          i < counteragents.length;
+                                          i++) {
+                                        if (counteragent ==
+                                                counteragents[i].name &&
+                                            counteragents[i].id != -1) {
+                                          counteragentId = counteragents[i].id;
+                                        }
                                       }
-                                    }
-                                    setState(() {});
-                                  },
-                                  items: counteragents
-                                      .map((e) => e.name)
-                                      .toList()
-                                      .map<DropdownMenuItem<String>>(
-                                          (String? value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        "$value",
-                                      ),
-                                    );
-                                  }).toList(),
-                                );
-                              },
-                              orElse: () {
-                                return const CircularProgressIndicator(
-                                  color: Colors.red,
-                                );
-                              },
-                            );
-                          },
+                                      setState(() {});
+                                    },
+                                    items: counteragents
+                                        .map((e) => e.name)
+                                        .toList()
+                                        .map<DropdownMenuItem<String>>(
+                                            (String? value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          "$value",
+                                        ),
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                                orElse: () {
+                                  return const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -216,7 +222,7 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                     height: 16,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
@@ -232,57 +238,60 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                             ),
                           ),
                         ),
-                        BlocBuilder<countragents.CounteragentsCubit,
-                            countragents.CounteragentState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              loadingState: () =>
-                                  const CircularProgressIndicator(
-                                color: Colors.amber,
-                              ),
-                              loadedState: (counteragents) {
-                                return DropdownButton(
-                                  underline: const SizedBox(),
-                                  value: fromCounteragent,
-                                  alignment: AlignmentDirectional.centerEnd,
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svg/chevron_right.svg",
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    fromCounteragent = newValue!;
-                                    for (int i = 0;
-                                        i < counteragents.length;
-                                        i++) {
-                                      if (fromCounteragent ==
-                                              counteragents[i].name &&
-                                          counteragents[i].id != -1) {
-                                        fromCounteragentId =
-                                            counteragents[i].id;
+                        Expanded(
+                          child: BlocBuilder<countragents.CounteragentsCubit,
+                              countragents.CounteragentState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                loadingState: () =>
+                                    const CircularProgressIndicator(
+                                  color: Colors.amber,
+                                ),
+                                loadedState: (counteragents) {
+                                  return DropdownButton(
+                                    isExpanded: true,
+                                    underline: const SizedBox(),
+                                    value: fromCounteragent,
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    icon: SvgPicture.asset(
+                                      "assets/images/svg/chevron_right.svg",
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      fromCounteragent = newValue!;
+                                      for (int i = 0;
+                                          i < counteragents.length;
+                                          i++) {
+                                        if (fromCounteragent ==
+                                                counteragents[i].name &&
+                                            counteragents[i].id != -1) {
+                                          fromCounteragentId =
+                                              counteragents[i].id;
+                                        }
                                       }
-                                    }
-                                    setState(() {});
-                                  },
-                                  items: counteragents
-                                      .map((e) => e.name)
-                                      .toList()
-                                      .map<DropdownMenuItem<String>>(
-                                          (String? value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        "$value",
-                                      ),
-                                    );
-                                  }).toList(),
-                                );
-                              },
-                              orElse: () {
-                                return const CircularProgressIndicator(
-                                  color: Colors.red,
-                                );
-                              },
-                            );
-                          },
+                                      setState(() {});
+                                    },
+                                    items: counteragents
+                                        .map((e) => e.name)
+                                        .toList()
+                                        .map<DropdownMenuItem<String>>(
+                                            (String? value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          "$value",
+                                        ),
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                                orElse: () {
+                                  return const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

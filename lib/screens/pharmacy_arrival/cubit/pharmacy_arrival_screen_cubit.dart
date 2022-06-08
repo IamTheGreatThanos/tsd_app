@@ -11,7 +11,8 @@ part 'pharmacy_arrival_screen_state.dart';
 part 'pharmacy_arrival_screen_cubit.freezed.dart';
 
 class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
-  List<PharmacyOrderDTO> activeOrders = [];
+  List<PharmacyOrderDTO> _activeOrders = [];
+  int _currentPage = 1;
   final GetPharmacyArrivalOrders _getPharmacyArrivalOrders;
   final UpdatePharmacyOrderStatus _updatePharmacyOrderStatus;
   PharmacyArrivalScreenCubit(
@@ -19,9 +20,10 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     this._updatePharmacyOrderStatus,
   ) : super(const PharmacyArrivalScreenState.initialState());
 
-  Future<void> getOrders() async {
+  Future<void> onRefreshOrders() async {
+    _currentPage = 1;
     emit(const PharmacyArrivalScreenState.loadingState());
-    final result = await _getPharmacyArrivalOrders.call();
+    final result = await _getPharmacyArrivalOrders.call(_currentPage);
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -29,13 +31,40 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
         ),
       ),
       (r) {
-        activeOrders = [];
+        log("ON REFRESH:: , page:: $_currentPage,");
+        _currentPage++;
+        _activeOrders = [];
         for (final PharmacyOrderDTO orderDTO in r) {
           if (orderDTO.status == 1 || orderDTO.status == 2) {
-            activeOrders.add(orderDTO);
+            _activeOrders.add(orderDTO);
           }
         }
-        emit(PharmacyArrivalScreenState.loadedState(orders: activeOrders));
+        emit(PharmacyArrivalScreenState.loadedState(orders: _activeOrders));
+      },
+    );
+  }
+
+  Future<void> onLoadOrders() async {
+    final result = await _getPharmacyArrivalOrders.call(_currentPage);
+    result.fold(
+      (l) => emit(
+        PharmacyArrivalScreenState.errorState(
+          message: mapFailureToMessage(l),
+        ),
+      ),
+      (r) {
+        List<PharmacyOrderDTO> _loadOrders = [];
+        log("ON LOADING:: , page:: $_currentPage");
+        if (r.isNotEmpty) {
+          _currentPage++;
+        }
+        for (final PharmacyOrderDTO orderDTO in r) {
+          if (orderDTO.status == 1 || orderDTO.status == 2) {
+            _loadOrders.add(orderDTO);
+          }
+        }
+        _activeOrders+=_loadOrders;
+        emit(PharmacyArrivalScreenState.loadedState(orders: _activeOrders));
       },
     );
   }
@@ -61,6 +90,6 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
         log('SUCCESS UPDATED STATUS: ${r.status}');
       },
     );
-    await getOrders();
+    await onRefreshOrders();
   }
 }

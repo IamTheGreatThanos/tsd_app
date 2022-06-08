@@ -4,7 +4,9 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 
 abstract class PharmacyRepository {
-  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalOrders();
+  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalOrders({
+    required int page,
+  });
 
   Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory();
 
@@ -33,7 +35,6 @@ abstract class PharmacyRepository {
     required int status,
   });
 
-  Future<Either<Failure, PharmacyOrderDTO>> getOrderByNumber({
-    required String number
-  });
+  Future<Either<Failure, PharmacyOrderDTO>> getOrderByNumber(
+      {required String number});
 }
