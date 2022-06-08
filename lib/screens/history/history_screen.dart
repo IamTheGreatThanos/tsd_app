@@ -14,6 +14,7 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  RefreshController refreshController = RefreshController();
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context).getPharmacyArrivalHistory();
@@ -230,242 +232,355 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     );
                   },
                   pharmacyHistoryState: (List<PharmacyOrderDTO> orders) {
-                    return orders.isEmpty
-                        ? Center(
-                            child:
-                                Lottie.asset('assets/lotties/empty_box.json'),
-                          )
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 11.5,
+                    return SmartRefresher(
+                      controller: refreshController,
+                      onRefresh: () {
+                        BlocProvider.of<HistoryCubit>(context)
+                            .getPharmacyArrivalHistory();
+                        refreshController.refreshCompleted();
+                      },
+                      child: orders.isEmpty
+                          ? ListView(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
+                                ),
+                                Center(
+                                  child: Lottie.asset(
+                                      'assets/lotties/empty_box.json'),
+                                ),
+                              ],
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 11.5,
+                              ),
+                              itemBuilder: (context, index) {
+                                return _BuildOrderData(
+                                  orderNumber: '${orders[index].number}',
+                                  orderId: orders[index].id,
+                                  container: orders[index].container ?? 0,
+                                  createdAt: orders[index].createdAt,
+                                  counteragent: orders[index].sender,
+                                );
+                              },
+                              itemCount: orders.length,
+                              shrinkWrap: true,
                             ),
-                            itemBuilder: (context, index) {
-                              return _BuildOrderData(
-                                orderNumber: '${orders[index].number}',
-                                orderId: orders[index].id,
-                                container: orders[index].container ?? 0,
-                                createdAt: orders[index].createdAt,
-                                counteragent: orders[index].sender,
-                              );
-                            },
-                            itemCount: orders.length,
-                            shrinkWrap: true,
-                          );
+                    );
                   },
                   warehouseHistoryState: (List<WarehouseOrderDTO> orders) {
-                    return orders.isEmpty
-                        ? Center(
-                            child:
-                                Lottie.asset('assets/lotties/empty_box.json'),
-                          )
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 11.5,
+                    return SmartRefresher(
+                      controller: refreshController,
+                      onRefresh: () {
+                        BlocProvider.of<HistoryCubit>(context)
+                            .getPharmacyArrivalHistory();
+                        refreshController.refreshCompleted();
+                      },
+                      child: orders.isEmpty
+                          ? ListView(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
+                                ),
+                                Center(
+                                  child: Lottie.asset(
+                                      'assets/lotties/empty_box.json'),
+                                ),
+                              ],
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 11.5,
+                              ),
+                              itemBuilder: (context, index) {
+                                return _BuildOrderData(
+                                  orderNumber: '${orders[index].number}',
+                                  orderId: orders[index].id,
+                                  container: orders[index].container ?? 0,
+                                  createdAt: orders[index].createdAt,
+                                  counteragent: orders[index].counteragent,
+                                );
+                              },
+                              itemCount: orders.length,
+                              shrinkWrap: true,
                             ),
-                            itemBuilder: (context, index) {
-                              return _BuildOrderData(
-                                orderNumber: '${orders[index].number}',
-                                orderId: orders[index].id,
-                                container: orders[index].container ?? 0,
-                                createdAt: orders[index].createdAt,
-                                counteragent: orders[index].counteragent,
-                              );
-                            },
-                            itemCount: orders.length,
-                            shrinkWrap: true,
-                          );
+                    );
                   },
                   movingHistoryState: (List<MoveDataDTO> orders) {
-                    return orders.isEmpty
-                        ? Center(
-                            child:
-                                Lottie.asset('assets/lotties/empty_box.json'),)
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 11.5,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: ColorPalette.white,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 13, horizontal: 11,),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            '№.${orders[index].id}',
-                                            style:
-                                                ThemeTextStyle.textStyle20w600,
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 203, 211, 216,),
-                                              border: Border.all(
-                                                color: const Color.fromARGB(
-                                                    255, 94, 96, 97,),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
+                    return SmartRefresher(
+                      controller: refreshController,
+                      onRefresh: () {
+                        BlocProvider.of<HistoryCubit>(context)
+                            .getPharmacyArrivalHistory();
+                        refreshController.refreshCompleted();
+                      },
+                      child: orders.isEmpty
+                          ? ListView(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
+                                ),
+                                Center(
+                                  child: Lottie.asset(
+                                      'assets/lotties/empty_box.json'),
+                                ),
+                              ],
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 11.5,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: ColorPalette.white,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 13,
+                                      horizontal: 11,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '№.${orders[index].id}',
+                                              style: ThemeTextStyle
+                                                  .textStyle20w600,
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 4, horizontal: 8,),
-                                            child: Center(
-                                              child: Text(
-                                                "Завершенный",
-                                                style: ThemeTextStyle
-                                                    .textStyle12w600
-                                                    .copyWith(
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  203,
+                                                  211,
+                                                  216,
+                                                ),
+                                                border: Border.all(
                                                   color: const Color.fromARGB(
-                                                      255, 94, 96, 97,),
+                                                    255,
+                                                    94,
+                                                    96,
+                                                    97,
+                                                  ),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 4,
+                                                horizontal: 8,
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "Завершенный",
+                                                  style: ThemeTextStyle
+                                                      .textStyle12w600
+                                                      .copyWith(
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      94,
+                                                      96,
+                                                      97,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 27,
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "container_ic",
-                                        title: "Организация",
-                                        data: (orders[index].organizationId)
-                                            .toString(),
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "calendar_ic",
-                                        title: "Дата создания",
-                                        data: orders[index].createdAt != null
-                                            ? DateFormat("dd.MM.yyyy; hh:mm a")
-                                                .format(DateTime.parse(
-                                                    orders[index].createdAt!,),)
-                                            : "No data",
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "stock_ic",
-                                        title: "Отрпавитель",
-                                        data: orders[index].senderId.toString(),
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 27,
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "container_ic",
+                                          title: "Организация",
+                                          data: (orders[index].organizationId)
+                                              .toString(),
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "calendar_ic",
+                                          title: "Дата создания",
+                                          data: orders[index].createdAt != null
+                                              ? DateFormat(
+                                                      "dd.MM.yyyy; hh:mm a")
+                                                  .format(
+                                                  DateTime.parse(
+                                                    orders[index].createdAt!,
+                                                  ),
+                                                )
+                                              : "No data",
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "stock_ic",
+                                          title: "Отрпавитель",
+                                          data:
+                                              orders[index].senderId.toString(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            itemCount: orders.length,
-                            shrinkWrap: true,
-                          );
+                                );
+                              },
+                              itemCount: orders.length,
+                              shrinkWrap: true,
+                            ),
+                    );
                   },
                   refundHistoryState: (List<RefundDataDTO> orders) {
-                 
-                    return orders.isEmpty
-                        ? Center(
-                            child:
-                                Lottie.asset('assets/lotties/empty_box.json'),)
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 11.5,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: ColorPalette.white,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 13, horizontal: 11,),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            '№.${orders[index].id}',
-                                            style:
-                                                ThemeTextStyle.textStyle20w600,
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 203, 211, 216,),
-                                              border: Border.all(
-                                                color: const Color.fromARGB(
-                                                    255, 94, 96, 97,),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
+                    return SmartRefresher(
+                      controller: refreshController,
+                      onRefresh: () {
+                        BlocProvider.of<HistoryCubit>(context)
+                            .getPharmacyArrivalHistory();
+                        refreshController.refreshCompleted();
+                      },
+                      child: orders.isEmpty
+                          ? ListView(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
+                                ),
+                                Center(
+                                  child: Lottie.asset(
+                                      'assets/lotties/empty_box.json'),
+                                ),
+                              ],
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 11.5,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: ColorPalette.white,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 13,
+                                      horizontal: 11,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '№.${orders[index].id}',
+                                              style: ThemeTextStyle
+                                                  .textStyle20w600,
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 4, horizontal: 8,),
-                                            child: Center(
-                                              child: Text(
-                                                "Завершенный",
-                                                style: ThemeTextStyle
-                                                    .textStyle12w600
-                                                    .copyWith(
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  203,
+                                                  211,
+                                                  216,
+                                                ),
+                                                border: Border.all(
                                                   color: const Color.fromARGB(
-                                                      255, 94, 96, 97,),
+                                                    255,
+                                                    94,
+                                                    96,
+                                                    97,
+                                                  ),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 4,
+                                                horizontal: 8,
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "Завершенный",
+                                                  style: ThemeTextStyle
+                                                      .textStyle12w600
+                                                      .copyWith(
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      94,
+                                                      96,
+                                                      97,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 27,
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "container_ic",
-                                        title: "Организация",
-                                        data: (orders[index].organizationId)
-                                            .toString(),
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "calendar_ic",
-                                        title: "Дата создания",
-                                        data: orders[index].createdAt != null
-                                            ? DateFormat("dd.MM.yyyy; hh:mm a")
-                                                .format(DateTime.parse(
-                                                    orders[index].createdAt!,),)
-                                            : "No data",
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "stock_ic",
-                                        title: "Контрагент",
-                                        data: orders[index].counteragentId.toString(),
-                                      ),
-                                      _BuildOrderDetailItem(
-                                        icon: "stock_ic",
-                                        title: "Склад с которого делается возврат",
-                                        data: orders[index].fromCounteragentId.toString(),
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 27,
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "container_ic",
+                                          title: "Организация",
+                                          data: (orders[index].organizationId)
+                                              .toString(),
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "calendar_ic",
+                                          title: "Дата создания",
+                                          data: orders[index].createdAt != null
+                                              ? DateFormat(
+                                                      "dd.MM.yyyy; hh:mm a")
+                                                  .format(
+                                                  DateTime.parse(
+                                                    orders[index].createdAt!,
+                                                  ),
+                                                )
+                                              : "No data",
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "stock_ic",
+                                          title: "Контрагент",
+                                          data: orders[index]
+                                              .counteragentId
+                                              .toString(),
+                                        ),
+                                        _BuildOrderDetailItem(
+                                          icon: "stock_ic",
+                                          title:
+                                              "Склад с которого делается возврат",
+                                          data: orders[index]
+                                              .fromCounteragentId
+                                              .toString(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            itemCount: orders.length,
-                            shrinkWrap: true,
-                          );
+                                );
+                              },
+                              itemCount: orders.length,
+                              shrinkWrap: true,
+                            ),
+                    );
                   },
                   errorState: (String message) {
                     return const Center(

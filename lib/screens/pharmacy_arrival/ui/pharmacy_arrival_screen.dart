@@ -17,6 +17,7 @@ import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PharmacyArrivalScreen extends StatefulWidget {
   const PharmacyArrivalScreen({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class PharmacyArrivalScreen extends StatefulWidget {
 }
 
 class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
+  RefreshController refreshController = RefreshController();
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -91,51 +93,65 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                 );
               },
               loadedState: (orders) {
-                return orders.isEmpty
-                    ? Center(
-                        child: Lottie.asset('assets/lotties/empty_box.json'),
-                      )
-                    : SingleChildScrollView(
-                        child: Padding(
+                return SmartRefresher(
+                  onRefresh: () {
+                    BlocProvider.of<PharmacyArrivalScreenCubit>(
+                      context,
+                    ).getOrders();
+                    refreshController.refreshCompleted();
+                  },
+                  controller: refreshController,
+                  child: orders.isEmpty
+                      ? ListView(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.1,
+                            ),
+                            Center(
+                              child: Lottie.asset(
+                                'assets/lotties/empty_box.json',
+                              ),
+                            )
+                          ],
+                        )
+                      : ListView(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 13,
                             vertical: 15,
                           ),
-                          child: Column(
-                            children: [
-                              AppTextField(
-                                controller: searchController,
-                                hintText: "Искать по номеру заказа",
-                                hintStyle: ThemeTextStyle.textStyle14w400
-                                    .copyWith(color: ColorPalette.grey400),
-                                fillColor: ColorPalette.white,
-                                prefixIcon: SvgPicture.asset(
-                                  "assets/images/svg/search.svg",
-                                  color: ColorPalette.grey400,
-                                ),
-                                contentPadding: const EdgeInsets.only(
-                                  top: 17,
-                                  bottom: 17,
-                                  left: 13,
-                                ),
+                          children: [
+                            AppTextField(
+                              controller: searchController,
+                              hintText: "Искать по номеру заказа",
+                              hintStyle: ThemeTextStyle.textStyle14w400
+                                  .copyWith(color: ColorPalette.grey400),
+                              fillColor: ColorPalette.white,
+                              prefixIcon: SvgPicture.asset(
+                                "assets/images/svg/search.svg",
+                                color: ColorPalette.grey400,
                               ),
-                              const SizedBox(
-                                height: 20,
+                              contentPadding: const EdgeInsets.only(
+                                top: 17,
+                                bottom: 17,
+                                left: 13,
                               ),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: orders.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return _BuildOrderData(
-                                    orderData: orders[index],
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: orders.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return _BuildOrderData(
+                                  orderData: orders[index],
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                      );
+                );
               },
               orElse: () {
                 return const Center(

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
@@ -17,6 +18,7 @@ import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class GoodsListScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
@@ -227,8 +229,11 @@ class _BuildBody extends StatefulWidget {
 
 class _BuildBodyState extends State<_BuildBody> {
   int currentIndex = 0;
+  RefreshController controller = RefreshController();
+  int itemCount = 0;
   @override
   void initState() {
+    itemCount = widget.unscannedProducts.length;
     super.initState();
   }
 
@@ -246,6 +251,7 @@ class _BuildBodyState extends State<_BuildBody> {
                 onTap: () {
                   setState(() {
                     currentIndex = 0;
+                    itemCount = widget.unscannedProducts.length;
                   });
                 },
                 child: Container(
@@ -294,6 +300,7 @@ class _BuildBodyState extends State<_BuildBody> {
                 onTap: () {
                   setState(() {
                     currentIndex = 1;
+                    itemCount = widget.scannedProducts.length;
                   });
                 },
                 child: Container(
@@ -342,6 +349,7 @@ class _BuildBodyState extends State<_BuildBody> {
                 onTap: () {
                   setState(() {
                     currentIndex = 2;
+                    itemCount = widget.discrepancy.length;
                   });
                 },
                 child: Container(
@@ -386,108 +394,167 @@ class _BuildBodyState extends State<_BuildBody> {
             ],
           ),
         ),
-        if (currentIndex == 0)
-          Expanded(
-            flex: 12,
-            child: SingleChildScrollView(
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding:
-                    const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.unscannedProducts.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      AppRouter.push(
-                        context,
-                        DefectScreen(
-                          product: widget.unscannedProducts[index],
-                          orderId: widget.orderId,
+        Expanded(
+          child: SmartRefresher(
+            onRefresh: () {
+              BlocProvider.of<GoodsListScreenCubit>(context)
+                  .getPharmacyProducts(widget.orderId);
+            },
+            controller: controller,
+            child: itemCount == 0
+                ? ListView(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                      ),
+                      Center(
+                        child: Lottie.asset('assets/lotties/empty_box.json'),
+                      ),
+                    ],
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    padding:
+                        const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
+                    itemCount: currentIndex==0?widget.unscannedProducts.length:(currentIndex==1?widget.scannedProducts.length:widget.discrepancy.length),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          if (currentIndex == 0) {
+                            AppRouter.push(
+                              context,
+                              DefectScreen(
+                                product: widget.unscannedProducts[index],
+                                orderId: widget.orderId,
+                              ),
+                            );
+                          }
+                        },
+                        child: _BuildGoodDetails(
+                          orderID: widget.orderId,
+                          good: currentIndex == 0
+                              ? widget.unscannedProducts[index]
+                              : (currentIndex == 1
+                                  ? widget.scannedProducts[index]
+                                  : widget.discrepancy[index]),
+                          selectedProduct: widget.selectedProduct,
                         ),
                       );
-                      // AppRouter.push(
-                      //   context,
-                      //   BlocProvider.value(
-                      //     value: context.read<BlocGoodsList>(),
-                      //     child: const BarcodeScannerScreen(),
-                      //   ),
-                      // );
-                      // await FlutterBarcodeScanner.scanBarcode(
-                      //     "F87615", "Cancel", false, ScanMode.BARCODE);
-                      // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
                     },
-                    child: _BuildGoodDetails(
-                      orderID: widget.orderId,
-                      good: widget.unscannedProducts[index],
-                      selectedProduct: widget.selectedProduct,
-                    ),
-                  );
-                },
-              ),
-            ),
+                  ),
           ),
-        if (currentIndex == 1)
-          widget.scannedProducts.isEmpty
-              ? const Padding(
-                  padding: EdgeInsets.only(top: 40.0),
-                  child: Center(
-                    child: Text("Отсканированных товаров нет"),
-                  ),
-                )
-              : Expanded(
-                  flex: 12,
-                  child: SingleChildScrollView(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(
-                        left: 12.5,
-                        right: 12.5,
-                        top: 20,
-                      ),
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.scannedProducts.length,
-                      itemBuilder: (context, index) {
-                        return _BuildGoodDetails(
-                          orderID: widget.orderId,
-                          selectedProduct: const ProductDTO(id: -1),
-                          good: widget.scannedProducts[index],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-        if (currentIndex == 2)
-          widget.discrepancy.isEmpty
-              ? const Padding(
-                  padding: EdgeInsets.only(top: 40.0),
-                  child: Center(
-                    child: Text("Нет несоответствий"),
-                  ),
-                )
-              : Expanded(
-                  flex: 12,
-                  child: SingleChildScrollView(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(
-                        left: 12.5,
-                        right: 12.5,
-                        top: 20,
-                      ),
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.discrepancy.length,
-                      itemBuilder: (context, index) {
-                        return _BuildGoodDetails(
-                          orderID: widget.orderId,
-                          selectedProduct: const ProductDTO(id: -1),
-                          good: widget.discrepancy[index],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-        const Spacer(),
+        ),
+
+        // if (currentIndex == 0)
+        //   Expanded(
+        //     child: SingleChildScrollView(
+        //       child: widget.unscannedProducts.isEmpty
+        //           ? ListView(
+        //               children: [
+        //                 SizedBox(
+        //                   height: MediaQuery.of(context).size.height * 0.1,
+        //                 ),
+        //                 Center(
+        //                   child: Lottie.asset('assets/lotties/empty_box.json'),
+        //                 ),
+        //               ],
+        //             )
+        //           : ListView.builder(
+        //               shrinkWrap: true,
+        //               padding: const EdgeInsets.only(
+        //                   left: 12.5, right: 12.5, top: 20),
+        //               physics: const NeverScrollableScrollPhysics(),
+        //               itemCount: widget.unscannedProducts.length,
+        //               itemBuilder: (context, index) {
+        //                 return GestureDetector(
+        //                   onTap: () {
+        //                     AppRouter.push(
+        //                       context,
+        //                       DefectScreen(
+        //                         product: widget.unscannedProducts[index],
+        //                         orderId: widget.orderId,
+        //                       ),
+        //                     );
+        //                     // AppRouter.push(
+        //                     //   context,
+        //                     //   BlocProvider.value(
+        //                     //     value: context.read<BlocGoodsList>(),
+        //                     //     child: const BarcodeScannerScreen(),
+        //                     //   ),
+        //                     // );
+        //                     // await FlutterBarcodeScanner.scanBarcode(
+        //                     //     "F87615", "Cancel", false, ScanMode.BARCODE);
+        //                     // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
+        //                   },
+        //                   child: _BuildGoodDetails(
+        //                     orderID: widget.orderId,
+        //                     good: widget.unscannedProducts[index],
+        //                     selectedProduct: widget.selectedProduct,
+        //                   ),
+        //                 );
+        //               },
+        //             ),
+        //     ),
+        //   ),
+        // if (currentIndex == 1)
+        //   widget.scannedProducts.isEmpty
+        //       ? const Padding(
+        //           padding: EdgeInsets.only(top: 40.0),
+        //           child: Center(
+        //             child: Text("Отсканированных товаров нет"),
+        //           ),
+        //         )
+        //       : Expanded(
+        //           child: SingleChildScrollView(
+        //             child: ListView.builder(
+        //               shrinkWrap: true,
+        //               padding: const EdgeInsets.only(
+        //                 left: 12.5,
+        //                 right: 12.5,
+        //                 top: 20,
+        //               ),
+        //               physics: const NeverScrollableScrollPhysics(),
+        //               itemCount: widget.scannedProducts.length,
+        //               itemBuilder: (context, index) {
+        //                 return _BuildGoodDetails(
+        //                   orderID: widget.orderId,
+        //                   selectedProduct: const ProductDTO(id: -1),
+        //                   good: widget.scannedProducts[index],
+        //                 );
+        //               },
+        //             ),
+        //           ),
+        //         ),
+        // if (currentIndex == 2)
+        //   widget.discrepancy.isEmpty
+        //       ? const Padding(
+        //           padding: EdgeInsets.only(top: 40.0),
+        //           child: Center(
+        //             child: Text("Нет несоответствий"),
+        //           ),
+        //         )
+        //       : Expanded(
+        //           child: SingleChildScrollView(
+        //             child: ListView.builder(
+        //               shrinkWrap: true,
+        //               padding: const EdgeInsets.only(
+        //                 left: 12.5,
+        //                 right: 12.5,
+        //                 top: 20,
+        //               ),
+        //               physics: const NeverScrollableScrollPhysics(),
+        //               itemCount: widget.discrepancy.length,
+        //               itemBuilder: (context, index) {
+        //                 return _BuildGoodDetails(
+        //                   orderID: widget.orderId,
+        //                   selectedProduct: const ProductDTO(id: -1),
+        //                   good: widget.discrepancy[index],
+        //                 );
+        //               },
+        //             ),
+        //           ),
+        //         ),
+
         if (widget.unscannedProducts.isEmpty)
           BlocListener<SignatureScreenCubit, SignatureScreenState>(
             listener: (context, state) {
@@ -514,6 +581,7 @@ class _BuildBodyState extends State<_BuildBody> {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 12,
+                vertical: 20,
               ),
               child: MaterialButton(
                 shape: RoundedRectangleBorder(
@@ -523,7 +591,10 @@ class _BuildBodyState extends State<_BuildBody> {
                 color: ColorPalette.orange,
                 onPressed: () {
                   BlocProvider.of<SignatureScreenCubit>(context)
-                      .updateOrderStatus(orderId: widget.orderId, status: 3);
+                      .updateOrderStatus(
+                    orderId: widget.orderId,
+                    status: 3,
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -539,9 +610,7 @@ class _BuildBodyState extends State<_BuildBody> {
                 ),
               ),
             ),
-          )
-        else
-          const SizedBox(),
+          ),
 
         // IntrinsicHeight(
         //   child: Row(
@@ -596,9 +665,6 @@ class _BuildBodyState extends State<_BuildBody> {
         //     ],
         //   ),
         // ),
-        const SizedBox(
-          height: 30,
-        ),
       ],
     );
   }
