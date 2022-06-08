@@ -11,6 +11,7 @@ import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
+import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:provider/provider.dart';
 
 class FillInvoiceScreen extends StatefulWidget {
@@ -35,6 +36,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
     numberController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
@@ -284,14 +286,21 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                 //   print(_vmodel.incomeNumberController.text.length);
                 //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
                 // } else {
+                if (_vmodel.incomeNumber.controller.text.isNotEmpty &&
+                    _vmodel.incomeNumberDateController.text.isNotEmpty &&
+                    _vmodel.bin.controller.text.isNotEmpty &&
+                    _vmodel.invoiceDate.text.isNotEmpty) {
+                  _bottomSheet(
+                    _TypeChooseBottomSheet(
+                      isFromPharmacyPage: widget.isFromPharmacyPage,
+                      warehouseOrder: widget.warehouseOrder,
+                      pharmacyOrder: widget.pharmacyOrder,
+                    ),
+                  );
+                } else {
+                  buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
+                }
 
-                _bottomSheet(
-                  _TypeChooseBottomSheet(
-                    isFromPharmacyPage: widget.isFromPharmacyPage,
-                    warehouseOrder: widget.warehouseOrder,
-                    pharmacyOrder: widget.pharmacyOrder,
-                  ),
-                );
                 // AppRouter.push(
                 //   context,
                 //   const DigitalSignatureLoadScreen(),
@@ -335,12 +344,12 @@ class _TypeChooseBottomSheet extends StatelessWidget {
   final bool isFromPharmacyPage;
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
-  const _TypeChooseBottomSheet(
-      {Key? key,
-      required this.isFromPharmacyPage,
-      this.pharmacyOrder,
-      this.warehouseOrder,})
-      : super(key: key);
+  const _TypeChooseBottomSheet({
+    Key? key,
+    required this.isFromPharmacyPage,
+    this.pharmacyOrder,
+    this.warehouseOrder,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +386,10 @@ class _TypeChooseBottomSheet extends StatelessWidget {
           const Text(
             'Выберите способ подтверждения ',
             style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500,),
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const Spacer(),
           MaterialButton(
