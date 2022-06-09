@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -31,8 +33,10 @@ class FillInvoiceScreen extends StatefulWidget {
 
 class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
   TextEditingController numberController = TextEditingController();
+  FocusNode focusNode1 = FocusNode();
   @override
   void dispose() {
+    focusNode1.dispose();
     numberController.dispose();
     super.dispose();
   }
@@ -48,178 +52,36 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 16.5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Заполните накладную",
-              style: ThemeTextStyle.textTitleDella16w400,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: ColorPalette.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
               child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Входящий номер",
-                        style: ThemeTextStyle.textStyle14w400.copyWith(
-                          color: ColorPalette.grey400,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Flexible(child: _vmodel.incomeNumber)
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: Divider(
-                      color: ColorPalette.borderGrey,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Дата вх. номера",
-                        style: ThemeTextStyle.textStyle14w400.copyWith(
-                          color: ColorPalette.grey400,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Flexible(
-                        child: AppTextField(
-                          contentPadding: EdgeInsets.zero,
-                          capitalize: false,
-                          controller: _vmodel.incomeNumberDateController,
-                          readonly: true,
-                          textAlign: TextAlign.right,
-                          showErrorMessages: false,
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: GestureDetector(
-                              onTap: () async {
-                                final DateTime? date = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2019),
-                                  lastDate: DateTime.now(),
-                                  helpText: "Дата входящего номера",
-                                  builder: (context, child) {
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(
-                                        colorScheme: const ColorScheme.light(
-                                          primary: ColorPalette.greyDark,
-                                        ),
-                                        textTheme: TextTheme(
-                                          headline5: ThemeTextStyle
-                                              .textTitleDella24w400,
-                                          overline:
-                                              ThemeTextStyle.textStyle16w600,
-                                        ),
-                                        textButtonTheme: TextButtonThemeData(
-                                          style: TextButton.styleFrom(
-                                            primary: Colors.black,
-                                            textStyle: ThemeTextStyle
-                                                .textStyle14w600
-                                                .copyWith(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      child: child!,
-                                    );
-                                  },
-                                );
-                                if (date != null) {
-                                  _vmodel.incomeNumberDateController.text =
-                                      DateFormat("dd.MM.yyyy").format(date);
-                                }
-                              },
-                              child: SvgPicture.asset(
-                                "assets/images/svg/calendar_circle_ic.svg",
-                                width: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            _vmodel.bin,
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: ColorPalette.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Получатель",
-                    style: ThemeTextStyle.textStyle14w400.copyWith(
-                      color: ColorPalette.grey400,
-                    ),
-                  ),
-                  Flexible(child: _vmodel.recipient)
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: ColorPalette.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Дата накладной",
-                    style: ThemeTextStyle.textStyle14w400.copyWith(
-                      color: ColorPalette.grey400,
-                    ),
+                    "Заполните накладную",
+                    style: ThemeTextStyle.textTitleDella16w400,
                   ),
                   const SizedBox(
-                    width: 16,
+                    height: 24,
                   ),
-                  Flexible(
-                    child: AppTextField(
-                      contentPadding: EdgeInsets.zero,
-                      capitalize: false,
-                      controller: _vmodel.invoiceDate,
-                      readonly: true,
-                      textAlign: TextAlign.right,
-                      showErrorMessages: false,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: GestureDetector(
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: ColorPalette.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      children: [
+                        _vmodel.incomeNumber,
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Divider(
+                            color: ColorPalette.borderGrey,
+                          ),
+                        ),
+                        GestureDetector(
                           onTap: () async {
                             final DateTime? date = await showDatePicker(
                               context: context,
@@ -243,7 +105,9 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                         primary: Colors.black,
                                         textStyle: ThemeTextStyle
                                             .textStyle14w600
-                                            .copyWith(color: Colors.black),
+                                            .copyWith(
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -252,69 +116,280 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                               },
                             );
                             if (date != null) {
-                              _vmodel.invoiceDate.text =
+                              _vmodel.incomeNumberDateController.text =
                                   DateFormat("dd.MM.yyyy").format(date);
                             }
                           },
-                          child: SvgPicture.asset(
-                            "assets/images/svg/calendar_circle_ic.svg",
-                            width: 24,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Дата вх. номера",
+                                style: ThemeTextStyle.textStyle14w400.copyWith(
+                                  color: ColorPalette.grey400,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              Flexible(
+                                child: AppTextField(
+                                  focusNode: focusNode1,
+                                  contentPadding: EdgeInsets.zero,
+                                  capitalize: false,
+                                  controller:
+                                      _vmodel.incomeNumberDateController,
+                                  readonly: true,
+                                  textAlign: TextAlign.right,
+                                  showErrorMessages: false,
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        final DateTime? date =
+                                            await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2019),
+                                          lastDate: DateTime.now(),
+                                          helpText: "Дата входящего номера",
+                                          builder: (context, child) {
+                                            return Theme(
+                                              data: Theme.of(context).copyWith(
+                                                colorScheme:
+                                                    const ColorScheme.light(
+                                                  primary:
+                                                      ColorPalette.greyDark,
+                                                ),
+                                                textTheme: TextTheme(
+                                                  headline5: ThemeTextStyle
+                                                      .textTitleDella24w400,
+                                                  overline: ThemeTextStyle
+                                                      .textStyle16w600,
+                                                ),
+                                                textButtonTheme:
+                                                    TextButtonThemeData(
+                                                  style: TextButton.styleFrom(
+                                                    primary: Colors.black,
+                                                    textStyle: ThemeTextStyle
+                                                        .textStyle14w600
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              child: child!,
+                                            );
+                                          },
+                                        );
+                                        if (date != null) {
+                                          _vmodel.incomeNumberDateController
+                                                  .text =
+                                              DateFormat("dd.MM.yyyy")
+                                                  .format(date);
+                                        }
+                                      },
+                                      child: SvgPicture.asset(
+                                        "assets/images/svg/calendar_circle_ic.svg",
+                                        width: 24,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _vmodel.bin,
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: ColorPalette.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: _vmodel.recipient,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      final DateTime? date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2019),
+                        lastDate: DateTime.now(),
+                        helpText: "Дата входящего номера",
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: const ColorScheme.light(
+                                primary: ColorPalette.greyDark,
+                              ),
+                              textTheme: TextTheme(
+                                headline5: ThemeTextStyle.textTitleDella24w400,
+                                overline: ThemeTextStyle.textStyle16w600,
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  primary: Colors.black,
+                                  textStyle: ThemeTextStyle.textStyle14w600
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      );
+                      if (date != null) {
+                        _vmodel.invoiceDate.text =
+                            DateFormat("dd.MM.yyyy").format(date);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: ColorPalette.white,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Дата накладной",
+                            style: ThemeTextStyle.textStyle14w400.copyWith(
+                              color: ColorPalette.grey400,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Flexible(
+                            child: AppTextField(
+                              contentPadding: EdgeInsets.zero,
+                              capitalize: false,
+                              controller: _vmodel.invoiceDate,
+                              readonly: true,
+                              textAlign: TextAlign.right,
+                              showErrorMessages: false,
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final DateTime? date = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2019),
+                                      lastDate: DateTime.now(),
+                                      helpText: "Дата входящего номера",
+                                      builder: (context, child) {
+                                        return Theme(
+                                          data: Theme.of(context).copyWith(
+                                            colorScheme:
+                                                const ColorScheme.light(
+                                              primary: ColorPalette.greyDark,
+                                            ),
+                                            textTheme: TextTheme(
+                                              headline5: ThemeTextStyle
+                                                  .textTitleDella24w400,
+                                              overline: ThemeTextStyle
+                                                  .textStyle16w600,
+                                            ),
+                                            textButtonTheme:
+                                                TextButtonThemeData(
+                                              style: TextButton.styleFrom(
+                                                primary: Colors.black,
+                                                textStyle: ThemeTextStyle
+                                                    .textStyle14w600
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                          child: child!,
+                                        );
+                                      },
+                                    );
+                                    if (date != null) {
+                                      _vmodel.invoiceDate.text =
+                                          DateFormat("dd.MM.yyyy").format(date);
+                                    }
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/images/svg/calendar_circle_ic.svg",
+                                    width: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  MaterialButton(
+                    height: 40,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    color: ColorPalette.orange,
+                    disabledColor: ColorPalette.orangeInactive,
+                    padding: EdgeInsets.zero,
+                    // onTap: _vmodel.incomeNumber.validated ? () {
+                    //   AppRouter.push(context, DigitalSignatureLoadScreen());
+                    // } : null,
+                    ///todo
+
+                    onPressed: () {
+                      // if (_vmodel.incomeNumberController.text.length < 2) {
+                      //   print(_vmodel.incomeNumberController.text.length);
+                      //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
+                      // } else {
+                      if (_vmodel.incomeNumber.controller.text.isNotEmpty &&
+                          _vmodel.incomeNumberDateController.text.isNotEmpty &&
+                          _vmodel.bin.controller.text.isNotEmpty &&
+                          _vmodel.invoiceDate.text.isNotEmpty) {
+                        _bottomSheet(
+                          _TypeChooseBottomSheet(
+                            isFromPharmacyPage: widget.isFromPharmacyPage,
+                            warehouseOrder: widget.warehouseOrder,
+                            pharmacyOrder: widget.pharmacyOrder,
+                          ),
+                        );
+                      } else {
+                        buildErrorCustomSnackBar(
+                            context, 'Не все поля заполнены!!!');
+                      }
+
+                      // AppRouter.push(
+                      //   context,
+                      //   const DigitalSignatureLoadScreen(),
+                      // );
+                      // }
+                    },
+                    child: Center(
+                      child: Text(
+                        "ДАЛЕЕ",
+                        style: ThemeTextStyle.textStyle14w600
+                            .copyWith(color: ColorPalette.white),
                       ),
                     ),
                   )
                 ],
               ),
             ),
-            const Spacer(),
-            MaterialButton(
-              height: 40,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              color: ColorPalette.orange,
-              disabledColor: ColorPalette.orangeInactive,
-              padding: EdgeInsets.zero,
-              // onTap: _vmodel.incomeNumber.validated ? () {
-              //   AppRouter.push(context, DigitalSignatureLoadScreen());
-              // } : null,
-              ///todo
-
-              onPressed: () {
-                // if (_vmodel.incomeNumberController.text.length < 2) {
-                //   print(_vmodel.incomeNumberController.text.length);
-                //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
-                // } else {
-                if (_vmodel.incomeNumber.controller.text.isNotEmpty &&
-                    _vmodel.incomeNumberDateController.text.isNotEmpty &&
-                    _vmodel.bin.controller.text.isNotEmpty &&
-                    _vmodel.invoiceDate.text.isNotEmpty) {
-                  _bottomSheet(
-                    _TypeChooseBottomSheet(
-                      isFromPharmacyPage: widget.isFromPharmacyPage,
-                      warehouseOrder: widget.warehouseOrder,
-                      pharmacyOrder: widget.pharmacyOrder,
-                    ),
-                  );
-                } else {
-                  buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
-                }
-
-                // AppRouter.push(
-                //   context,
-                //   const DigitalSignatureLoadScreen(),
-                // );
-                // }
-              },
-              child: Center(
-                child: Text(
-                  "ДАЛЕЕ",
-                  style: ThemeTextStyle.textStyle14w600
-                      .copyWith(color: ColorPalette.white),
-                ),
-              ),
-            )
           ],
         ),
       ),
@@ -409,7 +484,6 @@ class _TypeChooseBottomSheet extends StatelessWidget {
                   pharmacyOrder: pharmacyOrder,
                 ),
               );
-              // }
             },
             child: Center(
               child: Text(

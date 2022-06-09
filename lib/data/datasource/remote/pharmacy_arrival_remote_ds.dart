@@ -11,6 +11,7 @@ abstract class PharmacyArrivalRemoteDS {
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
     required String accessToken,
     required int page,
+    required int status,
   });
 
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({
@@ -28,11 +29,14 @@ abstract class PharmacyArrivalRemoteDS {
     int? reSorting,
   });
 
-  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
-    required String accessToken,
-    required int orderId,
-    required int status,
-  });
+  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder(
+      {required String accessToken,
+      required int orderId,
+      required int status,
+      String? incomingNumber,
+      String? incomingDate,
+      String? bin,
+      String? invoiceDate});
 
   Future<List<PharmacyOrderDTO>> getOrderByNumber({
     required String accessToken,
@@ -46,15 +50,16 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   PharmacyArrivalRemoteDSImpl(this.dio);
 
   @override
-  Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
-    required String accessToken,
-    required int page,
-  }) async {
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders(
+      {required String accessToken,
+      required int page,
+      required int status}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio.get('$SERVER_/api/arrival-pharmacy?page=$page');
+      final response = await dio
+          .get('$SERVER_/api/arrival-pharmacy?page=$page&status=$status');
       log('##### getPharmacyArrivalOrders api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(
@@ -116,6 +121,10 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     required String accessToken,
     required int orderId,
     required int status,
+    String? incomingNumber,
+    String? incomingDate,
+    String? bin,
+    String? invoiceDate,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -124,6 +133,10 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
         '$SERVER_/api/arrival-pharmacy/$orderId',
         data: {
           'status': status,
+          if (incomingNumber != null) 'incoming_number': incomingNumber,
+          if (incomingDate != null) 'incoming_date': incomingDate,
+          if (bin != null) 'bin': bin,
+          if (invoiceDate != null) 'invoice_date': invoiceDate,
         },
       );
 
@@ -137,9 +150,10 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
       );
     }
   }
-  
+
   @override
-  Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({required String accessToken})async {
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory(
+      {required String accessToken}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -163,14 +177,16 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
       );
     }
   }
-  
+
   @override
-  Future<List<PharmacyOrderDTO>> getOrderByNumber({required String accessToken, required String number}) async {
+  Future<List<PharmacyOrderDTO>> getOrderByNumber(
+      {required String accessToken, required String number}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio.get('$SERVER_/api/arrival-pharmacy?number=$number');
+      final response =
+          await dio.get('$SERVER_/api/arrival-pharmacy?number=$number');
       log('##### getOrderByNumber api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(
@@ -179,7 +195,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
               .map((e) => PharmacyOrderDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getOrderByNumber api error::: ${e.response}, ${e.error}');

@@ -17,6 +17,10 @@ class UpdatePharmacyOrderStatus
     return _pharmacyRepository.updatePharmacyStatusOfOrder(
       orderId: params.orderId,
       status: params.status,
+      incomingNumber: params.incomingNumber,
+      incomingDate: params.invoiceDate,
+      bin: params.bin,
+      invoiceDate: params.invoiceDate,
     );
   }
 }
@@ -24,8 +28,16 @@ class UpdatePharmacyOrderStatus
 class UpdatePharmacyOrderStatusParams {
   final int orderId;
   final int status;
+  final String? incomingNumber;
+  final String? incomingDate;
+  final String? bin;
+  final String? invoiceDate;
 
   UpdatePharmacyOrderStatusParams({
+    this.incomingNumber,
+    this.incomingDate,
+    this.bin,
+    this.invoiceDate,
     required this.orderId,
     required this.status,
   });

@@ -52,7 +52,7 @@ class _DigitalSignatureLoadScreenState
               loadedState: () {
                 context.loaderOverlay.hide();
                 BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                    .onRefreshOrders();
+                    .onRefreshOrders(status: 1);
                 AppRouter.pushReplacement(
                   context,
                   GoodsListScreen(
@@ -245,6 +245,20 @@ class _DigitalSignatureLoadScreenState
                                   ? widget.pharmacyOrder!.id
                                   : widget.warehouseOrder!.id,
                               status: 2,
+                              incomingNumber:
+                                  _vmodel.incomeNumber.controller.text.isEmpty
+                                      ? null
+                                      : _vmodel.incomeNumber.controller.text,
+                              incomingDate: _vmodel
+                                      .incomeNumberDateController.text.isEmpty
+                                  ? null
+                                  : _vmodel.incomeNumberDateController.text,
+                              bin: _vmodel.bin.controller.text.isEmpty
+                                  ? null
+                                  : _vmodel.bin.controller.text,
+                              invoiceDate: _vmodel.invoiceDate.text.isEmpty
+                                  ? null
+                                  : _vmodel.invoiceDate.text,
                             );
                           }
                         },

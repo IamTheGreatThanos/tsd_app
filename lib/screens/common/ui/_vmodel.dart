@@ -33,9 +33,12 @@ class FillInvoiceVModel extends ChangeNotifier {
     incomeNumber = AppTextField(
       contentPadding: EdgeInsets.zero,
       capitalize: false,
-      textAlign: TextAlign.right,
       showErrorMessages: false,
       onChanged: onChanged,
+      hintText: 'Входящий номер',
+      hintStyle: ThemeTextStyle.textStyle14w400.copyWith(
+        color: ColorPalette.grey400,
+      ),
     );
     incomeNumberDate = AppTextField(
       contentPadding: EdgeInsets.zero,
@@ -58,8 +61,11 @@ class FillInvoiceVModel extends ChangeNotifier {
     recipient = AppTextField(
       contentPadding: EdgeInsets.zero,
       capitalize: false,
-      textAlign: TextAlign.right,
       showErrorMessages: false,
+      hintText: 'Получатель',
+      hintStyle: ThemeTextStyle.textStyle14w400.copyWith(
+        color: ColorPalette.grey400,
+      ),
       onChanged: onChanged,
     );
     authPassword = AppTextField(

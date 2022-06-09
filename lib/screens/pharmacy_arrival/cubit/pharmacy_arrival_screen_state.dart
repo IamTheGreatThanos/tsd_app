@@ -10,6 +10,11 @@ class PharmacyArrivalScreenState with _$PharmacyArrivalScreenState {
     required List<PharmacyOrderDTO> orders,
   }) = _LoadedState;
 
+    const factory PharmacyArrivalScreenState.bySearch({
+    required List<PharmacyOrderDTO> products,
+  }) = _BySearchState;
+
+
   const factory PharmacyArrivalScreenState.errorState({
     required String message,
   }) = _ErrorState;

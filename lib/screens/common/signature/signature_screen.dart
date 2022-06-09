@@ -6,6 +6,7 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -53,6 +54,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
     return AppLoaderOverlay(
       child: BlocConsumer<SignatureScreenCubit, SignatureScreenState>(
         listener: (context, state) {
@@ -65,7 +67,8 @@ class _SignatureScreenState extends State<SignatureScreen> {
             },
             loadedState: () {
               context.loaderOverlay.hide();
-              BlocProvider.of<PharmacyArrivalScreenCubit>(context).onRefreshOrders();
+              BlocProvider.of<PharmacyArrivalScreenCubit>(context)
+                  .onRefreshOrders(status: 1);
               AppRouter.pushReplacement(
                 context,
                 GoodsListScreen(
@@ -122,6 +125,20 @@ class _SignatureScreenState extends State<SignatureScreen> {
                                 ? widget.pharmacyOrder!.id
                                 : widget.warehouseOrder!.id,
                             status: 2,
+                            incomingNumber:
+                                _vmodel.incomeNumber.controller.text.isEmpty
+                                    ? null
+                                    : _vmodel.incomeNumber.controller.text,
+                            incomingDate:
+                                _vmodel.incomeNumberDateController.text.isEmpty
+                                    ? null
+                                    : _vmodel.incomeNumberDateController.text,
+                            bin: _vmodel.bin.controller.text.isEmpty
+                                ? null
+                                : _vmodel.bin.controller.text,
+                            invoiceDate: _vmodel.invoiceDate.text.isEmpty
+                                ? null
+                                : _vmodel.invoiceDate.text,
                           );
                         },
                         title: "Отправить",

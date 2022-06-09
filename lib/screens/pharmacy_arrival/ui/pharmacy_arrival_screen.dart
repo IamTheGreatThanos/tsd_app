@@ -8,6 +8,7 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -18,6 +19,7 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PharmacyArrivalScreen extends StatefulWidget {
   const PharmacyArrivalScreen({Key? key}) : super(key: key);
@@ -29,10 +31,12 @@ class PharmacyArrivalScreen extends StatefulWidget {
 class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
   RefreshController refreshController = RefreshController();
   TextEditingController searchController = TextEditingController();
-
+  int currentIndex = 0;
+  int status = 1;
   @override
   void initState() {
-    BlocProvider.of<PharmacyArrivalScreenCubit>(context).onRefreshOrders();
+    BlocProvider.of<PharmacyArrivalScreenCubit>(context)
+        .onRefreshOrders(status: status);
     super.initState();
   }
 
@@ -73,101 +77,243 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
         appBar: CustomAppBar(
           title: "Приход аптека".toUpperCase(),
         ),
-        body: BlocConsumer<PharmacyArrivalScreenCubit,
-            PharmacyArrivalScreenState>(
-          listener: (context, state) {
-            state.when(
-              initialState: () {},
-              loadingState: () {},
-              loadedState: (orders) {},
-              errorState: (String message) {
-                buildErrorCustomSnackBar(context, message);
-              },
-            );
-          },
-          builder: (context, state) {
-            return state.maybeWhen(
-              loadingState: () {
-                return const Center(
-                  child: CircularProgressIndicator(color: Colors.amber),
-                );
-              },
-              loadedState: (orders) {
-                return SmartRefresher(
-                  enablePullUp: true,
-                  onLoading: () {
-                    BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                        .onLoadOrders();
-                        refreshController.loadComplete();
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 13,
+            vertical: 15,
+          ),
+          child: Column(
+            children: [
+              AppTextField(
+                focusNode: FocusNode(),
+                onFieldSubmitted: (value) {
+                  final productCubit =
+                      BlocProvider.of<PharmacyArrivalScreenCubit>(context);
+
+                  if (value.isNotEmpty) {
+                    productCubit.getOrdersBySearch(
+                      number: searchController.text,
+                    );
+                  } else {
+                    productCubit.onRefreshOrders(status: status);
+                  }
+                },
+                onChanged: (String? text) {
+                  final productCubit =
+                      BlocProvider.of<PharmacyArrivalScreenCubit>(context);
+
+                  if (text != null) {
+                    productCubit.getOrdersBySearch(
+                      number: searchController.text,
+                    );
+                  }
+                  if (text == null || text.isEmpty) {
+                    productCubit.onRefreshOrders(status: status);
+                  }
+                },
+                controller: searchController,
+                hintText: "Искать по номеру заказа",
+                hintStyle: ThemeTextStyle.textStyle14w400
+                    .copyWith(color: ColorPalette.grey400),
+                fillColor: ColorPalette.white,
+                prefixIcon: SvgPicture.asset(
+                  "assets/images/svg/search.svg",
+                  color: ColorPalette.grey400,
+                ),
+                contentPadding: const EdgeInsets.only(
+                  top: 17,
+                  bottom: 17,
+                  left: 13,
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12.5,
+                ),
+                scrollDirection: Axis.horizontal,
+                child: BlocConsumer<PharmacyArrivalCatCubit,
+                    PharmacyArrivalCatState>(
+                  listener: (context, state) {
+                    state.when(
+                      newOrdersCatState: () {
+                        currentIndex = 0;
+                        status = 1;
+                        BlocProvider.of<PharmacyArrivalScreenCubit>(context)
+                            .onRefreshOrders(status: status);
+                      },
+                      discrepancyCatState: () {
+                        currentIndex = 1;
+                        status = 2;
+                        BlocProvider.of<PharmacyArrivalScreenCubit>(context)
+                            .onRefreshOrders(status: status);
+                      },
+                    );
                   },
-                  onRefresh: () {
-                    BlocProvider.of<PharmacyArrivalScreenCubit>(
-                      context,
-                    ).onRefreshOrders();
-                    refreshController.refreshCompleted();
-                  },
-                  controller: refreshController,
-                  child: orders.isEmpty
-                      ? ListView(
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.1,
+                  builder: (context, state) {
+                    return Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<PharmacyArrivalCatCubit>(context)
+                                .changeToNewOrdersCat();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 16,
                             ),
-                            Center(
-                              child: Lottie.asset(
-                                'assets/lotties/empty_box.json',
+                            decoration: BoxDecoration(
+                              color: currentIndex == 0
+                                  ? ColorPalette.white
+                                  : ColorPalette.main,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              "Новые заказы",
+                              style: ThemeTextStyle.textStyle14w500.copyWith(
+                                color: currentIndex == 0
+                                    ? ColorPalette.grayText
+                                    : ColorPalette.grayTextDisabled,
                               ),
-                            )
-                          ],
-                        )
-                      : ListView(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 13,
-                            vertical: 15,
+                            ),
                           ),
-                          children: [
-                            AppTextField(
-                              controller: searchController,
-                              hintText: "Искать по номеру заказа",
-                              hintStyle: ThemeTextStyle.textStyle14w400
-                                  .copyWith(color: ColorPalette.grey400),
-                              fillColor: ColorPalette.white,
-                              prefixIcon: SvgPicture.asset(
-                                "assets/images/svg/search.svg",
-                                color: ColorPalette.grey400,
-                              ),
-                              contentPadding: const EdgeInsets.only(
-                                top: 17,
-                                bottom: 17,
-                                left: 13,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: orders.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return _BuildOrderData(
-                                  orderData: orders[index],
-                                );
-                              },
-                            ),
-                          ],
                         ),
-                );
-              },
-              orElse: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<PharmacyArrivalCatCubit>(context)
+                                .changeToDiscrepanyCat();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: currentIndex == 1
+                                  ? ColorPalette.white
+                                  : ColorPalette.main,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "На расхождении",
+                                  style:
+                                      ThemeTextStyle.textStyle14w500.copyWith(
+                                    color: currentIndex == 1
+                                        ? ColorPalette.grayText
+                                        : ColorPalette.grayTextDisabled,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: BlocConsumer<PharmacyArrivalScreenCubit,
+                      PharmacyArrivalScreenState>(
+                    listener: (context, state) {
+                      state.when(
+                        initialState: () {},
+                        loadingState: () {},
+                        loadedState: (orders) {},
+                        bySearch: (orders) {},
+                        errorState: (String message) {
+                          buildErrorCustomSnackBar(context, message);
+                        },
+                      );
+                    },
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        loadingState: () {
+                          return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.amber),
+                          );
+                        },
+                        bySearch: (orders) {
+                          return ListView.builder(
+                            itemCount: orders.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return _BuildOrderData(
+                                orderData: orders[index],
+                              );
+                            },
+                          );
+                        },
+                        loadedState: (orders) {
+                          return SmartRefresher(
+                            enablePullUp: true,
+                            onLoading: () {
+                              BlocProvider.of<PharmacyArrivalScreenCubit>(
+                                      context)
+                                  .onLoadOrders(status: status);
+                              refreshController.loadComplete();
+                            },
+                            onRefresh: () {
+                              BlocProvider.of<PharmacyArrivalScreenCubit>(
+                                context,
+                              ).onRefreshOrders(status: status);
+                              refreshController.refreshCompleted();
+                            },
+                            controller: refreshController,
+                            child: orders.isEmpty
+                                ? ListView(
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.1,
+                                      ),
+                                      Center(
+                                        child: Lottie.asset(
+                                          'assets/lotties/empty_box.json',
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                : ListView.builder(
+                                    itemCount: orders.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return _BuildOrderData(
+                                        orderData: orders[index],
+                                      );
+                                    },
+                                  ),
+                          );
+                        },
+                        orElse: () {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.red,
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                );
-              },
-            );
-          },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -393,13 +539,20 @@ class _BuildOrderData extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: ColorPalette.orange,
-                    borderRadius: BorderRadius.circular(100),
+                InkWell(
+                  onTap: () async {
+                    _launchUrl(Uri.parse(
+                        'tel:${orderData.driver?.phone?[0] == '8' ? '' : '+7'}${orderData.driver?.phone}'));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorPalette.orange,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding: const EdgeInsets.all(11),
+                    child:
+                        SvgPicture.asset("assets/images/svg/driver_phone.svg"),
                   ),
-                  padding: const EdgeInsets.all(11),
-                  child: SvgPicture.asset("assets/images/svg/driver_phone.svg"),
                 )
               ],
             ),
@@ -446,6 +599,10 @@ class _BuildOrderData extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _launchUrl(Uri _url) async {
+    if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 }
 

@@ -16,14 +16,26 @@ class SignatureScreenCubit extends Cubit<SignatureScreenState> {
   Future<void> updateOrderStatus({
     required int orderId,
     required int status,
+    String? incomingNumber,
+    String? incomingDate,
+    String? bin,
+    String? invoiceDate,
   }) async {
     emit(const SignatureScreenState.loadingState());
     final result = await _updatePharmacyOrderStatus.call(
-      UpdatePharmacyOrderStatusParams(orderId: orderId, status: status),
+      UpdatePharmacyOrderStatusParams(
+        orderId: orderId,
+        status: status,
+        incomingNumber: incomingNumber,
+        incomingDate: incomingDate,
+        bin: bin,
+        invoiceDate: invoiceDate,
+      ),
     );
 
     result.fold(
-      (l) => emit(SignatureScreenState.errorState(message: mapFailureToMessage(l))),
+      (l) => emit(
+          SignatureScreenState.errorState(message: mapFailureToMessage(l))),
       (r) {
         log('SUCCESS UPDATED STATUS: ${r.status}');
         emit(const SignatureScreenState.loadedState());

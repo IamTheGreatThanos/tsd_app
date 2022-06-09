@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_orders_by_search.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
 
@@ -15,15 +16,30 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
   int _currentPage = 1;
   final GetPharmacyArrivalOrders _getPharmacyArrivalOrders;
   final UpdatePharmacyOrderStatus _updatePharmacyOrderStatus;
+  final GetOrdersBySearch _getOrdersBySearch;
   PharmacyArrivalScreenCubit(
     this._getPharmacyArrivalOrders,
     this._updatePharmacyOrderStatus,
+    this._getOrdersBySearch,
   ) : super(const PharmacyArrivalScreenState.initialState());
 
-  Future<void> onRefreshOrders() async {
+  Future<void> getOrdersBySearch({required String number}) async {
+    emit(const PharmacyArrivalScreenState.loadingState());
+    final result = await _getOrdersBySearch.call(number);
+    result.fold(
+      (l) => emit(
+        PharmacyArrivalScreenState.errorState(
+          message: mapFailureToMessage(l),
+        ),
+      ),
+      (r) => emit(PharmacyArrivalScreenState.bySearch(products: r)),
+    );
+  }
+
+  Future<void> onRefreshOrders({required int status}) async {
     _currentPage = 1;
     emit(const PharmacyArrivalScreenState.loadingState());
-    final result = await _getPharmacyArrivalOrders.call(_currentPage);
+    final result = await _getPharmacyArrivalOrders.call(GetPharmacyArrivalOrdersParams(_currentPage,status));
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -44,8 +60,8 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     );
   }
 
-  Future<void> onLoadOrders() async {
-    final result = await _getPharmacyArrivalOrders.call(_currentPage);
+  Future<void> onLoadOrders({required int status}) async {
+    final result = await _getPharmacyArrivalOrders.call(GetPharmacyArrivalOrdersParams(_currentPage,status));
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -63,7 +79,7 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
             _loadOrders.add(orderDTO);
           }
         }
-        _activeOrders+=_loadOrders;
+        _activeOrders += _loadOrders;
         emit(PharmacyArrivalScreenState.loadedState(orders: _activeOrders));
       },
     );
@@ -90,6 +106,6 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
         log('SUCCESS UPDATED STATUS: ${r.status}');
       },
     );
-    await onRefreshOrders();
+    await onRefreshOrders(status: 2);
   }
 }

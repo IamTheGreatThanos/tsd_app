@@ -38,6 +38,7 @@ import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/save_move_da
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/save_move_products_to_cahce.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/update_moving_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_order_by_number.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_orders_by_search.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
@@ -70,6 +71,7 @@ import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
@@ -84,7 +86,7 @@ Future<void> initLocator() async {
   // BLoC / Cubit
   sl.registerFactory(() => SignInCubit(sl()));
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl()));
-  sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl()));
+  sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(),sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => SignatureScreenCubit(sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
@@ -118,6 +120,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => HistoryCatCubit());
   sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => PharmacyQrScreenCubit(sl()));
+  sl.registerFactory(() => PharmacyArrivalCatCubit());
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -151,6 +154,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => UpdatePharmacyOrderStatus(sl()));
   sl.registerLazySingleton(() => GetPharmacyArrivalHistory(sl()));
   sl.registerLazySingleton(() => GetOrderByNumber(sl()));
+  sl.registerLazySingleton(() => GetOrdersBySearch(sl()));
 
   ///Move Data usecases
   sl.registerLazySingleton(() => GetMoveDataFromCache(sl()));
