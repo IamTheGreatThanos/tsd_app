@@ -32,6 +32,7 @@ class UpdatePharmacyOrderStatusParams {
   final String? incomingDate;
   final String? bin;
   final String? invoiceDate;
+  final int? recipientId;
 
   UpdatePharmacyOrderStatusParams({
     this.incomingNumber,
@@ -40,5 +41,6 @@ class UpdatePharmacyOrderStatusParams {
     this.invoiceDate,
     required this.orderId,
     required this.status,
+    this.recipientId,
   });
 }

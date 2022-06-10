@@ -139,6 +139,9 @@ class _SignatureScreenState extends State<SignatureScreen> {
                             invoiceDate: _vmodel.invoiceDate.text.isEmpty
                                 ? null
                                 : _vmodel.invoiceDate.text,
+                            recipientId: _vmodel.recipientId == -1
+                                ? null
+                                : _vmodel.recipientId,
                           );
                         },
                         title: "Отправить",

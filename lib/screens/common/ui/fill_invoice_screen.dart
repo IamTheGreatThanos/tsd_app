@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
+    as countragents;
 import 'package:pharmacy_arrival/screens/common/digital_signature_load/digital_signature_load_screen.dart';
 import 'package:pharmacy_arrival/screens/common/signature/signature_screen.dart';
 import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
@@ -15,6 +18,7 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:provider/provider.dart';
+import 'package:search_choices/search_choices.dart';
 
 class FillInvoiceScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
@@ -34,6 +38,9 @@ class FillInvoiceScreen extends StatefulWidget {
 class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
   TextEditingController numberController = TextEditingController();
   FocusNode focusNode1 = FocusNode();
+
+  String? recipient;
+  int recipientId = -1;
   @override
   void dispose() {
     focusNode1.dispose();
@@ -212,12 +219,67 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                     height: 16,
                   ),
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: _vmodel.recipient,
+                    child: BlocBuilder<countragents.CounteragentsCubit,
+                        countragents.CounteragentState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          loadingState: () => const CircularProgressIndicator(
+                            color: Colors.amber,
+                          ),
+                          loadedState: (counteragents) {
+                            return SearchChoices.single(
+                              padding: recipientId == -1 ? 14 : 7,
+                              displayClearIcon: false,
+                              closeButton: "Закрыть",
+                              items: counteragents
+                                  .map((e) => e.name)
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>(
+                                      (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    "$value",
+                                    style: ThemeTextStyle.textStyle14w400,
+                                  ),
+                                );
+                              }).toList(),
+                              value: recipient,
+                              hint: "Получатель",
+                              searchHint: "Получатель",
+                              style: ThemeTextStyle.textStyle14w400,
+                              onChanged: (String? newValue) {
+                                recipient = newValue;
+                                for (int i = 0; i < counteragents.length; i++) {
+                                  if (recipient == counteragents[i].name &&
+                                      counteragents[i].id != -1) {
+                                    recipientId = counteragents[i].id;
+                                    _vmodel.recipientId = recipientId;
+                                    log(_vmodel.recipientId.toString());
+                                  }
+                                }
+                                setState(() {});
+                              },
+                              isExpanded: true,
+                              icon: SvgPicture.asset(
+                                "assets/images/svg/chevron_right.svg",
+                              ),
+                              underline: const SizedBox(),
+                            );
+                          },
+                          orElse: () {
+                            return const CircularProgressIndicator(
+                              color: Colors.red,
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 16,
@@ -357,7 +419,8 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                       //   print(_vmodel.incomeNumberController.text.length);
                       //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
                       // } else {
-                      if (_vmodel.incomeNumber.controller.text.isNotEmpty &&
+                      if (_vmodel.recipientId != -1 &&
+                          _vmodel.incomeNumber.controller.text.isNotEmpty &&
                           _vmodel.incomeNumberDateController.text.isNotEmpty &&
                           _vmodel.bin.controller.text.isNotEmpty &&
                           _vmodel.invoiceDate.text.isNotEmpty) {
@@ -370,7 +433,9 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                         );
                       } else {
                         buildErrorCustomSnackBar(
-                            context, 'Не все поля заполнены!!!');
+                          context,
+                          'Не все поля заполнены!!!',
+                        );
                       }
 
                       // AppRouter.push(

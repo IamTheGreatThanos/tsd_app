@@ -17,6 +17,7 @@ class FillInvoiceVModel extends ChangeNotifier {
   late TextEditingController invoiceDate;
   late String auth;
   late String cert;
+  late int recipientId;
   late bool isTwoPassword;
 
   void setIncomeNumberDate(DateTime value) {
@@ -30,6 +31,7 @@ class FillInvoiceVModel extends ChangeNotifier {
   }
 
   void init() {
+    recipientId=-1;
     incomeNumber = AppTextField(
       contentPadding: EdgeInsets.zero,
       capitalize: false,

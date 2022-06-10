@@ -93,6 +93,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                   if (value.isNotEmpty) {
                     productCubit.getOrdersBySearch(
                       number: searchController.text,
+                      status: status,
                     );
                   } else {
                     productCubit.onRefreshOrders(status: status);
@@ -105,6 +106,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                   if (text != null) {
                     productCubit.getOrdersBySearch(
                       number: searchController.text,
+                      status: status,
                     );
                   }
                   if (text == null || text.isEmpty) {

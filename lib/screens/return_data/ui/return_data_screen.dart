@@ -14,6 +14,7 @@ import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:search_choices/search_choices.dart';
 
 class ReturnDataScreen extends StatefulWidget {
   const ReturnDataScreen({Key? key}) : super(key: key);
@@ -23,11 +24,11 @@ class ReturnDataScreen extends StatefulWidget {
 }
 
 class _ReturnDataScreenState extends State<ReturnDataScreen> {
-  String fromCounteragent = 'Не выбран';
+  String? fromCounteragent;
   int fromCounteragentId = -1;
-  String counteragent = 'Не выбран';
+  String? counteragent;
   int counteragentId = -1;
-  String organizationName = "Организация не выбрана";
+  String? organizationName;
   int organizationId = -1;
   String moveType = "Не выбрана";
 
@@ -64,236 +65,204 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
             return Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 16.5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                    ),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Организация",
-                            style: ThemeTextStyle.textStyle14w400.copyWith(
-                              color: ColorPalette.grey400,
-                            ),
+                    child: BlocBuilder<organization.OrganizationCubit,
+                        organization.OrganizationState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          loadingState: () => const CircularProgressIndicator(
+                            color: Colors.amber,
                           ),
-                        ),
-                        Expanded(
-                          child: BlocBuilder<organization.OrganizationCubit,
-                              organization.OrganizationState>(
-                            builder: (context, state) {
-                              return state.maybeWhen(
-                                loadingState: () =>
-                                    const CircularProgressIndicator(
-                                  color: Colors.amber,
-                                ),
-                                loadedState: (counteragents) {
-                                  return DropdownButton(
-                                    isExpanded: true,
-                                    underline: const SizedBox(),
-                                    value: organizationName,
-                                    alignment: AlignmentDirectional.centerEnd,
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svg/chevron_right.svg",
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      organizationName = newValue!;
-                                      for (int i = 0;
-                                          i < counteragents.length;
-                                          i++) {
-                                        if (organizationName ==
-                                                counteragents[i].name &&
-                                            counteragents[i].id != -1) {
-                                          organizationId = counteragents[i].id;
-                                        }
-                                      }
-                                      setState(() {});
-                                    },
-                                    items: counteragents
-                                        .map((e) => e.name)
-                                        .toList()
-                                        .map<DropdownMenuItem<String>>(
-                                            (String? value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          "$value",
-                                        ),
-                                      );
-                                    }).toList(),
-                                  );
-                                },
-                                orElse: () {
-                                  return const CircularProgressIndicator(
-                                    color: Colors.red,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                          loadedState: (counteragents) {
+                            return SearchChoices.single(
+                              padding: organizationId == -1 ? 14 : 7,
+                              displayClearIcon: false,
+                              closeButton: "Закрыть",
+                              items: counteragents
+                                  .map((e) => e.name)
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>(
+                                      (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    "$value",
+                                    style: ThemeTextStyle.textStyle14w400,
+                                  ),
+                                );
+                              }).toList(),
+                              value: organizationName,
+                              hint: "Организация",
+                              searchHint: "Организация",
+                              style: ThemeTextStyle.textStyle14w400,
+                              onChanged: (String? newValue) {
+                                organizationName = newValue;
+                                for (int i = 0; i < counteragents.length; i++) {
+                                  if (organizationName ==
+                                          counteragents[i].name &&
+                                      counteragents[i].id != -1) {
+                                    organizationId = counteragents[i].id;
+                                  }
+                                }
+                                setState(() {});
+                              },
+                              isExpanded: true,
+                              icon: SvgPicture.asset(
+                                "assets/images/svg/chevron_right.svg",
+                              ),
+                              underline: const SizedBox(),
+                            );
+                          },
+                          orElse: () {
+                            return const CircularProgressIndicator(
+                              color: Colors.red,
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                    ),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Контрагент",
-                            style: ThemeTextStyle.textStyle14w400.copyWith(
-                              color: ColorPalette.grey400,
-                            ),
+                    child: BlocBuilder<countragents.CounteragentsCubit,
+                        countragents.CounteragentState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          loadingState: () => const CircularProgressIndicator(
+                            color: Colors.amber,
                           ),
-                        ),
-                        Expanded(
-                          child: BlocBuilder<countragents.CounteragentsCubit,
-                              countragents.CounteragentState>(
-                            builder: (context, state) {
-                              return state.maybeWhen(
-                                loadingState: () =>
-                                    const CircularProgressIndicator(
-                                  color: Colors.amber,
-                                ),
-                                loadedState: (counteragents) {
-                                  return DropdownButton(
-                                    isExpanded: true,
-                                    underline: const SizedBox(),
-                                    value: counteragent,
-                                    alignment: AlignmentDirectional.centerEnd,
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svg/chevron_right.svg",
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      counteragent = newValue!;
-                                      for (int i = 0;
-                                          i < counteragents.length;
-                                          i++) {
-                                        if (counteragent ==
-                                                counteragents[i].name &&
-                                            counteragents[i].id != -1) {
-                                          counteragentId = counteragents[i].id;
-                                        }
-                                      }
-                                      setState(() {});
-                                    },
-                                    items: counteragents
-                                        .map((e) => e.name)
-                                        .toList()
-                                        .map<DropdownMenuItem<String>>(
-                                            (String? value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          "$value",
-                                        ),
-                                      );
-                                    }).toList(),
-                                  );
-                                },
-                                orElse: () {
-                                  return const CircularProgressIndicator(
-                                    color: Colors.red,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                          loadedState: (counteragents) {
+                            return SearchChoices.single(
+                              padding: counteragentId == -1 ? 14 : 7,
+                              displayClearIcon: false,
+                              closeButton: "Закрыть",
+                              items: counteragents
+                                  .map((e) => e.name)
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>(
+                                      (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    "$value",
+                                    style: ThemeTextStyle.textStyle14w400,
+                                  ),
+                                );
+                              }).toList(),
+                              value: counteragent,
+                              hint: "Контрагент",
+                              searchHint: "Контрагент",
+                              style: ThemeTextStyle.textStyle14w400,
+                              onChanged: (String? newValue) {
+                                counteragent = newValue;
+                                for (int i = 0; i < counteragents.length; i++) {
+                                  if (counteragent == counteragents[i].name &&
+                                      counteragents[i].id != -1) {
+                                    counteragentId = counteragents[i].id;
+                                  }
+                                }
+                                setState(() {});
+                              },
+                              isExpanded: true,
+                              icon: SvgPicture.asset(
+                                "assets/images/svg/chevron_right.svg",
+                              ),
+                              underline: const SizedBox(),
+                            );
+                          },
+                          orElse: () {
+                            return const CircularProgressIndicator(
+                              color: Colors.red,
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                       color: ColorPalette.white,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Склад с которого делается возврат",
-                            style: ThemeTextStyle.textStyle14w400.copyWith(
-                              color: ColorPalette.grey400,
-                            ),
+                    child: BlocBuilder<countragents.CounteragentsCubit,
+                        countragents.CounteragentState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                          loadingState: () => const CircularProgressIndicator(
+                            color: Colors.amber,
                           ),
-                        ),
-                        Expanded(
-                          child: BlocBuilder<countragents.CounteragentsCubit,
-                              countragents.CounteragentState>(
-                            builder: (context, state) {
-                              return state.maybeWhen(
-                                loadingState: () =>
-                                    const CircularProgressIndicator(
-                                  color: Colors.amber,
-                                ),
-                                loadedState: (counteragents) {
-                                  return DropdownButton(
-                                    isExpanded: true,
-                                    underline: const SizedBox(),
-                                    value: fromCounteragent,
-                                    alignment: AlignmentDirectional.centerEnd,
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svg/chevron_right.svg",
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      fromCounteragent = newValue!;
-                                      for (int i = 0;
-                                          i < counteragents.length;
-                                          i++) {
-                                        if (fromCounteragent ==
-                                                counteragents[i].name &&
-                                            counteragents[i].id != -1) {
-                                          fromCounteragentId =
-                                              counteragents[i].id;
-                                        }
-                                      }
-                                      setState(() {});
-                                    },
-                                    items: counteragents
-                                        .map((e) => e.name)
-                                        .toList()
-                                        .map<DropdownMenuItem<String>>(
-                                            (String? value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          "$value",
-                                        ),
-                                      );
-                                    }).toList(),
-                                  );
-                                },
-                                orElse: () {
-                                  return const CircularProgressIndicator(
-                                    color: Colors.red,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                          loadedState: (counteragents) {
+                            return SearchChoices.single(
+                              padding: fromCounteragentId == -1 ? 14 : 7,
+                              displayClearIcon: false,
+                              closeButton: "Закрыть",
+                              items: counteragents
+                                  .map((e) => e.name)
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>(
+                                      (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    "$value",
+                                    style: ThemeTextStyle.textStyle14w400,
+                                  ),
+                                );
+                              }).toList(),
+                              value: fromCounteragent,
+                              hint: "Склад с которого делается возврат",
+                              searchHint: "Склад с которого делается возврат",
+                              style: ThemeTextStyle.textStyle14w400,
+                              onChanged: (String? newValue) {
+                                fromCounteragent = newValue;
+                                for (int i = 0; i < counteragents.length; i++) {
+                                  if (fromCounteragent ==
+                                          counteragents[i].name &&
+                                      counteragents[i].id != -1) {
+                                    fromCounteragentId = counteragents[i].id;
+                                  }
+                                }
+                                setState(() {});
+                              },
+                              isExpanded: true,
+                              icon: SvgPicture.asset(
+                                "assets/images/svg/chevron_right.svg",
+                              ),
+                              underline: const SizedBox(),
+                            );
+                          },
+                          orElse: () {
+                            return const CircularProgressIndicator(
+                              color: Colors.red,
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -318,16 +287,6 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                             "Вы не выбрали все пункты!!!",
                           );
                         }
-                        // AppRouter.push(
-                        //   context,
-                        //   BarcodeScannerScreen(
-                        //     callback: (code) {
-                        //       toastServiceSuccess(code);
-                        //       AppRouter.push(
-                        //           context, const ReturnDataScannedScreen());
-                        //     },
-                        //   ),
-                        // );
                       },
                       child: Container(
                         padding: const EdgeInsets.all(28),

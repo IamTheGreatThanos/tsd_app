@@ -38,6 +38,7 @@ abstract class PharmacyRepository {
     String? incomingDate,
     String? bin,
     String? invoiceDate,
+    int? recipientId,
   });
 
   Future<Either<Failure, PharmacyOrderDTO>> getOrderByNumber({
@@ -46,5 +47,6 @@ abstract class PharmacyRepository {
 
   Future<Either<Failure, List<PharmacyOrderDTO>>> getOrdersBySearch({
     required String number,
+    required int status,
   });
 }

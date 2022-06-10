@@ -20,7 +20,6 @@ class CounteragentsCubit extends Cubit<CounteragentState> {
             emit(CounteragentState.errorState(message: mapFailureToMessage(l))),
         (r) {
           
-      r.insert(0, const CounteragentDTO(id: -1, name: 'Не выбран'));
       emit(CounteragentState.loadedState(counteragents: r));
     });
   }

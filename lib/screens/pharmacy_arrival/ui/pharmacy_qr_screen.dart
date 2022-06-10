@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
@@ -50,7 +51,8 @@ class _PharmacyQrScreenState extends State<PharmacyQrScreen> {
               topPos: MediaQuery.of(context).size.height / 5,
               callback: (qr) {
                 BlocProvider.of<PharmacyQrScreenCubit>(context)
-                    .getOrderByNumber(number: qr);
+                    .getOrderByNumber(number: qr.substring(4));
+                log(qr);
               },
               title: 'Отсканируйте qr водителя',
               height: MediaQuery.of(context).size.width - 40,

@@ -20,6 +20,7 @@ class SignatureScreenCubit extends Cubit<SignatureScreenState> {
     String? incomingDate,
     String? bin,
     String? invoiceDate,
+    int? recipientId,
   }) async {
     emit(const SignatureScreenState.loadingState());
     final result = await _updatePharmacyOrderStatus.call(
@@ -30,6 +31,7 @@ class SignatureScreenCubit extends Cubit<SignatureScreenState> {
         incomingDate: incomingDate,
         bin: bin,
         invoiceDate: invoiceDate,
+        recipientId: recipientId,
       ),
     );
 

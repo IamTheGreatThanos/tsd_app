@@ -64,10 +64,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             ),
           ),
           Positioned(
-            top: 55,
+            top:0,
+            bottom: 0,
             left: 12,
             right: 12,
-            child: Column(
+            child: ListView(
               children: [
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 6,

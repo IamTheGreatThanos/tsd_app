@@ -23,9 +23,15 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     this._getOrdersBySearch,
   ) : super(const PharmacyArrivalScreenState.initialState());
 
-  Future<void> getOrdersBySearch({required String number}) async {
+  Future<void> getOrdersBySearch({
+    required String number,
+    required int status,
+  }) async {
     emit(const PharmacyArrivalScreenState.loadingState());
-    final result = await _getOrdersBySearch.call(number);
+    final result = await _getOrdersBySearch.call(GetOrdersBySearchParams(
+      number: number,
+      status: status,
+    ));
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -39,7 +45,8 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
   Future<void> onRefreshOrders({required int status}) async {
     _currentPage = 1;
     emit(const PharmacyArrivalScreenState.loadingState());
-    final result = await _getPharmacyArrivalOrders.call(GetPharmacyArrivalOrdersParams(_currentPage,status));
+    final result = await _getPharmacyArrivalOrders
+        .call(GetPharmacyArrivalOrdersParams(_currentPage, status));
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -61,7 +68,8 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
   }
 
   Future<void> onLoadOrders({required int status}) async {
-    final result = await _getPharmacyArrivalOrders.call(GetPharmacyArrivalOrdersParams(_currentPage,status));
+    final result = await _getPharmacyArrivalOrders
+        .call(GetPharmacyArrivalOrdersParams(_currentPage, status));
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -106,6 +114,6 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
         log('SUCCESS UPDATED STATUS: ${r.status}');
       },
     );
-    await onRefreshOrders(status: 2);
+    await onRefreshOrders(status: 1);
   }
 }

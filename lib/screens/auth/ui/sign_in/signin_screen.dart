@@ -54,8 +54,8 @@ class _SignInScreenState extends State<SignInScreen> {
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.only(top: 88, left: 16, right: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
+               // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SvgPicture.asset("assets/images/svg/europharm_logo.svg"),
                   const SizedBox(

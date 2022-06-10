@@ -136,6 +136,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     String? incomingDate,
     String? bin,
     String? invoiceDate,
+    int? recipientId,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -149,6 +150,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           incomingDate: incomingDate,
           bin: bin,
           invoiceDate: invoiceDate,
+          recipientId: recipientId,
         );
         return Right(order);
       } on ServerException catch (e) {
@@ -183,8 +185,9 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
-        final List<PharmacyOrderDTO> numberOrders = await arrivalRemoteDS
-            .getOrderByNumber(accessToken: user.accessToken!, number: number);
+        final List<PharmacyOrderDTO> numberOrders =
+            await arrivalRemoteDS.getOrderByNumber(
+                accessToken: user.accessToken!, number: number, status: 4);
         if (numberOrders.isEmpty) {
           return Left(
             ServerFailure(message: 'Нету такого заказа в поступлений!'),
@@ -214,12 +217,17 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   @override
   Future<Either<Failure, List<PharmacyOrderDTO>>> getOrdersBySearch({
     required String number,
+    required int status,
   }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
-        final List<PharmacyOrderDTO> numberOrders = await arrivalRemoteDS
-            .getOrderByNumber(accessToken: user.accessToken!, number: number);
+        final List<PharmacyOrderDTO> numberOrders =
+            await arrivalRemoteDS.getOrderByNumber(
+          accessToken: user.accessToken!,
+          number: number,
+          status: status,
+        );
 
         return Right(numberOrders);
       } on ServerException catch (e) {

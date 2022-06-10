@@ -29,18 +29,21 @@ abstract class PharmacyArrivalRemoteDS {
     int? reSorting,
   });
 
-  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder(
-      {required String accessToken,
-      required int orderId,
-      required int status,
-      String? incomingNumber,
-      String? incomingDate,
-      String? bin,
-      String? invoiceDate});
+  Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
+    required String accessToken,
+    required int orderId,
+    required int status,
+    String? incomingNumber,
+    String? incomingDate,
+    String? bin,
+    String? invoiceDate,
+    int? recipientId,
+  });
 
   Future<List<PharmacyOrderDTO>> getOrderByNumber({
     required String accessToken,
     required String number,
+    required int status,
   });
 }
 
@@ -50,10 +53,11 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   PharmacyArrivalRemoteDSImpl(this.dio);
 
   @override
-  Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders(
-      {required String accessToken,
-      required int page,
-      required int status}) async {
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
+    required String accessToken,
+    required int page,
+    required int status,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -125,6 +129,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     String? incomingDate,
     String? bin,
     String? invoiceDate,
+    int? recipientId,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -137,6 +142,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
           if (incomingDate != null) 'incoming_date': incomingDate,
           if (bin != null) 'bin': bin,
           if (invoiceDate != null) 'invoice_date': invoiceDate,
+          if (recipientId != null) 'recipient_id': recipientId,
         },
       );
 
@@ -152,8 +158,9 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   }
 
   @override
-  Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory(
-      {required String accessToken}) async {
+  Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({
+    required String accessToken,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -179,14 +186,16 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   }
 
   @override
-  Future<List<PharmacyOrderDTO>> getOrderByNumber(
-      {required String accessToken, required String number}) async {
+  Future<List<PharmacyOrderDTO>> getOrderByNumber({
+    required String accessToken,
+    required String number,
+    required int status,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
-
     try {
-      final response =
-          await dio.get('$SERVER_/api/arrival-pharmacy?number=$number');
+      final response = await dio
+          .get('$SERVER_/api/arrival-pharmacy?number=$number&status=$status');
       log('##### getOrderByNumber api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(

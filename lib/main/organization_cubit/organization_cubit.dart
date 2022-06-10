@@ -21,7 +21,6 @@ class OrganizationCubit extends Cubit<OrganizationState> {
         (l) =>
             emit(OrganizationState.errorState(message: mapFailureToMessage(l))),
         (r) {
-          r.insert(0,const CounteragentDTO(id: -1,name: "Организация не выбрана"));
       emit(OrganizationState.loadedState(organizations: r));
     });
   }
