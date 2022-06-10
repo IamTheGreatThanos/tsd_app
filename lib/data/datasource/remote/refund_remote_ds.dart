@@ -101,7 +101,7 @@ class RefundRemoteDSImpl extends RefundRemoteDS {
               .map((e) => RefundDataDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getRefundHistory api error::: ${e.response}, ${e.error}');

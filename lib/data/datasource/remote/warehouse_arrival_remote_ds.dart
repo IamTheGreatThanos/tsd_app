@@ -37,7 +37,7 @@ class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
               .map((e) => WarehouseOrderDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic> ,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getWarehouseArrivalOrders api error::: ${e.response}, ${e.error}');
@@ -63,7 +63,7 @@ class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
               .map((e) => WarehouseOrderDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getWarehouseArrivalHistory api error::: ${e.response}, ${e.error}');

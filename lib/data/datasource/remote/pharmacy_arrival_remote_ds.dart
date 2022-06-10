@@ -174,7 +174,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
               .map((e) => PharmacyOrderDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getPharmacyArrivalHistory api error::: ${e.response}, ${e.error}');

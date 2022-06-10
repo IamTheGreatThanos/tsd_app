@@ -21,6 +21,7 @@ class UpdatePharmacyOrderStatus
       incomingDate: params.invoiceDate,
       bin: params.bin,
       invoiceDate: params.invoiceDate,
+      recipientId: params.recipientId,
     );
   }
 }

@@ -136,7 +136,7 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
               .map((e) => MoveDataDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        (response.data as Map<String, dynamic>)['data'] as List,
       );
     } on DioError catch (e) {
       log('##### getMovingHistory api error::: ${e.response}, ${e.error}');
