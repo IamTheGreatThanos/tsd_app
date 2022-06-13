@@ -44,6 +44,7 @@ import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/save_pharmacy_selected_product.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/send_signature.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_product_by_id.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/delete_refund_order_from_cache.dart';
@@ -88,7 +89,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(),sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => SignatureScreenCubit(sl()));
+  sl.registerFactory(() => SignatureScreenCubit(sl(),sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));
   sl.registerFactory(() => MoveCubit(sl(), sl()));
@@ -155,6 +156,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => GetPharmacyArrivalHistory(sl()));
   sl.registerLazySingleton(() => GetOrderByNumber(sl()));
   sl.registerLazySingleton(() => GetOrdersBySearch(sl()));
+  sl.registerLazySingleton(() => SendSignature(sl()));
 
   ///Move Data usecases
   sl.registerLazySingleton(() => GetMoveDataFromCache(sl()));

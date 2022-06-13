@@ -1,7 +1,15 @@
+import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
@@ -15,6 +23,7 @@ import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:signature/signature.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 
 class SignatureScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
@@ -35,6 +44,34 @@ class _SignatureScreenState extends State<SignatureScreen> {
   final SignatureController _controller = SignatureController(
     exportBackgroundColor: ColorPalette.main,
   );
+
+//обратно запрашиваем уже сохранившеися файл через путь
+  Future<File> getImageFileFromAssets(String path) async {
+    final File file = await toFile(path);
+    return file;
+  }
+//сохраняем нарисованную подпись
+  Future<String> storeSignature() async {
+    final status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
+    final time = DateTime.now().toIso8601String().replaceAll('.', ':');
+    final name = 'signature_$time';
+
+    final result = await ImageGallerySaver.saveImage(
+        (await _controller.toPngBytes())!,
+        name: name);
+    final isSuccess = result['isSuccess'] as bool;
+
+    if (isSuccess) {
+      log('Saved to signature folder');
+    } else {
+      log('Failed to save signature');
+    }
+    return (result as Map)["filePath"].toString();
+  }
 
   @override
   void initState() {
@@ -118,32 +155,37 @@ class _SignatureScreenState extends State<SignatureScreen> {
                         width: 8,
                       ),
                       _BuildButton(
-                        onTap: () {
-                          BlocProvider.of<SignatureScreenCubit>(context)
-                              .updateOrderStatus(
-                            orderId: widget.isFromPharmacyPage
-                                ? widget.pharmacyOrder!.id
-                                : widget.warehouseOrder!.id,
-                            status: 2,
-                            incomingNumber:
-                                _vmodel.incomeNumber.controller.text.isEmpty
-                                    ? null
-                                    : _vmodel.incomeNumber.controller.text,
-                            incomingDate:
-                                _vmodel.incomeNumberDateController.text.isEmpty
-                                    ? null
-                                    : _vmodel.incomeNumberDateController.text,
-                            bin: _vmodel.bin.controller.text.isEmpty
-                                ? null
-                                : _vmodel.bin.controller.text,
-                            invoiceDate: _vmodel.invoiceDate.text.isEmpty
-                                ? null
-                                : _vmodel.invoiceDate.text,
-                            recipientId: _vmodel.recipientId == -1
-                                ? null
-                                : _vmodel.recipientId,
-                          );
-                        },
+                        onTap:  () async {
+                                BlocProvider.of<SignatureScreenCubit>(context)
+                                    .sendSignature(
+                                  orderId: widget.isFromPharmacyPage
+                                      ? widget.pharmacyOrder!.id
+                                      : widget.warehouseOrder!.id,
+                                  status: 2,
+                                  incomingNumber: _vmodel
+                                          .incomeNumber.controller.text.isEmpty
+                                      ? null
+                                      : _vmodel.incomeNumber.controller.text,
+                                  incomingDate: _vmodel
+                                          .incomeNumberDateController
+                                          .text
+                                          .isEmpty
+                                      ? null
+                                      : _vmodel.incomeNumberDateController.text,
+                                  bin: _vmodel.bin.controller.text.isEmpty
+                                      ? null
+                                      : _vmodel.bin.controller.text,
+                                  invoiceDate: _vmodel.invoiceDate.text.isEmpty
+                                      ? null
+                                      : _vmodel.invoiceDate.text,
+                                  recipientId: _vmodel.recipientId == -1
+                                      ? null
+                                      : _vmodel.recipientId,
+                                  signature: await getImageFileFromAssets(
+                                    await storeSignature(),
+                                  ),
+                                );
+                              },
                         title: "Отправить",
                         icon: "done_signature",
                         color: ColorPalette.orange,
@@ -161,7 +203,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
 }
 
 class _BuildButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String title;
   final String icon;
   final Color color;

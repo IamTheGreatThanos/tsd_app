@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +121,7 @@ class _DigitalSignatureLoadScreenState
                                     allowedExtensions: ['p12'],
                                   );
                                   if (file != null) {
+                                    log('${file.paths}');
                                     _vmodel.setCertName(file.files.first.name);
                                   }
                                 },

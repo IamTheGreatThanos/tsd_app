@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
@@ -137,6 +139,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     String? bin,
     String? invoiceDate,
     int? recipientId,
+    File? signature,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -151,6 +154,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           bin: bin,
           invoiceDate: invoiceDate,
           recipientId: recipientId,
+          signature: signature,
         );
         return Right(order);
       } on ServerException catch (e) {
@@ -187,7 +191,10 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         final User user = await authLocalDS.getUserFromCache();
         final List<PharmacyOrderDTO> numberOrders =
             await arrivalRemoteDS.getOrderByNumber(
-                accessToken: user.accessToken!, number: number, status: 4);
+          accessToken: user.accessToken!,
+          number: number,
+          status: 4,
+        );
         if (numberOrders.isEmpty) {
           return Left(
             ServerFailure(message: 'Нету такого заказа в поступлений!'),
@@ -230,6 +237,29 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         );
 
         return Right(numberOrders);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> sendSignature({
+    required int orderId,
+    required File signature,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final String result = await arrivalRemoteDS.sendSignature(
+          accessToken: user.accessToken!,
+          orderId: orderId,
+          signature: signature,
+        );
+
+        return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/core/extension/usecases/usecase.dart';
@@ -22,6 +24,7 @@ class UpdatePharmacyOrderStatus
       bin: params.bin,
       invoiceDate: params.invoiceDate,
       recipientId: params.recipientId,
+      signature: params.signature,
     );
   }
 }
@@ -34,6 +37,7 @@ class UpdatePharmacyOrderStatusParams {
   final String? bin;
   final String? invoiceDate;
   final int? recipientId;
+  final File? signature;
 
   UpdatePharmacyOrderStatusParams({
     this.incomingNumber,
@@ -43,5 +47,6 @@ class UpdatePharmacyOrderStatusParams {
     required this.orderId,
     required this.status,
     this.recipientId,
+    this.signature,
   });
 }

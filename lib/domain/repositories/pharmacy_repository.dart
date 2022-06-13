@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
@@ -39,6 +41,12 @@ abstract class PharmacyRepository {
     String? bin,
     String? invoiceDate,
     int? recipientId,
+    File? signature,
+  });
+
+  Future<Either<Failure,String>> sendSignature({
+    required int orderId,
+    required File signature,
   });
 
   Future<Either<Failure, PharmacyOrderDTO>> getOrderByNumber({
