@@ -10,6 +10,11 @@ class WarehouseArrivalScreenState with _$WarehouseArrivalScreenState {
     required List<WarehouseOrderDTO> orders,
   }) = _LoadedState;
 
+      const factory WarehouseArrivalScreenState.bySearch({
+    required List<WarehouseOrderDTO> orders,
+  }) = _BySearchState;
+
+
   const factory WarehouseArrivalScreenState.errorState({
     required String message,
   }) = _ErrorState;

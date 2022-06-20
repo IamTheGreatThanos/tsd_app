@@ -61,6 +61,7 @@ import 'package:pharmacy_arrival/domain/usecases/refund_usecases/save_refund_ord
 import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
+import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/update_warehouse_order_status.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
@@ -78,6 +79,7 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_scre
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/return_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,10 +88,10 @@ final sl = GetIt.instance;
 Future<void> initLocator() async {
   // BLoC / Cubit
   sl.registerFactory(() => SignInCubit(sl()));
-  sl.registerFactory(() => WarehouseArrivalScreenCubit(sl()));
-  sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(),sl()));
+  sl.registerFactory(() => WarehouseArrivalScreenCubit(sl(), sl()));
+  sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => SignatureScreenCubit(sl(),sl()));
+  sl.registerFactory(() => SignatureScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));
   sl.registerFactory(() => MoveCubit(sl(), sl()));
@@ -122,6 +124,8 @@ Future<void> initLocator() async {
   sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => PharmacyQrScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalCatCubit());
+  sl.registerFactory(() => WarehouseArrivalCatCubit());
+
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -144,6 +148,7 @@ Future<void> initLocator() async {
   ///Warehouse usecases
   sl.registerLazySingleton(() => GetWarehouseArrivalOrders(sl()));
   sl.registerLazySingleton(() => GetWarehouseArrivalHistory(sl()));
+  sl.registerLazySingleton(() => UpdateWarehouseOrderStatus(sl()));
 
   ///Pharmacy usecases
 

@@ -18,14 +18,21 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
     required this.warehouseArrivalRemoteDS,
   });
   @override
-  Future<Either<Failure, List<WarehouseOrderDTO>>>
-      getWarehouseArrivalOrders() async {
+  Future<Either<Failure, List<WarehouseOrderDTO>>> getWarehouseArrivalOrders({
+    required int page,
+    required int status,
+    String? searchText,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
         final List<WarehouseOrderDTO> warehouseOrders =
             await warehouseArrivalRemoteDS.getWarehouseArrivalOrders(
-                accessToken: user.accessToken!,);
+          accessToken: user.accessToken!,
+          page: page,
+          status: status,
+          searchText: searchText,
+        );
         return Right(warehouseOrders);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -43,8 +50,42 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
         final User user = await authLocalDS.getUserFromCache();
         final List<WarehouseOrderDTO> historyOrders =
             await warehouseArrivalRemoteDS.getWarehouseArrivalHistory(
-                accessToken: user.accessToken!,);
+          accessToken: user.accessToken!,
+        );
         return Right(historyOrders);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нету интернета!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, WarehouseOrderDTO>> updateWarehouseStatusOfOrder({
+    required int orderId,
+    required int status,
+    String? incomingNumber,
+    String? incomingDate,
+    String? bin,
+    String? invoiceDate,
+    int? counteragentId,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final WarehouseOrderDTO order =
+            await warehouseArrivalRemoteDS.updateWarehouseStatusOfOrder(
+          accessToken: user.accessToken!,
+          orderId: orderId,
+          status: status,
+          incomingNumber: incomingNumber,
+          incomingDate: incomingDate,
+          bin: bin,
+          invoiceDate: invoiceDate,
+          counteragentId: counteragentId,
+        );
+        return Right(order);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

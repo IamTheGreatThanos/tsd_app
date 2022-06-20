@@ -9,12 +9,25 @@ import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 abstract class WarehouseArrivalRemoteDS {
   Future<List<WarehouseOrderDTO>> getWarehouseArrivalOrders({
     required String accessToken,
+    required int page,
+    required int status,
+    String? searchText,
   });
 
-    Future<List<WarehouseOrderDTO>> getWarehouseArrivalHistory({
+  Future<List<WarehouseOrderDTO>> getWarehouseArrivalHistory({
     required String accessToken,
   });
 
+  Future<WarehouseOrderDTO> updateWarehouseStatusOfOrder({
+    required String accessToken,
+    required int orderId,
+    required int status,
+    String? incomingNumber,
+    String? incomingDate,
+    String? bin,
+    String? invoiceDate,
+    int? counteragentId,
+  });
 }
 
 class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
@@ -23,16 +36,26 @@ class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
   @override
   Future<List<WarehouseOrderDTO>> getWarehouseArrivalOrders({
     required String accessToken,
+    required int page,
+    required int status,
+    String? searchText,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio.get('$SERVER_/api/arrival-warehouse');
+      final response = await dio.get(
+        '$SERVER_/api/arrival-warehouse',
+        queryParameters: {
+          "page": page.toString(),
+          "status": status.toString(),
+          if (searchText != null && searchText.isNotEmpty) "number": searchText,
+        },
+      );
       log('##### getWarehouseArrivalOrders api:: ${response.statusCode}');
 
       return compute<List, List<WarehouseOrderDTO>>(
-        (List list) {   
+        (List list) {
           return list
               .map((e) => WarehouseOrderDTO.fromJson(e as Map<String, dynamic>))
               .toList();
@@ -47,9 +70,11 @@ class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
       );
     }
   }
-  
+
   @override
-  Future<List<WarehouseOrderDTO>> getWarehouseArrivalHistory({required String accessToken}) async {
+  Future<List<WarehouseOrderDTO>> getWarehouseArrivalHistory({
+    required String accessToken,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -67,6 +92,44 @@ class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
       );
     } on DioError catch (e) {
       log('##### getWarehouseArrivalHistory api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<WarehouseOrderDTO> updateWarehouseStatusOfOrder(
+      {required String accessToken,
+      required int orderId,
+      required int status,
+      String? incomingNumber,
+      String? incomingDate,
+      String? bin,
+      String? invoiceDate,
+      int? counteragentId}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+    try {
+      final FormData formData = FormData.fromMap({
+        "id": orderId,
+        'status': status,
+        if (incomingNumber != null) 'incoming_number': incomingNumber,
+        if (incomingDate != null) 'incoming_date': incomingDate,
+        if (bin != null) 'bin': bin,
+        if (invoiceDate != null) 'invoice_date': invoiceDate,
+        if (counteragentId != null) 'counteragent_id': counteragentId,
+      });
+      final response = await dio.post(
+        '$SERVER_/api/arrival-warehouse/newupdate',
+        data: formData,
+      );
+
+      log("##### updateWarehouseStatusOfOrder api:: ${response.statusCode},${response.data}");
+      return WarehouseOrderDTO.fromJson(response.data as Map<String, dynamic>);
+    } on DioError catch (e) {
+      log('$e');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

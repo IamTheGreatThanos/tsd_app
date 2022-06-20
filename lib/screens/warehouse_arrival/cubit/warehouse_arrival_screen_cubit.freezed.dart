@@ -21,6 +21,7 @@ mixin _$WarehouseArrivalScreenState {
     required TResult Function() initialState,
     required TResult Function() loadingState,
     required TResult Function(List<WarehouseOrderDTO> orders) loadedState,
+    required TResult Function(List<WarehouseOrderDTO> orders) bySearch,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -29,6 +30,7 @@ mixin _$WarehouseArrivalScreenState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,6 +39,7 @@ mixin _$WarehouseArrivalScreenState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -46,6 +49,7 @@ mixin _$WarehouseArrivalScreenState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_BySearchState value) bySearch,
     required TResult Function(_ErrorState value) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +58,7 @@ mixin _$WarehouseArrivalScreenState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,6 +67,7 @@ mixin _$WarehouseArrivalScreenState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) =>
@@ -130,6 +136,7 @@ class _$_InitialState implements _InitialState {
     required TResult Function() initialState,
     required TResult Function() loadingState,
     required TResult Function(List<WarehouseOrderDTO> orders) loadedState,
+    required TResult Function(List<WarehouseOrderDTO> orders) bySearch,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -141,6 +148,7 @@ class _$_InitialState implements _InitialState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -152,6 +160,7 @@ class _$_InitialState implements _InitialState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -167,6 +176,7 @@ class _$_InitialState implements _InitialState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_BySearchState value) bySearch,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return initialState(this);
@@ -178,6 +188,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return initialState?.call(this);
@@ -189,6 +200,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -247,6 +259,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function() initialState,
     required TResult Function() loadingState,
     required TResult Function(List<WarehouseOrderDTO> orders) loadedState,
+    required TResult Function(List<WarehouseOrderDTO> orders) bySearch,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -258,6 +271,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -269,6 +283,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -284,6 +299,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_BySearchState value) bySearch,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadingState(this);
@@ -295,6 +311,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
@@ -306,6 +323,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -393,6 +411,7 @@ class _$_LoadedState implements _LoadedState {
     required TResult Function() initialState,
     required TResult Function() loadingState,
     required TResult Function(List<WarehouseOrderDTO> orders) loadedState,
+    required TResult Function(List<WarehouseOrderDTO> orders) bySearch,
     required TResult Function(String message) errorState,
   }) {
     return loadedState(orders);
@@ -404,6 +423,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
   }) {
     return loadedState?.call(orders);
@@ -415,6 +435,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -430,6 +451,7 @@ class _$_LoadedState implements _LoadedState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_BySearchState value) bySearch,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadedState(this);
@@ -441,6 +463,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadedState?.call(this);
@@ -452,6 +475,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -469,6 +493,164 @@ abstract class _LoadedState implements WarehouseArrivalScreenState {
   List<WarehouseOrderDTO> get orders => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_BySearchStateCopyWith<$Res> {
+  factory _$$_BySearchStateCopyWith(
+          _$_BySearchState value, $Res Function(_$_BySearchState) then) =
+      __$$_BySearchStateCopyWithImpl<$Res>;
+  $Res call({List<WarehouseOrderDTO> orders});
+}
+
+/// @nodoc
+class __$$_BySearchStateCopyWithImpl<$Res>
+    extends _$WarehouseArrivalScreenStateCopyWithImpl<$Res>
+    implements _$$_BySearchStateCopyWith<$Res> {
+  __$$_BySearchStateCopyWithImpl(
+      _$_BySearchState _value, $Res Function(_$_BySearchState) _then)
+      : super(_value, (v) => _then(v as _$_BySearchState));
+
+  @override
+  _$_BySearchState get _value => super._value as _$_BySearchState;
+
+  @override
+  $Res call({
+    Object? orders = freezed,
+  }) {
+    return _then(_$_BySearchState(
+      orders: orders == freezed
+          ? _value._orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<WarehouseOrderDTO>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_BySearchState implements _BySearchState {
+  const _$_BySearchState({required final List<WarehouseOrderDTO> orders})
+      : _orders = orders;
+
+  final List<WarehouseOrderDTO> _orders;
+  @override
+  List<WarehouseOrderDTO> get orders {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_orders);
+  }
+
+  @override
+  String toString() {
+    return 'WarehouseArrivalScreenState.bySearch(orders: $orders)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BySearchState &&
+            const DeepCollectionEquality().equals(other._orders, _orders));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_orders));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_BySearchStateCopyWith<_$_BySearchState> get copyWith =>
+      __$$_BySearchStateCopyWithImpl<_$_BySearchState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialState,
+    required TResult Function() loadingState,
+    required TResult Function(List<WarehouseOrderDTO> orders) loadedState,
+    required TResult Function(List<WarehouseOrderDTO> orders) bySearch,
+    required TResult Function(String message) errorState,
+  }) {
+    return bySearch(orders);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
+    TResult Function(String message)? errorState,
+  }) {
+    return bySearch?.call(orders);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (bySearch != null) {
+      return bySearch(orders);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialState value) initialState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_BySearchState value) bySearch,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return bySearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
+    TResult Function(_ErrorState value)? errorState,
+  }) {
+    return bySearch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (bySearch != null) {
+      return bySearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BySearchState implements WarehouseArrivalScreenState {
+  const factory _BySearchState(
+      {required final List<WarehouseOrderDTO> orders}) = _$_BySearchState;
+
+  List<WarehouseOrderDTO> get orders => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_BySearchStateCopyWith<_$_BySearchState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -540,6 +722,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function() initialState,
     required TResult Function() loadingState,
     required TResult Function(List<WarehouseOrderDTO> orders) loadedState,
+    required TResult Function(List<WarehouseOrderDTO> orders) bySearch,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -551,6 +734,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -562,6 +746,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function()? initialState,
     TResult Function()? loadingState,
     TResult Function(List<WarehouseOrderDTO> orders)? loadedState,
+    TResult Function(List<WarehouseOrderDTO> orders)? bySearch,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -577,6 +762,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_BySearchState value) bySearch,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return errorState(this);
@@ -588,6 +774,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
@@ -599,6 +786,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_BySearchState value)? bySearch,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {

@@ -591,7 +591,7 @@ class _BuildBodyState extends State<_BuildBody> {
                 color: ColorPalette.orange,
                 onPressed: () {
                   BlocProvider.of<SignatureScreenCubit>(context)
-                      .updateOrderStatus(
+                      .updatePharmacyOrderStatus(
                     orderId: widget.orderId,
                     status: 3,
                   );
