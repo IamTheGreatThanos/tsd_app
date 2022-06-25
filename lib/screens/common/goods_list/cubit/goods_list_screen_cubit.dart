@@ -69,6 +69,11 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
           await savePharmacySelectedProductToCache(
             selectedProduct: const ProductDTO(id: -1),
           );
+          emit(
+            const GoodsListScreenState.successScannedState(
+              message: 'Продукт полностью отсканирован',
+            ),
+          );
         }
         log("Update success:::::");
         await _getPharmacyProducts(orderId);
@@ -196,7 +201,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   ProductDTO? checkProductBarCode(String barcode) {
     ProductDTO? product;
     for (final ProductDTO productDTO in unscannedProducts) {
-      if (productDTO.barcode == barcode) {
+      if (productDTO.barcode!.contains(barcode)) {
         product = productDTO;
         break;
       }

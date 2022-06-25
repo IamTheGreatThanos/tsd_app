@@ -190,6 +190,9 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               state.when(
                 initialState: () {},
                 loadingState: () {},
+                successScannedState: (String message){
+                  buildSuccessCustomSnackBar(context, message);
+                },
                 loadedState: (
                   scannedProducts,
                   unscannedProducts,
@@ -703,7 +706,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
             Stack(
               children: [
                 Image.network(
-                  widget.good.image ?? 'null',
+                  widget.good.image ?? 'https://teelindy.com/wp-content/uploads/2019/03/default_image.png',
                   width: 104,
                   height: 104,
                 ),
@@ -746,10 +749,13 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                         style: ThemeTextStyle.textStyle14w400
                             .copyWith(color: ColorPalette.black),
                       ),
-                      Text(
-                        widget.good.barcode ?? 'null',
-                        style: ThemeTextStyle.textStyle14w600
-                            .copyWith(color: ColorPalette.grayText),
+                      const SizedBox(width: 12,),
+                      Expanded(
+                        child: Text(
+                          widget.good.barcode ?? 'null',
+                          style: ThemeTextStyle.textStyle14w600
+                              .copyWith(color: ColorPalette.grayText),
+                        ),
                       ),
                     ],
                   ),

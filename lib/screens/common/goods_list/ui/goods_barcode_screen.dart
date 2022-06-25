@@ -41,8 +41,9 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
                 context.loaderOverlay.hide();
                 Navigator.pop(context);
               },
+              successScannedState: (message) {
+              },
               errorState: (message) {
-                buildErrorCustomSnackBar(context, message);
                 context.loaderOverlay.hide();
               },
             );
@@ -54,7 +55,8 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
               height: (MediaQuery.of(context).size.width - 26) / 1.5,
               width: MediaQuery.of(context).size.width - 26,
               callback: (barcode) {
-                BlocProvider.of<GoodsListScreenCubit>(context).scannerBarCode(barcode, widget.orderId, 1);
+                BlocProvider.of<GoodsListScreenCubit>(context)
+                    .scannerBarCode(barcode, widget.orderId, 1);
               },
             );
           },

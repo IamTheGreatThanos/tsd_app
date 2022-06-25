@@ -13,6 +13,10 @@ class GoodsListScreenState with _$GoodsListScreenState {
     required List<ProductDTO> discrepancy,
   }) = _LoadedState;
 
+    const factory GoodsListScreenState.successScannedState({
+    required String message,
+  }) = _SuccessScannedState;
+
   const factory GoodsListScreenState.errorState({
     required String message,
   }) = _ErrorState;

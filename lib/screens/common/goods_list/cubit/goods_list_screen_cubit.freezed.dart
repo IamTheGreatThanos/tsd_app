@@ -26,6 +26,7 @@ mixin _$GoodsListScreenState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)
         loadedState,
+    required TResult Function(String message) successScannedState,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ mixin _$GoodsListScreenState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +54,7 @@ mixin _$GoodsListScreenState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -61,6 +64,7 @@ mixin _$GoodsListScreenState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_SuccessScannedState value) successScannedState,
     required TResult Function(_ErrorState value) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -69,6 +73,7 @@ mixin _$GoodsListScreenState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -77,6 +82,7 @@ mixin _$GoodsListScreenState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) =>
@@ -149,6 +155,7 @@ class _$_InitialState implements _InitialState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)
         loadedState,
+    required TResult Function(String message) successScannedState,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -165,6 +172,7 @@ class _$_InitialState implements _InitialState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -181,6 +189,7 @@ class _$_InitialState implements _InitialState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -196,6 +205,7 @@ class _$_InitialState implements _InitialState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_SuccessScannedState value) successScannedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return initialState(this);
@@ -207,6 +217,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return initialState?.call(this);
@@ -218,6 +229,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -281,6 +293,7 @@ class _$_LoadingState implements _LoadingState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)
         loadedState,
+    required TResult Function(String message) successScannedState,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -297,6 +310,7 @@ class _$_LoadingState implements _LoadingState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -313,6 +327,7 @@ class _$_LoadingState implements _LoadingState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -328,6 +343,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_SuccessScannedState value) successScannedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadingState(this);
@@ -339,6 +355,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
@@ -350,6 +367,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -503,6 +521,7 @@ class _$_LoadedState implements _LoadedState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)
         loadedState,
+    required TResult Function(String message) successScannedState,
     required TResult Function(String message) errorState,
   }) {
     return loadedState(
@@ -520,6 +539,7 @@ class _$_LoadedState implements _LoadedState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
   }) {
     return loadedState?.call(
@@ -537,6 +557,7 @@ class _$_LoadedState implements _LoadedState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -553,6 +574,7 @@ class _$_LoadedState implements _LoadedState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_SuccessScannedState value) successScannedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadedState(this);
@@ -564,6 +586,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadedState?.call(this);
@@ -575,6 +598,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -598,6 +622,175 @@ abstract class _LoadedState implements GoodsListScreenState {
   List<ProductDTO> get discrepancy => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SuccessScannedStateCopyWith<$Res> {
+  factory _$$_SuccessScannedStateCopyWith(_$_SuccessScannedState value,
+          $Res Function(_$_SuccessScannedState) then) =
+      __$$_SuccessScannedStateCopyWithImpl<$Res>;
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$_SuccessScannedStateCopyWithImpl<$Res>
+    extends _$GoodsListScreenStateCopyWithImpl<$Res>
+    implements _$$_SuccessScannedStateCopyWith<$Res> {
+  __$$_SuccessScannedStateCopyWithImpl(_$_SuccessScannedState _value,
+      $Res Function(_$_SuccessScannedState) _then)
+      : super(_value, (v) => _then(v as _$_SuccessScannedState));
+
+  @override
+  _$_SuccessScannedState get _value => super._value as _$_SuccessScannedState;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$_SuccessScannedState(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SuccessScannedState implements _SuccessScannedState {
+  const _$_SuccessScannedState({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'GoodsListScreenState.successScannedState(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SuccessScannedState &&
+            const DeepCollectionEquality().equals(other.message, message));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SuccessScannedStateCopyWith<_$_SuccessScannedState> get copyWith =>
+      __$$_SuccessScannedStateCopyWithImpl<_$_SuccessScannedState>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialState,
+    required TResult Function() loadingState,
+    required TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)
+        loadedState,
+    required TResult Function(String message) successScannedState,
+    required TResult Function(String message) errorState,
+  }) {
+    return successScannedState(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
+        loadedState,
+    TResult Function(String message)? successScannedState,
+    TResult Function(String message)? errorState,
+  }) {
+    return successScannedState?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(
+            List<ProductDTO> scannedProducts,
+            List<ProductDTO> unscannedProducts,
+            ProductDTO selectedProduct,
+            List<ProductDTO> discrepancy)?
+        loadedState,
+    TResult Function(String message)? successScannedState,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (successScannedState != null) {
+      return successScannedState(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialState value) initialState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_SuccessScannedState value) successScannedState,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return successScannedState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
+    TResult Function(_ErrorState value)? errorState,
+  }) {
+    return successScannedState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (successScannedState != null) {
+      return successScannedState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessScannedState implements GoodsListScreenState {
+  const factory _SuccessScannedState({required final String message}) =
+      _$_SuccessScannedState;
+
+  String get message => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_SuccessScannedStateCopyWith<_$_SuccessScannedState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -674,6 +867,7 @@ class _$_ErrorState implements _ErrorState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)
         loadedState,
+    required TResult Function(String message) successScannedState,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -690,6 +884,7 @@ class _$_ErrorState implements _ErrorState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -706,6 +901,7 @@ class _$_ErrorState implements _ErrorState {
             ProductDTO selectedProduct,
             List<ProductDTO> discrepancy)?
         loadedState,
+    TResult Function(String message)? successScannedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -721,6 +917,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function(_InitialState value) initialState,
     required TResult Function(_LoadingState value) loadingState,
     required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_SuccessScannedState value) successScannedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return errorState(this);
@@ -732,6 +929,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
@@ -743,6 +941,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_InitialState value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
     TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_SuccessScannedState value)? successScannedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {

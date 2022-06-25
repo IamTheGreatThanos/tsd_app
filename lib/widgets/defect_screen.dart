@@ -67,6 +67,9 @@ class _DefectScreenState extends State<DefectScreen> {
               context.loaderOverlay.hide();
               Navigator.pop(context);
             },
+            successScannedState: (message){
+
+            },
             errorState: (message) {
               buildErrorCustomSnackBar(context, message);
               context.loaderOverlay.hide();
