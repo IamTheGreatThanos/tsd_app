@@ -67,9 +67,7 @@ class _DefectScreenState extends State<DefectScreen> {
               context.loaderOverlay.hide();
               Navigator.pop(context);
             },
-            successScannedState: (message){
-
-            },
+            successScannedState: (message) {},
             errorState: (message) {
               buildErrorCustomSnackBar(context, message);
               context.loaderOverlay.hide();
@@ -172,7 +170,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "${productInfo.totalCount??0 - (productInfo.scanCount??0)}",
+                                  "${productInfo.totalCount ?? 0 - (productInfo.scanCount ?? 0)}",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),
@@ -309,10 +307,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         onChanged: (index, isChecked) {
                           if (isChecked) {
                             defective = index;
-                            allCount = defective +
-                                surplus +
-                                underachievement +
-                                reSorting;
+                            allCount = defective + underachievement + reSorting;
                             if (allCount ==
                                 productInfo.totalCount! -
                                     productInfo.scanCount!) {
@@ -326,25 +321,21 @@ class _DefectScreenState extends State<DefectScreen> {
                         showDivider: 0 != defectDetails.length - 1,
                       ),
                       _BuildDefectiveDetail(
-                        isAll: isAll,
+                        isAll: false,
                         title: defectDetails[1],
-                        onChanged: (index, isChecked) {
-                          if (isChecked) {
-                            surplus = index;
-                            allCount = defective +
-                                surplus +
-                                underachievement +
-                                reSorting;
-                            if (allCount ==
-                                productInfo.totalCount! -
-                                    productInfo.scanCount!) {
-                              isAll = true;
-                            } else {
-                              isAll = false;
-                            }
-                            setState(() {});
-                          }
-                        },
+                        onChanged: (productInfo.scanCount! +
+                                    defective +
+                                    underachievement +
+                                    reSorting ==
+                                productInfo.totalCount)
+                            ? (index, isChecked) {
+                                if (isChecked) {
+                                  surplus = index;
+
+                                  setState(() {});
+                                }
+                              }
+                            : null,
                         showDivider: 1 != defectDetails.length - 1,
                       ),
                       _BuildDefectiveDetail(
@@ -353,10 +344,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         onChanged: (index, isChecked) {
                           if (isChecked) {
                             underachievement = index;
-                            allCount = defective +
-                                surplus +
-                                underachievement +
-                                reSorting;
+                            allCount = defective + underachievement + reSorting;
                             if (allCount ==
                                 productInfo.totalCount! -
                                     productInfo.scanCount!) {
@@ -375,10 +363,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         onChanged: (index, isChecked) {
                           if (isChecked) {
                             reSorting = index;
-                            allCount = defective +
-                                surplus +
-                                underachievement +
-                                reSorting;
+                            allCount = defective + underachievement + reSorting;
                             if (allCount ==
                                 productInfo.totalCount! -
                                     productInfo.scanCount!) {
@@ -403,7 +388,8 @@ class _DefectScreenState extends State<DefectScreen> {
                     child: GestureDetector(
                       onTap: () async {
                         if (isAll) {
-                          BlocProvider.of<GoodsListScreenCubit>(context).changeToLoadingState();
+                          BlocProvider.of<GoodsListScreenCubit>(context)
+                              .changeToLoadingState();
                           BlocProvider.of<GoodsListScreenCubit>(context)
                               .updatePharmacyProductById(
                             orderId: widget.orderId,
@@ -423,7 +409,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         }
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                         decoration: BoxDecoration(
                           color: ColorPalette.orange,
                           borderRadius: BorderRadius.circular(6),
@@ -450,7 +436,7 @@ class _DefectScreenState extends State<DefectScreen> {
 
 class _BuildDefectiveDetail extends StatefulWidget {
   final String title;
-  final Function(int, bool) onChanged;
+  final Function(int, bool)? onChanged;
   final bool showDivider;
   final bool isAll;
   const _BuildDefectiveDetail({
@@ -485,14 +471,14 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                   const SizedBox(
                     width: 16,
                   ),
-                  if (checked)
+                  if (checked&&widget.onChanged!=null)
                     Row(
                       children: [
                         GestureDetector(
                           onTap: () {
                             setState(() {
                               if (count > 0) count--;
-                              widget.onChanged(count, checked);
+                              widget.onChanged!(count, checked);
                             });
                           },
                           child: Image.asset("assets/images/svg/minus.png"),
@@ -513,7 +499,7 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                             setState(() {
                               if (!widget.isAll) {
                                 count++;
-                                widget.onChanged(count, checked);
+                                widget.onChanged!(count, checked);
                               }
                             });
                           },
@@ -525,13 +511,13 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
               ),
             ),
             GestureDetector(
-              onTap: () {
+              onTap:widget.onChanged!=null? () {
                 setState(() {
                   checked = !checked;
                 });
-              },
+              }:null,
               child: Image.asset(
-                "assets/images/svg/checkbox_${!checked ? "un" : ""}checked.png",
+                "assets/images/svg/checkbox_${(!checked||widget.onChanged==null) ? "un" : ""}checked.png",
               ),
             ),
           ],

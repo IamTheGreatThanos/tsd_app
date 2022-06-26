@@ -15,6 +15,7 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
+import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
@@ -149,7 +150,17 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
           backgroundColor: ColorPalette.main,
           appBar: CustomAppBar(
             title: "Список товаров".toUpperCase(),
-            showLogo: false,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  buildAlertDialog(context);
+                },
+                icon: const Icon(
+                  Icons.document_scanner_rounded,
+                  color: Colors.black,
+                ),
+              )
+            ],
           ),
           body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
             builder: (context, state) {
@@ -168,6 +179,9 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   discrepancy,
                 ) {
                   return _BuildBody(
+                    orderStatus: widget.isFromPharmacyPage
+                        ? widget.pharmacyOrder?.status ?? 0
+                        : widget.warehouseOrder?.status ?? 0,
                     orderId: widget.isFromPharmacyPage
                         ? widget.pharmacyOrder!.id
                         : widget.warehouseOrder!.id,
@@ -190,7 +204,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               state.when(
                 initialState: () {},
                 loadingState: () {},
-                successScannedState: (String message){
+                successScannedState: (String message) {
                   buildSuccessCustomSnackBar(context, message);
                 },
                 loadedState: (
@@ -212,6 +226,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final int orderStatus;
   final int orderId;
   final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
@@ -224,6 +239,7 @@ class _BuildBody extends StatefulWidget {
     required this.unscannedProducts,
     required this.selectedProduct,
     required this.discrepancy,
+    required this.orderStatus,
   }) : super(key: key);
 
   @override
@@ -405,21 +421,52 @@ class _BuildBodyState extends State<_BuildBody> {
             },
             controller: controller,
             child: itemCount == 0
-                ? ListView(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                      ),
-                      Center(
-                        child: Lottie.asset('assets/lotties/empty_box.json'),
-                      ),
-                    ],
-                  )
+                ? widget.orderStatus == 3
+                    ? ListView(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          ),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 100, vertical: 16),
+                                child: Image.asset(
+                                  'assets/images/png/done_icon.png',
+                                ),
+                              ),
+                              Text(
+                                'Завершенный заказ!'.toUpperCase(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    : ListView(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          ),
+                          Center(
+                            child:
+                                Lottie.asset('assets/lotties/empty_box.json'),
+                          ),
+                        ],
+                      )
                 : ListView.builder(
                     shrinkWrap: true,
                     padding:
                         const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
-                    itemCount: currentIndex==0?widget.unscannedProducts.length:(currentIndex==1?widget.scannedProducts.length:widget.discrepancy.length),
+                    itemCount: currentIndex == 0
+                        ? widget.unscannedProducts.length
+                        : (currentIndex == 1
+                            ? widget.scannedProducts.length
+                            : widget.discrepancy.length),
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -558,7 +605,7 @@ class _BuildBodyState extends State<_BuildBody> {
         //           ),
         //         ),
 
-        if (widget.unscannedProducts.isEmpty)
+        if (widget.unscannedProducts.isEmpty && widget.orderStatus != 3)
           BlocListener<SignatureScreenCubit, SignatureScreenState>(
             listener: (context, state) {
               state.when(
@@ -570,6 +617,8 @@ class _BuildBodyState extends State<_BuildBody> {
                 },
                 loadedState: () {
                   context.loaderOverlay.hide();
+                  buildSuccessCustomSnackBar(context,
+                      'Накладная будет загружена в 1С в течении 15 минут !');
                   BlocProvider.of<PharmacyArrivalScreenCubit>(context)
                       .onRefreshOrders(status: 1);
 
@@ -706,7 +755,8 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
             Stack(
               children: [
                 Image.network(
-                  widget.good.image ?? 'https://teelindy.com/wp-content/uploads/2019/03/default_image.png',
+                  widget.good.image ??
+                      'https://teelindy.com/wp-content/uploads/2019/03/default_image.png',
                   width: 104,
                   height: 104,
                 ),
@@ -749,7 +799,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                         style: ThemeTextStyle.textStyle14w400
                             .copyWith(color: ColorPalette.black),
                       ),
-                      const SizedBox(width: 12,),
+                      const SizedBox(
+                        width: 12,
+                      ),
                       Expanded(
                         child: Text(
                           widget.good.barcode ?? 'null',

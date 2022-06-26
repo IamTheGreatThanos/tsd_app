@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -30,8 +31,12 @@ class HistoryCubit extends Cubit<HistoryState> {
     emit(const HistoryState.loadingState());
     final failureOrSuccess = await _getPharmacyArrivalHistory.call();
     failureOrSuccess.fold(
-      (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
+      (l){
+        log(l.toString());
+         emit(HistoryState.errorState(message: mapFailureToMessage(l)));
+      },
       (r) {
+        log(r.length.toString());
         final List<PharmacyOrderDTO> orders = [];
         for (final PharmacyOrderDTO order in r) {
           if (order.status == 3) {

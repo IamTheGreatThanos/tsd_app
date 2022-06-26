@@ -34,6 +34,9 @@ class PharmacyOrderDTO with _$PharmacyOrderDTO {
     User? driver,
     CounteragentDTO? sender,
     CounteragentDTO? recipient,
+    @JsonKey(name: 'total_status') int? totalStatus,
+    @JsonKey(name: 'yandex_time') String? yandexTime,
+    
   }) = _PharmacyOrderDTO;
 
   factory PharmacyOrderDTO.fromJson(Map<String, dynamic> json) => _$PharmacyOrderDTOFromJson(json);

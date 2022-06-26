@@ -14,6 +14,7 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
+import 'package:pharmacy_arrival/utils/constants.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
@@ -51,31 +52,17 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-        floatingActionButton: SizedBox(
-          height: 80,
-          width: 80,
-          child: FloatingActionButton(
-            onPressed: () {
-              AppRouter.push(context, const PharmacyQrScreen());
-            },
-            child: Image.asset(
-              'assets/images/png/scan_button.png',
-              fit: BoxFit.fill,
-            ),
-            //  Container(
-            //   decoration: const BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage(
-            //         'assets/images/png/scan_button.png',
-            //       ),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
-          ),
-        ),
         appBar: CustomAppBar(
           title: "Приход аптека".toUpperCase(),
+          actions: [
+            IconButton(
+              padding: EdgeInsets.zero,
+              icon: SvgPicture.asset("assets/images/svg/new_qr.svg"),
+              onPressed: () {
+                AppRouter.push(context, const PharmacyQrScreen());
+              },
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
@@ -123,8 +110,8 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                   color: ColorPalette.grey400,
                 ),
                 contentPadding: const EdgeInsets.only(
-                  top: 17,
-                  bottom: 17,
+                  top: 18,
+                  bottom: 18,
                   left: 13,
                 ),
               ),
@@ -390,9 +377,9 @@ class _BuildOrderData extends StatelessWidget {
             ),
             _BuildOrderDetailItem(
               icon: "calendar_ic",
-              title: "Время отправления",
+              title: "Время отпр.",
               data: orderData.createdAt != null
-                  ? DateFormat("dd.MM.yyyy; hh:mm a")
+                  ? DateFormat("dd.MM.yyyy; hh:mm")
                       .format(DateTime.parse('${orderData.createdAt}'))
                   : "No data",
             ),
@@ -401,6 +388,11 @@ class _BuildOrderData extends StatelessWidget {
               title: orderData.status == 1 ? "Отправитель" : "Контрагент",
               data: "${orderData.sender?.name}",
               hasImage: true,
+            ),
+            _BuildOrderDetailItem(
+              icon: "document",
+              title: "Сумма",
+              data: "${orderData.amount} ₸",
             ),
             const SizedBox(
               height: 24,
@@ -427,20 +419,22 @@ class _BuildOrderData extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "${orderData.fromAddress}, ",
-                              style: ThemeTextStyle.textStyle16w500,
-                            ),
-                            TextSpan(
-                              text: orderData.fromCityName,
-                              style: ThemeTextStyle.textStyle14w400.copyWith(
-                                color: ColorPalette.grey400,
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "${orderData.fromAddress}, ",
+                                style: ThemeTextStyle.textStyle16w500,
                               ),
-                            )
-                          ],
+                              TextSpan(
+                                text: orderData.fromCityName,
+                                style: ThemeTextStyle.textStyle14w400.copyWith(
+                                  color: ColorPalette.grey400,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -499,64 +493,15 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 21,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image.network(
-                      (orderData.driver != null &&
-                              orderData.driver!.avatar != null)
-                          ? orderData.driver!.avatar!
-                          : 'https://i.stack.imgur.com/l60Hf.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${orderData.driver?.name}",
-                        style: ThemeTextStyle.textStyle16w600.copyWith(
-                          color: ColorPalette.black,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(
-                        "Водитель-экспедитор",
-                        style: ThemeTextStyle.textStyle12w400.copyWith(
-                          color: ColorPalette.commonGrey,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    _launchUrl(Uri.parse(
-                        'tel:${orderData.driver?.phone?[0] == '8' ? '' : '+7'}${orderData.driver?.phone}'));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ColorPalette.orange,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    padding: const EdgeInsets.all(11),
-                    child:
-                        SvgPicture.asset("assets/images/svg/driver_phone.svg"),
-                  ),
-                )
-              ],
+            _BuildOrderDetailItem(
+              icon: "messages",
+              title: "Статус",
+              data: "${totalStatuses[orderData.totalStatus]}",
+            ),
+            _BuildOrderDetailItem(
+              icon: "clock",
+              title: "Время доставки",
+              data: "${orderData.yandexTime}",
             ),
             const SizedBox(
               height: 12,
@@ -583,6 +528,7 @@ class _BuildOrderData extends StatelessWidget {
                 }
               },
               child: Container(
+                height: 44,
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 decoration: BoxDecoration(
                   color: ColorPalette.orange,
@@ -628,7 +574,11 @@ class _BuildOrderDetailItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
         children: [
-          SvgPicture.asset("assets/images/svg/$icon.svg"),
+          SvgPicture.asset(
+            "assets/images/svg/$icon.svg",
+            height: 18,
+            width: 18,
+          ),
           const SizedBox(
             width: 14,
           ),

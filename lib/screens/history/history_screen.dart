@@ -8,10 +8,12 @@ import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -220,7 +222,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   initialState: () {
                     return const Center(
                       child: CircularProgressIndicator(
-                        color: Colors.amber,
+                        color: Colors.black,
                       ),
                     );
                   },
@@ -248,7 +250,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                                 Center(
                                   child: Lottie.asset(
-                                      'assets/lotties/empty_box.json'),
+                                    'assets/lotties/empty_box.json',
+                                  ),
                                 ),
                               ],
                             )
@@ -258,12 +261,29 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 horizontal: 11.5,
                               ),
                               itemBuilder: (context, index) {
-                                return _BuildOrderData(
-                                  orderNumber: '${orders[index].number}',
-                                  orderId: orders[index].id,
-                                  container: orders[index].container ?? 0,
-                                  createdAt: orders[index].createdAt,
-                                  counteragent: orders[index].sender,
+                                return Material(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(15),
+                                    onTap: () {
+                                      AppRouter.push(
+                                        context,
+                                        GoodsListScreen(
+                                          isFromPharmacyPage: true,
+                                          pharmacyOrder: orders[index],
+                                        ),
+                                      );
+                                    },
+                                    child: SizedBox(
+                                      child: _BuildOrderData(
+                                        orderNumber: '${orders[index].number}',
+                                        orderId: orders[index].id,
+                                        container: orders[index].container ?? 0,
+                                        createdAt: orders[index].createdAt,
+                                        counteragent: orders[index].sender,
+                                      ),
+                                    ),
+                                  ),
                                 );
                               },
                               itemCount: orders.length,
@@ -288,7 +308,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                                 Center(
                                   child: Lottie.asset(
-                                      'assets/lotties/empty_box.json'),
+                                    'assets/lotties/empty_box.json',
+                                  ),
                                 ),
                               ],
                             )
@@ -298,12 +319,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 horizontal: 11.5,
                               ),
                               itemBuilder: (context, index) {
-                                return _BuildOrderData(
-                                  orderNumber: '${orders[index].number}',
-                                  orderId: orders[index].id,
-                                  container: orders[index].container ?? 0,
-                                  createdAt: orders[index].createdAt,
-                                  counteragent: orders[index].counteragent,
+                                return Material(
+                                  child: InkWell(
+                                    onTap: () {
+                                      AppRouter.push(
+                                          context,
+                                          GoodsListScreen(
+                                            isFromPharmacyPage: false,
+                                            warehouseOrder: orders[index],
+                                          ),);
+                                    },
+                                    child: _BuildOrderData(
+                                      orderNumber: '${orders[index].number}',
+                                      orderId: orders[index].id,
+                                      container: orders[index].container ?? 0,
+                                      createdAt: orders[index].createdAt,
+                                      counteragent: orders[index].counteragent,
+                                    ),
+                                  ),
                                 );
                               },
                               itemCount: orders.length,
@@ -328,7 +361,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                                 Center(
                                   child: Lottie.asset(
-                                      'assets/lotties/empty_box.json'),
+                                    'assets/lotties/empty_box.json',
+                                  ),
                                 ),
                               ],
                             )
@@ -418,8 +452,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           title: "Дата создания",
                                           data: orders[index].createdAt != null
                                               ? DateFormat(
-                                                      "dd.MM.yyyy; hh:mm a")
-                                                  .format(
+                                                  "dd.MM.yyyy; hh:mm a",
+                                                ).format(
                                                   DateTime.parse(
                                                     orders[index].createdAt!,
                                                   ),
@@ -459,7 +493,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                                 Center(
                                   child: Lottie.asset(
-                                      'assets/lotties/empty_box.json'),
+                                    'assets/lotties/empty_box.json',
+                                  ),
                                 ),
                               ],
                             )
@@ -549,8 +584,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           title: "Дата создания",
                                           data: orders[index].createdAt != null
                                               ? DateFormat(
-                                                      "dd.MM.yyyy; hh:mm a")
-                                                  .format(
+                                                  "dd.MM.yyyy; hh:mm a",
+                                                ).format(
                                                   DateTime.parse(
                                                     orders[index].createdAt!,
                                                   ),

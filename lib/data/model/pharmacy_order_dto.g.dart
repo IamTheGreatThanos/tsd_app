@@ -36,6 +36,8 @@ _$_PharmacyOrderDTO _$$_PharmacyOrderDTOFromJson(Map<String, dynamic> json) =>
       recipient: json['recipient'] == null
           ? null
           : CounteragentDTO.fromJson(json['recipient'] as Map<String, dynamic>),
+      totalStatus: json['total_status'] as int?,
+      yandexTime: json['yandex_time'] as String?,
     );
 
 Map<String, dynamic> _$$_PharmacyOrderDTOToJson(_$_PharmacyOrderDTO instance) =>
@@ -62,4 +64,6 @@ Map<String, dynamic> _$$_PharmacyOrderDTOToJson(_$_PharmacyOrderDTO instance) =>
       'driver': instance.driver,
       'sender': instance.sender,
       'recipient': instance.recipient,
+      'total_status': instance.totalStatus,
+      'yandex_time': instance.yandexTime,
     };
