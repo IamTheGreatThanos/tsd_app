@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
+import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
@@ -252,8 +253,8 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                             enablePullUp: true,
                             onLoading: () {
                               BlocProvider.of<PharmacyArrivalScreenCubit>(
-                                      context)
-                                  .onLoadOrders(status: status);
+                                context,
+                              ).onLoadOrders(status: status);
                               refreshController.loadComplete();
                             },
                             onRefresh: () {
@@ -508,24 +509,19 @@ class _BuildOrderData extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                // BlocProvider.of<SignatureScreenCubit>(context)
+                //     .updatePharmacyOrderStatus(
+                //   orderId: orderData.id,
+                //   status: 2,
+                // );
                 context.read<FillInvoiceVModel>().init();
-                if (orderData.status == 1) {
-                  AppRouter.push(
-                    context,
-                    FillInvoiceScreen(
-                      isFromPharmacyPage: true,
-                      pharmacyOrder: orderData,
-                    ),
-                  );
-                } else {
-                  AppRouter.push(
-                    context,
-                    GoodsListScreen(
-                      isFromPharmacyPage: true,
-                      pharmacyOrder: orderData,
-                    ),
-                  );
-                }
+                AppRouter.push(
+                  context,
+                  GoodsListScreen(
+                    isFromPharmacyPage: true,
+                    pharmacyOrder: orderData,
+                  ),
+                );
               },
               child: Container(
                 height: 44,

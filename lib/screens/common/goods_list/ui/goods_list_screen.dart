@@ -10,6 +10,7 @@ import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -189,6 +190,9 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                     scannedProducts: scannedProducts,
                     selectedProduct: selectedProduct,
                     discrepancy: discrepancy,
+                    pharmacyOrder: widget.pharmacyOrder,
+                    warehouseOrder: widget.warehouseOrder,
+                    isFromPharmacyPage: widget.isFromPharmacyPage,
                   );
                 },
                 orElse: () {
@@ -232,6 +236,9 @@ class _BuildBody extends StatefulWidget {
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
   final List<ProductDTO> discrepancy;
+  final PharmacyOrderDTO? pharmacyOrder;
+  final WarehouseOrderDTO? warehouseOrder;
+  final bool isFromPharmacyPage;
   const _BuildBody({
     Key? key,
     required this.orderId,
@@ -240,6 +247,9 @@ class _BuildBody extends StatefulWidget {
     required this.selectedProduct,
     required this.discrepancy,
     required this.orderStatus,
+    this.pharmacyOrder,
+    this.warehouseOrder,
+    required this.isFromPharmacyPage,
   }) : super(key: key);
 
   @override
@@ -431,7 +441,9 @@ class _BuildBodyState extends State<_BuildBody> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 100, vertical: 16),
+                                  horizontal: 100,
+                                  vertical: 16,
+                                ),
                                 child: Image.asset(
                                   'assets/images/png/done_icon.png',
                                 ),
@@ -481,6 +493,7 @@ class _BuildBodyState extends State<_BuildBody> {
                           }
                         },
                         child: _BuildGoodDetails(
+                          currentIndex: currentIndex,
                           orderID: widget.orderId,
                           good: currentIndex == 0
                               ? widget.unscannedProducts[index]
@@ -606,57 +619,35 @@ class _BuildBodyState extends State<_BuildBody> {
         //         ),
 
         if (widget.unscannedProducts.isEmpty && widget.orderStatus != 3)
-          BlocListener<SignatureScreenCubit, SignatureScreenState>(
-            listener: (context, state) {
-              state.when(
-                initialState: () {
-                  context.loaderOverlay.hide();
-                },
-                loadingState: () {
-                  context.loaderOverlay.show();
-                },
-                loadedState: () {
-                  context.loaderOverlay.hide();
-                  buildSuccessCustomSnackBar(context,
-                      'Накладная будет загружена в 1С в течении 15 минут !');
-                  BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                      .onRefreshOrders(status: 1);
-
-                  Navigator.pop(context);
-                },
-                errorState: (message) {
-                  context.loaderOverlay.hide();
-                  buildErrorCustomSnackBar(context, message);
-                },
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 20,
+            ),
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: MaterialButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                height: 40,
-                color: ColorPalette.orange,
-                onPressed: () {
-                  BlocProvider.of<SignatureScreenCubit>(context)
-                      .updatePharmacyOrderStatus(
-                    orderId: widget.orderId,
-                    status: 3,
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Center(
-                    child: Text(
-                      "Завершить".toUpperCase(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+              height: 40,
+              color: ColorPalette.orange,
+              onPressed: () {
+                AppRouter.push(
+                  context,
+                  FillInvoiceScreen(
+                    isFromPharmacyPage: widget.isFromPharmacyPage,
+                    pharmacyOrder: widget.pharmacyOrder,
+                    warehouseOrder: widget.warehouseOrder,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Center(
+                  child: Text(
+                    "Завершить".toUpperCase(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -723,6 +714,7 @@ class _BuildBodyState extends State<_BuildBody> {
 }
 
 class _BuildGoodDetails extends StatefulWidget {
+  final int currentIndex;
   final ProductDTO good;
   final ProductDTO selectedProduct;
   final int orderID;
@@ -731,6 +723,7 @@ class _BuildGoodDetails extends StatefulWidget {
     required this.good,
     required this.selectedProduct,
     required this.orderID,
+    required this.currentIndex,
   }) : super(key: key);
 
   @override
@@ -751,6 +744,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
               : ColorPalette.white,
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
@@ -759,10 +753,17 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       'https://teelindy.com/wp-content/uploads/2019/03/default_image.png',
                   width: 104,
                   height: 104,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/images/png/not_found.png',
+                      width: 104,
+                      height: 104,
+                    );
+                  },
                 ),
                 Positioned(
                   bottom: 8,
-                  left: 8,
+                  left: 24,
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
@@ -828,34 +829,59 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       color: ColorPalette.grayText,
                     ),
                   ),
-                  if (widget.good.id == widget.selectedProduct.id)
-                    MaterialButton(
-                      color: ColorPalette.orange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        _bottomSheet(
-                          _SpecifyingNumberManually(
-                            productDTO: widget.good,
-                            orderID: widget.orderID,
+                  if (widget.currentIndex == 0)
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        MaterialButton(
+                          color: ColorPalette.orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(
-                          'Указать вручную',
-                          style: TextStyle(
-                            color: ColorPalette.white,
-                            fontWeight: FontWeight.w600,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            _bottomSheet(
+                              _SpecifyingNumberManually(
+                                productDTO: widget.good,
+                                orderID: widget.orderID,
+                              ),
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Text(
+                              'Указать вручную',
+                              style: TextStyle(
+                                color: ColorPalette.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                      ],
                     )
                   else
-                    const SizedBox()
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Кол-во:   ${widget.good.totalCount}'.toUpperCase()),
+                      Text('Скан:   ${widget.good.scanCount}'.toUpperCase()),
+                      Text('Брак:   ${widget.good.defective}'.toUpperCase()),
+                      Text('Излишка:   ${widget.good.surplus}'.toUpperCase()),
+                      Text(
+                        'Недостача:   ${widget.good.underachievement}'
+                            .toUpperCase(),
+                      ),
+                    ],
+                  )
                 ],
               ),
             )

@@ -11,6 +11,7 @@ import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_screen_detail.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -268,7 +269,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     onTap: () {
                                       AppRouter.push(
                                         context,
-                                        GoodsListScreen(
+                                        HistoryScreenDetail(
                                           isFromPharmacyPage: true,
                                           pharmacyOrder: orders[index],
                                         ),
@@ -324,7 +325,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     onTap: () {
                                       AppRouter.push(
                                           context,
-                                          GoodsListScreen(
+                                          HistoryScreenDetail(
                                             isFromPharmacyPage: false,
                                             warehouseOrder: orders[index],
                                           ),);

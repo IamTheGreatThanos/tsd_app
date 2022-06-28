@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
@@ -29,6 +30,12 @@ class _DefectScreenState extends State<DefectScreen> {
   int reSorting = 0;
   int allCount = 0;
   bool isAll = false;
+  List<TextEditingController> defectControllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
   List<String> defectDetails = [
     "Брак",
     "Излишка",
@@ -302,6 +309,7 @@ class _DefectScreenState extends State<DefectScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       _BuildDefectiveDetail(
+                        textFieldController: defectControllers[0],
                         isAll: isAll,
                         title: defectDetails[0],
                         onChanged: (index, isChecked) {
@@ -321,6 +329,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         showDivider: 0 != defectDetails.length - 1,
                       ),
                       _BuildDefectiveDetail(
+                        textFieldController: defectControllers[1],
                         isAll: false,
                         title: defectDetails[1],
                         onChanged: (productInfo.scanCount! +
@@ -339,6 +348,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         showDivider: 1 != defectDetails.length - 1,
                       ),
                       _BuildDefectiveDetail(
+                        textFieldController: defectControllers[2],
                         isAll: isAll,
                         title: defectDetails[2],
                         onChanged: (index, isChecked) {
@@ -358,6 +368,7 @@ class _DefectScreenState extends State<DefectScreen> {
                         showDivider: 2 != defectDetails.length - 1,
                       ),
                       _BuildDefectiveDetail(
+                        textFieldController: defectControllers[3],
                         isAll: isAll,
                         title: defectDetails[3],
                         onChanged: (index, isChecked) {
@@ -439,12 +450,14 @@ class _BuildDefectiveDetail extends StatefulWidget {
   final Function(int, bool)? onChanged;
   final bool showDivider;
   final bool isAll;
+  final TextEditingController textFieldController;
   const _BuildDefectiveDetail({
     Key? key,
     required this.isAll,
     required this.title,
     required this.onChanged,
     required this.showDivider,
+    required this.textFieldController,
   }) : super(key: key);
 
   @override
@@ -460,8 +473,10 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
+              flex: 1,
               child: Row(
                 children: [
                   Text(
@@ -471,53 +486,99 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                   const SizedBox(
                     width: 16,
                   ),
-                  if (checked&&widget.onChanged!=null)
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (count > 0) count--;
-                              widget.onChanged!(count, checked);
-                            });
-                          },
-                          child: Image.asset("assets/images/svg/minus.png"),
-                        ),
-                        const SizedBox(
-                          width: 18,
-                        ),
-                        Text(
-                          "$count",
-                          style: ThemeTextStyle.textStyle18w400
-                              .copyWith(color: ColorPalette.black),
-                        ),
-                        const SizedBox(
-                          width: 18,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (!widget.isAll) {
-                                count++;
+                  if (checked && widget.onChanged != null)
+                    Expanded(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (count > 0) {
+                                  if (count == 1) {
+                                    count--;
+                                    widget.textFieldController.text = "";
+                                  } else {
+                                    count--;
+                                    widget.textFieldController.text =
+                                        count.toString();
+                                  }
+                                }
+
                                 widget.onChanged!(count, checked);
-                              }
-                            });
-                          },
-                          child: Image.asset("assets/images/svg/plus.png"),
-                        ),
-                      ],
+                                // if (count > 0) count--;
+                                // widget.onChanged!(count, checked);
+                              });
+                            },
+                            child: Image.asset(
+                              "assets/images/svg/minus.png",
+                            ),
+                          ),
+                          SizedBox(
+                            width: 51,
+                            child: TextField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              controller: widget.textFieldController,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                hintText: count.toString(),
+                                hintStyle: ThemeTextStyle.textStyle18w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                if (value == '') {
+                                  count = 0;
+                                } else {
+                                  count = int.parse(value);
+                                }
+
+                                widget.onChanged!(count, checked);
+                                setState(() {});
+                              },
+                              style: ThemeTextStyle.textStyle18w400
+                                  .copyWith(color: ColorPalette.black),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (!widget.isAll) {
+                                  count++;
+                                  widget.textFieldController.text =
+                                      count.toString();
+                                  widget.onChanged!(count, checked);
+                                }
+                              });
+                            },
+                            child: Image.asset("assets/images/svg/plus.png"),
+                          ),
+                        ],
+                      ),
                     ),
                 ],
               ),
             ),
-            GestureDetector(
-              onTap:widget.onChanged!=null? () {
-                setState(() {
-                  checked = !checked;
-                });
-              }:null,
-              child: Image.asset(
-                "assets/images/svg/checkbox_${(!checked||widget.onChanged==null) ? "un" : ""}checked.png",
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: widget.onChanged != null
+                    ? () {
+                        setState(() {
+                          checked = !checked;
+                        });
+                      }
+                    : () {
+                        buildErrorCustomSnackBar(
+                            context, 'Сначала отсканируйте все товары');
+                      },
+                child: Image.asset(
+                  "assets/images/svg/checkbox_${(!checked || widget.onChanged == null) ? "un" : ""}checked.png",
+                ),
               ),
             ),
           ],
