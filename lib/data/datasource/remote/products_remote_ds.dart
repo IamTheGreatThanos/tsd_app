@@ -59,8 +59,12 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
               .map((e) => ProductDTO.fromJson(e as Map<String, dynamic>))
               .toList();
         },
-        response.data as List<dynamic>,
+        response.data as List,
       );
+
+      // final List<ProductDTO> prods = response.data 
+
+      // return prods.map((e) => e.copyWith(orderID: orderId)).toList();
     } on DioError catch (e) {
       log('##### getProductsPharmacyArrival api error::: ${e.response}, ${e.error}');
       throw ServerException(

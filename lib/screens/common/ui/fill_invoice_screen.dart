@@ -260,207 +260,207 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        _vmodel.bin,
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: ColorPalette.white,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: BlocBuilder<countragents.CounteragentsCubit,
-                              countragents.CounteragentState>(
-                            builder: (context, state) {
-                              return state.maybeWhen(
-                                loadingState: () =>
-                                    const CircularProgressIndicator(
-                                  color: Colors.amber,
-                                ),
-                                loadedState: (counteragents) {
-                                  return SearchChoices.single(
-                                    padding: recipientId == -1 ? 14 : 7,
-                                    displayClearIcon: false,
-                                    closeButton: "Закрыть",
-                                    items: counteragents
-                                        .map((e) => e.name)
-                                        .toList()
-                                        .map<DropdownMenuItem<String>>(
-                                            (String? value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          "",
-                                          style: ThemeTextStyle.textStyle14w400,
-                                        ),
-                                      );
-                                    }).toList(),
-                                    value: recipient,
-                                    hint: "Получатель",
-                                    searchHint: "Получатель",
-                                    style: ThemeTextStyle.textStyle14w400,
-                                    onChanged: (String? newValue) {
-                                      recipient = newValue;
-                                      for (int i = 0;
-                                          i < counteragents.length;
-                                          i++) {
-                                        if (recipient ==
-                                                counteragents[i].name &&
-                                            counteragents[i].id != -1) {
-                                          recipientId = counteragents[i].id;
-                                          _vmodel.recipientId = recipientId;
-                                          log(_vmodel.recipientId.toString());
-                                        }
-                                      }
-                                      setState(() {});
-                                    },
-                                    isExpanded: true,
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svg/chevron_right.svg",
-                                    ),
-                                    underline: const SizedBox(),
-                                  );
-                                },
-                                orElse: () {
-                                  return const CircularProgressIndicator(
-                                    color: Colors.red,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            final DateTime? date = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2019),
-                              lastDate: DateTime.now(),
-                              helpText: "Дата входящего номера",
-                              builder: (context, child) {
-                                return Theme(
-                                  data: Theme.of(context).copyWith(
-                                    colorScheme: const ColorScheme.light(
-                                      primary: ColorPalette.greyDark,
-                                    ),
-                                    textTheme: TextTheme(
-                                      headline5:
-                                          ThemeTextStyle.textTitleDella24w400,
-                                      overline: ThemeTextStyle.textStyle16w600,
-                                    ),
-                                    textButtonTheme: TextButtonThemeData(
-                                      style: TextButton.styleFrom(
-                                        primary: Colors.black,
-                                        textStyle: ThemeTextStyle
-                                            .textStyle14w600
-                                            .copyWith(color: Colors.black),
-                                      ),
-                                    ),
-                                  ),
-                                  child: child!,
-                                );
-                              },
-                            );
-                            if (date != null) {
-                              _vmodel.invoiceDate.text =
-                                  DateFormat("dd.MM.yyyy").format(date);
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: ColorPalette.white,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Дата накладной",
-                                  style:
-                                      ThemeTextStyle.textStyle14w400.copyWith(
-                                    color: ColorPalette.grey400,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                                Flexible(
-                                  child: AppTextField(
-                                    contentPadding: EdgeInsets.zero,
-                                    capitalize: false,
-                                    controller: _vmodel.invoiceDate,
-                                    readonly: true,
-                                    textAlign: TextAlign.right,
-                                    showErrorMessages: false,
-                                    suffixIcon: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          final DateTime? date =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2019),
-                                            lastDate: DateTime.now(),
-                                            helpText: "Дата входящего номера",
-                                            builder: (context, child) {
-                                              return Theme(
-                                                data:
-                                                    Theme.of(context).copyWith(
-                                                  colorScheme:
-                                                      const ColorScheme.light(
-                                                    primary:
-                                                        ColorPalette.greyDark,
-                                                  ),
-                                                  textTheme: TextTheme(
-                                                    headline5: ThemeTextStyle
-                                                        .textTitleDella24w400,
-                                                    overline: ThemeTextStyle
-                                                        .textStyle16w600,
-                                                  ),
-                                                  textButtonTheme:
-                                                      TextButtonThemeData(
-                                                    style: TextButton.styleFrom(
-                                                      primary: Colors.black,
-                                                      textStyle: ThemeTextStyle
-                                                          .textStyle14w600
-                                                          .copyWith(
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: child!,
-                                              );
-                                            },
-                                          );
-                                          if (date != null) {
-                                            _vmodel.invoiceDate.text =
-                                                DateFormat("dd.MM.yyyy")
-                                                    .format(date);
-                                          }
-                                        },
-                                        child: SvgPicture.asset(
-                                          "assets/images/svg/calendar_circle_ic.svg",
-                                          width: 24,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        // const SizedBox(
+                        //   height: 16,
+                        // ),
+                        // _vmodel.bin,
+                        // const SizedBox(
+                        //   height: 16,
+                        // ),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 12),
+                        //   decoration: BoxDecoration(
+                        //     color: ColorPalette.white,
+                        //     borderRadius: BorderRadius.circular(16),
+                        //   ),
+                        //   child: BlocBuilder<countragents.CounteragentsCubit,
+                        //       countragents.CounteragentState>(
+                        //     builder: (context, state) {
+                        //       return state.maybeWhen(
+                        //         loadingState: () =>
+                        //             const CircularProgressIndicator(
+                        //           color: Colors.amber,
+                        //         ),
+                        //         loadedState: (counteragents) {
+                        //           return SearchChoices.single(
+                        //             padding: recipientId == -1 ? 14 : 7,
+                        //             displayClearIcon: false,
+                        //             closeButton: "Закрыть",
+                        //             items: counteragents
+                        //                 .map((e) => e.name)
+                        //                 .toList()
+                        //                 .map<DropdownMenuItem<String>>(
+                        //                     (String? value) {
+                        //               return DropdownMenuItem<String>(
+                        //                 value: value,
+                        //                 child: Text(
+                        //                   "",
+                        //                   style: ThemeTextStyle.textStyle14w400,
+                        //                 ),
+                        //               );
+                        //             }).toList(),
+                        //             value: recipient,
+                        //             hint: "Получатель",
+                        //             searchHint: "Получатель",
+                        //             style: ThemeTextStyle.textStyle14w400,
+                        //             onChanged: (String? newValue) {
+                        //               recipient = newValue;
+                        //               for (int i = 0;
+                        //                   i < counteragents.length;
+                        //                   i++) {
+                        //                 if (recipient ==
+                        //                         counteragents[i].name &&
+                        //                     counteragents[i].id != -1) {
+                        //                   recipientId = counteragents[i].id;
+                        //                   _vmodel.recipientId = recipientId;
+                        //                   log(_vmodel.recipientId.toString());
+                        //                 }
+                        //               }
+                        //               setState(() {});
+                        //             },
+                        //             isExpanded: true,
+                        //             icon: SvgPicture.asset(
+                        //               "assets/images/svg/chevron_right.svg",
+                        //             ),
+                        //             underline: const SizedBox(),
+                        //           );
+                        //         },
+                        //         orElse: () {
+                        //           return const CircularProgressIndicator(
+                        //             color: Colors.red,
+                        //           );
+                        //         },
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 16,
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     final DateTime? date = await showDatePicker(
+                        //       context: context,
+                        //       initialDate: DateTime.now(),
+                        //       firstDate: DateTime(2019),
+                        //       lastDate: DateTime.now(),
+                        //       helpText: "Дата входящего номера",
+                        //       builder: (context, child) {
+                        //         return Theme(
+                        //           data: Theme.of(context).copyWith(
+                        //             colorScheme: const ColorScheme.light(
+                        //               primary: ColorPalette.greyDark,
+                        //             ),
+                        //             textTheme: TextTheme(
+                        //               headline5:
+                        //                   ThemeTextStyle.textTitleDella24w400,
+                        //               overline: ThemeTextStyle.textStyle16w600,
+                        //             ),
+                        //             textButtonTheme: TextButtonThemeData(
+                        //               style: TextButton.styleFrom(
+                        //                 primary: Colors.black,
+                        //                 textStyle: ThemeTextStyle
+                        //                     .textStyle14w600
+                        //                     .copyWith(color: Colors.black),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           child: child!,
+                        //         );
+                        //       },
+                        //     );
+                        //     if (date != null) {
+                        //       _vmodel.invoiceDate.text =
+                        //           DateFormat("dd.MM.yyyy").format(date);
+                        //     }
+                        //   },
+                        //   child: Container(
+                        //     padding: const EdgeInsets.all(12),
+                        //     decoration: BoxDecoration(
+                        //       color: ColorPalette.white,
+                        //       borderRadius: BorderRadius.circular(16),
+                        //     ),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //       children: [
+                        //         Text(
+                        //           "Дата накладной",
+                        //           style:
+                        //               ThemeTextStyle.textStyle14w400.copyWith(
+                        //             color: ColorPalette.grey400,
+                        //           ),
+                        //         ),
+                        //         const SizedBox(
+                        //           width: 16,
+                        //         ),
+                        //         Flexible(
+                        //           child: AppTextField(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             capitalize: false,
+                        //             controller: _vmodel.invoiceDate,
+                        //             readonly: true,
+                        //             textAlign: TextAlign.right,
+                        //             showErrorMessages: false,
+                        //             suffixIcon: Padding(
+                        //               padding: const EdgeInsets.only(left: 8.0),
+                        //               child: GestureDetector(
+                        //                 onTap: () async {
+                        //                   final DateTime? date =
+                        //                       await showDatePicker(
+                        //                     context: context,
+                        //                     initialDate: DateTime.now(),
+                        //                     firstDate: DateTime(2019),
+                        //                     lastDate: DateTime.now(),
+                        //                     helpText: "Дата входящего номера",
+                        //                     builder: (context, child) {
+                        //                       return Theme(
+                        //                         data:
+                        //                             Theme.of(context).copyWith(
+                        //                           colorScheme:
+                        //                               const ColorScheme.light(
+                        //                             primary:
+                        //                                 ColorPalette.greyDark,
+                        //                           ),
+                        //                           textTheme: TextTheme(
+                        //                             headline5: ThemeTextStyle
+                        //                                 .textTitleDella24w400,
+                        //                             overline: ThemeTextStyle
+                        //                                 .textStyle16w600,
+                        //                           ),
+                        //                           textButtonTheme:
+                        //                               TextButtonThemeData(
+                        //                             style: TextButton.styleFrom(
+                        //                               primary: Colors.black,
+                        //                               textStyle: ThemeTextStyle
+                        //                                   .textStyle14w600
+                        //                                   .copyWith(
+                        //                                 color: Colors.black,
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                         child: child!,
+                        //                       );
+                        //                     },
+                        //                   );
+                        //                   if (date != null) {
+                        //                     _vmodel.invoiceDate.text =
+                        //                         DateFormat("dd.MM.yyyy")
+                        //                             .format(date);
+                        //                   }
+                        //                 },
+                        //                 child: SvgPicture.asset(
+                        //                   "assets/images/svg/calendar_circle_ic.svg",
+                        //                   width: 24,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         const Spacer(),
                         MaterialButton(
                           height: 40,
@@ -480,13 +480,11 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                             //   print(_vmodel.incomeNumberController.text.length);
                             //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
                             // } else {
-                            if (_vmodel.recipientId != -1 &&
+                            if (
                                 _vmodel
                                     .incomeNumber.controller.text.isNotEmpty &&
                                 _vmodel.incomeNumberDateController.text
-                                    .isNotEmpty &&
-                                _vmodel.bin.controller.text.isNotEmpty &&
-                                _vmodel.invoiceDate.text.isNotEmpty) {
+                                    .isNotEmpty ) {
                               widget.isFromPharmacyPage
                                   ? BlocProvider.of<SignatureScreenCubit>(
                                       context,

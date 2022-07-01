@@ -116,7 +116,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   scannedProducts,
                   unscannedProducts,
                   selectedProductId,
-                  discrepancy,
                 ) {
                   if (unscannedProducts.isNotEmpty) {
                     return SizedBox(
@@ -177,7 +176,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   scannedProducts,
                   unscannedProducts,
                   selectedProduct,
-                  discrepancy,
                 ) {
                   return _BuildBody(
                     orderStatus: widget.isFromPharmacyPage
@@ -189,7 +187,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                     unscannedProducts: unscannedProducts,
                     scannedProducts: scannedProducts,
                     selectedProduct: selectedProduct,
-                    discrepancy: discrepancy,
                     pharmacyOrder: widget.pharmacyOrder,
                     warehouseOrder: widget.warehouseOrder,
                     isFromPharmacyPage: widget.isFromPharmacyPage,
@@ -215,7 +212,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   scannedProducts,
                   unscannedProducts,
                   selectedProductId,
-                  discrepancy,
                 ) {},
                 errorState: (String message) {
                   buildErrorCustomSnackBar(context, message);
@@ -235,7 +231,6 @@ class _BuildBody extends StatefulWidget {
   final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
-  final List<ProductDTO> discrepancy;
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
   final bool isFromPharmacyPage;
@@ -245,7 +240,6 @@ class _BuildBody extends StatefulWidget {
     required this.scannedProducts,
     required this.unscannedProducts,
     required this.selectedProduct,
-    required this.discrepancy,
     required this.orderStatus,
     this.pharmacyOrder,
     this.warehouseOrder,
@@ -374,52 +368,6 @@ class _BuildBodyState extends State<_BuildBody> {
               const SizedBox(
                 width: 25,
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    currentIndex = 2;
-                    itemCount = widget.discrepancy.length;
-                  });
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: currentIndex == 2
-                        ? ColorPalette.white
-                        : ColorPalette.main,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Расхождение",
-                        style: ThemeTextStyle.textStyle14w500.copyWith(
-                          color: currentIndex == 2
-                              ? ColorPalette.grayText
-                              : ColorPalette.grayTextDisabled,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
-                        decoration: BoxDecoration(
-                          color: ColorPalette.borderGrey,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Text(
-                          "${widget.discrepancy.length}",
-                          style: ThemeTextStyle.textStyle12w600.copyWith(
-                            color: ColorPalette.black,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -476,9 +424,7 @@ class _BuildBodyState extends State<_BuildBody> {
                         const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
                     itemCount: currentIndex == 0
                         ? widget.unscannedProducts.length
-                        : (currentIndex == 1
-                            ? widget.scannedProducts.length
-                            : widget.discrepancy.length),
+                        : widget.scannedProducts.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -497,9 +443,7 @@ class _BuildBodyState extends State<_BuildBody> {
                           orderID: widget.orderId,
                           good: currentIndex == 0
                               ? widget.unscannedProducts[index]
-                              : (currentIndex == 1
-                                  ? widget.scannedProducts[index]
-                                  : widget.discrepancy[index]),
+                              : widget.scannedProducts[index],
                           selectedProduct: widget.selectedProduct,
                         ),
                       );
@@ -507,117 +451,6 @@ class _BuildBodyState extends State<_BuildBody> {
                   ),
           ),
         ),
-
-        // if (currentIndex == 0)
-        //   Expanded(
-        //     child: SingleChildScrollView(
-        //       child: widget.unscannedProducts.isEmpty
-        //           ? ListView(
-        //               children: [
-        //                 SizedBox(
-        //                   height: MediaQuery.of(context).size.height * 0.1,
-        //                 ),
-        //                 Center(
-        //                   child: Lottie.asset('assets/lotties/empty_box.json'),
-        //                 ),
-        //               ],
-        //             )
-        //           : ListView.builder(
-        //               shrinkWrap: true,
-        //               padding: const EdgeInsets.only(
-        //                   left: 12.5, right: 12.5, top: 20),
-        //               physics: const NeverScrollableScrollPhysics(),
-        //               itemCount: widget.unscannedProducts.length,
-        //               itemBuilder: (context, index) {
-        //                 return GestureDetector(
-        //                   onTap: () {
-        //                     AppRouter.push(
-        //                       context,
-        //                       DefectScreen(
-        //                         product: widget.unscannedProducts[index],
-        //                         orderId: widget.orderId,
-        //                       ),
-        //                     );
-        //                     // AppRouter.push(
-        //                     //   context,
-        //                     //   BlocProvider.value(
-        //                     //     value: context.read<BlocGoodsList>(),
-        //                     //     child: const BarcodeScannerScreen(),
-        //                     //   ),
-        //                     // );
-        //                     // await FlutterBarcodeScanner.scanBarcode(
-        //                     //     "F87615", "Cancel", false, ScanMode.BARCODE);
-        //                     // FlutterBarcodeScanner.getBarcodeStreamReceiver("F87615", "Cancel", false, ScanMode.BARCODE);
-        //                   },
-        //                   child: _BuildGoodDetails(
-        //                     orderID: widget.orderId,
-        //                     good: widget.unscannedProducts[index],
-        //                     selectedProduct: widget.selectedProduct,
-        //                   ),
-        //                 );
-        //               },
-        //             ),
-        //     ),
-        //   ),
-        // if (currentIndex == 1)
-        //   widget.scannedProducts.isEmpty
-        //       ? const Padding(
-        //           padding: EdgeInsets.only(top: 40.0),
-        //           child: Center(
-        //             child: Text("Отсканированных товаров нет"),
-        //           ),
-        //         )
-        //       : Expanded(
-        //           child: SingleChildScrollView(
-        //             child: ListView.builder(
-        //               shrinkWrap: true,
-        //               padding: const EdgeInsets.only(
-        //                 left: 12.5,
-        //                 right: 12.5,
-        //                 top: 20,
-        //               ),
-        //               physics: const NeverScrollableScrollPhysics(),
-        //               itemCount: widget.scannedProducts.length,
-        //               itemBuilder: (context, index) {
-        //                 return _BuildGoodDetails(
-        //                   orderID: widget.orderId,
-        //                   selectedProduct: const ProductDTO(id: -1),
-        //                   good: widget.scannedProducts[index],
-        //                 );
-        //               },
-        //             ),
-        //           ),
-        //         ),
-        // if (currentIndex == 2)
-        //   widget.discrepancy.isEmpty
-        //       ? const Padding(
-        //           padding: EdgeInsets.only(top: 40.0),
-        //           child: Center(
-        //             child: Text("Нет несоответствий"),
-        //           ),
-        //         )
-        //       : Expanded(
-        //           child: SingleChildScrollView(
-        //             child: ListView.builder(
-        //               shrinkWrap: true,
-        //               padding: const EdgeInsets.only(
-        //                 left: 12.5,
-        //                 right: 12.5,
-        //                 top: 20,
-        //               ),
-        //               physics: const NeverScrollableScrollPhysics(),
-        //               itemCount: widget.discrepancy.length,
-        //               itemBuilder: (context, index) {
-        //                 return _BuildGoodDetails(
-        //                   orderID: widget.orderId,
-        //                   selectedProduct: const ProductDTO(id: -1),
-        //                   good: widget.discrepancy[index],
-        //                 );
-        //               },
-        //             ),
-        //           ),
-        //         ),
-
         if (widget.unscannedProducts.isEmpty && widget.orderStatus != 3)
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -654,60 +487,6 @@ class _BuildBodyState extends State<_BuildBody> {
               ),
             ),
           ),
-
-        // IntrinsicHeight(
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: [
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         children: [
-        //           Text(
-        //             "Заказ",
-        //             style: ThemeTextStyle.textStyle14w600
-        //                 .copyWith(color: ColorPalette.grayText),
-        //           ),
-        //           const SizedBox(
-        //             height: 8,
-        //           ),
-        //           Text(
-        //             NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
-        //                 .format(
-        //               widget.totalPrice,
-        //             ),
-        //             style: ThemeTextStyle.textStyle24w400,
-        //           ),
-        //         ],
-        //       ),
-        //       const Padding(
-        //         padding: EdgeInsets.only(top: 21.0),
-        //         child: VerticalDivider(
-        //           color: ColorPalette.dashGrey,
-        //         ),
-        //       ),
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         children: [
-        //           Text(
-        //             "Поступление",
-        //             style: ThemeTextStyle.textStyle14w600
-        //                 .copyWith(color: ColorPalette.grayText),
-        //           ),
-        //           const SizedBox(
-        //             height: 8,
-        //           ),
-        //           Text(
-        //             NumberFormat.simpleCurrency(locale: 'kk', decimalDigits: 0)
-        //                 .format(
-        //               goods.totalScannedPrice,
-        //             ),
-        //             style: ThemeTextStyle.textStyle24w400,
-        //           ),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }
@@ -841,19 +620,51 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           padding: EdgeInsets.zero,
-                          onPressed: () {
-                            _bottomSheet(
-                              _SpecifyingNumberManually(
-                                productDTO: widget.good,
-                                orderID: widget.orderID,
-                              ),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(10.0),
+                          onPressed: (widget.good.totalCount ==
+                                  widget.good.scanCount! +
+                                      widget.good.defective! +
+                                      widget.good.underachievement! +
+                                      widget.good.reSorting!)
+                              ? () {
+                                  BlocProvider.of<GoodsListScreenCubit>(context)
+                                      .updatePharmacyProductById(
+                                    status: "2",
+                                    orderId: widget.orderID,
+                                    productId: widget.good.id,
+                                    scanCount: widget.good.scanCount,
+                                    defective: widget.good.defective,
+                                    surplus: widget.good.surplus,
+                                    underachievement:
+                                        widget.good.underachievement,
+                                    reSorting: widget.good.reSorting,
+                                  );
+                                  BlocProvider.of<GoodsListScreenCubit>(context)
+                                      .savePharmacySelectedProductToCache(
+                                    selectedProduct: ProductDTO(
+                                      id: -1,
+                                      orderID: widget.orderID,
+                                    ),
+                                  );
+                                }
+                              : () {
+                                  _bottomSheet(
+                                    _SpecifyingNumberManually(
+                                      productDTO: widget.good,
+                                      orderID: widget.orderID,
+                                    ),
+                                  );
+                                },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              'Указать вручную',
-                              style: TextStyle(
+                              (widget.good.totalCount ==
+                                      widget.good.scanCount! +
+                                          widget.good.defective! +
+                                          widget.good.underachievement! +
+                                          widget.good.reSorting!)
+                                  ? 'Завершить'
+                                  : "Указать вручную",
+                              style: const TextStyle(
                                 color: ColorPalette.white,
                                 fontWeight: FontWeight.w600,
                               ),

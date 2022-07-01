@@ -45,11 +45,20 @@ class _DefectScreenState extends State<DefectScreen> {
 
   @override
   void initState() {
+    
     defective = widget.product.defective ?? 0;
     surplus = widget.product.surplus ?? 0;
     underachievement = widget.product.underachievement ?? 0;
     reSorting = widget.product.reSorting ?? 0;
     productInfo = widget.product;
+     allCount = defective + underachievement + reSorting;
+                            if (allCount ==
+                                productInfo.totalCount! -
+                                    productInfo.scanCount!) {
+                              isAll = true;
+                            } else {
+                              isAll = false;
+                            }
     super.initState();
   }
 
@@ -69,7 +78,6 @@ class _DefectScreenState extends State<DefectScreen> {
               scannedProducts,
               unscannedProducts,
               selectedProduct,
-              discrepancy,
             ) {
               context.loaderOverlay.hide();
               Navigator.pop(context);
@@ -177,7 +185,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "${productInfo.totalCount ?? 0 - (productInfo.scanCount ?? 0)}",
+                                  "${productInfo.totalCount! - (productInfo.scanCount!)}",
                                   style: ThemeTextStyle.textTitleDella40w400
                                       .copyWith(color: ColorPalette.black),
                                 ),
@@ -398,26 +406,19 @@ class _DefectScreenState extends State<DefectScreen> {
                     ),
                     child: GestureDetector(
                       onTap: () async {
-                        if (isAll) {
                           BlocProvider.of<GoodsListScreenCubit>(context)
                               .changeToLoadingState();
                           BlocProvider.of<GoodsListScreenCubit>(context)
                               .updatePharmacyProductById(
                             orderId: widget.orderId,
                             productId: productInfo.id,
-                            scanCount: productInfo.scanCount,
-                            status: "2",
+                        //    scanCount: productInfo.scanCount,
                             defective: defective,
                             surplus: surplus,
                             underachievement: underachievement,
                             reSorting: reSorting,
                           );
-                        } else {
-                          buildErrorCustomSnackBar(
-                            context,
-                            'Выберите все товары!!!',
-                          );
-                        }
+                       
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),

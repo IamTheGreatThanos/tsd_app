@@ -8,7 +8,9 @@ import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ProductsLocalDS {
-  Future<ProductDTO> getPharmacySelectedProductFromCahce();
+  Future<ProductDTO> getPharmacySelectedProductFromCahce({
+    required int orderId,
+  });
 
   Future<void> setPharmacySelectedProductToCahce({
     required ProductDTO selectedProduct,
@@ -22,9 +24,11 @@ class ProductsLocalDSImpl extends ProductsLocalDS {
 
   ProductsLocalDSImpl(this.sharedPreferences);
   @override
-  Future<ProductDTO> getPharmacySelectedProductFromCahce() async {
+  Future<ProductDTO> getPharmacySelectedProductFromCahce({
+    required int orderId,
+  }) async {
     try {
-      final product = sharedPreferences.get(PHARMACY_SELECTED_PRODUCT);
+      final product = sharedPreferences.get("$orderId $PHARMACY_SELECTED_PRODUCT");
       if (product != null) {
         return ProductDTO.fromJson(
           jsonDecode(product.toString()) as Map<String, dynamic>,
@@ -42,8 +46,9 @@ class ProductsLocalDSImpl extends ProductsLocalDS {
   Future<void> setPharmacySelectedProductToCahce({
     required ProductDTO selectedProduct,
   }) async {
+    log(selectedProduct.orderID.toString());
     sharedPreferences.setString(
-      PHARMACY_SELECTED_PRODUCT,
+      "${selectedProduct.orderID} $PHARMACY_SELECTED_PRODUCT",
       jsonEncode(selectedProduct.toJson()),
     );
   }

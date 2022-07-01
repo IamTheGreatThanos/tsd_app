@@ -62,7 +62,10 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           accessToken: user.accessToken!,
           orderId: orderId,
         );
-        return Right(products);
+        final List<ProductDTO> newProduct =
+            products.map((e) => e.copyWith(orderID: orderId)).toList();
+
+        return Right(newProduct);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
@@ -105,11 +108,12 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   }
 
   @override
-  Future<Either<Failure, ProductDTO>>
-      getPharmacySelectedProductFromCahce() async {
+  Future<Either<Failure, ProductDTO>> getPharmacySelectedProductFromCahce({
+    required int orderId,
+  }) async {
     try {
-      final ProductDTO selectedProduct =
-          await productsLoacalDS.getPharmacySelectedProductFromCahce();
+      final ProductDTO selectedProduct = await productsLoacalDS
+          .getPharmacySelectedProductFromCahce(orderId: orderId);
       return Right(selectedProduct);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));

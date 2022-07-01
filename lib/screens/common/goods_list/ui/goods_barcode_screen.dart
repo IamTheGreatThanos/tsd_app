@@ -36,13 +36,11 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
                 scannedProducts,
                 unscannedProducts,
                 selectedProduct,
-                discrepancy,
               ) {
                 context.loaderOverlay.hide();
                 Navigator.pop(context);
               },
-              successScannedState: (message) {
-              },
+              successScannedState: (message) {},
               errorState: (message) {
                 context.loaderOverlay.hide();
               },

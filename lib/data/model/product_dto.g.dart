@@ -25,6 +25,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       isReady: json['isReady'] as bool?,
+      orderID: json['orderID'] as int?,
     );
 
 Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
@@ -46,4 +47,5 @@ Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'isReady': instance.isReady,
+      'orderID': instance.orderID,
     };

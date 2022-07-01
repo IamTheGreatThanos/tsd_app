@@ -43,6 +43,7 @@ mixin _$ProductDTO {
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
   bool? get isReady => throw _privateConstructorUsedError;
+  int? get orderID => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -72,7 +73,8 @@ abstract class $ProductDTOCopyWith<$Res> {
       @JsonKey(name: 're_sorting') int? reSorting,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
-      bool? isReady});
+      bool? isReady,
+      int? orderID});
 }
 
 /// @nodoc
@@ -102,6 +104,7 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? isReady = freezed,
+    Object? orderID = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -172,6 +175,10 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
           ? _value.isReady
           : isReady // ignore: cast_nullable_to_non_nullable
               as bool?,
+      orderID: orderID == freezed
+          ? _value.orderID
+          : orderID // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -200,7 +207,8 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       @JsonKey(name: 're_sorting') int? reSorting,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
-      bool? isReady});
+      bool? isReady,
+      int? orderID});
 }
 
 /// @nodoc
@@ -232,6 +240,7 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? isReady = freezed,
+    Object? orderID = freezed,
   }) {
     return _then(_$_ProductDTO(
       id: id == freezed
@@ -302,6 +311,10 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
           ? _value.isReady
           : isReady // ignore: cast_nullable_to_non_nullable
               as bool?,
+      orderID: orderID == freezed
+          ? _value.orderID
+          : orderID // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -326,7 +339,8 @@ class _$_ProductDTO implements _ProductDTO {
       @JsonKey(name: 're_sorting') this.reSorting,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt,
-      this.isReady});
+      this.isReady,
+      this.orderID});
 
   factory _$_ProductDTO.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDTOFromJson(json);
@@ -371,10 +385,12 @@ class _$_ProductDTO implements _ProductDTO {
   final String? updatedAt;
   @override
   final bool? isReady;
+  @override
+  final int? orderID;
 
   @override
   String toString() {
-    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady)';
+    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID)';
   }
 
   @override
@@ -401,7 +417,8 @@ class _$_ProductDTO implements _ProductDTO {
             const DeepCollectionEquality().equals(other.reSorting, reSorting) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.isReady, isReady));
+            const DeepCollectionEquality().equals(other.isReady, isReady) &&
+            const DeepCollectionEquality().equals(other.orderID, orderID));
   }
 
   @JsonKey(ignore: true)
@@ -424,7 +441,8 @@ class _$_ProductDTO implements _ProductDTO {
       const DeepCollectionEquality().hash(reSorting),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(isReady));
+      const DeepCollectionEquality().hash(isReady),
+      const DeepCollectionEquality().hash(orderID));
 
   @JsonKey(ignore: true)
   @override
@@ -455,7 +473,8 @@ abstract class _ProductDTO implements ProductDTO {
       @JsonKey(name: 're_sorting') final int? reSorting,
       @JsonKey(name: 'created_at') final String? createdAt,
       @JsonKey(name: 'updated_at') final String? updatedAt,
-      final bool? isReady}) = _$_ProductDTO;
+      final bool? isReady,
+      final int? orderID}) = _$_ProductDTO;
 
   factory _ProductDTO.fromJson(Map<String, dynamic> json) =
       _$_ProductDTO.fromJson;
@@ -500,6 +519,8 @@ abstract class _ProductDTO implements ProductDTO {
   String? get updatedAt => throw _privateConstructorUsedError;
   @override
   bool? get isReady => throw _privateConstructorUsedError;
+  @override
+  int? get orderID => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDTOCopyWith<_$_ProductDTO> get copyWith =>

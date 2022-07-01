@@ -193,7 +193,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                             child: Row(
                               children: [
                                 Text(
-                                  "На расхождении",
+                                  "Активные заказы",
                                   style:
                                       ThemeTextStyle.textStyle14w500.copyWith(
                                     color: currentIndex == 1
@@ -351,7 +351,7 @@ class _BuildOrderData extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Center(
                     child: Text(
-                      orderData.status == 1 ? "Новый заказ" : "На расхождении",
+                      orderData.status == 1 ? "Новый заказ" : "Активный заказ",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
                         color: orderData.status == 1
                             ? ColorPalette.textGreen

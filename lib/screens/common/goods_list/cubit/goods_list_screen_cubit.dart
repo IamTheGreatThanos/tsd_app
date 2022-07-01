@@ -16,7 +16,6 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   List<ProductDTO> allProducts = [];
   List<ProductDTO> unscannedProducts = [];
   List<ProductDTO> scannedProdcuts = [];
-  List<ProductDTO> discrepancy = [];
   final GetProductsPharmacyArrival _getProductsPharmacyArrival;
   final UpdatePharmacyProductById _updatePharmacyProductById;
   final GetPharmacySelectedProduct _getPharmacySelectedProduct;
@@ -58,23 +57,25 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         );
       },
       (r) async {
-        log("SUM::::::: ${r.scanCount! + r.defective! + r.surplus! + r.underachievement! + r.reSorting!}");
-        if (r.totalCount ==
-            r.scanCount! +
-                r.defective! +
-                r.surplus! +
-                r.underachievement! +
-                r.reSorting!) {
-          log("${r.scanCount! + r.defective! + r.surplus! + r.underachievement! + r.reSorting!}");
-          await savePharmacySelectedProductToCache(
-            selectedProduct: const ProductDTO(id: -1),
-          );
+        // log("SUM::::::: ${r.scanCount! + r.defective! + r.surplus! + r.underachievement! + r.reSorting!}");
+        // if (r.totalCount ==
+        //     r.scanCount! +
+        //         r.defective! +
+        //         r.underachievement! +
+        //         r.reSorting!) {
+        //  log("${r.scanCount! + r.defective!  + r.underachievement! + r.reSorting!}");
+        // await savePharmacySelectedProductToCache(
+        //   selectedProduct: ProductDTO(id: -1, orderID: orderId),
+        // );
+        if (r.status == 2) {
           emit(
             const GoodsListScreenState.successScannedState(
               message: 'Продукт полностью отсканирован',
             ),
           );
         }
+
+        //  }
         log("Update success:::::");
         await _getPharmacyProducts(orderId);
       },
@@ -91,36 +92,32 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
 //получение продуктов
   Future<void> _getPharmacyProducts(int orderId) async {
     final ProductDTO selectedProduct =
-        await getPharmacySelectedProductFromCache();
+        await getPharmacySelectedProductFromCache(orderId: orderId);
     final result = await _getProductsPharmacyArrival.call(orderId);
     result.fold(
         (l) => emit(
               GoodsListScreenState.errorState(message: mapFailureToMessage(l)),
             ), (r) {
+      for (ProductDTO product in r) {
+        log(product.orderID.toString());
+      }
       allProducts = r;
       final List<ProductDTO> scanned = [];
       final List<ProductDTO> unscanned = [];
-      final List<ProductDTO> discrepancy1 = [];
       for (final ProductDTO product in r) {
-        if (product.status == 1) {
-          if (product.totalCount == product.scanCount) {
-            scanned.add(product);
-          } else {
-            unscanned.add(product);
-          }
+        if (product.status == 2) {
+          scanned.add(product);
         } else {
-          discrepancy1.add(product);
+          unscanned.add(product);
         }
       }
       unscannedProducts = unscanned;
       scannedProdcuts = scanned;
-      discrepancy = discrepancy1;
       emit(
         GoodsListScreenState.loadedState(
           selectedProduct: selectedProduct,
           scannedProducts: scannedProdcuts,
           unscannedProducts: unscannedProducts,
-          discrepancy: discrepancy,
         ),
       );
     });
@@ -135,7 +132,10 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   ) async {
     //проверим есть ли выбранный продукт в кэше
     final ProductDTO selectedProduct =
-        await getPharmacySelectedProductFromCache();
+        await getPharmacySelectedProductFromCache(
+      orderId: orderId,
+    );
+    log("${selectedProduct.id},  ${selectedProduct.orderID}");
     if (checkProductBarCode(_scannedResult) != null) {
       final ProductDTO productDTO = checkProductBarCode(_scannedResult)!;
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
@@ -148,20 +148,36 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         );
         log("SCANNED SUCCESSFULLY");
       } else {
-        if (selectedProduct.id != productDTO.id) {
+        if (selectedProduct.orderID == productDTO.orderID &&
+            selectedProduct.id != productDTO.id) {
           emit(
             const GoodsListScreenState.errorState(
-              message: 'Сначало отсканируйте выбранный товар до конца',
+              message: 'Сначала отсканируйте выбранный товар до конца',
             ),
           );
-          changeToLoadedState();
-        } else {
-          updatePharmacyProductById(
+          changeToLoadedState(
             orderId: orderId,
-            productId: productDTO.id,
-            scanCount: productDTO.scanCount! + quantity,
           );
-          log("SCANNED SUCCESSFULLY");
+        } else {
+          if (productDTO.totalCount! <=
+              productDTO.scanCount! +
+                  productDTO.defective! +
+                  productDTO.underachievement! +
+                  productDTO.reSorting!) {
+            emit(
+              const GoodsListScreenState.errorState(
+                message: 'Продукты уже отсканированы!',
+              ),
+            );
+            changeToLoadedState(orderId: orderId);
+          } else {
+            updatePharmacyProductById(
+              orderId: orderId,
+              productId: productDTO.id,
+              scanCount: productDTO.scanCount! + quantity,
+            );
+            log("SCANNED SUCCESSFULLY");
+          }
         }
       }
     } else {
@@ -170,7 +186,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
           message: 'Нет такого товара в списке',
         ),
       );
-      changeToLoadedState();
+      changeToLoadedState(orderId: orderId);
       log("SCANNED FAILED");
     }
   }
@@ -188,9 +204,11 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   }
 
 // получение выбранного продукта из кэша
-  Future<ProductDTO> getPharmacySelectedProductFromCache() async {
+  Future<ProductDTO> getPharmacySelectedProductFromCache({
+    required int orderId,
+  }) async {
     ProductDTO productDTO = const ProductDTO(id: -1);
-    final result = await _getPharmacySelectedProduct.call();
+    final result = await _getPharmacySelectedProduct.call(orderId);
     result.fold((l) {}, (r) {
       productDTO = r;
     });
@@ -210,15 +228,18 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   }
 
 //изменение стэйта
-  Future<void> changeToLoadedState() async {
+  Future<void> changeToLoadedState({
+    required int orderId,
+  }) async {
     final ProductDTO selectedProduct =
-        await getPharmacySelectedProductFromCache();
+        await getPharmacySelectedProductFromCache(
+      orderId: orderId,
+    );
     emit(
       GoodsListScreenState.loadedState(
         scannedProducts: scannedProdcuts,
         unscannedProducts: unscannedProducts,
         selectedProduct: selectedProduct,
-        discrepancy: discrepancy,
       ),
     );
   }

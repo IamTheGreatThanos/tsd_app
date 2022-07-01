@@ -35,21 +35,21 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-          backgroundColor: ColorPalette.main,
-          appBar: CustomAppBar(
-            title: "Список товаров".toUpperCase(),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  buildAlertDialog(context);
-                },
-                icon: const Icon(
-                  Icons.document_scanner_rounded,
-                  color: Colors.black,
-                ),
-              )
-            ],
-          ),
+        backgroundColor: ColorPalette.main,
+        appBar: CustomAppBar(
+          title: "Список товаров".toUpperCase(),
+          actions: [
+            IconButton(
+              onPressed: () {
+                buildAlertDialog(context);
+              },
+              icon: const Icon(
+                Icons.document_scanner_rounded,
+                color: Colors.black,
+              ),
+            )
+          ],
+        ),
         body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
           builder: (context, state) {
             return state.maybeWhen(
@@ -64,7 +64,6 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                 scannedProducts,
                 unscannedProducts,
                 selectedProduct,
-                discrepancy,
               ) {
                 return _BuildBody(
                   orderStatus: widget.isFromPharmacyPage
@@ -76,7 +75,6 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                   unscannedProducts: unscannedProducts,
                   scannedProducts: scannedProducts,
                   selectedProduct: selectedProduct,
-                  discrepancy: discrepancy,
                   pharmacyOrder: widget.pharmacyOrder,
                   warehouseOrder: widget.warehouseOrder,
                   isFromPharmacyPage: widget.isFromPharmacyPage,
@@ -102,7 +100,6 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                 scannedProducts,
                 unscannedProducts,
                 selectedProductId,
-                discrepancy,
               ) {},
               errorState: (String message) {
                 buildErrorCustomSnackBar(context, message);
@@ -121,7 +118,6 @@ class _BuildBody extends StatefulWidget {
   final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
-  final List<ProductDTO> discrepancy;
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
   final bool isFromPharmacyPage;
@@ -131,7 +127,6 @@ class _BuildBody extends StatefulWidget {
     required this.scannedProducts,
     required this.unscannedProducts,
     required this.selectedProduct,
-    required this.discrepancy,
     required this.orderStatus,
     this.pharmacyOrder,
     this.warehouseOrder,
@@ -257,52 +252,6 @@ class _BuildBodyState extends State<_BuildBody> {
             const SizedBox(
               width: 25,
             ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  currentIndex = 2;
-                  itemCount = widget.discrepancy.length;
-                });
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                decoration: BoxDecoration(
-                  color: currentIndex == 2
-                      ? ColorPalette.white
-                      : ColorPalette.main,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      "Расхождение",
-                      style: ThemeTextStyle.textStyle14w500.copyWith(
-                        color: currentIndex == 2
-                            ? ColorPalette.grayText
-                            : ColorPalette.grayTextDisabled,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      decoration: BoxDecoration(
-                        color: ColorPalette.borderGrey,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Text(
-                        "${widget.discrepancy.length}",
-                        style: ThemeTextStyle.textStyle12w600.copyWith(
-                          color: ColorPalette.black,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
         Expanded(
@@ -358,9 +307,7 @@ class _BuildBodyState extends State<_BuildBody> {
                         const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
                     itemCount: currentIndex == 0
                         ? widget.unscannedProducts.length
-                        : (currentIndex == 1
-                            ? widget.scannedProducts.length
-                            : widget.discrepancy.length),
+                        : widget.scannedProducts.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -379,9 +326,7 @@ class _BuildBodyState extends State<_BuildBody> {
                           orderID: widget.orderId,
                           good: currentIndex == 0
                               ? widget.unscannedProducts[index]
-                              : (currentIndex == 1
-                                  ? widget.scannedProducts[index]
-                                  : widget.discrepancy[index]),
+                              : widget.scannedProducts[index],
                           selectedProduct: widget.selectedProduct,
                         ),
                       );
