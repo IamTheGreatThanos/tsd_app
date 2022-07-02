@@ -31,6 +31,15 @@ class HistoryScreenDetail extends StatefulWidget {
 }
 
 class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
+   @override
+  void initState() {
+    if (widget.isFromPharmacyPage) {
+      BlocProvider.of<GoodsListScreenCubit>(context)
+          .getPharmacyProducts(widget.pharmacyOrder!.id);
+    } else {}
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(

@@ -45,20 +45,17 @@ class _DefectScreenState extends State<DefectScreen> {
 
   @override
   void initState() {
-    
     defective = widget.product.defective ?? 0;
     surplus = widget.product.surplus ?? 0;
     underachievement = widget.product.underachievement ?? 0;
     reSorting = widget.product.reSorting ?? 0;
     productInfo = widget.product;
-     allCount = defective + underachievement + reSorting;
-                            if (allCount ==
-                                productInfo.totalCount! -
-                                    productInfo.scanCount!) {
-                              isAll = true;
-                            } else {
-                              isAll = false;
-                            }
+    allCount = defective + underachievement + reSorting;
+    if (allCount == productInfo.totalCount! - productInfo.scanCount!) {
+      isAll = true;
+    } else {
+      isAll = false;
+    }
     super.initState();
   }
 
@@ -320,16 +317,36 @@ class _DefectScreenState extends State<DefectScreen> {
                         textFieldController: defectControllers[0],
                         isAll: isAll,
                         title: defectDetails[0],
-                        onChanged: (index, isChecked) {
+                        onChanged: (index, isChecked, isFromTextField) {
                           if (isChecked) {
                             defective = index;
                             allCount = defective + underachievement + reSorting;
-                            if (allCount ==
-                                productInfo.totalCount! -
-                                    productInfo.scanCount!) {
+                            if (isFromTextField &&
+                                defective >
+                                    productInfo.totalCount! -
+                                        productInfo.scanCount! -
+                                        underachievement -
+                                        reSorting) {
+                              buildErrorCustomSnackBar(
+                                context,
+                                "Количество браков не может превышать ${productInfo.totalCount! - productInfo.scanCount! - underachievement - reSorting} шт",
+                              );
+                              defectControllers[0].text =
+                                  (productInfo.totalCount! -
+                                          productInfo.scanCount! -
+                                          underachievement -
+                                          reSorting)
+                                      .toString();
+                              defective = int.parse(defectControllers[0].text);
                               isAll = true;
                             } else {
-                              isAll = false;
+                              if (allCount ==
+                                  productInfo.totalCount! -
+                                      productInfo.scanCount!) {
+                                isAll = true;
+                              } else {
+                                isAll = false;
+                              }
                             }
                             setState(() {});
                           }
@@ -345,7 +362,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                     underachievement +
                                     reSorting ==
                                 productInfo.totalCount)
-                            ? (index, isChecked) {
+                            ? (index, isChecked, isFromTextField) {
                                 if (isChecked) {
                                   surplus = index;
 
@@ -359,16 +376,37 @@ class _DefectScreenState extends State<DefectScreen> {
                         textFieldController: defectControllers[2],
                         isAll: isAll,
                         title: defectDetails[2],
-                        onChanged: (index, isChecked) {
+                        onChanged: (index, isChecked, isFromTextField) {
                           if (isChecked) {
                             underachievement = index;
                             allCount = defective + underachievement + reSorting;
-                            if (allCount ==
-                                productInfo.totalCount! -
-                                    productInfo.scanCount!) {
+                            if (isFromTextField &&
+                                underachievement >
+                                    productInfo.totalCount! -
+                                        productInfo.scanCount! -
+                                        defective -
+                                        reSorting) {
+                              buildErrorCustomSnackBar(
+                                context,
+                                "Количество недостач не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - reSorting} шт",
+                              );
+                              defectControllers[2].text =
+                                  (productInfo.totalCount! -
+                                          productInfo.scanCount! -
+                                          defective -
+                                          reSorting)
+                                      .toString();
+                              underachievement =
+                                  int.parse(defectControllers[2].text);
                               isAll = true;
                             } else {
-                              isAll = false;
+                              if (allCount ==
+                                  productInfo.totalCount! -
+                                      productInfo.scanCount!) {
+                                isAll = true;
+                              } else {
+                                isAll = false;
+                              }
                             }
                             setState(() {});
                           }
@@ -379,16 +417,36 @@ class _DefectScreenState extends State<DefectScreen> {
                         textFieldController: defectControllers[3],
                         isAll: isAll,
                         title: defectDetails[3],
-                        onChanged: (index, isChecked) {
+                        onChanged: (index, isChecked, isFromTextField) {
                           if (isChecked) {
                             reSorting = index;
                             allCount = defective + underachievement + reSorting;
-                            if (allCount ==
-                                productInfo.totalCount! -
-                                    productInfo.scanCount!) {
+                            if (isFromTextField &&
+                                reSorting >
+                                    productInfo.totalCount! -
+                                        productInfo.scanCount! -
+                                        defective -
+                                        underachievement) {
+                              buildErrorCustomSnackBar(
+                                context,
+                                "Количество паспорт серий не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement} шт",
+                              );
+                              defectControllers[3].text =
+                                  (productInfo.totalCount! -
+                                          productInfo.scanCount! -
+                                          underachievement -
+                                          defective)
+                                      .toString();
+                              reSorting = int.parse(defectControllers[3].text);
                               isAll = true;
                             } else {
-                              isAll = false;
+                              if (allCount ==
+                                  productInfo.totalCount! -
+                                      productInfo.scanCount!) {
+                                isAll = true;
+                              } else {
+                                isAll = false;
+                              }
                             }
                             setState(() {});
                           }
@@ -406,19 +464,18 @@ class _DefectScreenState extends State<DefectScreen> {
                     ),
                     child: GestureDetector(
                       onTap: () async {
-                          BlocProvider.of<GoodsListScreenCubit>(context)
-                              .changeToLoadingState();
-                          BlocProvider.of<GoodsListScreenCubit>(context)
-                              .updatePharmacyProductById(
-                            orderId: widget.orderId,
-                            productId: productInfo.id,
-                        //    scanCount: productInfo.scanCount,
-                            defective: defective,
-                            surplus: surplus,
-                            underachievement: underachievement,
-                            reSorting: reSorting,
-                          );
-                       
+                        BlocProvider.of<GoodsListScreenCubit>(context)
+                            .changeToLoadingState();
+                        BlocProvider.of<GoodsListScreenCubit>(context)
+                            .updatePharmacyProductById(
+                          orderId: widget.orderId,
+                          productId: productInfo.id,
+                          //    scanCount: productInfo.scanCount,
+                          defective: defective,
+                          surplus: surplus,
+                          underachievement: underachievement,
+                          reSorting: reSorting,
+                        );
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),
@@ -448,7 +505,7 @@ class _DefectScreenState extends State<DefectScreen> {
 
 class _BuildDefectiveDetail extends StatefulWidget {
   final String title;
-  final Function(int, bool)? onChanged;
+  final Function(int, bool, bool)? onChanged;
   final bool showDivider;
   final bool isAll;
   final TextEditingController textFieldController;
@@ -467,7 +524,12 @@ class _BuildDefectiveDetail extends StatefulWidget {
 
 class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
   bool checked = false;
-  int count = 0;
+  //int count = 0;
+  @override
+  void initState() {
+    super.initState();
+    widget.textFieldController.text = "0";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -477,7 +539,6 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              flex: 1,
               child: Row(
                 children: [
                   Text(
@@ -494,18 +555,27 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                if (count > 0) {
-                                  if (count == 1) {
-                                    count--;
-                                    widget.textFieldController.text = "";
+                                if (int.parse(widget.textFieldController.text) >
+                                    0) {
+                                  if (int.parse(
+                                        widget.textFieldController.text,
+                                      ) ==
+                                      1) {
+                                    widget.textFieldController.text = "0";
                                   } else {
+                                    int count = int.parse(
+                                      widget.textFieldController.text,
+                                    );
                                     count--;
                                     widget.textFieldController.text =
                                         count.toString();
                                   }
                                 }
-
-                                widget.onChanged!(count, checked);
+                                widget.onChanged!(
+                                  int.parse(widget.textFieldController.text),
+                                  checked,
+                                  false,
+                                );
                                 // if (count > 0) count--;
                                 // widget.onChanged!(count, checked);
                               });
@@ -526,19 +596,25 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                                 isDense: true,
                                 contentPadding: EdgeInsets.zero,
                                 border: InputBorder.none,
-                                hintText: count.toString(),
+                                hintText:
+                                    int.parse(widget.textFieldController.text)
+                                        .toString(),
                                 hintStyle: ThemeTextStyle.textStyle18w400
                                     .copyWith(color: ColorPalette.black),
                               ),
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
-                                if (value == '') {
-                                  count = 0;
-                                } else {
-                                  count = int.parse(value);
-                                }
+                                // if (value == '') {
+                                //   count = 0;
+                                // } else {
+                                //   count = int.parse(value);
+                                // }
 
-                                widget.onChanged!(count, checked);
+                                widget.onChanged!(
+                                  int.parse(widget.textFieldController.text),
+                                  checked,
+                                  true,
+                                );
                                 setState(() {});
                               },
                               style: ThemeTextStyle.textStyle18w400
@@ -549,10 +625,13 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                             onTap: () {
                               setState(() {
                                 if (!widget.isAll) {
+                                  int count = int.parse(
+                                    widget.textFieldController.text,
+                                  );
                                   count++;
                                   widget.textFieldController.text =
                                       count.toString();
-                                  widget.onChanged!(count, checked);
+                                  widget.onChanged!(count, checked, false);
                                 }
                               });
                             },
@@ -575,7 +654,9 @@ class _BuildDefectiveDetailState extends State<_BuildDefectiveDetail> {
                       }
                     : () {
                         buildErrorCustomSnackBar(
-                            context, 'Сначала отсканируйте все товары');
+                          context,
+                          'Сначала отсканируйте все товары',
+                        );
                       },
                 child: Image.asset(
                   "assets/images/svg/checkbox_${(!checked || widget.onChanged == null) ? "un" : ""}checked.png",

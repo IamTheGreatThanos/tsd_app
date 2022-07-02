@@ -52,8 +52,8 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
               title: 'Отсканируйте штрихкод товара',
               height: (MediaQuery.of(context).size.width - 26) / 1.5,
               width: MediaQuery.of(context).size.width - 26,
-              callback: (barcode) {
-                BlocProvider.of<GoodsListScreenCubit>(context)
+              callback: (barcode) async{
+               await BlocProvider.of<GoodsListScreenCubit>(context)
                     .scannerBarCode(barcode, widget.orderId, 1);
               },
             );

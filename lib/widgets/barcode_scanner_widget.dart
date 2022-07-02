@@ -46,10 +46,11 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
               debugPrint('Failed to scan Barcode');
             } else {
               final String code = barcode.rawValue!;
-              log("BARCODE CODE::::: ${code.substring(3)}");
+              log("BARCODE CODE::::: $code");
               if (!codes.contains(code)) {
                 codes.add(code);
-                widget.callback.call(code.substring(3));
+                widget.callback(code);
+              // controller.stop();
                 // context
                 //     .read<BlocGoodsList>()
                 //     .add(EventScanItem(code: code));

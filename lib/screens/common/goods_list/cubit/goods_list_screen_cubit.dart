@@ -141,12 +141,25 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
       if (selectedProduct.id == -1) {
         await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-        updatePharmacyProductById(
-          orderId: orderId,
-          productId: productDTO.id,
-          scanCount: productDTO.scanCount! + quantity,
-        );
-        log("SCANNED SUCCESSFULLY");
+        if (productDTO.totalCount! <=
+            productDTO.scanCount! +
+                productDTO.defective! +
+                productDTO.underachievement! +
+                productDTO.reSorting!) {
+          emit(
+            const GoodsListScreenState.errorState(
+              message: 'Продукты уже отсканированы!',
+            ),
+          );
+          changeToLoadedState(orderId: orderId);
+        } else {
+          updatePharmacyProductById(
+            orderId: orderId,
+            productId: productDTO.id,
+            scanCount: productDTO.scanCount! + quantity,
+          );
+          log("SCANNED SUCCESSFULLY");
+        }
       } else {
         if (selectedProduct.orderID == productDTO.orderID &&
             selectedProduct.id != productDTO.id) {
