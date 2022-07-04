@@ -15,6 +15,7 @@ abstract class PharmacyRepository {
 
   Future<Either<Failure, List<ProductDTO>>> getProductsPharmacyArrival({
     required int orderId,
+    String? search,
   });
 
   Future<Either<Failure, ProductDTO>> updatePharmacyProductById({

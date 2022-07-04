@@ -31,11 +31,11 @@ class HistoryScreenDetail extends StatefulWidget {
 }
 
 class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
-   @override
+  @override
   void initState() {
     if (widget.isFromPharmacyPage) {
       BlocProvider.of<GoodsListScreenCubit>(context)
-          .getPharmacyProducts(widget.pharmacyOrder!.id);
+          .getPharmacyProducts(orderId: widget.pharmacyOrder!.id);
     } else {}
     super.initState();
   }
@@ -267,7 +267,7 @@ class _BuildBodyState extends State<_BuildBody> {
           child: SmartRefresher(
             onRefresh: () {
               BlocProvider.of<GoodsListScreenCubit>(context)
-                  .getPharmacyProducts(widget.orderId);
+                  .getPharmacyProducts(orderId: widget.orderId);
             },
             controller: controller,
             child: itemCount == 0
@@ -320,15 +320,15 @@ class _BuildBodyState extends State<_BuildBody> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          if (currentIndex == 0) {
-                            AppRouter.push(
-                              context,
-                              DefectScreen(
-                                product: widget.unscannedProducts[index],
-                                orderId: widget.orderId,
-                              ),
-                            );
-                          }
+                          // if (currentIndex == 0) {
+                          //   AppRouter.push(
+                          //     context,
+                          //     DefectScreen(
+                          //       product: widget.unscannedProducts[index],
+                          //       orderId: widget.orderId,
+                          //     ),
+                          //   );
+                          // }
                         },
                         child: _BuildGoodDetails(
                           currentIndex: currentIndex,

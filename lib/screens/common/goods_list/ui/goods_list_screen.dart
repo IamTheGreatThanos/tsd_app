@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
@@ -19,6 +20,7 @@ import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/defect_screen.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -42,11 +44,14 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
   bool isFloatingButtonVisible = true;
   String _currentScan = '';
   FocusNode focusNode = FocusNode();
+
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     if (widget.isFromPharmacyPage) {
-      BlocProvider.of<GoodsListScreenCubit>(context)
-          .getPharmacyProducts(widget.pharmacyOrder!.id);
+      BlocProvider.of<GoodsListScreenCubit>(context).getPharmacyProducts(
+        orderId: widget.pharmacyOrder!.id,
+      );
     } else {}
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -82,6 +87,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               widget.isFromPharmacyPage
                   ? widget.pharmacyOrder!.id
                   : widget.warehouseOrder!.id,
+              searchController.text.isNotEmpty ? searchController.text : null,
               1,
             );
 
@@ -129,6 +135,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                           AppRouter.push(
                             context,
                             GoodsBarcodeScreen(
+                              searchController: searchController,
                               orderId: widget.isFromPharmacyPage
                                   ? widget.pharmacyOrder!.id
                                   : widget.warehouseOrder!.id,
@@ -162,62 +169,128 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               )
             ],
           ),
-          body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                loadingState: () {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.amber,
-                    ),
-                  );
-                },
-                loadedState: (
-                  scannedProducts,
-                  unscannedProducts,
-                  selectedProduct,
-                ) {
-                  return _BuildBody(
-                    orderStatus: widget.isFromPharmacyPage
-                        ? widget.pharmacyOrder?.status ?? 0
-                        : widget.warehouseOrder?.status ?? 0,
-                    orderId: widget.isFromPharmacyPage
-                        ? widget.pharmacyOrder!.id
-                        : widget.warehouseOrder!.id,
-                    unscannedProducts: unscannedProducts,
-                    scannedProducts: scannedProducts,
-                    selectedProduct: selectedProduct,
-                    pharmacyOrder: widget.pharmacyOrder,
-                    warehouseOrder: widget.warehouseOrder,
-                    isFromPharmacyPage: widget.isFromPharmacyPage,
-                  );
-                },
-                orElse: () {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.red,
-                    ),
-                  );
-                },
-              );
-            },
-            listener: (context, state) {
-              state.when(
-                initialState: () {},
-                loadingState: () {},
-                successScannedState: (String message) {
-                  buildSuccessCustomSnackBar(context, message);
-                },
-                loadedState: (
-                  scannedProducts,
-                  unscannedProducts,
-                  selectedProductId,
-                ) {},
-                errorState: (String message) {
-                  buildErrorCustomSnackBar(context, message);
-                },
-              );
-            },
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AppTextField(
+                  focusNode: FocusNode(),
+                  onFieldSubmitted: (value) {
+                    final productCubit =
+                        BlocProvider.of<GoodsListScreenCubit>(context);
+
+                    if (value.isNotEmpty) {
+                      productCubit.getPharmacyProducts(
+                        orderId: widget.isFromPharmacyPage
+                            ? widget.pharmacyOrder!.id
+                            : widget.warehouseOrder!.id,
+                        search: value,
+                      );
+                    } else {
+                      productCubit.getPharmacyProducts(
+                        orderId: widget.isFromPharmacyPage
+                            ? widget.pharmacyOrder!.id
+                            : widget.warehouseOrder!.id,
+                      );
+                    }
+                  },
+                  onChanged: (String? text) {
+                    final productCubit =
+                        BlocProvider.of<GoodsListScreenCubit>(context);
+
+                    if (text != null) {
+                      productCubit.getPharmacyProducts(
+                        orderId: widget.isFromPharmacyPage
+                            ? widget.pharmacyOrder!.id
+                            : widget.warehouseOrder!.id,
+                        search: text,
+                      );
+                    }
+                    if (text == null || text.isEmpty) {
+                      productCubit.getPharmacyProducts(
+                        orderId: widget.isFromPharmacyPage
+                            ? widget.pharmacyOrder!.id
+                            : widget.warehouseOrder!.id,
+                      );
+                    }
+                  },
+                  controller: searchController,
+                  hintText: "Искать по номеру заказа",
+                  hintStyle: ThemeTextStyle.textStyle14w400
+                      .copyWith(color: ColorPalette.grey400),
+                  fillColor: ColorPalette.white,
+                  prefixIcon: SvgPicture.asset(
+                    "assets/images/svg/search.svg",
+                    color: ColorPalette.grey400,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 17,
+                    bottom: 17,
+                    left: 13,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                      loadingState: () {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.amber,
+                          ),
+                        );
+                      },
+                      loadedState: (
+                        scannedProducts,
+                        unscannedProducts,
+                        selectedProduct,
+                      ) {
+                        return _BuildBody(
+                          searchController: searchController,
+                          orderStatus: widget.isFromPharmacyPage
+                              ? widget.pharmacyOrder?.status ?? 0
+                              : widget.warehouseOrder?.status ?? 0,
+                          orderId: widget.isFromPharmacyPage
+                              ? widget.pharmacyOrder!.id
+                              : widget.warehouseOrder!.id,
+                          unscannedProducts: unscannedProducts,
+                          scannedProducts: scannedProducts,
+                          selectedProduct: selectedProduct,
+                          pharmacyOrder: widget.pharmacyOrder,
+                          warehouseOrder: widget.warehouseOrder,
+                          isFromPharmacyPage: widget.isFromPharmacyPage,
+                        );
+                      },
+                      orElse: () {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.red,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  listener: (context, state) {
+                    state.when(
+                      initialState: () {},
+                      loadingState: () {},
+                      successScannedState: (String message) {
+                        buildSuccessCustomSnackBar(context, message);
+                      },
+                      loadedState: (
+                        scannedProducts,
+                        unscannedProducts,
+                        selectedProductId,
+                      ) {},
+                      errorState: (String message) {
+                        buildErrorCustomSnackBar(context, message);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -226,6 +299,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final TextEditingController searchController;
   final int orderStatus;
   final int orderId;
   final ProductDTO selectedProduct;
@@ -244,6 +318,7 @@ class _BuildBody extends StatefulWidget {
     this.pharmacyOrder,
     this.warehouseOrder,
     required this.isFromPharmacyPage,
+    required this.searchController,
   }) : super(key: key);
 
   @override
@@ -375,7 +450,7 @@ class _BuildBodyState extends State<_BuildBody> {
           child: SmartRefresher(
             onRefresh: () {
               BlocProvider.of<GoodsListScreenCubit>(context)
-                  .getPharmacyProducts(widget.orderId);
+                  .getPharmacyProducts(orderId: widget.orderId);
             },
             controller: controller,
             child: itemCount == 0
@@ -432,6 +507,7 @@ class _BuildBodyState extends State<_BuildBody> {
                             AppRouter.push(
                               context,
                               DefectScreen(
+                                searchController: widget.searchController,
                                 product: widget.unscannedProducts[index],
                                 orderId: widget.orderId,
                               ),
@@ -439,6 +515,7 @@ class _BuildBodyState extends State<_BuildBody> {
                           }
                         },
                         child: _BuildGoodDetails(
+                          searchController: widget.searchController,
                           currentIndex: currentIndex,
                           orderID: widget.orderId,
                           good: currentIndex == 0
@@ -451,7 +528,7 @@ class _BuildBodyState extends State<_BuildBody> {
                   ),
           ),
         ),
-        if (widget.unscannedProducts.isEmpty && widget.orderStatus != 3)
+        if (widget.unscannedProducts.isEmpty && widget.orderStatus != 3&&widget.searchController.text.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 12,
@@ -493,6 +570,7 @@ class _BuildBodyState extends State<_BuildBody> {
 }
 
 class _BuildGoodDetails extends StatefulWidget {
+  final TextEditingController searchController;
   final int currentIndex;
   final ProductDTO good;
   final ProductDTO selectedProduct;
@@ -503,6 +581,7 @@ class _BuildGoodDetails extends StatefulWidget {
     required this.selectedProduct,
     required this.orderID,
     required this.currentIndex,
+    required this.searchController,
   }) : super(key: key);
 
   @override
@@ -631,6 +710,10 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                                   BlocProvider.of<GoodsListScreenCubit>(context)
                                       .updatePharmacyProductById(
                                     status: "2",
+                                    search:
+                                        widget.searchController.text.isNotEmpty
+                                            ? widget.searchController.text
+                                            : null,
                                     orderId: widget.orderID,
                                     productId: widget.good.id,
                                     scanCount: widget.good.scanCount,
@@ -653,6 +736,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                               : () {
                                   _bottomSheet(
                                     _SpecifyingNumberManually(
+                                      searchController: widget.searchController,
                                       productDTO: widget.good,
                                       orderID: widget.orderID,
                                     ),
@@ -737,12 +821,14 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
 }
 
 class _SpecifyingNumberManually extends StatefulWidget {
+  final TextEditingController searchController;
   final ProductDTO productDTO;
   final int orderID;
   const _SpecifyingNumberManually({
     Key? key,
     required this.productDTO,
     required this.orderID,
+    required this.searchController,
   }) : super(key: key);
 
   @override
@@ -844,6 +930,9 @@ class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
                         .scannerBarCode(
                       widget.productDTO.barcode!,
                       widget.orderID,
+                      widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
                       int.parse(controller.text),
                     );
                     controller.clear();

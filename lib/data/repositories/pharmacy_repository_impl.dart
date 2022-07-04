@@ -53,6 +53,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   @override
   Future<Either<Failure, List<ProductDTO>>> getProductsPharmacyArrival({
     required int orderId,
+    String? search,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -61,6 +62,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
             await productsRemoteDS.getProductsPharmacyArrival(
           accessToken: user.accessToken!,
           orderId: orderId,
+          search: search,
         );
         final List<ProductDTO> newProduct =
             products.map((e) => e.copyWith(orderID: orderId)).toList();

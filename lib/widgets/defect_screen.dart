@@ -11,11 +11,13 @@ import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class DefectScreen extends StatefulWidget {
   final ProductDTO product;
+  final TextEditingController searchController;
   final int orderId;
   const DefectScreen({
     Key? key,
     required this.product,
     required this.orderId,
+    required this.searchController,
   }) : super(key: key);
 
   @override
@@ -654,6 +656,7 @@ class _DefectScreenState extends State<DefectScreen> {
                             .changeToLoadingState();
                         BlocProvider.of<GoodsListScreenCubit>(context)
                             .updatePharmacyProductById(
+                          search: widget.searchController.text.isNotEmpty?widget.searchController.text:null,
                           orderId: widget.orderId,
                           productId: productInfo.id,
                           //    scanCount: productInfo.scanCount,

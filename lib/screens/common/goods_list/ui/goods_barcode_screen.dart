@@ -8,7 +8,12 @@ import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class GoodsBarcodeScreen extends StatefulWidget {
   final int orderId;
-  const GoodsBarcodeScreen({Key? key, required this.orderId}) : super(key: key);
+  final TextEditingController searchController;
+  const GoodsBarcodeScreen({
+    Key? key,
+    required this.orderId,
+    required this.searchController,
+  }) : super(key: key);
 
   @override
   State<GoodsBarcodeScreen> createState() => _GoodsBarcodeScreenState();
@@ -52,9 +57,16 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
               title: 'Отсканируйте штрихкод товара',
               height: (MediaQuery.of(context).size.width - 26) / 1.5,
               width: MediaQuery.of(context).size.width - 26,
-              callback: (barcode) async{
-               await BlocProvider.of<GoodsListScreenCubit>(context)
-                    .scannerBarCode(barcode, widget.orderId, 1);
+              callback: (barcode) async {
+                await BlocProvider.of<GoodsListScreenCubit>(context)
+                    .scannerBarCode(
+                  barcode,
+                  widget.orderId,
+                  widget.searchController.text.isNotEmpty
+                      ? widget.searchController.text
+                      : null,
+                  1,
+                );
               },
             );
           },

@@ -10,6 +10,7 @@ abstract class ProductsRemoteDS {
   Future<List<ProductDTO>> getProductsPharmacyArrival({
     required String accessToken,
     required int orderId,
+    String? search,
   });
 
   Future<List<ProductDTO>> getProductsMoveData({
@@ -44,13 +45,18 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
   Future<List<ProductDTO>> getProductsPharmacyArrival({
     required String accessToken,
     required int orderId,
+    String? search,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response =
-          await dio.get('$SERVER_/api/arrival-pharmacy-product/$orderId');
+      final response = await dio.get(
+        '$SERVER_/api/arrival-pharmacy-product/$orderId',
+        queryParameters: {
+          if (search != null && search.isNotEmpty) "search": search,
+        },
+      );
       log('##### getProductsPharmacyArrival api:: ${response.statusCode}');
 
       return compute<List, List<ProductDTO>>(
@@ -62,7 +68,7 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
         response.data as List,
       );
 
-      // final List<ProductDTO> prods = response.data 
+      // final List<ProductDTO> prods = response.data
 
       // return prods.map((e) => e.copyWith(orderID: orderId)).toList();
     } on DioError catch (e) {
@@ -138,8 +144,10 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
   }
 
   @override
-  Future<List<ProductDTO>> getProductsRefund(
-      {required String accessToken, required int refundOrderId,}) async {
+  Future<List<ProductDTO>> getProductsRefund({
+    required String accessToken,
+    required int refundOrderId,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -166,10 +174,11 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
   }
 
   @override
-  Future<ProductDTO> addRefundDataProduct(
-      {required String accessToken,
-      required int refundOrderId,
-      required ProductDTO addingProduct,}) async {
+  Future<ProductDTO> addRefundDataProduct({
+    required String accessToken,
+    required int refundOrderId,
+    required ProductDTO addingProduct,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
