@@ -28,6 +28,8 @@ class ProductDTO with _$ProductDTO {
     @JsonKey(name: 'updated_at') String? updatedAt,
     bool? isReady,
     int? orderID,
+    int? overdue,
+    int? netovar,
   }) = _ProductDTO;
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) => _$ProductDTOFromJson(json);

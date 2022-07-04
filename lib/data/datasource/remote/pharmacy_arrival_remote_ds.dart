@@ -29,6 +29,8 @@ abstract class PharmacyArrivalRemoteDS {
     int? surplus,
     int? underachievement,
     int? reSorting,
+    int? overdue,
+    int? netovar,
   });
 
   Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
@@ -102,6 +104,9 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     int? surplus,
     int? underachievement,
     int? reSorting,
+    int? overdue,
+    int? netovar,
+    
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -115,6 +120,8 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
           if (surplus != null) 'surplus': surplus,
           if (underachievement != null) 'underachievement': underachievement,
           if (reSorting != null) 're_sorting': reSorting,
+          if (underachievement != null) 'overdue': overdue,
+          if (reSorting != null) 'netovar': netovar,
         },
       );
 

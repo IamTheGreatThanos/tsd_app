@@ -25,10 +25,13 @@ abstract class PharmacyRepository {
     int? surplus,
     int? underachievement,
     int? reSorting,
+    int? overdue,
+    int? netovar,
   });
 
   Future<Either<Failure, ProductDTO>> getPharmacySelectedProductFromCahce({
-            required int orderId,});
+    required int orderId,
+  });
 
   Future<Either<Failure, String>> savePharmacySelectedProductToCahce({
     required ProductDTO selectedProduct,
@@ -45,7 +48,7 @@ abstract class PharmacyRepository {
     File? signature,
   });
 
-  Future<Either<Failure,String>> sendSignature({
+  Future<Either<Failure, String>> sendSignature({
     required int orderId,
     required File signature,
   });

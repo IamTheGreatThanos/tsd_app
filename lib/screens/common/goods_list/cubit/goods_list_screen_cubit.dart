@@ -36,6 +36,8 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     int? surplus,
     int? underachievement,
     int? reSorting,
+    int? overdue,
+    int? netovar,
   }) async {
     final result = await _updatePharmacyProductById.call(
       UpdatePharmacyProductByIdParams(
@@ -46,6 +48,8 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         surplus: surplus,
         underachievement: underachievement,
         reSorting: reSorting,
+        overdue: overdue,
+        netovar: netovar
       ),
     );
 

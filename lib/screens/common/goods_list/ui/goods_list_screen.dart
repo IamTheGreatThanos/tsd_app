@@ -624,7 +624,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                                   widget.good.scanCount! +
                                       widget.good.defective! +
                                       widget.good.underachievement! +
-                                      widget.good.reSorting!)
+                                      widget.good.reSorting! +
+                                      widget.good.overdue! +
+                                      widget.good.netovar!)
                               ? () {
                                   BlocProvider.of<GoodsListScreenCubit>(context)
                                       .updatePharmacyProductById(
@@ -637,6 +639,8 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                                     underachievement:
                                         widget.good.underachievement,
                                     reSorting: widget.good.reSorting,
+                                    overdue: widget.good.overdue,
+                                    netovar: widget.good.netovar,
                                   );
                                   BlocProvider.of<GoodsListScreenCubit>(context)
                                       .savePharmacySelectedProductToCache(
@@ -661,7 +665,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                                       widget.good.scanCount! +
                                           widget.good.defective! +
                                           widget.good.underachievement! +
-                                          widget.good.reSorting!)
+                                          widget.good.reSorting! +
+                                          widget.good.overdue! +
+                                          widget.good.netovar!)
                                   ? 'Завершить'
                                   : "Указать вручную",
                               style: const TextStyle(
@@ -685,10 +691,19 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     children: [
                       Text('Кол-во:   ${widget.good.totalCount}'.toUpperCase()),
                       Text('Скан:   ${widget.good.scanCount}'.toUpperCase()),
+                      Text('Просрочен:   ${widget.good.overdue}'.toUpperCase()),
+                      Text(
+                        'Нетоварный вид:   ${widget.good.netovar}'
+                            .toUpperCase(),
+                      ),
                       Text('Брак:   ${widget.good.defective}'.toUpperCase()),
                       Text('Излишка:   ${widget.good.surplus}'.toUpperCase()),
                       Text(
                         'Недостача:   ${widget.good.underachievement}'
+                            .toUpperCase(),
+                      ),
+                      Text(
+                        'Пересорт серий:   ${widget.good.reSorting}'
                             .toUpperCase(),
                       ),
                     ],

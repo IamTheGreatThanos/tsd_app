@@ -21,6 +21,8 @@ class UpdatePharmacyProductById
       surplus: params.surplus,
       underachievement: params.underachievement,
       reSorting: params.reSorting,
+      overdue: params.overdue,
+      netovar: params.netovar,
     );
   }
 }
@@ -33,6 +35,8 @@ class UpdatePharmacyProductByIdParams {
   final int? surplus;
   final int? underachievement;
   final int? reSorting;
+  final int? overdue;
+  final int? netovar;
 
   UpdatePharmacyProductByIdParams({
     required this.productId,
@@ -42,5 +46,7 @@ class UpdatePharmacyProductByIdParams {
     this.surplus,
     this.underachievement,
     this.reSorting,
+    this.overdue,
+    this.netovar,
   });
 }

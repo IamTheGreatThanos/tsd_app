@@ -83,6 +83,8 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     int? surplus,
     int? underachievement,
     int? reSorting,
+    int? overdue,
+    int? netovar,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -97,6 +99,8 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           surplus: surplus,
           underachievement: underachievement,
           reSorting: reSorting,
+          overdue: overdue,
+          netovar: netovar,
         );
         return Right(product);
       } on ServerException catch (e) {
