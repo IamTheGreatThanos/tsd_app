@@ -215,7 +215,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                     }
                   },
                   controller: searchController,
-                  hintText: "Искать по номеру заказа",
+                  hintText: "Введите имя продукта",
                   hintStyle: ThemeTextStyle.textStyle14w400
                       .copyWith(color: ColorPalette.grey400),
                   fillColor: ColorPalette.white,
