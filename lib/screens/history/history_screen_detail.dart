@@ -502,10 +502,19 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     children: [
                       Text('Кол-во:   ${widget.good.totalCount}'.toUpperCase()),
                       Text('Скан:   ${widget.good.scanCount}'.toUpperCase()),
+                      Text('Просрочен:   ${widget.good.overdue}'.toUpperCase()),
+                      Text(
+                        'Нетоварный вид:   ${widget.good.netovar}'
+                            .toUpperCase(),
+                      ),
                       Text('Брак:   ${widget.good.defective}'.toUpperCase()),
                       Text('Излишка:   ${widget.good.surplus}'.toUpperCase()),
                       Text(
                         'Недостача:   ${widget.good.underachievement}'
+                            .toUpperCase(),
+                      ),
+                      Text(
+                        'Пересорт серий:   ${widget.good.reSorting}'
                             .toUpperCase(),
                       ),
                     ],
