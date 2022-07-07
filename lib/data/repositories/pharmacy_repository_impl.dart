@@ -46,7 +46,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -72,7 +72,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -109,7 +109,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -171,7 +171,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -188,7 +188,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -227,7 +227,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -251,7 +251,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -274,7 +274,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }

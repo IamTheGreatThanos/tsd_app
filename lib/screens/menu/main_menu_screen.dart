@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
@@ -64,7 +66,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             ),
           ),
           Positioned(
-            top:0,
+            top: 0,
             bottom: 0,
             left: 12,
             right: 12,
@@ -98,6 +100,14 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           color: const Color.fromARGB(255, 24, 102, 229),
                           onTap: () =>
                               AppRouter.push(context, const HistoryScreen()),
+                        ),
+                        _BuildMenuOption(
+                          title: "Выйти",
+                          color: ColorPalette.darkGrey,
+                          onTap: () {
+                            BlocProvider.of<LoginBloc>(context)
+                                .add(LogOutEvent());
+                          },
                         ),
                       ],
                     ),
@@ -253,7 +263,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
 }
 
 class _BuildMenuOption extends StatelessWidget {
-  final String icon;
+  final String? icon;
   final String title;
   final Color color;
   final bool pad;
@@ -261,7 +271,7 @@ class _BuildMenuOption extends StatelessWidget {
 
   const _BuildMenuOption({
     Key? key,
-    required this.icon,
+    this.icon,
     required this.title,
     required this.color,
     required this.onTap,
@@ -285,11 +295,14 @@ class _BuildMenuOption extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/images/png/$icon.png",
-                  height: 64,
-                  width: 64,
-                ),
+                if (icon == null)
+                  const SizedBox()
+                else
+                  Image.asset(
+                    "assets/images/png/$icon.png",
+                    height: 64,
+                    width: 64,
+                  ),
                 const SizedBox(
                   height: 8,
                 ),

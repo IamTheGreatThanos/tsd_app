@@ -193,7 +193,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Активные заказы",
+                                  "Незавершенные заказы",
                                   style:
                                       ThemeTextStyle.textStyle14w500.copyWith(
                                     color: currentIndex == 1
@@ -288,6 +288,25 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                                       );
                                     },
                                   ),
+                          );
+                        },
+                        errorState: (String message) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const CircularProgressIndicator(
+                                  color: Colors.red,
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  message,
+                                  style: const TextStyle(color: Colors.red),
+                                )
+                              ],
+                            ),
                           );
                         },
                         orElse: () {

@@ -89,6 +89,25 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                   isFromPharmacyPage: widget.isFromPharmacyPage,
                 );
               },
+               errorState: (String message) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const CircularProgressIndicator(
+                                  color: Colors.red,
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  message,
+                                  style: const TextStyle(color: Colors.red),
+                                )
+                              ],
+                            ),
+                          );
+                        },
               orElse: () {
                 return const Center(
                   child: CircularProgressIndicator(

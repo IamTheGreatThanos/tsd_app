@@ -132,6 +132,25 @@ class _ReturnProductsScreenState extends State<ReturnProductsScreen> {
                   ),
                 );
               },
+              errorState: (String message) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        message,
+                        style: const TextStyle(color: Colors.red),
+                      )
+                    ],
+                  ),
+                );
+              },
               orElse: () {
                 return const Center(
                   child: CircularProgressIndicator(
@@ -200,7 +219,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     ),
                   ),
                   child: Text(
-                    "${widget.good.totalCount??0} шт.",
+                    "${widget.good.totalCount ?? 0} шт.",
                     style: ThemeTextStyle.textStyle12w600.copyWith(
                       color: ColorPalette.green,
                     ),

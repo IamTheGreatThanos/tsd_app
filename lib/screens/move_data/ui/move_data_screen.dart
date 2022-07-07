@@ -169,7 +169,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                               ),
                               loadedState: (counteragents) {
                                 return SearchChoices.single(
-                                  padding:  senderId == -1 ? 14 : 7,
+                                  padding: senderId == -1 ? 14 : 7,
                                   displayClearIcon: false,
                                   closeButton: "Закрыть",
                                   items: counteragents
@@ -206,6 +206,26 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                                     "assets/images/svg/chevron_right.svg",
                                   ),
                                   underline: const SizedBox(),
+                                );
+                              },
+                              errorState: (String message) {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const CircularProgressIndicator(
+                                        color: Colors.red,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        message,
+                                        style:
+                                            const TextStyle(color: Colors.red),
+                                      )
+                                    ],
+                                  ),
                                 );
                               },
                               orElse: () {
@@ -266,6 +286,26 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                                     "assets/images/svg/chevron_right.svg",
                                   ),
                                   underline: const SizedBox(),
+                                );
+                              },
+                              errorState: (String message) {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const CircularProgressIndicator(
+                                        color: Colors.red,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        message,
+                                        style:
+                                            const TextStyle(color: Colors.red),
+                                      )
+                                    ],
+                                  ),
                                 );
                               },
                               orElse: () {
@@ -335,6 +375,25 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                                 "assets/images/svg/chevron_right.svg",
                               ),
                               underline: const SizedBox(),
+                            );
+                          },
+                          errorState: (String message) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    message,
+                                    style: const TextStyle(color: Colors.red),
+                                  )
+                                ],
+                              ),
                             );
                           },
                           orElse: () {

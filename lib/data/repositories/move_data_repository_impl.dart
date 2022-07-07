@@ -116,7 +116,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -137,7 +137,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -159,7 +159,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -188,7 +188,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -211,7 +211,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -223,7 +223,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
           .getMovingHistory(accessToken: user.accessToken!);
       return Right(history);
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }

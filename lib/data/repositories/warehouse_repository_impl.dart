@@ -38,7 +38,7 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -57,7 +57,7 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -90,7 +90,7 @@ class WarehouseRepositoryImpl extends WarehouseRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }

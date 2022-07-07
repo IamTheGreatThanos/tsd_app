@@ -125,6 +125,25 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                               underline: const SizedBox(),
                             );
                           },
+                          errorState: (String message) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    message,
+                                    style: const TextStyle(color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
                           orElse: () {
                             return const CircularProgressIndicator(
                               color: Colors.red,
@@ -191,6 +210,25 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                               underline: const SizedBox(),
                             );
                           },
+                          errorState: (String message) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    message,
+                                    style: const TextStyle(color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
                           orElse: () {
                             return const CircularProgressIndicator(
                               color: Colors.red,
@@ -254,6 +292,25 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                                 "assets/images/svg/chevron_right.svg",
                               ),
                               underline: const SizedBox(),
+                            );
+                          },
+                          errorState: (String message) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    message,
+                                    style: const TextStyle(color: Colors.red),
+                                  )
+                                ],
+                              ),
                             );
                           },
                           orElse: () {

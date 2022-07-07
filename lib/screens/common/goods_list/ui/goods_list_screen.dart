@@ -262,6 +262,25 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                           isFromPharmacyPage: widget.isFromPharmacyPage,
                         );
                       },
+                      errorState: (String message) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const CircularProgressIndicator(
+                                color: Colors.red,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                message,
+                                style: const TextStyle(color: Colors.red),
+                              )
+                            ],
+                          ),
+                        );
+                      },
                       orElse: () {
                         return const Center(
                           child: CircularProgressIndicator(
@@ -528,7 +547,9 @@ class _BuildBodyState extends State<_BuildBody> {
                   ),
           ),
         ),
-        if (widget.unscannedProducts.isEmpty && widget.orderStatus != 3&&widget.searchController.text.isEmpty)
+        if (widget.unscannedProducts.isEmpty &&
+            widget.orderStatus != 3 &&
+            widget.searchController.text.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 12,

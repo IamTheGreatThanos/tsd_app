@@ -68,7 +68,6 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
         body: BlocConsumer<MoveProductsScreenCubit, MoveProductsScreenState>(
           listener: (context, state) {
             state.maybeWhen(
-              
               finishedState: () {
                 Navigator.pop(context);
                 buildSuccessCustomSnackBar(context, "Успешно завершен");
@@ -134,6 +133,25 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
               loadingState: () {
                 return const Center(
                   child: CircularProgressIndicator(color: Colors.amber),
+                );
+              },
+              errorState: (String message) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        message,
+                        style: const TextStyle(color: Colors.red),
+                      )
+                    ],
+                  ),
                 );
               },
               orElse: () {
@@ -202,7 +220,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     ),
                   ),
                   child: Text(
-                    "${widget.good.totalCount??0} шт.",
+                    "${widget.good.totalCount ?? 0} шт.",
                     style: ThemeTextStyle.textStyle12w600.copyWith(
                       color: ColorPalette.green,
                     ),
@@ -284,5 +302,4 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
       ),
     );
   }
-
 }

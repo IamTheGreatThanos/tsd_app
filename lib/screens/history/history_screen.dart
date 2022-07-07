@@ -324,11 +324,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   child: InkWell(
                                     onTap: () {
                                       AppRouter.push(
-                                          context,
-                                          HistoryScreenDetail(
-                                            isFromPharmacyPage: false,
-                                            warehouseOrder: orders[index],
-                                          ),);
+                                        context,
+                                        HistoryScreenDetail(
+                                          isFromPharmacyPage: false,
+                                          warehouseOrder: orders[index],
+                                        ),
+                                      );
                                     },
                                     child: _BuildOrderData(
                                       orderNumber: '${orders[index].number}',
@@ -619,9 +620,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     );
                   },
                   errorState: (String message) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.red,
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CircularProgressIndicator(
+                            color: Colors.red,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            message,
+                            style: const TextStyle(color: Colors.red),
+                          )
+                        ],
                       ),
                     );
                   },

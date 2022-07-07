@@ -28,7 +28,8 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<WarehouseArrivalScreenCubit>(context).onRefreshOrders(status: status);
+    BlocProvider.of<WarehouseArrivalScreenCubit>(context)
+        .onRefreshOrders(status: status);
     super.initState();
   }
 
@@ -49,50 +50,50 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
         ),
         child: Column(
           children: [
-           AppTextField(
-                focusNode: FocusNode(),
-                onFieldSubmitted: (value) {
-                  final productCubit =
-                      BlocProvider.of<WarehouseArrivalScreenCubit>(context);
+            AppTextField(
+              focusNode: FocusNode(),
+              onFieldSubmitted: (value) {
+                final productCubit =
+                    BlocProvider.of<WarehouseArrivalScreenCubit>(context);
 
-                  if (value.isNotEmpty) {
-                    productCubit.getOrdersBySearch(
-                      number: searchController.text,
-                      status: status,
-                    );
-                  } else {
-                    productCubit.onRefreshOrders(status: status);
-                  }
-                },
-                onChanged: (String? text) {
-                  final productCubit =
-                      BlocProvider.of<WarehouseArrivalScreenCubit>(context);
+                if (value.isNotEmpty) {
+                  productCubit.getOrdersBySearch(
+                    number: searchController.text,
+                    status: status,
+                  );
+                } else {
+                  productCubit.onRefreshOrders(status: status);
+                }
+              },
+              onChanged: (String? text) {
+                final productCubit =
+                    BlocProvider.of<WarehouseArrivalScreenCubit>(context);
 
-                  if (text != null) {
-                    productCubit.getOrdersBySearch(
-                      number: searchController.text,
-                      status: status,
-                    );
-                  }
-                  if (text == null || text.isEmpty) {
-                    productCubit.onRefreshOrders(status: status);
-                  }
-                },
-                controller: searchController,
-                hintText: "Искать по номеру заказа",
-                hintStyle: ThemeTextStyle.textStyle14w400
-                    .copyWith(color: ColorPalette.grey400),
-                fillColor: ColorPalette.white,
-                prefixIcon: SvgPicture.asset(
-                  "assets/images/svg/search.svg",
-                  color: ColorPalette.grey400,
-                ),
-                contentPadding: const EdgeInsets.only(
-                  top: 17,
-                  bottom: 17,
-                  left: 13,
-                ),
+                if (text != null) {
+                  productCubit.getOrdersBySearch(
+                    number: searchController.text,
+                    status: status,
+                  );
+                }
+                if (text == null || text.isEmpty) {
+                  productCubit.onRefreshOrders(status: status);
+                }
+              },
+              controller: searchController,
+              hintText: "Искать по номеру заказа",
+              hintStyle: ThemeTextStyle.textStyle14w400
+                  .copyWith(color: ColorPalette.grey400),
+              fillColor: ColorPalette.white,
+              prefixIcon: SvgPicture.asset(
+                "assets/images/svg/search.svg",
+                color: ColorPalette.grey400,
               ),
+              contentPadding: const EdgeInsets.only(
+                top: 17,
+                bottom: 17,
+                left: 13,
+              ),
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -203,7 +204,7 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
                     state.when(
                       initialState: () {},
                       loadingState: () {},
-                      bySearch: (orders){},
+                      bySearch: (orders) {},
                       loadedState: (orders) {},
                       errorState: (String message) {
                         buildErrorCustomSnackBar(context, message);
@@ -219,22 +220,21 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
                           ),
                         );
                       },
-                       bySearch: (orders) {
-                          return ListView.builder(
-                            itemCount: orders.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return _BuildOrderData(
-                                orderData: orders[index],
-                              );
-                            },
-                          );
-                        },
+                      bySearch: (orders) {
+                        return ListView.builder(
+                          itemCount: orders.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return _BuildOrderData(
+                              orderData: orders[index],
+                            );
+                          },
+                        );
+                      },
                       loadedState: (List<WarehouseOrderDTO> orders) {
                         return SmartRefresher(
                           enablePullUp: true,
                           onLoading: () {
-
                             BlocProvider.of<WarehouseArrivalScreenCubit>(
                                     context)
                                 .onLoadOrders(status: status);
@@ -271,6 +271,25 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
                                     );
                                   },
                                 ),
+                        );
+                      },
+                      errorState: (String message) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const CircularProgressIndicator(
+                                color: Colors.red,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                message,
+                                style: const TextStyle(color: Colors.red),
+                              )
+                            ],
+                          ),
                         );
                       },
                       orElse: () {

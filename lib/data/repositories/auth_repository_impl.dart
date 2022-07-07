@@ -71,7 +71,7 @@ class AuthRepositoryImpl extends AuthRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
   
@@ -86,7 +86,7 @@ class AuthRepositoryImpl extends AuthRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }

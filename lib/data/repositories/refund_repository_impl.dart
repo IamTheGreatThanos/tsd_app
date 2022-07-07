@@ -46,7 +46,7 @@ class RefundRepositoryImpl extends RefundRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -141,7 +141,7 @@ class RefundRepositoryImpl extends RefundRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -163,7 +163,7 @@ class RefundRepositoryImpl extends RefundRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -186,7 +186,7 @@ class RefundRepositoryImpl extends RefundRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 
@@ -203,7 +203,7 @@ class RefundRepositoryImpl extends RefundRepository {
         return Left(ServerFailure(message: e.message));
       }
     } else {
-      return Left(ServerFailure(message: 'Нету интернета!'));
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }
