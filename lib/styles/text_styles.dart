@@ -80,7 +80,7 @@ class ThemeTextStyle {
     color: Colors.black,
   );
   static TextStyle textTitleDella40w400 = GoogleFonts.delaGothicOne(
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );

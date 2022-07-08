@@ -25,6 +25,7 @@ class UpdatePharmacyOrderStatus
       invoiceDate: params.invoiceDate,
       recipientId: params.recipientId,
       signature: params.signature,
+      totalStatus: params.totalStatus,
     );
   }
 }
@@ -38,6 +39,7 @@ class UpdatePharmacyOrderStatusParams {
   final String? invoiceDate;
   final int? recipientId;
   final File? signature;
+  final int? totalStatus;
 
   UpdatePharmacyOrderStatusParams({
     this.incomingNumber,
@@ -48,5 +50,6 @@ class UpdatePharmacyOrderStatusParams {
     required this.status,
     this.recipientId,
     this.signature,
+    this.totalStatus,
   });
 }

@@ -37,7 +37,7 @@ class _PharmacyQrScreenState extends State<PharmacyQrScreen> {
               loadedState: (PharmacyOrderDTO order) {
                 context.loaderOverlay.hide();
                 BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                    .updateOrderStatus(orderId: order.id, status: 1);
+                    .updateOrderStatus(orderId: order.id, status: order.status!,totalStatus: 4);
                 Navigator.pop(context);
               },
               errorState: (String message) {
@@ -51,7 +51,7 @@ class _PharmacyQrScreenState extends State<PharmacyQrScreen> {
               topPos: MediaQuery.of(context).size.height / 5,
               callback: (qr) {
                 BlocProvider.of<PharmacyQrScreenCubit>(context)
-                    .getOrderByNumber(number: qr.substring(4));
+                    .getOrderByNumber(number: qr);
                 log(qr);
               },
               title: 'Отсканируйте qr водителя',

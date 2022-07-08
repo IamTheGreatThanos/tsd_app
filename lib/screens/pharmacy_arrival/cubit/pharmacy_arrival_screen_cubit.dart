@@ -96,10 +96,11 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
   Future<void> updateOrderStatus({
     required int orderId,
     required int status,
+    required int totalStatus,
   }) async {
     emit(const PharmacyArrivalScreenState.loadingState());
     final result = await _updatePharmacyOrderStatus.call(
-      UpdatePharmacyOrderStatusParams(orderId: orderId, status: status),
+      UpdatePharmacyOrderStatusParams(orderId: orderId, status: status,totalStatus: totalStatus),
     );
 
     result.fold(

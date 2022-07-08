@@ -130,244 +130,294 @@ class _DefectScreenState extends State<DefectScreen> {
                             ],
                           ),
                         ),
-                        Image.network(
-                          productInfo.image ?? "null",
-                          width: 240,
-                          height: 240,
-                        ),
+                        // Image.network(
+                        //   productInfo.image ?? "null",
+                        //   width: 240,
+                        //   height: 240,
+                        // ),
                       ],
                     ),
                   ),
                   const SizedBox(
-                    height: 28,
+                    height: 14,
                   ),
-                  IntrinsicHeight(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF3F6FB),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "Количество",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF3F6FB),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 8,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Количество",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      "${productInfo.totalCount ?? 0}",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "${productInfo.totalCount ?? 0}",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
                               ),
-                              child: VerticalDivider(
+                              Container(
+                                width: 3,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: ColorPalette.borderGrey,
+                                ),
+                              ),
+                              // const Padding(
+                              //   padding: EdgeInsets.only(
+                              //     right: 20,
+                              //     left: 20,
+                              //   ),
+                              //   child: VerticalDivider(
+                              //     color: ColorPalette.borderGrey,
+                              //   ),
+                              // ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Не отсканировано",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      "${productInfo.totalCount! - (productInfo.scanCount!)}",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Container(
+                              height: 3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
                                 color: ColorPalette.borderGrey,
-                                thickness: 1.5,
                               ),
                             ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Не отсканировано:",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Просрочен",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "$overdue",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "${productInfo.totalCount! - (productInfo.scanCount!)}",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
                               ),
-                              child: VerticalDivider(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  width: 3,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorPalette.borderGrey,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Нетоварный вид",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "$netovar",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  width: 3,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorPalette.borderGrey,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Брак",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "$defective",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Container(
+                              height: 3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
                                 color: ColorPalette.borderGrey,
-                                thickness: 1.5,
                               ),
                             ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Просрочен:",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Излишек",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "$surplus",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "$overdue",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
                               ),
-                              child: VerticalDivider(
-                                color: ColorPalette.borderGrey,
-                                thickness: 1.5,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  width: 3,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorPalette.borderGrey,
+                                  ),
+                                ),
                               ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Нетоварный вид",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Пересорт серий",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "$reSorting",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "$netovar",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
                               ),
-                              child: VerticalDivider(
-                                color: ColorPalette.borderGrey,
-                                thickness: 1.5,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  width: 3,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorPalette.borderGrey,
+                                  ),
+                                ),
                               ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Брак",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Недостача",
+                                      textAlign: TextAlign.center,
+                                      style: ThemeTextStyle.textStyle14w400
+                                          .copyWith(
+                                              color: ColorPalette.grayText),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "$underachievement",
+                                      style: ThemeTextStyle.textTitleDella40w400
+                                          .copyWith(color: ColorPalette.black,),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "$defective",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
                               ),
-                              child: VerticalDivider(
-                                color: ColorPalette.borderGrey,
-                                thickness: 1.5,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Излишек",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "$surplus",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
-                              ),
-                              child: VerticalDivider(
-                                color: ColorPalette.borderGrey,
-                                thickness: 1.5,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Недостача",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "$underachievement",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                top: 30.0,
-                                right: 20,
-                                left: 20,
-                              ),
-                              child: VerticalDivider(
-                                color: ColorPalette.borderGrey,
-                                thickness: 1.5,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Пересорт серий",
-                                  style: ThemeTextStyle.textStyle14w400
-                                      .copyWith(color: ColorPalette.grayText),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "$reSorting",
-                                  style: ThemeTextStyle.textTitleDella40w400
-                                      .copyWith(color: ColorPalette.black),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -656,7 +706,9 @@ class _DefectScreenState extends State<DefectScreen> {
                             .changeToLoadingState();
                         BlocProvider.of<GoodsListScreenCubit>(context)
                             .updatePharmacyProductById(
-                          search: widget.searchController.text.isNotEmpty?widget.searchController.text:null,
+                          search: widget.searchController.text.isNotEmpty
+                              ? widget.searchController.text
+                              : null,
                           orderId: widget.orderId,
                           productId: productInfo.id,
                           //    scanCount: productInfo.scanCount,

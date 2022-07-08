@@ -150,6 +150,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     String? invoiceDate,
     int? recipientId,
     File? signature,
+    int? totalStatus,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -165,6 +166,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           invoiceDate: invoiceDate,
           recipientId: recipientId,
           signature: signature,
+          totalStatus: totalStatus,
         );
         return Right(order);
       } on ServerException catch (e) {
@@ -203,15 +205,14 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
             await arrivalRemoteDS.getOrderByNumber(
           accessToken: user.accessToken!,
           number: number,
-          status: 4,
+          status: 1,
         );
         if (numberOrders.isEmpty) {
           return Left(
             ServerFailure(message: 'Нету такого заказа в поступлений!'),
           );
         } else {
-          if (numberOrders.first.status == 1 ||
-              numberOrders.first.status == 2) {
+          if (numberOrders.first.status == 2) {
             return Left(
               ServerFailure(message: 'Данный заказ уже активен!'),
             );

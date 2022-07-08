@@ -43,6 +43,7 @@ abstract class PharmacyArrivalRemoteDS {
     String? invoiceDate,
     int? recipientId,
     File? signature,
+    int? totalStatus,
   });
 
   Future<List<PharmacyOrderDTO>> getOrderByNumber({
@@ -147,6 +148,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     String? invoiceDate,
     int? recipientId,
     File? signature,
+    int? totalStatus,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -173,6 +175,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
           if (bin != null) 'bin': bin,
           if (invoiceDate != null) 'invoice_date': invoiceDate,
           if (recipientId != null) 'recipient_id': recipientId,
+          if (totalStatus != null) 'total_status': totalStatus,
         },
       );
 

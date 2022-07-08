@@ -101,14 +101,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           onTap: () =>
                               AppRouter.push(context, const HistoryScreen()),
                         ),
-                        _BuildMenuOption(
-                          title: "Выйти",
-                          color: ColorPalette.darkGrey,
-                          onTap: () {
-                            BlocProvider.of<LoginBloc>(context)
-                                .add(LogOutEvent());
-                          },
-                        ),
+                        
                       ],
                     ),
                     Column(
@@ -192,6 +185,18 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                 // ),
               ],
             ),
+          ),
+          Positioned(
+            top:80,
+            right: 12,
+            child: _BuildMenuOption(
+                          title: "Выйти",
+                          color: ColorPalette.darkGrey,
+                          onTap: () {
+                            BlocProvider.of<LoginBloc>(context)
+                                .add(LogOutEvent());
+                          },
+                        ),
           ),
           SizedBox.expand(
             child: DraggableScrollableSheet(

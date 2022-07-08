@@ -47,6 +47,7 @@ abstract class PharmacyRepository {
     String? invoiceDate,
     int? recipientId,
     File? signature,
+    int? totalStatus,
   });
 
   Future<Either<Failure, String>> sendSignature({

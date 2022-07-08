@@ -526,13 +526,13 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            GestureDetector(
+           if (orderData.totalStatus==3||orderData.totalStatus==4) GestureDetector(
               onTap: () {
-                // BlocProvider.of<SignatureScreenCubit>(context)
-                //     .updatePharmacyOrderStatus(
-                //   orderId: orderData.id,
-                //   status: 2,
-                // );
+                BlocProvider.of<SignatureScreenCubit>(context)
+                    .updatePharmacyOrderStatus(
+                  orderId: orderData.id,
+                  status: 2,
+                );
                 context.read<FillInvoiceVModel>().init();
                 AppRouter.push(
                   context,
@@ -557,7 +557,7 @@ class _BuildOrderData extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ) else const SizedBox(),
           ],
         ),
       ),
