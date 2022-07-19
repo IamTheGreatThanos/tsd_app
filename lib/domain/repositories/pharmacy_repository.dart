@@ -11,7 +11,12 @@ abstract class PharmacyRepository {
     required int status,
   });
 
-  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory();
+  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory({
+    String? number,
+    int? senderId,
+    int? recipientId,
+    int? refundStatus,
+  });
 
   Future<Either<Failure, List<ProductDTO>>> getProductsPharmacyArrival({
     required int orderId,
@@ -40,7 +45,7 @@ abstract class PharmacyRepository {
 
   Future<Either<Failure, PharmacyOrderDTO>> updatePharmacyStatusOfOrder({
     required int orderId,
-    required int status,
+     int? status,
     String? incomingNumber,
     String? incomingDate,
     String? bin,
@@ -48,6 +53,7 @@ abstract class PharmacyRepository {
     int? recipientId,
     File? signature,
     int? totalStatus,
+    int? refundStatus,
   });
 
   Future<Either<Failure, String>> sendSignature({

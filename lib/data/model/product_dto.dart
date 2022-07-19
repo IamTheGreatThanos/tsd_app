@@ -30,6 +30,7 @@ class ProductDTO with _$ProductDTO {
     int? orderID,
     int? overdue,
     int? netovar,
+    int? refund,
   }) = _ProductDTO;
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) => _$ProductDTOFromJson(json);

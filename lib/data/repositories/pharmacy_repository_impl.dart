@@ -143,7 +143,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   @override
   Future<Either<Failure, PharmacyOrderDTO>> updatePharmacyStatusOfOrder({
     required int orderId,
-    required int status,
+     int? status,
     String? incomingNumber,
     String? incomingDate,
     String? bin,
@@ -151,6 +151,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     int? recipientId,
     File? signature,
     int? totalStatus,
+    int? refundStatus,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -167,6 +168,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           recipientId: recipientId,
           signature: signature,
           totalStatus: totalStatus,
+          refundStatus: refundStatus,
         );
         return Right(order);
       } on ServerException catch (e) {
@@ -178,13 +180,23 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   }
 
   @override
-  Future<Either<Failure, List<PharmacyOrderDTO>>>
-      getPharmacyArrivalHistory() async {
+  Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory({
+    String? number,
+    int? senderId,
+    int? recipientId,
+    int? refundStatus,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
-        final List<PharmacyOrderDTO> historyOrders = await arrivalRemoteDS
-            .getPharmacyArrivalHistory(accessToken: user.accessToken!);
+        final List<PharmacyOrderDTO> historyOrders =
+            await arrivalRemoteDS.getPharmacyArrivalHistory(
+          accessToken: user.accessToken!,
+          number: number,
+          senderId: senderId,
+          recipientId: recipientId,
+          refundStatus: refundStatus,
+        );
         return Right(historyOrders);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

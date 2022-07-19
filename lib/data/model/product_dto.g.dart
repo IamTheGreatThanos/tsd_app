@@ -28,6 +28,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       orderID: json['orderID'] as int?,
       overdue: json['overdue'] as int?,
       netovar: json['netovar'] as int?,
+      refund: json['refund'] as int?,
     );
 
 Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
@@ -52,4 +53,5 @@ Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
       'orderID': instance.orderID,
       'overdue': instance.overdue,
       'netovar': instance.netovar,
+      'refund': instance.refund,
     };

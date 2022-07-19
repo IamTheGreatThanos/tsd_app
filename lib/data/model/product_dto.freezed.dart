@@ -46,6 +46,7 @@ mixin _$ProductDTO {
   int? get orderID => throw _privateConstructorUsedError;
   int? get overdue => throw _privateConstructorUsedError;
   int? get netovar => throw _privateConstructorUsedError;
+  int? get refund => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -78,7 +79,8 @@ abstract class $ProductDTOCopyWith<$Res> {
       bool? isReady,
       int? orderID,
       int? overdue,
-      int? netovar});
+      int? netovar,
+      int? refund});
 }
 
 /// @nodoc
@@ -111,6 +113,7 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
     Object? orderID = freezed,
     Object? overdue = freezed,
     Object? netovar = freezed,
+    Object? refund = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -193,6 +196,10 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
           ? _value.netovar
           : netovar // ignore: cast_nullable_to_non_nullable
               as int?,
+      refund: refund == freezed
+          ? _value.refund
+          : refund // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -224,7 +231,8 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       bool? isReady,
       int? orderID,
       int? overdue,
-      int? netovar});
+      int? netovar,
+      int? refund});
 }
 
 /// @nodoc
@@ -259,6 +267,7 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
     Object? orderID = freezed,
     Object? overdue = freezed,
     Object? netovar = freezed,
+    Object? refund = freezed,
   }) {
     return _then(_$_ProductDTO(
       id: id == freezed
@@ -341,6 +350,10 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
           ? _value.netovar
           : netovar // ignore: cast_nullable_to_non_nullable
               as int?,
+      refund: refund == freezed
+          ? _value.refund
+          : refund // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -368,7 +381,8 @@ class _$_ProductDTO implements _ProductDTO {
       this.isReady,
       this.orderID,
       this.overdue,
-      this.netovar});
+      this.netovar,
+      this.refund});
 
   factory _$_ProductDTO.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDTOFromJson(json);
@@ -419,10 +433,12 @@ class _$_ProductDTO implements _ProductDTO {
   final int? overdue;
   @override
   final int? netovar;
+  @override
+  final int? refund;
 
   @override
   String toString() {
-    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID, overdue: $overdue, netovar: $netovar)';
+    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID, overdue: $overdue, netovar: $netovar, refund: $refund)';
   }
 
   @override
@@ -452,7 +468,8 @@ class _$_ProductDTO implements _ProductDTO {
             const DeepCollectionEquality().equals(other.isReady, isReady) &&
             const DeepCollectionEquality().equals(other.orderID, orderID) &&
             const DeepCollectionEquality().equals(other.overdue, overdue) &&
-            const DeepCollectionEquality().equals(other.netovar, netovar));
+            const DeepCollectionEquality().equals(other.netovar, netovar) &&
+            const DeepCollectionEquality().equals(other.refund, refund));
   }
 
   @JsonKey(ignore: true)
@@ -478,7 +495,8 @@ class _$_ProductDTO implements _ProductDTO {
         const DeepCollectionEquality().hash(isReady),
         const DeepCollectionEquality().hash(orderID),
         const DeepCollectionEquality().hash(overdue),
-        const DeepCollectionEquality().hash(netovar)
+        const DeepCollectionEquality().hash(netovar),
+        const DeepCollectionEquality().hash(refund)
       ]);
 
   @JsonKey(ignore: true)
@@ -513,7 +531,8 @@ abstract class _ProductDTO implements ProductDTO {
       final bool? isReady,
       final int? orderID,
       final int? overdue,
-      final int? netovar}) = _$_ProductDTO;
+      final int? netovar,
+      final int? refund}) = _$_ProductDTO;
 
   factory _ProductDTO.fromJson(Map<String, dynamic> json) =
       _$_ProductDTO.fromJson;
@@ -564,6 +583,8 @@ abstract class _ProductDTO implements ProductDTO {
   int? get overdue => throw _privateConstructorUsedError;
   @override
   int? get netovar => throw _privateConstructorUsedError;
+  @override
+  int? get refund => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDTOCopyWith<_$_ProductDTO> get copyWith =>

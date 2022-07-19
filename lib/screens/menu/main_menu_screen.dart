@@ -73,7 +73,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             child: ListView(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 6,
+                  height: MediaQuery.of(context).size.height / 5,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,69 +198,69 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           },
                         ),
           ),
-          SizedBox.expand(
-            child: DraggableScrollableSheet(
-              initialChildSize: 0.24,
-              minChildSize: 0.2,
-              maxChildSize: 0.9,
-              builder: (context, controller) {
-                return ClipPath(
-                  clipper: MyClipper(
-                    maxHeight: MediaQuery.of(context).size.height,
-                  ),
-                  child: Container(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 16, right: 16),
-                    decoration: const BoxDecoration(
-                      color: ColorPalette.white,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Наши аптеки",
-                          style: ThemeTextStyle.textStyle20w600,
-                        ),
-                        Expanded(
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            controller: controller,
-                            itemCount: images.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  // color: Colors.red,
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      images[index],
-                                    ),
-                                  ),
-                                ),
-                                // child: Container(
-                                //   height: 10,
-                                //   width: 10,
-                                //   color: Colors.red,
-                                // )
-                              );
-                            },
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              mainAxisExtent: 96,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          // SizedBox.expand(
+          //   child: DraggableScrollableSheet(
+          //     initialChildSize: 0.24,
+          //     minChildSize: 0.2,
+          //     maxChildSize: 0.9,
+          //     builder: (context, controller) {
+          //       return ClipPath(
+          //         clipper: MyClipper(
+          //           maxHeight: MediaQuery.of(context).size.height,
+          //         ),
+          //         child: Container(
+          //           padding:
+          //               const EdgeInsets.only(top: 30, left: 16, right: 16),
+          //           decoration: const BoxDecoration(
+          //             color: ColorPalette.white,
+          //           ),
+          //           child: Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: [
+          //               const Text(
+          //                 "Наши аптеки",
+          //                 style: ThemeTextStyle.textStyle20w600,
+          //               ),
+          //               Expanded(
+          //                 child: GridView.builder(
+          //                   shrinkWrap: true,
+          //                   controller: controller,
+          //                   itemCount: images.length,
+          //                   itemBuilder: (context, index) {
+          //                     return Container(
+          //                       decoration: BoxDecoration(
+          //                         // color: Colors.red,
+          //                         borderRadius: BorderRadius.circular(12),
+          //                         image: DecorationImage(
+          //                           fit: BoxFit.cover,
+          //                           image: NetworkImage(
+          //                             images[index],
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       // child: Container(
+          //                       //   height: 10,
+          //                       //   width: 10,
+          //                       //   color: Colors.red,
+          //                       // )
+          //                     );
+          //                   },
+          //                   gridDelegate:
+          //                       const SliverGridDelegateWithFixedCrossAxisCount(
+          //                     crossAxisCount: 2,
+          //                     crossAxisSpacing: 10,
+          //                     mainAxisSpacing: 10,
+          //                     mainAxisExtent: 96,
+          //                   ),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

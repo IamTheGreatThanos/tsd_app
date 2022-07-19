@@ -8,7 +8,9 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_moving_history.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_orders_by_search.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_history.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
 import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/get_refund_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_history.dart';
 
@@ -19,32 +21,85 @@ class HistoryCubit extends Cubit<HistoryState> {
   final GetPharmacyArrivalHistory _getPharmacyArrivalHistory;
   final GetWarehouseArrivalHistory _getWarehouseArrivalHistory;
   final GetMovingHistory _getMovingHistory;
-  final GetRefundHistory _getRefundHistory;
+  final UpdatePharmacyOrderStatus _updatePharmacyOrderStatus;
+  final GetOrdersBySearch _getOrdersBySearch;
   HistoryCubit(
     this._getPharmacyArrivalHistory,
     this._getWarehouseArrivalHistory,
     this._getMovingHistory,
-    this._getRefundHistory,
+    this._updatePharmacyOrderStatus,
+    this._getOrdersBySearch,
   ) : super(const HistoryState.initialState());
 
-  Future<void> getPharmacyArrivalHistory() async {
+  Future<void> updatePharmacyOrderStatus({
+    required int orderId,
+    int? refundStatus,
+  }) async {
     emit(const HistoryState.loadingState());
-    final failureOrSuccess = await _getPharmacyArrivalHistory.call();
+    final result = await _updatePharmacyOrderStatus.call(
+      UpdatePharmacyOrderStatusParams(
+        orderId: orderId,
+        refundStatus: refundStatus,
+      ),
+    );
+    result.fold(
+        (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
+        (r) {
+      log('Refund Status updated successfully');
+      getPharmacyArrivalHistory();
+    });
+  }
+
+  Future<void> getPharmacyArrivalHistory({
+    String? number,
+    int? senderId,
+    int? recipientId,
+    int? refundStatus,
+  }) async {
+    emit(const HistoryState.loadingState());
+    final failureOrSuccess = await _getPharmacyArrivalHistory.call(
+      GetPharmacyArrivalHistoryParams(
+        number: number,
+        recipientId: recipientId,
+        senderId: senderId,
+        refundStatus: refundStatus,
+      ),
+    );
     failureOrSuccess.fold(
-      (l){
+      (l) {
         log(l.toString());
-         emit(HistoryState.errorState(message: mapFailureToMessage(l)));
+        emit(HistoryState.errorState(message: mapFailureToMessage(l)));
       },
       (r) {
         log(r.length.toString());
-        final List<PharmacyOrderDTO> orders = [];
-        for (final PharmacyOrderDTO order in r) {
-          if (order.status == 3) {
-            orders.add(order);
-          }
-        }
-        emit(HistoryState.pharmacyHistoryState(pharmacyOrders: orders));
+        // final List<PharmacyOrderDTO> orders = [];
+        // for (final PharmacyOrderDTO order in r) {
+        //   if (order.status == 3) {
+        //     orders.add(order);
+        //   }
+        // }
+        emit(HistoryState.pharmacyHistoryState(pharmacyOrders: r));
       },
+    );
+  }
+
+  Future<void> getPharmacyHistoryBySearch({
+    required String number,
+  }) async {
+    emit(const HistoryState.loadingState());
+    final result = await _getOrdersBySearch.call(
+      GetOrdersBySearchParams(
+        number: number,
+        status: 3,
+      ),
+    );
+    result.fold(
+      (l) => emit(
+        HistoryState.errorState(
+          message: mapFailureToMessage(l),
+        ),
+      ),
+      (r) => emit(HistoryState.pharmacyHistoryBySearch(pharmacyOrders: r)),
     );
   }
 
@@ -81,19 +136,14 @@ class HistoryCubit extends Cubit<HistoryState> {
     });
   }
 
-  Future<void> getRefundHistory() async {
+  Future<void> getRefundHistory({int? refundStatus}) async {
     emit(const HistoryState.loadingState());
-    final failureOrSuccess = await _getRefundHistory.call();
+    final failureOrSuccess = await _getPharmacyArrivalHistory
+        .call(GetPharmacyArrivalHistoryParams(refundStatus: refundStatus));
     failureOrSuccess.fold(
         (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
         (r) {
-      final List<RefundDataDTO> orders = [];
-      for (final RefundDataDTO order in r) {
-        if (order.status == 2) {
-          orders.add(order);
-        }
-      }
-      emit(HistoryState.refundHistoryState(pharmacyOrders: orders));
+      emit(HistoryState.refundHistoryState(pharmacyOrders: r));
     });
   }
 }

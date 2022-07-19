@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,10 +14,15 @@ import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen_detail.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/custom_button.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -28,6 +35,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   RefreshController refreshController = RefreshController();
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     BlocProvider.of<HistoryCubit>(context).getPharmacyArrivalHistory();
@@ -66,7 +74,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   },
                   refundHistoryCatState: () {
                     currentIndex = 2;
-                    BlocProvider.of<HistoryCubit>(context).getRefundHistory();
+                    BlocProvider.of<HistoryCubit>(context)
+                        .getRefundHistory(refundStatus: 2);
                   },
                 );
               },
@@ -203,12 +212,82 @@ class _HistoryScreenState extends State<HistoryScreen> {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AppTextField(
+              focusNode: FocusNode(),
+              onFieldSubmitted: (value) {
+                final productCubit = BlocProvider.of<HistoryCubit>(context);
+
+                switch (currentIndex) {
+                  case 0:
+                    if (value.isNotEmpty) {
+                      productCubit.getPharmacyArrivalHistory(
+                        number: searchController.text,
+                      );
+                    } else {
+                      productCubit.getPharmacyArrivalHistory();
+                    }
+                    break;
+                  case 1:
+                    break;
+                  case 2:
+                    break;
+                  case 3:
+                    break;
+
+                  default:
+                    break;
+                }
+              },
+              onChanged: (String? text) {
+                final productCubit = BlocProvider.of<HistoryCubit>(context);
+
+                switch (currentIndex) {
+                  case 0:
+                    if (text != null) {
+                      productCubit.getPharmacyArrivalHistory(
+                        number: searchController.text,
+                      );
+                    }
+                    if (text == null || text.isEmpty) {
+                      productCubit.getPharmacyArrivalHistory();
+                    }
+                    break;
+                  case 1:
+                    break;
+                  case 2:
+                    break;
+                  case 3:
+                    break;
+
+                  default:
+                    break;
+                }
+              },
+              controller: searchController,
+              hintText: "Искать по номеру заказа",
+              hintStyle: ThemeTextStyle.textStyle14w400
+                  .copyWith(color: ColorPalette.grey400),
+              fillColor: ColorPalette.white,
+              prefixIcon: SvgPicture.asset(
+                "assets/images/svg/search.svg",
+                color: ColorPalette.grey400,
+              ),
+              contentPadding: const EdgeInsets.only(
+                top: 18,
+                bottom: 18,
+                left: 13,
+              ),
+            ),
+          ),
           Expanded(
             child: BlocConsumer<HistoryCubit, HistoryState>(
               listener: (context, state) {
-                state.when(
+                state.maybeWhen(
                   initialState: () {},
                   loadingState: () {},
+                  orElse: () {},
                   pharmacyHistoryState: (orders) {},
                   warehouseHistoryState: (orders) {},
                   movingHistoryState: (orders) {},
@@ -216,10 +295,60 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   errorState: (String message) {
                     buildErrorCustomSnackBar(context, message);
                   },
+                  movingHistoryBySearch: (List<MoveDataDTO> pharmacyOrders) {},
+                  pharmacyHistoryBySearch:
+                      (List<PharmacyOrderDTO> pharmacyOrders) {},
+                  refundHistoryBySearch:
+                      (List<RefundDataDTO> pharmacyOrders) {},
+                  warehouseHistoryBySearch:
+                      (List<WarehouseOrderDTO> warehouseOrders) {},
                 );
               },
               builder: (context, state) {
-                return state.when(
+                return state.maybeWhen(
+                  orElse: () {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
+                    );
+                  },
+                  pharmacyHistoryBySearch: (orders) {
+                    return ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 11.5,
+                      ),
+                      itemBuilder: (context, index) {
+                        return Material(
+                          borderRadius: BorderRadius.circular(15),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(15),
+                            onTap: () {
+                              AppRouter.push(
+                                context,
+                                HistoryScreenDetail(
+                                  isFromPharmacyPage: true,
+                                  pharmacyOrder: orders[index],
+                                ),
+                              );
+                            },
+                            child: SizedBox(
+                              child: _BuildOrderData(
+                                orderNumber: '${orders[index].number}',
+                                orderId: orders[index].id,
+                                container: orders[index].container ?? 0,
+                                createdAt: orders[index].createdAt,
+                                counteragent: orders[index].sender,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: orders.length,
+                      shrinkWrap: true,
+                    );
+                  },
                   initialState: () {
                     return const Center(
                       child: CircularProgressIndicator(
@@ -277,6 +406,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     },
                                     child: SizedBox(
                                       child: _BuildOrderData(
+                                        pharmacyOrderDTO: orders[index],
                                         orderNumber: '${orders[index].number}',
                                         orderId: orders[index].id,
                                         container: orders[index].container ?? 0,
@@ -478,7 +608,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             ),
                     );
                   },
-                  refundHistoryState: (List<RefundDataDTO> orders) {
+                  refundHistoryState: (List<PharmacyOrderDTO> orders) {
                     return SmartRefresher(
                       controller: refreshController,
                       onRefresh: () {
@@ -506,110 +636,28 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 horizontal: 11.5,
                               ),
                               itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 16.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: ColorPalette.white,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 13,
-                                      horizontal: 11,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              '№.${orders[index].id}',
-                                              style: ThemeTextStyle
-                                                  .textStyle20w600,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  203,
-                                                  211,
-                                                  216,
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    94,
-                                                    96,
-                                                    97,
-                                                  ),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 4,
-                                                horizontal: 8,
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  "Завершенный",
-                                                  style: ThemeTextStyle
-                                                      .textStyle12w600
-                                                      .copyWith(
-                                                    color: const Color.fromARGB(
-                                                      255,
-                                                      94,
-                                                      96,
-                                                      97,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                return Material(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(15),
+                                    onTap: () {
+                                      AppRouter.push(
+                                        context,
+                                        HistoryScreenDetail(
+                                          isFromPharmacyPage: true,
+                                          pharmacyOrder: orders[index],
                                         ),
-                                        const SizedBox(
-                                          height: 27,
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "container_ic",
-                                          title: "Организация",
-                                          data: (orders[index].organizationId)
-                                              .toString(),
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "calendar_ic",
-                                          title: "Дата создания",
-                                          data: orders[index].createdAt != null
-                                              ? DateFormat(
-                                                  "dd.MM.yyyy; hh:mm a",
-                                                ).format(
-                                                  DateTime.parse(
-                                                    orders[index].createdAt!,
-                                                  ),
-                                                )
-                                              : "No data",
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "stock_ic",
-                                          title: "Контрагент",
-                                          data: orders[index]
-                                              .counteragentId
-                                              .toString(),
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "stock_ic",
-                                          title:
-                                              "Склад с которого делается возврат",
-                                          data: orders[index]
-                                              .fromCounteragentId
-                                              .toString(),
-                                        ),
-                                      ],
+                                      );
+                                    },
+                                    child: SizedBox(
+                                      child: _BuildOrderData(
+                                        pharmacyOrderDTO: orders[index],
+                                        orderNumber: '${orders[index].number}',
+                                        orderId: orders[index].id,
+                                        container: orders[index].container ?? 0,
+                                        createdAt: orders[index].createdAt,
+                                        counteragent: orders[index].sender,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -654,6 +702,7 @@ class _BuildOrderData extends StatelessWidget {
   final int container;
   final String? createdAt;
   final CounteragentDTO? counteragent;
+  final PharmacyOrderDTO? pharmacyOrderDTO;
   const _BuildOrderData({
     Key? key,
     required this.orderNumber,
@@ -661,6 +710,7 @@ class _BuildOrderData extends StatelessWidget {
     required this.container,
     this.createdAt,
     this.counteragent,
+    this.pharmacyOrderDTO,
   }) : super(key: key);
 
   @override
@@ -695,7 +745,11 @@ class _BuildOrderData extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Center(
                     child: Text(
-                      "Завершенный",
+                      pharmacyOrderDTO?.refundStatus == 0
+                          ? "Завершенный"
+                          : pharmacyOrderDTO?.refundStatus == 1
+                              ? "Возвращается"
+                              : "Возвращен",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
                         color: const Color.fromARGB(255, 94, 96, 97),
                       ),
@@ -725,6 +779,33 @@ class _BuildOrderData extends StatelessWidget {
               title: "Склад",
               data: counteragent?.name ?? "No data",
             ),
+            const SizedBox(
+              height: 25,
+            ),
+            if (pharmacyOrderDTO?.refundStatus == 0)
+              CustomButton(
+                height: 44,
+                onClick: () {
+                  AppRouter.push(
+                    context,
+                    ReturnDetailPage(
+                      pharmacyOrder: pharmacyOrderDTO,
+                    ),
+                  );
+                  BlocProvider.of<HistoryCubit>(context)
+                      .updatePharmacyOrderStatus(
+                    orderId: orderId,
+                    refundStatus: 1,
+                  );
+                },
+                body: const Text(
+                  'Создать возврата',
+                  style: TextStyle(),
+                ),
+                style: pinkButtonStyle(),
+              )
+            else
+              SizedBox(),
           ],
         ),
       ),
