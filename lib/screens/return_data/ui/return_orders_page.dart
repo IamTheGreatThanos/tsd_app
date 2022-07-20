@@ -1,5 +1,3 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,12 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
-import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -36,10 +32,12 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
   TextEditingController searchController = TextEditingController();
   int currentIndex = 0;
   int status = 1;
+  TextEditingController invoiceDateController = TextEditingController();
   @override
   void initState() {
-    BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-        .onRefreshOrders(status: status);
+    BlocProvider.of<ReturnOrderCatCubit>(context).changeToActiveOrdersCat();
+    BlocProvider.of<ReturnOrderPageCubit>(context)
+        .onRefreshOrders(refundStatus: status);
     super.initState();
   }
 
@@ -68,33 +66,45 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                 focusNode: FocusNode(),
                 onFieldSubmitted: (value) {
                   final productCubit =
-                      BlocProvider.of<PharmacyArrivalScreenCubit>(context);
+                      BlocProvider.of<ReturnOrderPageCubit>(context);
 
                   if (value.isNotEmpty) {
                     productCubit.getOrdersBySearch(
-                      number: searchController.text,
-                      status: status,
+                      incomingNumber: searchController.text,
+                      incomingDate: invoiceDateController.text.isEmpty
+                          ? null
+                          : invoiceDateController.text,
                     );
                   } else {
-                    productCubit.onRefreshOrders(status: status);
+                    invoiceDateController.text.isEmpty
+                        ? productCubit.onRefreshOrders(refundStatus: status)
+                        : productCubit.getOrdersBySearch(
+                            incomingDate: invoiceDateController.text,
+                          );
                   }
                 },
                 onChanged: (String? text) {
                   final productCubit =
-                      BlocProvider.of<PharmacyArrivalScreenCubit>(context);
+                      BlocProvider.of<ReturnOrderPageCubit>(context);
 
                   if (text != null) {
                     productCubit.getOrdersBySearch(
-                      number: searchController.text,
-                      status: status,
+                      incomingNumber: searchController.text,
+                      incomingDate: invoiceDateController.text.isEmpty
+                          ? null
+                          : invoiceDateController.text,
                     );
                   }
                   if (text == null || text.isEmpty) {
-                    productCubit.onRefreshOrders(status: status);
+                    invoiceDateController.text.isEmpty
+                        ? productCubit.onRefreshOrders(refundStatus: status)
+                        : productCubit.getOrdersBySearch(
+                            incomingDate: invoiceDateController.text,
+                          );
                   }
                 },
                 controller: searchController,
-                hintText: "Искать по номеру заказа",
+                hintText: "Введите входящий номер",
                 hintStyle: ThemeTextStyle.textStyle14w400
                     .copyWith(color: ColorPalette.grey400),
                 fillColor: ColorPalette.white,
@@ -111,26 +121,189 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
               const SizedBox(
                 height: 16,
               ),
+              GestureDetector(
+                onTap: () async {
+                  final DateTime? date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    lastDate: DateTime(2050),
+                    helpText: "Дата входящего номера",
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: const ColorScheme.light(
+                            primary: ColorPalette.greyDark,
+                          ),
+                          textTheme: TextTheme(
+                            headline5: ThemeTextStyle.textTitleDella24w400,
+                            overline: ThemeTextStyle.textStyle16w600,
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              primary: Colors.black,
+                              textStyle: ThemeTextStyle.textStyle14w600
+                                  .copyWith(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+                  if (date != null) {
+                    setState(() {
+                      BlocProvider.of<ReturnOrderPageCubit>(context)
+                          .getOrdersBySearch(
+                        incomingNumber: searchController.text,
+                        incomingDate: DateFormat("yyyy-MM-dd").format(date),
+                      );
+                    });
+                    invoiceDateController.text =
+                        DateFormat("yyyy-MM-dd").format(date);
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Выберите дату накладной",
+                        style: ThemeTextStyle.textStyle14w400.copyWith(
+                          color: ColorPalette.grey400,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Flexible(
+                        child: AppTextField(
+                          contentPadding: EdgeInsets.zero,
+                          capitalize: false,
+                          controller: invoiceDateController,
+                          readonly: true,
+                          textAlign: TextAlign.right,
+                          showErrorMessages: false,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: GestureDetector(
+                              onTap: invoiceDateController.text.isNotEmpty
+                                  ? () {
+                                      invoiceDateController.clear();
+                                      if (searchController.text.isEmpty) {
+                                        BlocProvider.of<ReturnOrderPageCubit>(
+                                                context)
+                                            .onRefreshOrders(
+                                          refundStatus: status,
+                                        );
+                                      } else {
+                                        BlocProvider.of<ReturnOrderPageCubit>(
+                                                context)
+                                            .getOrdersBySearch(
+                                          incomingNumber: searchController.text,
+                                        );
+                                      }
+                                      setState(() {});
+                                    }
+                                  : () async {
+                                      final DateTime? date =
+                                          await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2019),
+                                        lastDate: DateTime.now(),
+                                        helpText: "Дата входящего номера",
+                                        builder: (context, child) {
+                                          return Theme(
+                                            data: Theme.of(context).copyWith(
+                                              colorScheme:
+                                                  const ColorScheme.light(
+                                                primary: ColorPalette.greyDark,
+                                              ),
+                                              textTheme: TextTheme(
+                                                headline5: ThemeTextStyle
+                                                    .textTitleDella24w400,
+                                                overline: ThemeTextStyle
+                                                    .textStyle16w600,
+                                              ),
+                                              textButtonTheme:
+                                                  TextButtonThemeData(
+                                                style: TextButton.styleFrom(
+                                                  primary: Colors.black,
+                                                  textStyle: ThemeTextStyle
+                                                      .textStyle14w600
+                                                      .copyWith(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            child: child!,
+                                          );
+                                        },
+                                      );
+                                      if (date != null) {
+                                        setState(() {
+                                          BlocProvider.of<ReturnOrderPageCubit>(
+                                            context,
+                                          ).getOrdersBySearch(
+                                            incomingNumber:
+                                                searchController.text,
+                                            incomingDate:
+                                                DateFormat("yyyy-MM-dd")
+                                                    .format(date),
+                                          );
+                                        });
+                                        invoiceDateController.text =
+                                            DateFormat("yyyy-MM-dd")
+                                                .format(date);
+                                      }
+                                    },
+                              child: invoiceDateController.text.isNotEmpty
+                                  ? const Icon(
+                                      Icons.close,
+                                      size: 24,
+                                      color: ColorPalette.grey400,
+                                    )
+                                  : SvgPicture.asset(
+                                      "assets/images/svg/calendar_circle_ic.svg",
+                                      width: 24,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
               SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12.5,
                 ),
                 scrollDirection: Axis.horizontal,
-                child: BlocConsumer<PharmacyArrivalCatCubit,
-                    PharmacyArrivalCatState>(
+                child: BlocConsumer<ReturnOrderCatCubit, ReturnOrderCatState>(
                   listener: (context, state) {
                     state.when(
-                      newOrdersCatState: () {
+                      activeOrdersCatState: () {
                         currentIndex = 0;
                         status = 1;
-                        BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                            .onRefreshOrders(status: status);
+                        BlocProvider.of<ReturnOrderPageCubit>(context)
+                            .onRefreshOrders(refundStatus: status);
                       },
-                      discrepancyCatState: () {
+                      finishedCatState: () {
                         currentIndex = 1;
                         status = 2;
-                        BlocProvider.of<PharmacyArrivalScreenCubit>(context)
-                            .onRefreshOrders(status: status);
+                        BlocProvider.of<ReturnOrderPageCubit>(context)
+                            .onRefreshOrders(refundStatus: status);
                       },
                     );
                   },
@@ -139,8 +312,8 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            BlocProvider.of<PharmacyArrivalCatCubit>(context)
-                                .changeToNewOrdersCat();
+                            BlocProvider.of<ReturnOrderCatCubit>(context)
+                                .changeToActiveOrdersCat();
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -168,8 +341,8 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            BlocProvider.of<PharmacyArrivalCatCubit>(context)
-                                .changeToDiscrepanyCat();
+                            BlocProvider.of<ReturnOrderCatCubit>(context)
+                                .changeToFinishedCat();
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -185,7 +358,7 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Законченные возвраты",
+                                  "Завершенные возвраты",
                                   style:
                                       ThemeTextStyle.textStyle14w500.copyWith(
                                     color: currentIndex == 1
@@ -208,14 +381,14 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: BlocConsumer<PharmacyArrivalScreenCubit,
-                      PharmacyArrivalScreenState>(
+                  child:
+                      BlocConsumer<ReturnOrderPageCubit, ReturnOrderPageState>(
                     listener: (context, state) {
                       state.when(
                         initialState: () {},
                         loadingState: () {},
                         loadedState: (orders) {},
-                        bySearch: (orders) {},
+                        byFilterState: (orders) {},
                         errorState: (String message) {
                           buildErrorCustomSnackBar(context, message);
                         },
@@ -229,7 +402,7 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                                 CircularProgressIndicator(color: Colors.amber),
                           );
                         },
-                        bySearch: (orders) {
+                        byFilterState: (orders) {
                           return ListView.builder(
                             itemCount: orders.length,
                             shrinkWrap: true,
@@ -244,15 +417,15 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                           return SmartRefresher(
                             enablePullUp: true,
                             onLoading: () {
-                              BlocProvider.of<PharmacyArrivalScreenCubit>(
+                              BlocProvider.of<ReturnOrderPageCubit>(
                                 context,
-                              ).onLoadOrders(status: status);
+                              ).onLoadOrders(refundStatus: status);
                               refreshController.loadComplete();
                             },
                             onRefresh: () {
-                              BlocProvider.of<PharmacyArrivalScreenCubit>(
+                              BlocProvider.of<ReturnOrderPageCubit>(
                                 context,
-                              ).onRefreshOrders(status: status);
+                              ).onRefreshOrders(refundStatus: status);
                               refreshController.refreshCompleted();
                             },
                             controller: refreshController,
@@ -342,17 +515,21 @@ class _BuildOrderData extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "№.${orderData.id} ${orderData.number}",
-                  style: ThemeTextStyle.textStyle20w600,
+                Expanded(
+                  child: Text(
+                    "№.${orderData.id} ${orderData.number}",
+                    style: ThemeTextStyle.textStyle20w600,
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: orderData.status == 1
+                    color: orderData.refundStatus == 1 ||
+                            orderData.refundStatus == 0
                         ? ColorPalette.lightGreen
                         : ColorPalette.lightYellow,
                     border: Border.all(
-                      color: orderData.status == 1
+                      color: orderData.refundStatus == 1 ||
+                              orderData.refundStatus == 0
                           ? ColorPalette.borderGreen
                           : ColorPalette.borderYellow,
                     ),
@@ -362,12 +539,18 @@ class _BuildOrderData extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Center(
                     child: Text(
-                      orderData.status == 1 ? "Новый заказ" : "Активный заказ",
+                      orderData.refundStatus == 1 || orderData.refundStatus == 0
+                          ? "Активный возврат"
+                          : orderData.refundStatus == 2
+                              ? "Завершенный\nвозврат"
+                              : "Ошибка статуса",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
-                        color: orderData.status == 1
+                        color: orderData.refundStatus == 1 ||
+                                orderData.refundStatus == 0
                             ? ColorPalette.textGreen
                             : ColorPalette.textYellow,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -376,12 +559,12 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 27,
             ),
-            if (orderData.status != 1)
-              const _BuildOrderDetailItem(
-                icon: "divergence",
-                title: "Товары на расхождении",
-                data: "5",
-              ),
+
+            _BuildOrderDetailItem(
+              icon: "divergence",
+              title: "Входяящий номер",
+              data: "${orderData.incomingNumber}",
+            ),
             _BuildOrderDetailItem(
               icon: "container_ic",
               title: "Контейнеров",
@@ -389,10 +572,18 @@ class _BuildOrderData extends StatelessWidget {
             ),
             _BuildOrderDetailItem(
               icon: "calendar_ic",
-              title: "Время отпр.",
+              title: "Дата создания.",
               data: orderData.createdAt != null
                   ? DateFormat("dd.MM.yyyy; hh:mm")
                       .format(DateTime.parse('${orderData.createdAt}'))
+                  : "No data",
+            ),
+            _BuildOrderDetailItem(
+              icon: "calendar_ic",
+              title: "Дата накладной.",
+              data: orderData.incomingDate != null
+                  ? DateFormat("dd.MM.yyyy")
+                      .format(DateTime.parse('${orderData.incomingDate}'))
                   : "No data",
             ),
             _BuildOrderDetailItem(
@@ -404,7 +595,7 @@ class _BuildOrderData extends StatelessWidget {
             _BuildOrderDetailItem(
               icon: "document",
               title: "Сумма",
-              data: "${orderData.amount} ₸",
+              data: "${moneyFormatter(orderData.amount.toString())} ₸",
             ),
             const SizedBox(
               height: 24,
@@ -505,32 +696,25 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 21,
             ),
-            _BuildOrderDetailItem(
-              icon: "messages",
-              title: "Статус",
-              data: "${totalStatuses[orderData.totalStatus]}",
-            ),
-            _BuildOrderDetailItem(
-              icon: "clock",
-              title: "Время доставки",
-              data: "${orderData.yandexTime}",
-            ),
-            const SizedBox(
-              height: 12,
-            ),
+            // _BuildOrderDetailItem(
+            //   icon: "messages",
+            //   title: "Статус",
+            //   data: "${totalStatuses[orderData.totalStatus]}",
+            // ),
+            // _BuildOrderDetailItem(
+            //   icon: "clock",
+            //   title: "Время доставки",
+            //   data: "${orderData.yandexTime}",
+            // ),
+            // const SizedBox(
+            //   height: 12,
+            // ),
             if (orderData.totalStatus == 3 || orderData.totalStatus == 4)
               GestureDetector(
                 onTap: () {
-                  BlocProvider.of<SignatureScreenCubit>(context)
-                      .updatePharmacyOrderStatus(
-                    orderId: orderData.id,
-                    status: 2,
-                  );
-                  context.read<FillInvoiceVModel>().init();
                   AppRouter.push(
                     context,
-                    GoodsListScreen(
-                      isFromPharmacyPage: true,
+                    ReturnDetailPage(
                       pharmacyOrder: orderData,
                     ),
                   );
@@ -544,7 +728,11 @@ class _BuildOrderData extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "Оприходовать",
+                      orderData.refundStatus == 0
+                          ? "Начать возврат"
+                          : orderData.refundStatus == 1
+                              ? "Продолжить возврат"
+                              : "Посмотреть детали возврата",
                       style: ThemeTextStyle.textStyle14w600
                           .copyWith(color: ColorPalette.white),
                     ),

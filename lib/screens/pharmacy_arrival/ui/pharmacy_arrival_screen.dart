@@ -37,6 +37,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
   int status = 1;
   @override
   void initState() {
+    BlocProvider.of<PharmacyArrivalCatCubit>(context).changeToNewOrdersCat();
     BlocProvider.of<PharmacyArrivalScreenCubit>(context)
         .onRefreshOrders(status: status);
     super.initState();
@@ -350,9 +351,11 @@ class _BuildOrderData extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "№.${orderData.id} ${orderData.number}",
-                  style: ThemeTextStyle.textStyle20w600,
+                Expanded(
+                  child: Text(
+                    "№.${orderData.id} ${orderData.number}",
+                    style: ThemeTextStyle.textStyle20w600,
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -376,6 +379,7 @@ class _BuildOrderData extends StatelessWidget {
                             ? ColorPalette.textGreen
                             : ColorPalette.textYellow,
                       ),
+                      textAlign: TextAlign.center
                     ),
                   ),
                 ),
@@ -412,7 +416,7 @@ class _BuildOrderData extends StatelessWidget {
             _BuildOrderDetailItem(
               icon: "document",
               title: "Сумма",
-              data: "${orderData.amount} ₸",
+              data: "${moneyFormatter(orderData.amount.toString())} ₸",
             ),
             const SizedBox(
               height: 24,

@@ -23,6 +23,7 @@ class UpdatePharmacyProductById
       reSorting: params.reSorting,
       overdue: params.overdue,
       netovar: params.netovar,
+      refund: params.refund,
     );
   }
 }
@@ -37,7 +38,7 @@ class UpdatePharmacyProductByIdParams {
   final int? reSorting;
   final int? overdue;
   final int? netovar;
-
+  final int? refund;
   UpdatePharmacyProductByIdParams({
     required this.productId,
     this.status,
@@ -48,5 +49,6 @@ class UpdatePharmacyProductByIdParams {
     this.reSorting,
     this.overdue,
     this.netovar,
+    this.refund,
   });
 }

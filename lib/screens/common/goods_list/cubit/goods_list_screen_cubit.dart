@@ -39,18 +39,21 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     int? overdue,
     int? netovar,
     String? search,
+    int? refund,
   }) async {
     final result = await _updatePharmacyProductById.call(
       UpdatePharmacyProductByIdParams(
-          productId: productId,
-          status: status,
-          scanCount: scanCount,
-          defective: defective,
-          surplus: surplus,
-          underachievement: underachievement,
-          reSorting: reSorting,
-          overdue: overdue,
-          netovar: netovar),
+        productId: productId,
+        status: status,
+        scanCount: scanCount,
+        defective: defective,
+        surplus: surplus,
+        underachievement: underachievement,
+        reSorting: reSorting,
+        overdue: overdue,
+        netovar: netovar,
+        refund: refund,
+      ),
     );
 
     result.fold(
@@ -121,9 +124,10 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         }
       }
       unscannedProducts = unscanned;
-      if (search == null) {
-        scannedProdcuts = scanned;
-      }
+      scannedProdcuts = scanned;
+      // if (search == null) {
+      //   scannedProdcuts = scanned;
+      // }
       emit(
         GoodsListScreenState.loadedState(
           selectedProduct: selectedProduct,

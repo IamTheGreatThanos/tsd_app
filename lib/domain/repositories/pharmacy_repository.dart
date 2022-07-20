@@ -16,6 +16,12 @@ abstract class PharmacyRepository {
     int? senderId,
     int? recipientId,
     int? refundStatus,
+    int? page,
+  });
+
+  Future<Either<Failure, List<PharmacyOrderDTO>>> getRefundOrderByIncoming({
+    String? incomingNumber,
+    String? incomingDate,
   });
 
   Future<Either<Failure, List<ProductDTO>>> getProductsPharmacyArrival({
@@ -33,6 +39,7 @@ abstract class PharmacyRepository {
     int? reSorting,
     int? overdue,
     int? netovar,
+    int? refund,
   });
 
   Future<Either<Failure, ProductDTO>> getPharmacySelectedProductFromCahce({
@@ -45,7 +52,7 @@ abstract class PharmacyRepository {
 
   Future<Either<Failure, PharmacyOrderDTO>> updatePharmacyStatusOfOrder({
     required int orderId,
-     int? status,
+    int? status,
     String? incomingNumber,
     String? incomingDate,
     String? bin,

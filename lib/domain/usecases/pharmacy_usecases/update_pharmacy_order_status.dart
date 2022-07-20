@@ -20,7 +20,7 @@ class UpdatePharmacyOrderStatus
       orderId: params.orderId,
       status: params.status,
       incomingNumber: params.incomingNumber,
-      incomingDate: params.invoiceDate,
+      incomingDate: params.incomingDate,
       bin: params.bin,
       invoiceDate: params.invoiceDate,
       recipientId: params.recipientId,

@@ -43,6 +43,7 @@ import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_pharmacy_arrival.dart';
+import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_refund_order_by_incoming.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/save_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/send_signature.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
@@ -77,6 +78,8 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_cat_cubit.dart';
@@ -126,6 +129,8 @@ Future<void> initLocator() async {
   sl.registerFactory(() => PharmacyArrivalCatCubit());
   sl.registerFactory(() => WarehouseArrivalCatCubit());
 
+  sl.registerFactory(() => ReturnOrderPageCubit(sl(), sl(),));
+  sl.registerFactory(() => ReturnOrderCatCubit());
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -189,6 +194,7 @@ Future<void> initLocator() async {
   sl.registerLazySingleton(() => AddRefundDataProduct(sl()));
   sl.registerLazySingleton(() => UpdateRefundOrderStatus(sl()));
   sl.registerLazySingleton(() => GetRefundHistory(sl()));
+  sl.registerLazySingleton(() => GetRefundOrderByIncoming(sl()));
 
   ///
   ///

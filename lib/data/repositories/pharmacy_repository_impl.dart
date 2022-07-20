@@ -87,6 +87,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     int? reSorting,
     int? overdue,
     int? netovar,
+    int? refund,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -103,6 +104,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           reSorting: reSorting,
           overdue: overdue,
           netovar: netovar,
+          refund: refund,
         );
         return Right(product);
       } on ServerException catch (e) {
@@ -143,7 +145,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   @override
   Future<Either<Failure, PharmacyOrderDTO>> updatePharmacyStatusOfOrder({
     required int orderId,
-     int? status,
+    int? status,
     String? incomingNumber,
     String? incomingDate,
     String? bin,
@@ -185,6 +187,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     int? senderId,
     int? recipientId,
     int? refundStatus,
+    int? page,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -196,6 +199,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           senderId: senderId,
           recipientId: recipientId,
           refundStatus: refundStatus,
+          page: page,
         );
         return Right(historyOrders);
       } on ServerException catch (e) {
@@ -283,6 +287,35 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         );
 
         return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PharmacyOrderDTO>>> getRefundOrderByIncoming({
+    String? incomingNumber,
+    String? incomingDate,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final List<PharmacyOrderDTO> historyOrders =
+            await arrivalRemoteDS.getRefundOrderByIncoming(
+          accessToken: user.accessToken!,
+          incomingDate: incomingDate,
+          incomingNumber: incomingNumber,
+        );
+        List<PharmacyOrderDTO> orders = [];
+        for (final PharmacyOrderDTO order in historyOrders) {
+          if (order.status == 3) {
+            orders.add(order);
+          }
+        }
+        return Right(orders);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

@@ -12,3 +12,17 @@ Map<int?, String> totalStatuses = {
   3: "в пути",
   4: "доставлен",
 };
+
+String moneyFormatter(String money) {
+  String temp = "";
+  final String tempReversed = money.split('').reversed.join();
+
+  for (int i = 0; i < tempReversed.length; i++) {
+    temp += tempReversed[i];
+    if ((i + 1) % 3 == 0) {
+      temp += ' ';
+    }
+  }
+
+  return temp.split('').reversed.join();
+}

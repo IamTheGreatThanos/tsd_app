@@ -10,12 +10,9 @@ import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen_detail.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -38,6 +35,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   TextEditingController searchController = TextEditingController();
   @override
   void initState() {
+    BlocProvider.of<HistoryCatCubit>(context).changeToPharmacyCat();
     BlocProvider.of<HistoryCubit>(context).getPharmacyArrivalHistory();
     super.initState();
   }
@@ -651,6 +649,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     },
                                     child: SizedBox(
                                       child: _BuildOrderData(
+                                        incomingNumber:
+                                            orders[index].incomingNumber,
                                         pharmacyOrderDTO: orders[index],
                                         orderNumber: '${orders[index].number}',
                                         orderId: orders[index].id,
@@ -703,6 +703,7 @@ class _BuildOrderData extends StatelessWidget {
   final String? createdAt;
   final CounteragentDTO? counteragent;
   final PharmacyOrderDTO? pharmacyOrderDTO;
+  final String? incomingNumber;
   const _BuildOrderData({
     Key? key,
     required this.orderNumber,
@@ -711,6 +712,7 @@ class _BuildOrderData extends StatelessWidget {
     this.createdAt,
     this.counteragent,
     this.pharmacyOrderDTO,
+    this.incomingNumber,
   }) : super(key: key);
 
   @override
@@ -729,9 +731,11 @@ class _BuildOrderData extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '№.$orderId $orderNumber',
-                  style: ThemeTextStyle.textStyle20w600,
+                Expanded(
+                  child: Text(
+                    '№.$orderId $orderNumber',
+                    style: ThemeTextStyle.textStyle20w600,
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -760,6 +764,11 @@ class _BuildOrderData extends StatelessWidget {
             ),
             const SizedBox(
               height: 27,
+            ),
+            _BuildOrderDetailItem(
+              icon: "divergence",
+              title: "Входяящий номер",
+              data: "$incomingNumber",
             ),
             _BuildOrderDetailItem(
               icon: "container_ic",
@@ -805,7 +814,7 @@ class _BuildOrderData extends StatelessWidget {
                 style: pinkButtonStyle(),
               )
             else
-              SizedBox(),
+              const SizedBox(),
           ],
         ),
       ),

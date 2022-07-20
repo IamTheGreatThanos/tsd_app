@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -22,6 +27,8 @@ class ReturnDetailPage extends StatefulWidget {
 }
 
 class _ReturnDetailPageState extends State<ReturnDetailPage> {
+  FocusNode focusNode = FocusNode();
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     BlocProvider.of<GoodsListScreenCubit>(context)
@@ -34,20 +41,52 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(32, 0, 0, 0),
-          child: CustomButton(
-            height: 44,
-            onClick: () {
-              //FIXME Need to change refund status from 1 to 2 through api
-            },
-            body: const Text(
-              'Завершить возврата',
-              style: TextStyle(),
-            ),
-            style: pinkButtonStyle(),
-          ),
-        ),
+        floatingActionButton: widget.pharmacyOrder?.refundStatus == 2
+            ? null
+            : BlocConsumer<HistoryCubit, HistoryState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    orElse: () {
+                      context.loaderOverlay.hide();
+                    },
+                    initialState: () {
+                      context.loaderOverlay.hide();
+                    },
+                    loadingState: () {
+                      context.loaderOverlay.show();
+                    },
+                    pharmacyHistoryState: (orders) {
+                      context.loaderOverlay.hide();
+                      BlocProvider.of<ReturnOrderPageCubit>(context)
+                          .onRefreshOrders(refundStatus: 1);
+                      Navigator.pop(context);
+                    },
+                    errorState: (String message) {
+                      buildErrorCustomSnackBar(context, message);
+                    },
+                  );
+                },
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 0, 0, 0),
+                    child: CustomButton(
+                      height: 44,
+                      onClick: () {
+                        BlocProvider.of<HistoryCubit>(context)
+                            .updatePharmacyOrderStatus(
+                          orderId: widget.pharmacyOrder!.id,
+                          refundStatus: 2,
+                        );
+                      },
+                      body: const Text(
+                        'Завершить возврата',
+                        style: TextStyle(),
+                      ),
+                      style: pinkButtonStyle(),
+                    ),
+                  );
+                },
+              ),
         backgroundColor: ColorPalette.main,
         appBar: CustomAppBar(
           title: "Список товаров".toUpperCase(),
@@ -63,74 +102,132 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
             )
           ],
         ),
-        body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              loadingState: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.amber,
-                  ),
-                );
-              },
-              loadedState: (
-                scannedProducts,
-                unscannedProducts,
-                selectedProduct,
-              ) {
-                return _BuildBody(
-                  orderStatus: widget.pharmacyOrder?.status ?? 0,
-                  orderId: widget.pharmacyOrder!.id,
-                  scannedProducts: scannedProducts,
-                  selectedProduct: selectedProduct,
-                  pharmacyOrder: widget.pharmacyOrder,
-                );
-              },
-              errorState: (String message) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircularProgressIndicator(
-                        color: Colors.red,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        message,
-                        style: const TextStyle(color: Colors.red),
-                      )
-                    ],
-                  ),
-                );
-              },
-              orElse: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                  ),
-                );
-              },
-            );
-          },
-          listener: (context, state) {
-            state.when(
-              initialState: () {},
-              loadingState: () {},
-              successScannedState: (String message) {
-                buildSuccessCustomSnackBar(context, message);
-              },
-              loadedState: (
-                scannedProducts,
-                unscannedProducts,
-                selectedProductId,
-              ) {},
-              errorState: (String message) {
-                buildErrorCustomSnackBar(context, message);
-              },
-            );
-          },
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AppTextField(
+                focusNode: FocusNode(),
+                onFieldSubmitted: (value) {
+                  final productCubit =
+                      BlocProvider.of<GoodsListScreenCubit>(context);
+
+                  if (value.isNotEmpty) {
+                    productCubit.getPharmacyProducts(
+                      orderId: widget.pharmacyOrder!.id,
+                      search: value,
+                    );
+                  } else {
+                    productCubit.getPharmacyProducts(
+                      orderId: widget.pharmacyOrder!.id,
+                    );
+                  }
+                },
+                onChanged: (String? text) {
+                  final productCubit =
+                      BlocProvider.of<GoodsListScreenCubit>(context);
+
+                  if (text != null) {
+                    productCubit.getPharmacyProducts(
+                      orderId: widget.pharmacyOrder!.id,
+                      search: text,
+                    );
+                  }
+                  if (text == null || text.isEmpty) {
+                    productCubit.getPharmacyProducts(
+                      orderId: widget.pharmacyOrder!.id,
+                    );
+                  }
+                },
+                controller: searchController,
+                hintText: "Введите имя продукта",
+                hintStyle: ThemeTextStyle.textStyle14w400
+                    .copyWith(color: ColorPalette.grey400),
+                fillColor: ColorPalette.white,
+                prefixIcon: SvgPicture.asset(
+                  "assets/images/svg/search.svg",
+                  color: ColorPalette.grey400,
+                ),
+                contentPadding: const EdgeInsets.only(
+                  top: 17,
+                  bottom: 17,
+                  left: 13,
+                ),
+              ),
+            ),
+            Expanded(
+              child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    loadingState: () {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.amber,
+                        ),
+                      );
+                    },
+                    loadedState: (
+                      scannedProducts,
+                      unscannedProducts,
+                      selectedProduct,
+                    ) {
+                      return _BuildBody(
+                        searchController: searchController,
+                        orderStatus: widget.pharmacyOrder?.status ?? 0,
+                        orderId: widget.pharmacyOrder!.id,
+                        scannedProducts: scannedProducts,
+                        selectedProduct: selectedProduct,
+                        pharmacyOrder: widget.pharmacyOrder,
+                      );
+                    },
+                    errorState: (String message) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CircularProgressIndicator(
+                              color: Colors.red,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              message,
+                              style: const TextStyle(color: Colors.red),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    orElse: () {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  );
+                },
+                listener: (context, state) {
+                  state.when(
+                    initialState: () {},
+                    loadingState: () {},
+                    successScannedState: (String message) {
+                      buildSuccessCustomSnackBar(context, message);
+                    },
+                    loadedState: (
+                      scannedProducts,
+                      unscannedProducts,
+                      selectedProductId,
+                    ) {},
+                    errorState: (String message) {
+                      buildErrorCustomSnackBar(context, message);
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -138,6 +235,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final TextEditingController searchController;
   final int orderStatus;
   final int orderId;
   final ProductDTO selectedProduct;
@@ -150,6 +248,7 @@ class _BuildBody extends StatefulWidget {
     required this.selectedProduct,
     required this.orderStatus,
     this.pharmacyOrder,
+    required this.searchController,
   }) : super(key: key);
 
   @override
@@ -168,6 +267,41 @@ class _BuildBodyState extends State<_BuildBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+            decoration: BoxDecoration(
+              color: ColorPalette.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  "Продукты",
+                  style: ThemeTextStyle.textStyle14w500
+                      .copyWith(color: ColorPalette.grayText),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.borderGrey,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    "${widget.scannedProducts.length}",
+                    style: ThemeTextStyle.textStyle12w600.copyWith(
+                      color: ColorPalette.black,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
         Expanded(
           child: SmartRefresher(
             onRefresh: () {
@@ -193,6 +327,8 @@ class _BuildBodyState extends State<_BuildBody> {
                     // }
                   },
                   child: _BuildGoodDetails(
+                    pharmacyOrderDTO: widget.pharmacyOrder,
+                    searchController: widget.searchController,
                     orderID: widget.orderId,
                     good: widget.scannedProducts[index],
                     selectedProduct: widget.selectedProduct,
@@ -208,14 +344,18 @@ class _BuildBodyState extends State<_BuildBody> {
 }
 
 class _BuildGoodDetails extends StatefulWidget {
+  final TextEditingController searchController;
   final ProductDTO good;
   final ProductDTO selectedProduct;
   final int orderID;
+  final PharmacyOrderDTO? pharmacyOrderDTO;
   const _BuildGoodDetails({
     Key? key,
     required this.good,
     required this.selectedProduct,
     required this.orderID,
+    required this.searchController,
+    required this.pharmacyOrderDTO,
   }) : super(key: key);
 
   @override
@@ -284,6 +424,37 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: widget.good.refund != 0
+                          ? ColorPalette.lightGreen
+                          : ColorPalette.lightYellow,
+                      border: Border.all(
+                        color: widget.good.refund != 0
+                            ? ColorPalette.borderGreen
+                            : ColorPalette.borderYellow,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    child: Center(
+                      child: Text(
+                        widget.good.refund != 0
+                            ? "Подтвержден"
+                            : "Не подтвержден",
+                        style: ThemeTextStyle.textStyle12w600.copyWith(
+                          color: widget.good.refund != 0
+                              ? ColorPalette.textGreen
+                              : ColorPalette.textYellow,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -326,26 +497,36 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       const SizedBox(
                         height: 8,
                       ),
-                      MaterialButton(
-                        color: ColorPalette.orange,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          //FIXME need to update refund in product api
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text(
-                            'Ввести сумму возравта',
-                            style: TextStyle(
-                              color: ColorPalette.white,
-                              fontWeight: FontWeight.w600,
+                      if (widget.good.refund != widget.good.totalCount! &&
+                          widget.pharmacyOrderDTO?.refundStatus != 2)
+                        MaterialButton(
+                          color: ColorPalette.orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            _bottomSheet(
+                              _SpecifyingNumberManually(
+                                searchController: widget.searchController,
+                                productDTO: widget.good,
+                                orderID: widget.orderID,
+                              ),
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Text(
+                              'Ввести сумму возравта',
+                              style: TextStyle(
+                                color: ColorPalette.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        )
+                      else
+                        const SizedBox(),
                       const SizedBox(
                         height: 8,
                       ),
@@ -370,6 +551,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       Text(
                         'Пересорт серий:   ${widget.good.reSorting}'
                             .toUpperCase(),
+                      ),
+                      Text(
+                        'Возврат:   ${widget.good.refund}'.toUpperCase(),
                       ),
                     ],
                   )
@@ -397,6 +581,141 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
       builder: (context) {
         return widget;
       },
+    );
+  }
+}
+
+class _SpecifyingNumberManually extends StatefulWidget {
+  final TextEditingController searchController;
+  final ProductDTO productDTO;
+  final int orderID;
+  const _SpecifyingNumberManually({
+    Key? key,
+    required this.productDTO,
+    required this.orderID,
+    required this.searchController,
+  }) : super(key: key);
+
+  @override
+  State<_SpecifyingNumberManually> createState() =>
+      _SpecifyingNumberManuallyState();
+}
+
+class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
+  TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    controller.clear();
+    controller.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.3,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+        ),
+        padding: const EdgeInsets.only(
+          right: 16,
+          left: 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(
+                top: 14,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xffD9DBE9),
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'Укажите число вручную ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const Spacer(),
+            TextField(
+              focusNode: focusNode,
+              keyboardType: TextInputType.number,
+              controller: controller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Укажите число вручную',
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            MaterialButton(
+              height: 40,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              color: ColorPalette.orange,
+              disabledColor: ColorPalette.orangeInactive,
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                if (controller.text.isEmpty) {
+                  Navigator.pop(context);
+                } else {
+                  if (int.parse(controller.text) >
+                      widget.productDTO.totalCount!) {
+                    Navigator.pop(context);
+                    buildErrorCustomSnackBar(
+                      context,
+                      'Количество возвращаемых товаров не должно превышать общее количество товаров',
+                    );
+                  } else {
+                    BlocProvider.of<GoodsListScreenCubit>(context)
+                        .updatePharmacyProductById(
+                      orderId: widget.orderID,
+                      productId: widget.productDTO.id,
+                      refund: int.parse(controller.text),
+                    );
+                    controller.clear();
+                    focusNode.dispose();
+                    Navigator.pop(context);
+                  }
+                }
+              },
+              child: Center(
+                child: Text(
+                  "Отправить",
+                  style: ThemeTextStyle.textStyle14w600
+                      .copyWith(color: ColorPalette.white),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

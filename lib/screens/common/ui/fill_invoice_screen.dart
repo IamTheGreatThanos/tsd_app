@@ -164,7 +164,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                   );
                                   if (date != null) {
                                     _vmodel.incomeNumberDateController.text =
-                                        DateFormat("dd.MM.yyyy").format(date);
+                                        DateFormat("yyyy-MM-dd").format(date);
                                   }
                                 },
                                 child: Row(
@@ -242,7 +242,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                                 _vmodel
                                                     .incomeNumberDateController
                                                     .text = DateFormat(
-                                                  "dd.MM.yyyy",
+                                                  "yyyy-MM-dd",
                                                 ).format(date);
                                               }
                                             },

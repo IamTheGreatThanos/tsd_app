@@ -22,6 +22,7 @@ abstract class PharmacyArrivalRemoteDS {
     int? senderId,
     int? recipientId,
     int? refundStatus,
+    int? page,
   });
 
   Future<ProductDTO> updatePharmacyProductById({
@@ -35,6 +36,7 @@ abstract class PharmacyArrivalRemoteDS {
     int? reSorting,
     int? overdue,
     int? netovar,
+    int? refund,
   });
 
   Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
@@ -55,6 +57,12 @@ abstract class PharmacyArrivalRemoteDS {
     required String accessToken,
     required String number,
     required int status,
+  });
+
+  Future<List<PharmacyOrderDTO>> getRefundOrderByIncoming({
+    required String accessToken,
+    String? incomingNumber,
+    String? incomingDate,
   });
 
   Future<String> sendSignature({
@@ -112,6 +120,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     int? reSorting,
     int? overdue,
     int? netovar,
+    int? refund,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -127,6 +136,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
           if (reSorting != null) 're_sorting': reSorting,
           if (underachievement != null) 'overdue': overdue,
           if (reSorting != null) 'netovar': netovar,
+          if (refund != null) "refund": refund,
         },
       );
 
@@ -203,6 +213,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     int? senderId,
     int? recipientId,
     int? refundStatus,
+    int? page,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -215,6 +226,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
           if (senderId != null) "sender_id": senderId,
           if (recipientId != null) "recipient_id": recipientId,
           if (refundStatus != null) "refund_status": refundStatus,
+          if (page != null) "page": page,
           "status": 3,
         },
       );
@@ -296,6 +308,41 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
       }
     } on DioError catch (e) {
       log('$e');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<PharmacyOrderDTO>> getRefundOrderByIncoming(
+      {required String accessToken,
+      String? incomingNumber,
+      String? incomingDate}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get(
+        '$SERVER_/api/arrival-pharmacy/getbyincoming',
+        queryParameters: {
+          if (incomingNumber != null) "incoming_number": incomingNumber,
+          if (incomingDate != null) "incoming_date": incomingDate,
+        },
+      );
+      log('##### getRefundOrderByIncoming api:: ${response.statusCode}');
+
+      return compute<List, List<PharmacyOrderDTO>>(
+        (List list) {
+          return list
+              .map((e) => PharmacyOrderDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        (response.data as Map<String, dynamic>)['data'] as List,
+      );
+    } on DioError catch (e) {
+      log('##### getRefundOrderByIncoming api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

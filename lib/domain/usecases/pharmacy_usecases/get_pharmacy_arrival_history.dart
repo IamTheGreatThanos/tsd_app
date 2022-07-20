@@ -18,6 +18,7 @@ class GetPharmacyArrivalHistory
       senderId: params.senderId,
       recipientId: params.recipientId,
       refundStatus: params.refundStatus,
+      page:params.page,
     );
   }
 }
@@ -27,11 +28,13 @@ class GetPharmacyArrivalHistoryParams {
   final int? recipientId;
   final int? senderId;
   final int? refundStatus;
+  final int? page;
 
   GetPharmacyArrivalHistoryParams({
     this.number,
     this.recipientId,
     this.senderId,
     this.refundStatus,
+    this.page,
   });
 }
