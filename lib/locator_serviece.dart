@@ -73,6 +73,8 @@ import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubi
 import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
+import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_page_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
@@ -124,13 +126,25 @@ Future<void> initLocator() async {
     ),
   );
   sl.registerFactory(() => HistoryCatCubit());
-  sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl(),sl()));
+  sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => PharmacyQrScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalCatCubit());
   sl.registerFactory(() => WarehouseArrivalCatCubit());
 
-  sl.registerFactory(() => ReturnOrderPageCubit(sl(), sl(),));
+  sl.registerFactory(
+    () => ReturnOrderPageCubit(
+      sl(),
+      sl(),
+    ),
+  );
   sl.registerFactory(() => ReturnOrderCatCubit());
+
+  sl.registerFactory(
+    () => MoveOrderPageCubit(
+      sl(),
+    ),
+  );
+  sl.registerFactory(() => MoveOrderCatCubit());
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///

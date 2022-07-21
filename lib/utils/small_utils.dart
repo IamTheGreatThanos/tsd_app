@@ -1,4 +1,4 @@
-class SmallUtils {
+mixin SmallUtils {
   static String splitSym = ',';
 
   static String beautifyName(String name) {

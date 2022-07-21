@@ -226,4 +226,32 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
       return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<MoveDataDTO>>> getMovingOrders({
+    int? page,
+    int? status,
+    int? senderId,
+    int? recipientId,
+    int? accept,
+    int? send,
+    String? date,
+  }) async {
+    if (await networkInfo.isConnected) {
+      final User user = await authLocalDS.getUserFromCache();
+      final List<MoveDataDTO> history = await _moveDataRemoteDS.getMovingOrders(
+        accessToken: user.accessToken!,
+        page: page,
+        status: status,
+        senderId: senderId,
+        recipientId: recipientId,
+        send: send,
+        accept: accept,
+        date: date,
+      );
+      return Right(history);
+    } else {
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
+    }
+  }
 }

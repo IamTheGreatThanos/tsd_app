@@ -8,6 +8,17 @@ import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 
 abstract class MoveDataRemoteDS {
+  Future<List<MoveDataDTO>> getMovingOrders({
+    required String accessToken,
+    int? page,
+    int? status,
+    int? senderId,
+    int? recipientId,
+    int? accept,
+    int? send,
+    String? date,
+  });
+
   Future<MoveDataDTO> createMovingOrder({
     required String accessToken,
     int? senderId,
@@ -51,7 +62,8 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
         '$SERVER_/api/moving',
         data: {
           if (senderId != null) 'sender_id': senderId,
-          if (recipientId != null) 'recipient_id': recipientId,
+          //FIXME Need to send id
+          if (recipientId != null) 'recipient': recipientId,
           if (organizationId != null) 'organization_id': organizationId,
           if (movingType != null) 'moving_type': movingType,
         },
@@ -125,8 +137,9 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
   }
 
   @override
-  Future<List<MoveDataDTO>> getMovingHistory(
-      {required String accessToken}) async {
+  Future<List<MoveDataDTO>> getMovingHistory({
+    required String accessToken,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
@@ -144,6 +157,53 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
       );
     } on DioError catch (e) {
       log('##### getMovingHistory api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<MoveDataDTO>> getMovingOrders({
+    required String accessToken,
+    int? page,
+    int? status,
+    int? senderId,
+    int? recipientId,
+    int? accept,
+    int? send,
+    String? date,
+  }) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.get(
+        '$SERVER_/api/moving',
+        queryParameters: {
+          if (page != null) "page": page,
+          if (status != null) "status": status,
+          if (senderId != null) "sender_id": senderId,
+          if (recipientId != null) "recipient_id": recipientId,
+          if (senderId != null) "sender_id": senderId,
+          if (accept != null) "accept": accept,
+          if (send != null) "send": send,
+          if (date != null) "date": date,
+        },
+      );
+      log('##### getMovingOrders api:: ${response.statusCode}');
+
+      return compute<List, List<MoveDataDTO>>(
+        (List list) {
+          return list
+              .map((e) => MoveDataDTO.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+        (response.data as Map<String, dynamic>)['data'] as List,
+      );
+    } on DioError catch (e) {
+      log('##### getMovingOrders api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

@@ -23,6 +23,8 @@ mixin _$ProductDTO {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'arrival_pharmacy_id')
   int? get arrivalPharmacyId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'moving_id')
+  int? get movingId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   String? get barcode => throw _privateConstructorUsedError;
@@ -62,6 +64,7 @@ abstract class $ProductDTOCopyWith<$Res> {
   $Res call(
       {int id,
       @JsonKey(name: 'arrival_pharmacy_id') int? arrivalPharmacyId,
+      @JsonKey(name: 'moving_id') int? movingId,
       String? name,
       String? image,
       String? barcode,
@@ -95,6 +98,7 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? arrivalPharmacyId = freezed,
+    Object? movingId = freezed,
     Object? name = freezed,
     Object? image = freezed,
     Object? barcode = freezed,
@@ -123,6 +127,10 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
       arrivalPharmacyId: arrivalPharmacyId == freezed
           ? _value.arrivalPharmacyId
           : arrivalPharmacyId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      movingId: movingId == freezed
+          ? _value.movingId
+          : movingId // ignore: cast_nullable_to_non_nullable
               as int?,
       name: name == freezed
           ? _value.name
@@ -214,6 +222,7 @@ abstract class _$$_ProductDTOCopyWith<$Res>
   $Res call(
       {int id,
       @JsonKey(name: 'arrival_pharmacy_id') int? arrivalPharmacyId,
+      @JsonKey(name: 'moving_id') int? movingId,
       String? name,
       String? image,
       String? barcode,
@@ -249,6 +258,7 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? arrivalPharmacyId = freezed,
+    Object? movingId = freezed,
     Object? name = freezed,
     Object? image = freezed,
     Object? barcode = freezed,
@@ -277,6 +287,10 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
       arrivalPharmacyId: arrivalPharmacyId == freezed
           ? _value.arrivalPharmacyId
           : arrivalPharmacyId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      movingId: movingId == freezed
+          ? _value.movingId
+          : movingId // ignore: cast_nullable_to_non_nullable
               as int?,
       name: name == freezed
           ? _value.name
@@ -364,6 +378,7 @@ class _$_ProductDTO implements _ProductDTO {
   const _$_ProductDTO(
       {required this.id,
       @JsonKey(name: 'arrival_pharmacy_id') this.arrivalPharmacyId,
+      @JsonKey(name: 'moving_id') this.movingId,
       this.name,
       this.image,
       this.barcode,
@@ -392,6 +407,9 @@ class _$_ProductDTO implements _ProductDTO {
   @override
   @JsonKey(name: 'arrival_pharmacy_id')
   final int? arrivalPharmacyId;
+  @override
+  @JsonKey(name: 'moving_id')
+  final int? movingId;
   @override
   final String? name;
   @override
@@ -438,7 +456,7 @@ class _$_ProductDTO implements _ProductDTO {
 
   @override
   String toString() {
-    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID, overdue: $overdue, netovar: $netovar, refund: $refund)';
+    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, movingId: $movingId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID, overdue: $overdue, netovar: $netovar, refund: $refund)';
   }
 
   @override
@@ -449,6 +467,7 @@ class _$_ProductDTO implements _ProductDTO {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.arrivalPharmacyId, arrivalPharmacyId) &&
+            const DeepCollectionEquality().equals(other.movingId, movingId) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality().equals(other.barcode, barcode) &&
@@ -478,6 +497,7 @@ class _$_ProductDTO implements _ProductDTO {
         runtimeType,
         const DeepCollectionEquality().hash(id),
         const DeepCollectionEquality().hash(arrivalPharmacyId),
+        const DeepCollectionEquality().hash(movingId),
         const DeepCollectionEquality().hash(name),
         const DeepCollectionEquality().hash(image),
         const DeepCollectionEquality().hash(barcode),
@@ -514,6 +534,7 @@ abstract class _ProductDTO implements ProductDTO {
   const factory _ProductDTO(
       {required final int id,
       @JsonKey(name: 'arrival_pharmacy_id') final int? arrivalPharmacyId,
+      @JsonKey(name: 'moving_id') final int? movingId,
       final String? name,
       final String? image,
       final String? barcode,
@@ -542,6 +563,9 @@ abstract class _ProductDTO implements ProductDTO {
   @override
   @JsonKey(name: 'arrival_pharmacy_id')
   int? get arrivalPharmacyId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'moving_id')
+  int? get movingId => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override

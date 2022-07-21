@@ -10,6 +10,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
     _$_ProductDTO(
       id: json['id'] as int,
       arrivalPharmacyId: json['arrival_pharmacy_id'] as int?,
+      movingId: json['moving_id'] as int?,
       name: json['name'] as String?,
       image: json['image'] as String?,
       barcode: json['barcode'] as String?,
@@ -35,6 +36,7 @@ Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'arrival_pharmacy_id': instance.arrivalPharmacyId,
+      'moving_id': instance.movingId,
       'name': instance.name,
       'image': instance.image,
       'barcode': instance.barcode,

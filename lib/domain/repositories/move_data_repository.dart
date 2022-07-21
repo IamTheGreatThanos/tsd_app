@@ -44,4 +44,14 @@ abstract class MoveDataRepository {
   });
 
   Future<Either<Failure, List<MoveDataDTO>>> getMovingHistory();
+
+  Future<Either<Failure, List<MoveDataDTO>>> getMovingOrders({
+    int? page,
+    int? status,
+    int? senderId,
+    int? recipientId,
+    int? accept,
+    int? send,
+    String? date,
+  });
 }

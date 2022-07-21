@@ -12,6 +12,7 @@ class ProductDTO with _$ProductDTO {
   const factory ProductDTO({
     required int id,
     @JsonKey(name:'arrival_pharmacy_id') int? arrivalPharmacyId,
+    @JsonKey(name:'moving_id') int? movingId,
     String? name,
     String? image,
     String? barcode,

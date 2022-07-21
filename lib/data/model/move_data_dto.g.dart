@@ -11,11 +11,13 @@ _$_MoveDataDTO _$$_MoveDataDTOFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       senderId: json['sender_id'] as int?,
       recipientId: json['recipient_id'] as int?,
-      organizationId: json['organization_id'] as int?,
-      movingType: json['moving_type'] as int?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       status: json['status'] as int?,
+      date: json['date'] as String?,
+      comment: json['comment'] as String?,
+      send: json['send'] as int?,
+      accept: json['accept'] as int?,
     );
 
 Map<String, dynamic> _$$_MoveDataDTOToJson(_$_MoveDataDTO instance) =>
@@ -23,9 +25,11 @@ Map<String, dynamic> _$$_MoveDataDTOToJson(_$_MoveDataDTO instance) =>
       'id': instance.id,
       'sender_id': instance.senderId,
       'recipient_id': instance.recipientId,
-      'organization_id': instance.organizationId,
-      'moving_type': instance.movingType,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'status': instance.status,
+      'date': instance.date,
+      'comment': instance.comment,
+      'send': instance.send,
+      'accept': instance.accept,
     };

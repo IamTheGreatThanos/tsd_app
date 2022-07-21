@@ -242,95 +242,95 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                         const Divider(
                           color: ColorPalette.borderGrey,
                         ),
-                        AppTextField(
-                          controller: reciverController,
-                          hintText: "Получатель",
-                          hintStyle: ThemeTextStyle.textStyle14w400
-                              .copyWith(color: ColorPalette.grey400),
-                          fillColor: ColorPalette.white,
-                          contentPadding: const EdgeInsets.only(
-                            top: 18,
-                            bottom: 18,
-                            left: 13,
-                          ),
-                        )
-                        // BlocBuilder<countragents.CounteragentsCubit,
-                        //     countragents.CounteragentState>(
-                        //   builder: (context, state) {
-                        //     return state.maybeWhen(
-                        //       loadingState: () =>
-                        //           const CircularProgressIndicator(
-                        //         color: Colors.amber,
-                        //       ),
-                        //       loadedState: (counteragents) {
-                        //         return SearchChoices.single(
-                        //           padding: recipientId == -1 ? 14 : 7,
-                        //           displayClearIcon: false,
-                        //           closeButton: "Закрыть",
-                        //           items: counteragents
-                        //               .map((e) => e.name)
-                        //               .toList()
-                        //               .map<DropdownMenuItem<String>>(
-                        //                   (String? value) {
-                        //             return DropdownMenuItem<String>(
-                        //               value: value,
-                        //               child: Text(
-                        //                 "$value",
-                        //                 style: ThemeTextStyle.textStyle14w400,
-                        //               ),
-                        //             );
-                        //           }).toList(),
-                        //           value: recipient,
-                        //           hint: "Получатель",
-                        //           searchHint: "Получатель",
-                        //           style: ThemeTextStyle.textStyle14w400,
-                        //           onChanged: (String? newValue) {
-                        //             recipient = newValue;
-                        //             for (int i = 0;
-                        //                 i < counteragents.length;
-                        //                 i++) {
-                        //               if (recipient == counteragents[i].name &&
-                        //                   counteragents[i].id != -1) {
-                        //                 recipientId = counteragents[i].id;
-                        //               }
-                        //             }
-                        //             setState(() {});
-                        //           },
-                        //           isExpanded: true,
-                        //           icon: SvgPicture.asset(
-                        //             "assets/images/svg/chevron_right.svg",
-                        //           ),
-                        //           underline: const SizedBox(),
-                        //         );
-                        //       },
-                        //       errorState: (String message) {
-                        //         return Center(
-                        //           child: Column(
-                        //             mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               const CircularProgressIndicator(
-                        //                 color: Colors.red,
-                        //               ),
-                        //               const SizedBox(
-                        //                 height: 8,
-                        //               ),
-                        //               Text(
-                        //                 message,
-                        //                 style:
-                        //                     const TextStyle(color: Colors.red),
-                        //               )
-                        //             ],
-                        //           ),
-                        //         );
-                        //       },
-                        //       orElse: () {
-                        //         return const CircularProgressIndicator(
-                        //           color: Colors.red,
-                        //         );
-                        //       },
-                        //     );
-                        //   },
-                        // ),
+                        // AppTextField(
+                        //   controller: reciverController,
+                        //   hintText: "Получатель",
+                        //   hintStyle: ThemeTextStyle.textStyle14w400
+                        //       .copyWith(color: ColorPalette.grey400),
+                        //   fillColor: ColorPalette.white,
+                        //   contentPadding: const EdgeInsets.only(
+                        //     top: 18,
+                        //     bottom: 18,
+                        //     left: 13,
+                        //   ),
+                        // )
+                        BlocBuilder<countragents.CounteragentsCubit,
+                            countragents.CounteragentState>(
+                          builder: (context, state) {
+                            return state.maybeWhen(
+                              loadingState: () =>
+                                  const CircularProgressIndicator(
+                                color: Colors.amber,
+                              ),
+                              loadedState: (counteragents) {
+                                return SearchChoices.single(
+                                  padding: recipientId == -1 ? 14 : 7,
+                                  displayClearIcon: false,
+                                  closeButton: "Закрыть",
+                                  items: counteragents
+                                      .map((e) => e.name)
+                                      .toList()
+                                      .map<DropdownMenuItem<String>>(
+                                          (String? value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        "$value",
+                                        style: ThemeTextStyle.textStyle14w400,
+                                      ),
+                                    );
+                                  }).toList(),
+                                  value: recipient,
+                                  hint: "Получатель",
+                                  searchHint: "Получатель",
+                                  style: ThemeTextStyle.textStyle14w400,
+                                  onChanged: (String? newValue) {
+                                    recipient = newValue;
+                                    for (int i = 0;
+                                        i < counteragents.length;
+                                        i++) {
+                                      if (recipient == counteragents[i].name &&
+                                          counteragents[i].id != -1) {
+                                        recipientId = counteragents[i].id;
+                                      }
+                                    }
+                                    setState(() {});
+                                  },
+                                  isExpanded: true,
+                                  icon: SvgPicture.asset(
+                                    "assets/images/svg/chevron_right.svg",
+                                  ),
+                                  underline: const SizedBox(),
+                                );
+                              },
+                              errorState: (String message) {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const CircularProgressIndicator(
+                                        color: Colors.red,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        message,
+                                        style:
+                                            const TextStyle(color: Colors.red),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                              orElse: () {
+                                return const CircularProgressIndicator(
+                                  color: Colors.red,
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -342,7 +342,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                     child: GestureDetector(
                       onTap: () {
                         if (senderId == -1 ||
-                            reciverController.text.isEmpty) {
+                            recipientId == -1) {
                           buildErrorCustomSnackBar(
                             context,
                             "Вы не выбрали все пункты!!!",
@@ -352,8 +352,6 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                               .createMovingOrder(
                             senderId: senderId,
                             recipientId: recipientId,
-                            organizationId: organizationId,
-                            movingType: moveType == "Между аптеками" ? 1 : 2,
                           );
                         }
                       },

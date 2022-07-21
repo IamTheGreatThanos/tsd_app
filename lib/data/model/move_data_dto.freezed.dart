@@ -25,15 +25,15 @@ mixin _$MoveDataDTO {
   int? get senderId => throw _privateConstructorUsedError;
   @JsonKey(name: 'recipient_id')
   int? get recipientId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'organization_id')
-  int? get organizationId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'moving_type')
-  int? get movingType => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
   int? get status => throw _privateConstructorUsedError;
+  String? get date => throw _privateConstructorUsedError;
+  String? get comment => throw _privateConstructorUsedError;
+  int? get send => throw _privateConstructorUsedError;
+  int? get accept => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,11 +50,13 @@ abstract class $MoveDataDTOCopyWith<$Res> {
       {int id,
       @JsonKey(name: 'sender_id') int? senderId,
       @JsonKey(name: 'recipient_id') int? recipientId,
-      @JsonKey(name: 'organization_id') int? organizationId,
-      @JsonKey(name: 'moving_type') int? movingType,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
-      int? status});
+      int? status,
+      String? date,
+      String? comment,
+      int? send,
+      int? accept});
 }
 
 /// @nodoc
@@ -70,11 +72,13 @@ class _$MoveDataDTOCopyWithImpl<$Res> implements $MoveDataDTOCopyWith<$Res> {
     Object? id = freezed,
     Object? senderId = freezed,
     Object? recipientId = freezed,
-    Object? organizationId = freezed,
-    Object? movingType = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? status = freezed,
+    Object? date = freezed,
+    Object? comment = freezed,
+    Object? send = freezed,
+    Object? accept = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -89,14 +93,6 @@ class _$MoveDataDTOCopyWithImpl<$Res> implements $MoveDataDTOCopyWith<$Res> {
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as int?,
-      organizationId: organizationId == freezed
-          ? _value.organizationId
-          : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      movingType: movingType == freezed
-          ? _value.movingType
-          : movingType // ignore: cast_nullable_to_non_nullable
-              as int?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -108,6 +104,22 @@ class _$MoveDataDTOCopyWithImpl<$Res> implements $MoveDataDTOCopyWith<$Res> {
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: comment == freezed
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      send: send == freezed
+          ? _value.send
+          : send // ignore: cast_nullable_to_non_nullable
+              as int?,
+      accept: accept == freezed
+          ? _value.accept
+          : accept // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -124,11 +136,13 @@ abstract class _$$_MoveDataDTOCopyWith<$Res>
       {int id,
       @JsonKey(name: 'sender_id') int? senderId,
       @JsonKey(name: 'recipient_id') int? recipientId,
-      @JsonKey(name: 'organization_id') int? organizationId,
-      @JsonKey(name: 'moving_type') int? movingType,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
-      int? status});
+      int? status,
+      String? date,
+      String? comment,
+      int? send,
+      int? accept});
 }
 
 /// @nodoc
@@ -146,11 +160,13 @@ class __$$_MoveDataDTOCopyWithImpl<$Res> extends _$MoveDataDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? senderId = freezed,
     Object? recipientId = freezed,
-    Object? organizationId = freezed,
-    Object? movingType = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? status = freezed,
+    Object? date = freezed,
+    Object? comment = freezed,
+    Object? send = freezed,
+    Object? accept = freezed,
   }) {
     return _then(_$_MoveDataDTO(
       id: id == freezed
@@ -165,14 +181,6 @@ class __$$_MoveDataDTOCopyWithImpl<$Res> extends _$MoveDataDTOCopyWithImpl<$Res>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as int?,
-      organizationId: organizationId == freezed
-          ? _value.organizationId
-          : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      movingType: movingType == freezed
-          ? _value.movingType
-          : movingType // ignore: cast_nullable_to_non_nullable
-              as int?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -185,6 +193,22 @@ class __$$_MoveDataDTOCopyWithImpl<$Res> extends _$MoveDataDTOCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: comment == freezed
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      send: send == freezed
+          ? _value.send
+          : send // ignore: cast_nullable_to_non_nullable
+              as int?,
+      accept: accept == freezed
+          ? _value.accept
+          : accept // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -196,11 +220,13 @@ class _$_MoveDataDTO implements _MoveDataDTO {
       {required this.id,
       @JsonKey(name: 'sender_id') this.senderId,
       @JsonKey(name: 'recipient_id') this.recipientId,
-      @JsonKey(name: 'organization_id') this.organizationId,
-      @JsonKey(name: 'moving_type') this.movingType,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt,
-      this.status});
+      this.status,
+      this.date,
+      this.comment,
+      this.send,
+      this.accept});
 
   factory _$_MoveDataDTO.fromJson(Map<String, dynamic> json) =>
       _$$_MoveDataDTOFromJson(json);
@@ -214,12 +240,6 @@ class _$_MoveDataDTO implements _MoveDataDTO {
   @JsonKey(name: 'recipient_id')
   final int? recipientId;
   @override
-  @JsonKey(name: 'organization_id')
-  final int? organizationId;
-  @override
-  @JsonKey(name: 'moving_type')
-  final int? movingType;
-  @override
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @override
@@ -227,10 +247,18 @@ class _$_MoveDataDTO implements _MoveDataDTO {
   final String? updatedAt;
   @override
   final int? status;
+  @override
+  final String? date;
+  @override
+  final String? comment;
+  @override
+  final int? send;
+  @override
+  final int? accept;
 
   @override
   String toString() {
-    return 'MoveDataDTO(id: $id, senderId: $senderId, recipientId: $recipientId, organizationId: $organizationId, movingType: $movingType, createdAt: $createdAt, updatedAt: $updatedAt, status: $status)';
+    return 'MoveDataDTO(id: $id, senderId: $senderId, recipientId: $recipientId, createdAt: $createdAt, updatedAt: $updatedAt, status: $status, date: $date, comment: $comment, send: $send, accept: $accept)';
   }
 
   @override
@@ -242,13 +270,13 @@ class _$_MoveDataDTO implements _MoveDataDTO {
             const DeepCollectionEquality().equals(other.senderId, senderId) &&
             const DeepCollectionEquality()
                 .equals(other.recipientId, recipientId) &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId) &&
-            const DeepCollectionEquality()
-                .equals(other.movingType, movingType) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.date, date) &&
+            const DeepCollectionEquality().equals(other.comment, comment) &&
+            const DeepCollectionEquality().equals(other.send, send) &&
+            const DeepCollectionEquality().equals(other.accept, accept));
   }
 
   @JsonKey(ignore: true)
@@ -258,11 +286,13 @@ class _$_MoveDataDTO implements _MoveDataDTO {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(senderId),
       const DeepCollectionEquality().hash(recipientId),
-      const DeepCollectionEquality().hash(organizationId),
-      const DeepCollectionEquality().hash(movingType),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(status));
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(date),
+      const DeepCollectionEquality().hash(comment),
+      const DeepCollectionEquality().hash(send),
+      const DeepCollectionEquality().hash(accept));
 
   @JsonKey(ignore: true)
   @override
@@ -280,11 +310,13 @@ abstract class _MoveDataDTO implements MoveDataDTO {
       {required final int id,
       @JsonKey(name: 'sender_id') final int? senderId,
       @JsonKey(name: 'recipient_id') final int? recipientId,
-      @JsonKey(name: 'organization_id') final int? organizationId,
-      @JsonKey(name: 'moving_type') final int? movingType,
       @JsonKey(name: 'created_at') final String? createdAt,
       @JsonKey(name: 'updated_at') final String? updatedAt,
-      final int? status}) = _$_MoveDataDTO;
+      final int? status,
+      final String? date,
+      final String? comment,
+      final int? send,
+      final int? accept}) = _$_MoveDataDTO;
 
   factory _MoveDataDTO.fromJson(Map<String, dynamic> json) =
       _$_MoveDataDTO.fromJson;
@@ -298,12 +330,6 @@ abstract class _MoveDataDTO implements MoveDataDTO {
   @JsonKey(name: 'recipient_id')
   int? get recipientId => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'organization_id')
-  int? get organizationId => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: 'moving_type')
-  int? get movingType => throw _privateConstructorUsedError;
-  @override
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
   @override
@@ -311,6 +337,14 @@ abstract class _MoveDataDTO implements MoveDataDTO {
   String? get updatedAt => throw _privateConstructorUsedError;
   @override
   int? get status => throw _privateConstructorUsedError;
+  @override
+  String? get date => throw _privateConstructorUsedError;
+  @override
+  String? get comment => throw _privateConstructorUsedError;
+  @override
+  int? get send => throw _privateConstructorUsedError;
+  @override
+  int? get accept => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MoveDataDTOCopyWith<_$_MoveDataDTO> get copyWith =>

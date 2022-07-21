@@ -80,17 +80,17 @@ class ReturnOrderPageCubit extends Cubit<ReturnOrderPageState> {
         ),
       ),
       (r) {
-        List<PharmacyOrderDTO> _loadOrders = [];
+       // List<PharmacyOrderDTO> _loadOrders = [];
         log("ON LOADING:: , page:: $_currentPage");
         if (r.isNotEmpty) {
           _currentPage++;
         }
-        for (final PharmacyOrderDTO orderDTO in r) {
-          if (orderDTO.status == 1 || orderDTO.status == 2) {
-            _loadOrders.add(orderDTO);
-          }
-        }
-        _activeOrders += _loadOrders;
+        // for (final PharmacyOrderDTO orderDTO in r) {
+        //   if (orderDTO.status == 1 || orderDTO.status == 2) {
+        //     _loadOrders.add(orderDTO);
+        //   }
+        // }
+        _activeOrders += r;
         emit(ReturnOrderPageState.loadedState(orders: _activeOrders));
       },
     );

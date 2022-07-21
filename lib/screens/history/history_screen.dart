@@ -574,7 +574,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         _BuildOrderDetailItem(
                                           icon: "container_ic",
                                           title: "Организация",
-                                          data: (orders[index].organizationId)
+                                          data: (orders[index].recipientId)
                                               .toString(),
                                         ),
                                         _BuildOrderDetailItem(
