@@ -95,10 +95,10 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
 
   @override
   Future<Either<Failure, MoveDataDTO>> createMovingOrder({
-    required int senderId,
-    required int recipientId,
-    required int organizationId,
-    required int movingType,
+    int? senderId,
+    int? recipientId,
+    int? organizationId,
+    int? movingType,
   }) async {
     if (await networkInfo.isConnected) {
       try {

@@ -16,6 +16,7 @@ import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:search_choices/search_choices.dart';
 
@@ -112,6 +113,8 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
   }
 
   TextEditingController numberController = TextEditingController();
+
+  TextEditingController reciverController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -239,204 +242,95 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                         const Divider(
                           color: ColorPalette.borderGrey,
                         ),
-                        BlocBuilder<countragents.CounteragentsCubit,
-                            countragents.CounteragentState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              loadingState: () =>
-                                  const CircularProgressIndicator(
-                                color: Colors.amber,
-                              ),
-                              loadedState: (counteragents) {
-                                return SearchChoices.single(
-                                  padding: recipientId == -1 ? 14 : 7,
-                                  displayClearIcon: false,
-                                  closeButton: "Закрыть",
-                                  items: counteragents
-                                      .map((e) => e.name)
-                                      .toList()
-                                      .map<DropdownMenuItem<String>>(
-                                          (String? value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        "$value",
-                                        style: ThemeTextStyle.textStyle14w400,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  value: recipient,
-                                  hint: "Получатель",
-                                  searchHint: "Получатель",
-                                  style: ThemeTextStyle.textStyle14w400,
-                                  onChanged: (String? newValue) {
-                                    recipient = newValue;
-                                    for (int i = 0;
-                                        i < counteragents.length;
-                                        i++) {
-                                      if (recipient == counteragents[i].name &&
-                                          counteragents[i].id != -1) {
-                                        recipientId = counteragents[i].id;
-                                      }
-                                    }
-                                    setState(() {});
-                                  },
-                                  isExpanded: true,
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svg/chevron_right.svg",
-                                  ),
-                                  underline: const SizedBox(),
-                                );
-                              },
-                              errorState: (String message) {
-                                return Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const CircularProgressIndicator(
-                                        color: Colors.red,
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(
-                                        message,
-                                        style:
-                                            const TextStyle(color: Colors.red),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              orElse: () {
-                                return const CircularProgressIndicator(
-                                  color: Colors.red,
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: ColorPalette.white,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: BlocBuilder<organization.OrganizationCubit,
-                        organization.OrganizationState>(
-                      builder: (context, state) {
-                        return state.maybeWhen(
-                          loadingState: () => const CircularProgressIndicator(
-                            color: Colors.amber,
+                        AppTextField(
+                          controller: reciverController,
+                          hintText: "Получатель",
+                          hintStyle: ThemeTextStyle.textStyle14w400
+                              .copyWith(color: ColorPalette.grey400),
+                          fillColor: ColorPalette.white,
+                          contentPadding: const EdgeInsets.only(
+                            top: 18,
+                            bottom: 18,
+                            left: 13,
                           ),
-                          loadedState: (organizations) {
-                            return SearchChoices.single(
-                              padding: organizationId == -1 ? 14 : 7,
-                              displayClearIcon: false,
-                              closeButton: "Закрыть",
-                              items: organizations
-                                  .map((e) => e.name)
-                                  .toList()
-                                  .map<DropdownMenuItem<String>>(
-                                      (String? value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    "$value",
-                                    style: ThemeTextStyle.textStyle14w400,
-                                  ),
-                                );
-                              }).toList(),
-                              value: organizationName,
-                              hint: "Получатель",
-                              searchHint: "Получатель",
-                              style: ThemeTextStyle.textStyle14w400,
-                              onChanged: (String? newValue) {
-                                organizationName = newValue;
-                                for (int i = 0; i < organizations.length; i++) {
-                                  if (organizationName ==
-                                          organizations[i].name &&
-                                      organizations[i].id != -1) {
-                                    organizationId = organizations[i].id;
-                                  }
-                                }
-                                setState(() {});
-                              },
-                              isExpanded: true,
-                              icon: SvgPicture.asset(
-                                "assets/images/svg/chevron_right.svg",
-                              ),
-                              underline: const SizedBox(),
-                            );
-                          },
-                          errorState: (String message) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const CircularProgressIndicator(
-                                    color: Colors.red,
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    message,
-                                    style: const TextStyle(color: Colors.red),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                          orElse: () {
-                            return const CircularProgressIndicator(
-                              color: Colors.red,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: ColorPalette.white,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Вид перемещения",
-                          style: ThemeTextStyle.textStyle14w400.copyWith(
-                            color: ColorPalette.grey400,
-                          ),
-                        ),
-                        DropdownButton(
-                          icon: SvgPicture.asset(
-                            "assets/images/svg/chevron_right.svg",
-                          ),
-                          underline: const SizedBox(),
-                          value: moveType,
-                          items: dropdownItems,
-                          alignment: AlignmentDirectional.centerEnd,
-                          onChanged: (String? value) {
-                            moveType = value!;
-                            setState(() {});
-                          },
-                        ),
+                        )
+                        // BlocBuilder<countragents.CounteragentsCubit,
+                        //     countragents.CounteragentState>(
+                        //   builder: (context, state) {
+                        //     return state.maybeWhen(
+                        //       loadingState: () =>
+                        //           const CircularProgressIndicator(
+                        //         color: Colors.amber,
+                        //       ),
+                        //       loadedState: (counteragents) {
+                        //         return SearchChoices.single(
+                        //           padding: recipientId == -1 ? 14 : 7,
+                        //           displayClearIcon: false,
+                        //           closeButton: "Закрыть",
+                        //           items: counteragents
+                        //               .map((e) => e.name)
+                        //               .toList()
+                        //               .map<DropdownMenuItem<String>>(
+                        //                   (String? value) {
+                        //             return DropdownMenuItem<String>(
+                        //               value: value,
+                        //               child: Text(
+                        //                 "$value",
+                        //                 style: ThemeTextStyle.textStyle14w400,
+                        //               ),
+                        //             );
+                        //           }).toList(),
+                        //           value: recipient,
+                        //           hint: "Получатель",
+                        //           searchHint: "Получатель",
+                        //           style: ThemeTextStyle.textStyle14w400,
+                        //           onChanged: (String? newValue) {
+                        //             recipient = newValue;
+                        //             for (int i = 0;
+                        //                 i < counteragents.length;
+                        //                 i++) {
+                        //               if (recipient == counteragents[i].name &&
+                        //                   counteragents[i].id != -1) {
+                        //                 recipientId = counteragents[i].id;
+                        //               }
+                        //             }
+                        //             setState(() {});
+                        //           },
+                        //           isExpanded: true,
+                        //           icon: SvgPicture.asset(
+                        //             "assets/images/svg/chevron_right.svg",
+                        //           ),
+                        //           underline: const SizedBox(),
+                        //         );
+                        //       },
+                        //       errorState: (String message) {
+                        //         return Center(
+                        //           child: Column(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             children: [
+                        //               const CircularProgressIndicator(
+                        //                 color: Colors.red,
+                        //               ),
+                        //               const SizedBox(
+                        //                 height: 8,
+                        //               ),
+                        //               Text(
+                        //                 message,
+                        //                 style:
+                        //                     const TextStyle(color: Colors.red),
+                        //               )
+                        //             ],
+                        //           ),
+                        //         );
+                        //       },
+                        //       orElse: () {
+                        //         return const CircularProgressIndicator(
+                        //           color: Colors.red,
+                        //         );
+                        //       },
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   ),
@@ -448,9 +342,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                     child: GestureDetector(
                       onTap: () {
                         if (senderId == -1 ||
-                            recipientId == -1 ||
-                            organizationId == -1 ||
-                            moveType == "Не выбрана") {
+                            reciverController.text.isEmpty) {
                           buildErrorCustomSnackBar(
                             context,
                             "Вы не выбрали все пункты!!!",

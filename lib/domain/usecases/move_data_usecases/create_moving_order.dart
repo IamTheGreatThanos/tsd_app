@@ -21,15 +21,15 @@ class CreateMovingOrder extends UseCase<MoveDataDTO, CreateMovingOrderParams> {
 }
 
 class CreateMovingOrderParams {
-  final int senderId;
-  final int recipientId;
-  final int organizationId;
-  final int movingType;
+  final int? senderId;
+  final int? recipientId;
+  final int? organizationId;
+  final int? movingType;
 
   CreateMovingOrderParams({
-    required this.senderId,
-    required this.recipientId,
-    required this.organizationId,
-    required this.movingType,
+    this.senderId,
+    this.recipientId,
+    this.organizationId,
+    this.movingType,
   });
 }

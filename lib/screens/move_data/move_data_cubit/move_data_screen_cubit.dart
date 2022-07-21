@@ -15,10 +15,10 @@ class MoveDataScreenCubit extends Cubit<MoveDataScreenState> {
       : super(const MoveDataScreenState.initialState());
 
   Future<void> createMovingOrder({
-    required int senderId,
-    required int recipientId,
-    required int organizationId,
-    required int movingType,
+     int? senderId,
+     int? recipientId,
+     int? organizationId,
+     int? movingType,
   }) async {
     emit(const MoveDataScreenState.loadingState());
 

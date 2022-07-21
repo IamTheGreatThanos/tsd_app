@@ -10,10 +10,10 @@ import 'package:pharmacy_arrival/data/model/product_dto.dart';
 abstract class MoveDataRemoteDS {
   Future<MoveDataDTO> createMovingOrder({
     required String accessToken,
-    required int senderId,
-    required int recipientId,
-    required int organizationId,
-    required int movingType,
+    int? senderId,
+    int? recipientId,
+    int? organizationId,
+    int? movingType,
   });
 
   Future<List<ProductDTO>> getProductByBarcode({
@@ -39,10 +39,10 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
   @override
   Future<MoveDataDTO> createMovingOrder({
     required String accessToken,
-    required int senderId,
-    required int recipientId,
-    required int organizationId,
-    required int movingType,
+    int? senderId,
+    int? recipientId,
+    int? organizationId,
+    int? movingType,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -50,10 +50,10 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
       final response = await dio.post(
         '$SERVER_/api/moving',
         data: {
-          'sender_id': senderId,
-          'recipient_id': recipientId,
-          'organization_id': organizationId,
-          'moving_type': movingType,
+          if (senderId != null) 'sender_id': senderId,
+          if (recipientId != null) 'recipient_id': recipientId,
+          if (organizationId != null) 'organization_id': organizationId,
+          if (movingType != null) 'moving_type': movingType,
         },
       );
 
@@ -69,8 +69,10 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
   }
 
   @override
-  Future<List<ProductDTO>> getProductByBarcode(
-      {required String accessToken, required String barcode,}) async {
+  Future<List<ProductDTO>> getProductByBarcode({
+    required String accessToken,
+    required String barcode,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {
@@ -96,10 +98,11 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
   }
 
   @override
-  Future<MoveDataDTO> updateMovingOrderStatus(
-      {required String accessToken,
-      required int moveOrderId,
-      required int status,}) async {
+  Future<MoveDataDTO> updateMovingOrderStatus({
+    required String accessToken,
+    required int moveOrderId,
+    required int status,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {
@@ -120,9 +123,10 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
       );
     }
   }
-  
+
   @override
-  Future<List<MoveDataDTO>> getMovingHistory({required String accessToken}) async {
+  Future<List<MoveDataDTO>> getMovingHistory(
+      {required String accessToken}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 

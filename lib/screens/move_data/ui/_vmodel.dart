@@ -7,6 +7,8 @@ class MoveDataVModel extends ChangeNotifier {
   late AppTextField recipient;
   late AppTextField organization;
   late AppTextField moveType;
+  
+  TextEditingController reciverController = TextEditingController();
 
   void init() {
     sender = AppTextField(
