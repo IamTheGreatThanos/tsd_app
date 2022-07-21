@@ -12,13 +12,14 @@ class BarcodeScannerWidget extends StatefulWidget {
   final String title;
   final double topPos;
   final Function(String) callback;
-  const BarcodeScannerWidget(
-      {Key? key,
-      required this.callback,
-      required this.width,
-      required this.height,
-      required this.title, required this.topPos})
-      : super(key: key);
+  const BarcodeScannerWidget({
+    Key? key,
+    required this.callback,
+    required this.width,
+    required this.height,
+    required this.title,
+    required this.topPos,
+  }) : super(key: key);
 
   @override
   State<BarcodeScannerWidget> createState() => _BarcodeScannerWidgetState();
@@ -50,7 +51,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
               if (!codes.contains(code)) {
                 codes.add(code);
                 widget.callback(code);
-              // controller.stop();
+                controller.dispose();
+                controller.stop();
                 // context
                 //     .read<BlocGoodsList>()
                 //     .add(EventScanItem(code: code));

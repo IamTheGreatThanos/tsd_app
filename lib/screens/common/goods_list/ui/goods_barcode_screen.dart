@@ -28,48 +28,50 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
           title: 'Отсканируйте  товары'.toUpperCase(),
           showLogo: false,
         ),
-        body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
-          listener: (context, state) {
-            state.when(
-              initialState: () {
-                context.loaderOverlay.hide();
-              },
-              loadingState: () {
-                context.loaderOverlay.show();
-              },
-              loadedState: (
-                scannedProducts,
-                unscannedProducts,
-                selectedProduct,
-              ) {
-                context.loaderOverlay.hide();
-                Navigator.pop(context);
-              },
-              successScannedState: (message) {},
-              errorState: (message) {
-                context.loaderOverlay.hide();
-              },
-            );
-          },
-          builder: (context, state) {
-            return BarcodeScannerWidget(
-              topPos: MediaQuery.of(context).size.height / 4,
-              title: 'Отсканируйте штрихкод товара',
-              height: (MediaQuery.of(context).size.width - 26) / 1.5,
-              width: MediaQuery.of(context).size.width - 26,
-              callback: (barcode) async {
-                await BlocProvider.of<GoodsListScreenCubit>(context)
-                    .scannerBarCode(
-                  barcode,
-                  widget.orderId,
-                  widget.searchController.text.isNotEmpty
-                      ? widget.searchController.text
-                      : null,
-                  1,
-                );
-              },
-            );
-          },
+        body: SafeArea(
+          child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+            listener: (context, state) {
+              state.when(
+                initialState: () {
+                  context.loaderOverlay.hide();
+                },
+                loadingState: () {
+                  context.loaderOverlay.show();
+                },
+                loadedState: (
+                  scannedProducts,
+                  unscannedProducts,
+                  selectedProduct,
+                ) {
+                  context.loaderOverlay.hide();
+                  Navigator.pop(context);
+                },
+                successScannedState: (message) {},
+                errorState: (message) {
+                  context.loaderOverlay.hide();
+                },
+              );
+            },
+            builder: (context, state) {
+              return BarcodeScannerWidget(
+                topPos: MediaQuery.of(context).size.height / 4,
+                title: 'Отсканируйте штрихкод товара',
+                height: (MediaQuery.of(context).size.width - 26) / 1.5,
+                width: MediaQuery.of(context).size.width - 26,
+                callback: (barcode) async {
+                  await BlocProvider.of<GoodsListScreenCubit>(context)
+                      .scannerBarCode(
+                    barcode,
+                    widget.orderId,
+                    widget.searchController.text.isNotEmpty
+                        ? widget.searchController.text
+                        : null,
+                    1,
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
