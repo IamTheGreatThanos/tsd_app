@@ -29,6 +29,10 @@ abstract class ProductsRemoteDS {
     required ProductDTO addingProduct,
   });
 
+  Future<ProductDTO> updateMoveDataProduct({
+    required String accessToken,
+    required ProductDTO updatingProduct,
+  });
   Future<ProductDTO> addRefundDataProduct({
     required String accessToken,
     required int refundOrderId,
@@ -199,6 +203,33 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
       return ProductDTO.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       log('##### addRefundDataProduct api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<ProductDTO> updateMoveDataProduct({
+    required String accessToken,
+    required ProductDTO updatingProduct,
+  }) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.patch(
+        '$SERVER_/api/moving-product/${updatingProduct.id}',
+        data: {
+          "scan_count": updatingProduct.scanCount,
+        },
+      );
+      log('##### updateMoveDataProduct api:: ${response.statusCode}');
+
+      return ProductDTO.fromJson(response.data as Map<String, dynamic>);
+    } on DioError catch (e) {
+      log('##### updateMoveDataProduct api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

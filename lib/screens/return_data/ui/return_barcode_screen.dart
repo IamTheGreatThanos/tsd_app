@@ -63,7 +63,8 @@ class ReturnBarcodeScreen extends StatelessWidget {
               callback: (barcode) {
                 BlocProvider.of<MoveBarcodeScreenCubit>(context)
                     .getProductByBarcode(
-                        barcode: barcode, isMoveProduct: false);
+                        barcode: barcode, isMoveProduct: false,
+                        orderId: 0,);
               },
             );
           },

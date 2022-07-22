@@ -6,12 +6,12 @@ import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/fill_move_details/fill_number.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_barcode_screen.dart';
+import 'package:pharmacy_arrival/screens/move_data/ui/move_order_finish_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class MoveProductsScreen extends StatefulWidget {
   final MoveDataDTO moveDataDTO;
@@ -34,26 +34,28 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 75),
-          child: SizedBox(
-            height: 80,
-            width: 80,
-            child: FloatingActionButton(
-              onPressed: () {
-                AppRouter.push(
-                  context,
-                  MoveBarcodeScreen(
-                    moveDataDTO: widget.moveDataDTO,
-                    isFromProductsPage: true,
+        floatingActionButton: (widget.moveDataDTO.send == 1)
+            ? null
+            : Padding(
+                padding: const EdgeInsets.only(bottom: 75),
+                child: SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      AppRouter.push(
+                        context,
+                        MoveBarcodeScreen(
+                          moveDataDTO: widget.moveDataDTO,
+                          isFromProductsPage: true,
+                        ),
+                      );
+                    },
+                    backgroundColor: ColorPalette.orange,
+                    child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
                   ),
-                );
-              },
-              backgroundColor: ColorPalette.orange,
-              child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
-            ),
-          ),
-        ),
+                ),
+              ),
         appBar: CustomAppBar(
           title: "Отсканированные".toUpperCase(),
           // actions: [
@@ -70,7 +72,6 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
             state.maybeWhen(
               finishedState: () {
                 Navigator.pop(context);
-                buildSuccessCustomSnackBar(context, "Успешно завершен");
               },
               orElse: () {},
             );
@@ -100,32 +101,35 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
                           shrinkWrap: true,
                         ),
                       ),
-                      MaterialButton(
-                        height: 40,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        color: ColorPalette.orange,
-                        disabledColor: ColorPalette.orangeInactive,
-                        padding: EdgeInsets.zero,
-                        onPressed: isFinishable == true
-                            ? () {
-                                BlocProvider.of<MoveProductsScreenCubit>(
-                                  context,
-                                ).updateMovingOrderStatus(
-                                  moveOrderId: widget.moveDataDTO.id,
-                                  status: 2,
-                                );
-                              }
-                            : null,
-                        child: Center(
-                          child: Text(
-                            "Завершить",
-                            style: ThemeTextStyle.textStyle14w600
-                                .copyWith(color: ColorPalette.white),
+                      if (widget.moveDataDTO.send == 1)
+                        const SizedBox()
+                      else
+                        MaterialButton(
+                          height: 40,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          color: ColorPalette.orange,
+                          disabledColor: ColorPalette.orangeInactive,
+                          padding: EdgeInsets.zero,
+                          onPressed: isFinishable == true
+                              ? () {
+                                  AppRouter.push(
+                                    context,
+                                    MoveOrderFinishPage(
+                                      orderData: widget.moveDataDTO,
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: Center(
+                            child: Text(
+                              "Далее",
+                              style: ThemeTextStyle.textStyle14w600
+                                  .copyWith(color: ColorPalette.white),
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 );

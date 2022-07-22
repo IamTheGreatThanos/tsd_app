@@ -17,16 +17,28 @@ class UpdateMovingOrderStatus
     return _moveDataRepository.updateMovingOrderStatus(
       moveOrderId: params.moveOrderId,
       status: params.status,
+      send: params.send,
+      accept: params.accept,
+      date: params.date,
+      comment: params.comment,
     );
   }
 }
 
 class UpdateMovingOrderStatusParams {
   final int moveOrderId;
-  final int status;
+  final int? status;
+  final int? send;
+  final int? accept;
+  final String? date;
+  final String? comment;
 
   UpdateMovingOrderStatusParams({
     required this.moveOrderId,
-    required this.status,
+    this.status,
+    this.send,
+    this.accept,
+    this.date,
+    this.comment,
   });
 }

@@ -39,7 +39,11 @@ abstract class MoveDataRemoteDS {
   Future<MoveDataDTO> updateMovingOrderStatus({
     required String accessToken,
     required int moveOrderId,
-    required int status,
+    int? status,
+    int? send,
+    int? accept,
+    String? date,
+    String? comment,
   });
 }
 
@@ -62,8 +66,7 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
         '$SERVER_/api/moving',
         data: {
           if (senderId != null) 'sender_id': senderId,
-          //FIXME Need to send id
-          if (recipientId != null) 'recipient': recipientId,
+          if (recipientId != null) 'recipient_id': recipientId,
           if (organizationId != null) 'organization_id': organizationId,
           if (movingType != null) 'moving_type': movingType,
         },
@@ -113,7 +116,11 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
   Future<MoveDataDTO> updateMovingOrderStatus({
     required String accessToken,
     required int moveOrderId,
-    required int status,
+    int? status,
+    int? send,
+    int? accept,
+    String? date,
+    String? comment,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -121,7 +128,11 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
       final response = await dio.patch(
         '$SERVER_/api/moving/$moveOrderId',
         data: {
-          'status': status,
+          if (status != null) 'status': status,
+          if (send != null) 'send': send,
+          if (accept != null) 'accept': accept,
+          if (date != null) 'date': date,
+          if (comment != null) 'comment': comment,
         },
       );
 

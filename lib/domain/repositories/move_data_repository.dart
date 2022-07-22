@@ -11,11 +11,16 @@ abstract class MoveDataRepository {
   });
   Future<Either<Failure, String>> deleteMoveDataFromCache();
 
-  Future<Either<Failure, List<ProductDTO>>> getMoveProductsFromCache();
+  Future<Either<Failure, List<ProductDTO>>> getMoveProductsFromCache({
+    required int moveOrderId,
+  });
   Future<Either<Failure, String>> saveMoveProductsToCache({
+    required int moveOrderId,
     required List<ProductDTO> products,
   });
-  Future<Either<Failure, String>> deleteMoveProductsFromCache();
+  Future<Either<Failure, String>> deleteMoveProductsFromCache({
+    required int moveOrderId,
+  });
 
   ///remote methods
   Future<Either<Failure, MoveDataDTO>> createMovingOrder({
@@ -40,7 +45,11 @@ abstract class MoveDataRepository {
 
   Future<Either<Failure, MoveDataDTO>> updateMovingOrderStatus({
     required int moveOrderId,
-    required int status,
+    int? status,
+    int? send,
+    int? accept,
+    String? date,
+    String? comment,
   });
 
   Future<Either<Failure, List<MoveDataDTO>>> getMovingHistory();
@@ -53,5 +62,17 @@ abstract class MoveDataRepository {
     int? accept,
     int? send,
     String? date,
+  });
+
+  Future<Either<Failure, ProductDTO>> updateMoveProductById({
+    required ProductDTO updatingProduct,
+  });
+
+  Future<Either<Failure, ProductDTO>> getMoveSelectedProductFromCahce({
+    required int orderId,
+  });
+
+  Future<Either<Failure, String>> saveMoveSelectedProductToCahce({
+    required ProductDTO selectedProduct,
   });
 }

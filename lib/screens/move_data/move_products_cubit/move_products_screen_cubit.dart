@@ -37,11 +37,23 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
 
   Future<void> updateMovingOrderStatus({
     required int moveOrderId,
-    required int status,
+    int? status,
+    int? send,
+    int? accept,
+    String? date,
+    String? comment,
   }) async {
     emit(const MoveProductsScreenState.loadingState());
-    final result = await _movingOrderStatus.call(UpdateMovingOrderStatusParams(
-        moveOrderId: moveOrderId, status: status,),);
+    final result = await _movingOrderStatus.call(
+      UpdateMovingOrderStatusParams(
+        moveOrderId: moveOrderId,
+        status: status,
+        send: send,
+        accept: accept,
+        date: date,
+        comment: comment,
+      ),
+    );
     result.fold((l) {
       emit(MoveProductsScreenState.errorState(message: mapFailureToMessage(l)));
     }, (r) async {
@@ -62,14 +74,22 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
       ),
       (r) async {
         allProducts.addAll(r);
-        await _getProductsFromCache();
-        emit(MoveProductsScreenState.loadedState(
-            products: allProducts, isFinishable: isFinishable,),);
+        await _getProductsFromCache(
+          moveOrderId: moveOrderId,
+        );
+        emit(
+          MoveProductsScreenState.loadedState(
+            products: allProducts,
+            isFinishable: isFinishable,
+          ),
+        );
       },
     );
   }
 
-  Future<void> _getProductsFromCache() async {
+  Future<void> _getProductsFromCache({
+    required int moveOrderId,
+  }) async {
     isFinishable = false;
     //   const ProductDTO productDTO = ProductDTO(
     //     id: 11,
@@ -96,7 +116,9 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
     //     isReady: true,
     //   );
     //    final saveResult = await _saveMoveProductsToCache([productDTO,productDTO2]);
-    final result = await _getMoveProductsFromCache.call();
+    final result = await _getMoveProductsFromCache.call(
+      moveOrderId,
+    );
     result.fold(
       (l) {
         isFinishable = true;
@@ -125,14 +147,20 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
                 message: mapFailureToMessage(l),
               ),
             ), (r) async {
-      await deleteProductFromCahceById(productId: addingProduct.id);
+      await deleteProductFromCahceById(
+        productId: addingProduct.id,
+        moveOrderId: moveOrderId,
+      );
       await getProducts(moveOrderId: moveOrderId);
     });
   }
 
-  Future<void> deleteProductFromCahceById({required int productId}) async {
+  Future<void> deleteProductFromCahceById({
+    required int productId,
+    required int moveOrderId,
+  }) async {
     List<ProductDTO> cacheProducts = [];
-    final result = await _getMoveProductsFromCache();
+    final result = await _getMoveProductsFromCache(moveOrderId);
     result.fold((l) {
       log('GetProductsFromCache not success');
     }, (r) {
@@ -146,8 +174,15 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
       }
     }
 
-    await _deleteMoveProductsFromCache.call();
-    final saveResult = await _saveMoveProductsToCache(cacheProducts);
+    await _deleteMoveProductsFromCache.call(
+      moveOrderId,
+    );
+    final saveResult = await _saveMoveProductsToCache(
+      SaveMoveProductsToCacheParams(
+        moveOrderId: moveOrderId,
+        products: cacheProducts,
+      ),
+    );
     saveResult.fold((l) {
       log(mapFailureToMessage(l));
     }, (r) {

@@ -7,6 +7,7 @@ import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
@@ -109,6 +110,9 @@ class TopLevelBlocs extends StatelessWidget {
         ),
         BlocProvider<MoveOrderCatCubit>(
           create: (context) => sl<MoveOrderCatCubit>(),
+        ),
+        BlocProvider<MoveGoodsScreenCubit>(
+          create: (context) => sl<MoveGoodsScreenCubit>(),
         ),
       ],
       child: child,

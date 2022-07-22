@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
-class GoodsBarcodeScreen extends StatefulWidget {
+class MoveGoodsBarcodeScreen extends StatefulWidget {
   final int orderId;
   final TextEditingController searchController;
-  const GoodsBarcodeScreen({
-    Key? key,
-    required this.orderId,
-    required this.searchController,
-  }) : super(key: key);
+  const MoveGoodsBarcodeScreen(
+      {Key? key, required this.orderId, required this.searchController})
+      : super(key: key);
 
   @override
-  State<GoodsBarcodeScreen> createState() => _GoodsBarcodeScreenState();
+  State<MoveGoodsBarcodeScreen> createState() => _MoveGoodsBarcodeScreenState();
 }
 
-class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
+class _MoveGoodsBarcodeScreenState extends State<MoveGoodsBarcodeScreen> {
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
@@ -28,7 +26,7 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
           showLogo: false,
         ),
         body: SafeArea(
-          child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+          child: BlocConsumer<MoveGoodsScreenCubit, MoveGoodsScreenState>(
             listener: (context, state) {
               state.when(
                 initialState: () {
@@ -58,7 +56,7 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
                 height: (MediaQuery.of(context).size.width - 26) / 1.5,
                 width: MediaQuery.of(context).size.width - 26,
                 callback: (barcode) async {
-                  await BlocProvider.of<GoodsListScreenCubit>(context)
+                  await BlocProvider.of<MoveGoodsScreenCubit>(context)
                       .scannerBarCode(
                     barcode,
                     widget.orderId,

@@ -1,45 +1,35 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_barcode_screen.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/ui/widgets/build_pharmacy_good_datail.dart';
-import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/ui/move_goods_barcode_screen.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/ui/widgets/build_move_goods_detail.dart';
+import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class GoodsListScreen extends StatefulWidget {
-  final bool isFromPharmacyPage;
-  final PharmacyOrderDTO? pharmacyOrder;
-  final WarehouseOrderDTO? warehouseOrder;
-
-  const GoodsListScreen({
-    Key? key,
-    required this.isFromPharmacyPage,
-    this.pharmacyOrder,
-    this.warehouseOrder,
-  }) : super(key: key);
+class MoveGoodsListScreen extends StatefulWidget {
+  final MoveDataDTO moveDataDTO;
+  const MoveGoodsListScreen({Key? key, required this.moveDataDTO})
+      : super(key: key);
 
   @override
-  State<GoodsListScreen> createState() => _GoodsListScreenState();
+  State<MoveGoodsListScreen> createState() => _MoveGoodsListScreenState();
 }
 
-class _GoodsListScreenState extends State<GoodsListScreen> {
+class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
   bool isFloatingButtonVisible = true;
   String _currentScan = '';
   FocusNode focusNode = FocusNode();
@@ -47,14 +37,9 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
   TextEditingController searchController = TextEditingController();
   @override
   void initState() {
-    if (widget.isFromPharmacyPage) {
-      BlocProvider.of<GoodsListScreenCubit>(context).getPharmacyProducts(
-        orderId: widget.pharmacyOrder!.id,
-      );
-    } else {}
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    BlocProvider.of<MoveGoodsScreenCubit>(context).getMoveProducts(
+      orderId: widget.moveDataDTO.id,
+    );
     super.initState();
   }
 
@@ -81,11 +66,9 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
             setState(() {
               _currentScan = '';
             });
-            BlocProvider.of<GoodsListScreenCubit>(context).scannerBarCode(
+            BlocProvider.of<MoveGoodsScreenCubit>(context).scannerBarCode(
               scanResult,
-              widget.isFromPharmacyPage
-                  ? widget.pharmacyOrder!.id
-                  : widget.warehouseOrder!.id,
+              widget.moveDataDTO.id,
               searchController.text.isNotEmpty ? searchController.text : null,
               1,
             );
@@ -114,7 +97,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
         },
         child: Scaffold(
           floatingActionButton:
-              BlocBuilder<GoodsListScreenCubit, GoodsListScreenState>(
+              BlocBuilder<MoveGoodsScreenCubit, MoveGoodsScreenState>(
             builder: (context, state) {
               return state.maybeWhen(
                 loadedState: (
@@ -133,11 +116,9 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                         onPressed: () {
                           AppRouter.push(
                             context,
-                            GoodsBarcodeScreen(
+                            MoveGoodsBarcodeScreen(
                               searchController: searchController,
-                              orderId: widget.isFromPharmacyPage
-                                  ? widget.pharmacyOrder!.id
-                                  : widget.warehouseOrder!.id,
+                              orderId: widget.moveDataDTO.id,
                             ),
                           );
                         },
@@ -176,40 +157,32 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   focusNode: FocusNode(),
                   onFieldSubmitted: (value) {
                     final productCubit =
-                        BlocProvider.of<GoodsListScreenCubit>(context);
+                        BlocProvider.of<MoveGoodsScreenCubit>(context);
 
                     if (value.isNotEmpty) {
-                      productCubit.getPharmacyProducts(
-                        orderId: widget.isFromPharmacyPage
-                            ? widget.pharmacyOrder!.id
-                            : widget.warehouseOrder!.id,
+                      productCubit.getMoveProducts(
+                        orderId: widget.moveDataDTO.id,
                         search: value,
                       );
                     } else {
-                      productCubit.getPharmacyProducts(
-                        orderId: widget.isFromPharmacyPage
-                            ? widget.pharmacyOrder!.id
-                            : widget.warehouseOrder!.id,
+                      productCubit.getMoveProducts(
+                        orderId: widget.moveDataDTO.id,
                       );
                     }
                   },
                   onChanged: (String? text) {
                     final productCubit =
-                        BlocProvider.of<GoodsListScreenCubit>(context);
+                        BlocProvider.of<MoveGoodsScreenCubit>(context);
 
                     if (text != null) {
-                      productCubit.getPharmacyProducts(
-                        orderId: widget.isFromPharmacyPage
-                            ? widget.pharmacyOrder!.id
-                            : widget.warehouseOrder!.id,
+                      productCubit.getMoveProducts(
+                        orderId: widget.moveDataDTO.id,
                         search: text,
                       );
                     }
                     if (text == null || text.isEmpty) {
-                      productCubit.getPharmacyProducts(
-                        orderId: widget.isFromPharmacyPage
-                            ? widget.pharmacyOrder!.id
-                            : widget.warehouseOrder!.id,
+                      productCubit.getMoveProducts(
+                        orderId: widget.moveDataDTO.id,
                       );
                     }
                   },
@@ -230,7 +203,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                 ),
               ),
               Expanded(
-                child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+                child: BlocConsumer<MoveGoodsScreenCubit, MoveGoodsScreenState>(
                   builder: (context, state) {
                     return state.maybeWhen(
                       loadingState: () {
@@ -247,18 +220,12 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                       ) {
                         return _BuildBody(
                           searchController: searchController,
-                          orderStatus: widget.isFromPharmacyPage
-                              ? widget.pharmacyOrder?.status ?? 0
-                              : widget.warehouseOrder?.status ?? 0,
-                          orderId: widget.isFromPharmacyPage
-                              ? widget.pharmacyOrder!.id
-                              : widget.warehouseOrder!.id,
+                          orderStatus: widget.moveDataDTO.status!,
+                          orderId: widget.moveDataDTO.id,
                           unscannedProducts: unscannedProducts,
                           scannedProducts: scannedProducts,
                           selectedProduct: selectedProduct,
-                          pharmacyOrder: widget.pharmacyOrder,
-                          warehouseOrder: widget.warehouseOrder,
-                          isFromPharmacyPage: widget.isFromPharmacyPage,
+                          moveDataDTO: widget.moveDataDTO,
                         );
                       },
                       errorState: (String message) {
@@ -323,9 +290,7 @@ class _BuildBody extends StatefulWidget {
   final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
-  final PharmacyOrderDTO? pharmacyOrder;
-  final WarehouseOrderDTO? warehouseOrder;
-  final bool isFromPharmacyPage;
+  final MoveDataDTO moveDataDTO;
   const _BuildBody({
     Key? key,
     required this.orderId,
@@ -333,9 +298,7 @@ class _BuildBody extends StatefulWidget {
     required this.unscannedProducts,
     required this.selectedProduct,
     required this.orderStatus,
-    this.pharmacyOrder,
-    this.warehouseOrder,
-    required this.isFromPharmacyPage,
+    required this.moveDataDTO,
     required this.searchController,
   }) : super(key: key);
 
@@ -467,12 +430,12 @@ class _BuildBodyState extends State<_BuildBody> {
         Expanded(
           child: SmartRefresher(
             onRefresh: () {
-              BlocProvider.of<GoodsListScreenCubit>(context)
-                  .getPharmacyProducts(orderId: widget.orderId);
+              BlocProvider.of<MoveGoodsScreenCubit>(context)
+                  .getMoveProducts(orderId: widget.orderId);
             },
             controller: controller,
             child: itemCount == 0
-                ? widget.orderStatus == 3
+                ? widget.orderStatus == 2
                     ? ListView(
                         children: [
                           SizedBox(
@@ -519,65 +482,86 @@ class _BuildBodyState extends State<_BuildBody> {
                         ? widget.unscannedProducts.length
                         : widget.scannedProducts.length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (currentIndex == 0) {
-                            AppRouter.push(
-                              context,
-                              DefectScreen(
-                                searchController: widget.searchController,
-                                product: widget.unscannedProducts[index],
-                                orderId: widget.orderId,
-                              ),
-                            );
-                          }
-                        },
-                        child: BuildPharmacyGoodDetails(
-                          searchController: widget.searchController,
-                          currentIndex: currentIndex,
-                          orderID: widget.orderId,
-                          good: currentIndex == 0
-                              ? widget.unscannedProducts[index]
-                              : widget.scannedProducts[index],
-                          selectedProduct: widget.selectedProduct,
-                        ),
+                      return BuildMoveGoodsDetail(
+                        searchController: widget.searchController,
+                        currentIndex: currentIndex,
+                        orderID: widget.orderId,
+                        good: currentIndex == 0
+                            ? widget.unscannedProducts[index]
+                            : widget.scannedProducts[index],
+                        selectedProduct: widget.selectedProduct,
                       );
                     },
                   ),
           ),
         ),
         if (widget.unscannedProducts.isEmpty &&
-            widget.orderStatus != 3 &&
+            widget.orderStatus != 2 &&
             widget.searchController.text.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 20,
-            ),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+          BlocListener<MoveProductsScreenCubit, MoveProductsScreenState>(
+            listener: (context, state) {
+              state.when(
+                initialState: () {
+                  context.loaderOverlay.hide();
+                },
+                loadingState: () {
+                  context.loaderOverlay.show();
+                },
+                loadedState: (list, isFinishable) {
+                  context.loaderOverlay.hide();
+                },
+                finishedState: () {
+                  BlocProvider.of<MoveProductsScreenCubit>(
+                    context,
+                  ).getProducts(
+                    moveOrderId: widget.orderId,
+                  );
+                  Navigator.pop(context);
+                  context.loaderOverlay.hide();
+                },
+                errorState: (String message) {
+                  context.loaderOverlay.hide();
+                  buildErrorCustomSnackBar(context, message);
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 20,
               ),
-              height: 40,
-              color: ColorPalette.orange,
-              onPressed: () {
-                AppRouter.push(
-                  context,
-                  FillInvoiceScreen(
-                    isFromPharmacyPage: widget.isFromPharmacyPage,
-                    pharmacyOrder: widget.pharmacyOrder,
-                    warehouseOrder: widget.warehouseOrder,
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Center(
-                  child: Text(
-                    "Завершить".toUpperCase(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                height: 40,
+                color: ColorPalette.orange,
+                onPressed: () {
+                  BlocProvider.of<MoveProductsScreenCubit>(
+                    context,
+                  ).updateMovingOrderStatus(
+                    moveOrderId: widget.orderId,
+                    status: 2,
+                    accept: 1,
+                  );
+                  // AppRouter.push(
+                  //   context,
+                  //   FillInvoiceScreen(
+                  //     isFromPharmacyPage: widget.isFromPharmacyPage,
+                  //     pharmacyOrder: widget.pharmacyOrder,
+                  //     warehouseOrder: widget.warehouseOrder,
+                  //   ),
+                  // );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Text(
+                      "Завершить".toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

@@ -4,10 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/ui/move_goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_page_cubit.dart';
+import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
+import 'package:pharmacy_arrival/screens/move_data/ui/move_products_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
@@ -44,6 +48,20 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
+        floatingActionButton: SizedBox(
+          height: 80,
+          width: 80,
+          child: FloatingActionButton(
+            onPressed: () {
+              AppRouter.push(
+                context,
+                const MoveDataScreen(),
+              );
+            },
+            backgroundColor: ColorPalette.orange,
+            child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
+          ),
+        ),
         appBar: CustomAppBar(
           title: "Перемещение".toUpperCase(),
         ),
@@ -297,37 +315,66 @@ class _BuildOrderData extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "№.${orderData.id} ${orderData.id}",
+                    "№.${orderData.id}",
                     style: ThemeTextStyle.textStyle20w600,
                   ),
                 ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: orderData.status == 1
-                //         ? ColorPalette.lightGreen
-                //         : ColorPalette.lightYellow,
-                //     border: Border.all(
-                //       color: orderData.status == 1
-                //           ? ColorPalette.borderGreen
-                //           : ColorPalette.borderYellow,
-                //     ),
-                //     borderRadius: BorderRadius.circular(100),
-                //   ),
-                //   padding:
-                //       const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                //   child: Center(
-                //     child: Text(
-                //         orderData.status == 1
-                //             ? "Новый заказ"
-                //             : "Активный заказ",
-                //         style: ThemeTextStyle.textStyle12w600.copyWith(
-                //           color: orderData.status == 1
-                //               ? ColorPalette.textGreen
-                //               : ColorPalette.textYellow,
-                //         ),
-                //         textAlign: TextAlign.center),
-                //   ),
-                // ),
+                if (currentIndex == 0)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: orderData.accept == 0
+                          ? ColorPalette.lightGreen
+                          : ColorPalette.lightYellow,
+                      border: Border.all(
+                        color: orderData.accept == 0
+                            ? ColorPalette.borderGreen
+                            : ColorPalette.borderYellow,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    child: Center(
+                      child: Text(
+                        orderData.accept == 0
+                            ? "Необходимо принят"
+                            : "Уже принят",
+                        style: ThemeTextStyle.textStyle12w600.copyWith(
+                          color: orderData.accept == 0
+                              ? ColorPalette.textGreen
+                              : ColorPalette.textYellow,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                else
+                  Container(
+                    decoration: BoxDecoration(
+                      color: orderData.send == 1
+                          ? ColorPalette.lightGreen
+                          : ColorPalette.lightYellow,
+                      border: Border.all(
+                        color: orderData.send == 1
+                            ? ColorPalette.borderGreen
+                            : ColorPalette.borderYellow,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    child: Center(
+                      child: Text(
+                        orderData.send == 1 ? "Отправлен" : "Не отправлен",
+                        style: ThemeTextStyle.textStyle12w600.copyWith(
+                          color: orderData.send == 1
+                              ? ColorPalette.textGreen
+                              : ColorPalette.textYellow,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
               ],
             ),
             const SizedBox(
@@ -342,7 +389,7 @@ class _BuildOrderData extends StatelessWidget {
 
             _BuildOrderDetailItem(
               icon: "calendar_ic",
-              title: "Время отпр.",
+              title: "Время создания",
               data: orderData.createdAt != null
                   ? DateFormat("dd.MM.yyyy; hh:mm")
                       .format(DateTime.parse('${orderData.createdAt}'))
@@ -362,24 +409,35 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-
             if (orderData.send == 1)
               _BuildOrderDetailItem(
                 icon: "clock",
                 title: "Время отправки",
                 data: "${orderData.date}",
               ),
-            _BuildOrderDetailItem(
-              icon: "messages",
-              title: "Коментарий",
-              data: "${orderData.comment}",
-            ),
+            if (orderData.comment == null)
+              const SizedBox()
+            else
+              _BuildOrderDetailItem(
+                icon: "messages",
+                title: "Коментарий",
+                data: "${orderData.comment}",
+              ),
             const SizedBox(
               height: 12,
             ),
             if (currentIndex == 0)
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  if (orderData.accept == 0) {
+                    AppRouter.push(
+                      context,
+                      MoveGoodsListScreen(
+                        moveDataDTO: orderData,
+                      ),
+                    );
+                  }
+                },
                 child: Container(
                   height: 44,
                   padding: const EdgeInsets.symmetric(vertical: 6),
@@ -400,7 +458,14 @@ class _BuildOrderData extends StatelessWidget {
               )
             else
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  AppRouter.push(
+                    context,
+                    MoveProductsScreen(
+                      moveDataDTO: orderData,
+                    ),
+                  );
+                },
                 child: Container(
                   height: 44,
                   padding: const EdgeInsets.symmetric(vertical: 6),

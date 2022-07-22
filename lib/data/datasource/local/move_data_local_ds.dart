@@ -9,10 +9,17 @@ import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class MoveDataLocalDS {
-  Future<List<ProductDTO>> getMoveProductsFromCache();
+  Future<List<ProductDTO>> getMoveProductsFromCache({
+    required int moveOrderId,
+  });
 
-  Future<void> saveMoveProductsToCache({required List<ProductDTO> products});
-  Future<void> deleteMoveProductsFromCache();
+  Future<void> saveMoveProductsToCache({
+    required List<ProductDTO> products,
+    required int moveOrderId,
+  });
+  Future<void> deleteMoveProductsFromCache({
+    required int moveOrderId,
+  });
 
   Future<MoveDataDTO> getMoveDataFromCache();
 
@@ -65,10 +72,12 @@ class MoveDataLocalDSImpl extends MoveDataLocalDS {
   }
 
   @override
-  Future<List<ProductDTO>> getMoveProductsFromCache() async {
+  Future<List<ProductDTO>> getMoveProductsFromCache({
+    required int moveOrderId,
+  }) async {
     final jsonPersonsList =
-        sharedPreferences.getStringList(MOVE_PRODUCTS_CACHE);
-    if (jsonPersonsList!=null&&jsonPersonsList.isNotEmpty) {
+        sharedPreferences.getStringList("$moveOrderId,$MOVE_PRODUCTS_CACHE");
+    if (jsonPersonsList != null && jsonPersonsList.isNotEmpty) {
       log('Get Products from Cache: ${jsonPersonsList.length}');
       return Future.value(
         jsonPersonsList
@@ -84,20 +93,25 @@ class MoveDataLocalDSImpl extends MoveDataLocalDS {
   }
 
   @override
-  Future<void> saveMoveProductsToCache({required List<ProductDTO> products}) async {
+  Future<void> saveMoveProductsToCache({
+    required List<ProductDTO> products,
+    required int moveOrderId,
+  }) async {
     final List<String> jsonCitiesList =
         products.map((person) => json.encode(person.toJson())).toList();
 
-    sharedPreferences.setStringList(MOVE_PRODUCTS_CACHE, jsonCitiesList);
+    sharedPreferences.setStringList("$moveOrderId,$MOVE_PRODUCTS_CACHE", jsonCitiesList);
     log('Products to write Cache: ${jsonCitiesList.length}');
     return Future.value(jsonCitiesList);
   }
 
   @override
-  Future<void> deleteMoveProductsFromCache() async {
+  Future<void> deleteMoveProductsFromCache({
+    required int moveOrderId,
+  }) async {
     log('Products removed from Cache');
     sharedPreferences.remove(
-      MOVE_PRODUCTS_CACHE,
+      "$moveOrderId,$MOVE_PRODUCTS_CACHE",
     );
   }
 }

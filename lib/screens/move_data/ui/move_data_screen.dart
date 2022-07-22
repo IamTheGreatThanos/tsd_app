@@ -32,57 +32,13 @@ class MoveDataScreen extends StatefulWidget {
 class _MoveDataScreenState extends State<MoveDataScreen> {
   @override
   void initState() {
-    BlocProvider.of<MoveCubit>(context).checkMoveDataOrder();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<MoveCubit, MoveState>(
-        builder: (BuildContext context, state) {
-          return state.when(
-            initialState: () {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.amber),
-              );
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.amber),
-              );
-            },
-            activeState: (MoveDataDTO moveDataDTO, List<ProductDTO> product) {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.amber),
-              );
-            },
-            passiveState: () {
-              return const _BuildMoveScreenBody();
-            },
-          );
-        },
-        listener: (BuildContext context, state) {
-          state.maybeWhen(
-            activeState: (MoveDataDTO moveDataDTO, List<ProductDTO> products) {
-              AppRouter.pushReplacement(
-                context,
-                MoveProductsScreen(
-                  moveDataDTO: moveDataDTO,
-                ),
-              );
-            },
-            passiveState: () {
-              return const _BuildMoveScreenBody();
-            },
-            orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.amber),
-              );
-            },
-          );
-        },
-      ),
+    return const Scaffold(
+      body: _BuildMoveScreenBody(),
     );
   }
 }

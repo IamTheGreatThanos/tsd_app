@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 MaskTextInputFormatter maskPhoneFormatter = MaskTextInputFormatter(
@@ -25,4 +26,25 @@ String moneyFormatter(String money) {
   }
 
   return temp.split('').reversed.join();
+}
+
+Future bottomSheet(
+  Widget widget,
+  BuildContext context,
+) {
+  return showModalBottomSheet(
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10),
+        topRight: Radius.circular(10),
+      ),
+    ),
+    context: context,
+    enableDrag: true,
+    isDismissible: false,
+    isScrollControlled: true,
+    builder: (context) {
+      return widget;
+    },
+  );
 }

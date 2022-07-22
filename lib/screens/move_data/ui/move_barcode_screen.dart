@@ -79,7 +79,7 @@ class _MoveBarcodeScreenState extends State<MoveBarcodeScreen> {
               width: MediaQuery.of(context).size.width - 26,
               callback: (barcode) {
                 BlocProvider.of<MoveBarcodeScreenCubit>(context)
-                    .getProductByBarcode(barcode: barcode, isMoveProduct: true);
+                    .getProductByBarcode(barcode: barcode, isMoveProduct: true,orderId: widget.moveDataDTO.id);
               },
             );
           },

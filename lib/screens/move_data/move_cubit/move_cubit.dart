@@ -14,23 +14,23 @@ class MoveCubit extends Cubit<MoveState> {
   MoveCubit(this._getMoveDataFromCache, this._getMoveProductsFromCache)
       : super(const MoveState.initialState());
 
-  Future<void> checkMoveDataOrder() async {
-    List<ProductDTO> products = [];
-    emit(const MoveState.loadingState());
-    final result = await _getMoveDataFromCache.call();
-    result.fold(
-      (l) => emit(const MoveState.passiveState()),
-      (r) async {
-        final failureOrSuccess = await _getMoveProductsFromCache.call();
-        failureOrSuccess.fold(
-          (l) =>
-              emit(MoveState.activeState(moveDataDTO: r, products: products)),
-          (rArray) {
-            products = rArray;
-            emit(MoveState.activeState(moveDataDTO: r, products: products));
-          },
-        );
-      },
-    );
-  }
+  // Future<void> checkMoveDataOrder() async {
+  //   List<ProductDTO> products = [];
+  //   emit(const MoveState.loadingState());
+  //   final result = await _getMoveDataFromCache.call();
+  //   result.fold(
+  //     (l) => emit(const MoveState.passiveState()),
+  //     (r) async {
+  //       final failureOrSuccess = await _getMoveProductsFromCache.call();
+  //       failureOrSuccess.fold(
+  //         (l) =>
+  //             emit(MoveState.activeState(moveDataDTO: r, products: products)),
+  //         (rArray) {
+  //           products = rArray;
+  //           emit(MoveState.activeState(moveDataDTO: r, products: products));
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 }

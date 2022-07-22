@@ -23,12 +23,15 @@ class MoveBarcodeScreenCubit extends Cubit<MoveBarcodeScreenState> {
   MoveBarcodeScreenCubit(
     this._getProductByBarcode,
     this._getMoveProductsFromCache,
-    this._saveMoveProductsToCache, this._getRefundProductsFromCache, this._saveRefundProductsToCache,
+    this._saveMoveProductsToCache,
+    this._getRefundProductsFromCache,
+    this._saveRefundProductsToCache,
   ) : super(const MoveBarcodeScreenState.initialState());
 
   Future<void> getProductByBarcode({
     required String barcode,
     required bool isMoveProduct,
+    required int orderId,
   }) async {
     emit(const MoveBarcodeScreenState.loadingState());
 
@@ -36,12 +39,13 @@ class MoveBarcodeScreenCubit extends Cubit<MoveBarcodeScreenState> {
     result.fold(
       (l) {
         emit(
-            MoveBarcodeScreenState.errorState(message: mapFailureToMessage(l)),);
+          MoveBarcodeScreenState.errorState(message: mapFailureToMessage(l)),
+        );
         log(mapFailureToMessage(l));
       },
       (r) async {
         if (isMoveProduct) {
-          await saveMoveProductsToCache(r);
+          await saveMoveProductsToCache(r, orderId);
         } else {
           await saveRefundProductsToCache(r);
         }
@@ -69,9 +73,14 @@ class MoveBarcodeScreenCubit extends Cubit<MoveBarcodeScreenState> {
     });
   }
 
-  Future<void> saveMoveProductsToCache(ProductDTO scannedProduct) async {
+  Future<void> saveMoveProductsToCache(
+    ProductDTO scannedProduct,
+    int orderId,
+  ) async {
     List<ProductDTO> cahceProducts = [];
-    final result = await _getMoveProductsFromCache.call();
+    final result = await _getMoveProductsFromCache.call(
+      orderId,
+    );
     result.fold((l) {
       log(mapFailureToMessage(l));
     }, (r) {
@@ -80,7 +89,11 @@ class MoveBarcodeScreenCubit extends Cubit<MoveBarcodeScreenState> {
 
     cahceProducts.add(scannedProduct.copyWith(isReady: true));
 
-    final saveResult = await _saveMoveProductsToCache(cahceProducts);
+    final saveResult =
+        await _saveMoveProductsToCache(SaveMoveProductsToCacheParams(
+      products: cahceProducts,
+      moveOrderId: orderId,
+    ));
     saveResult.fold((l) {
       log(mapFailureToMessage(l));
     }, (r) {

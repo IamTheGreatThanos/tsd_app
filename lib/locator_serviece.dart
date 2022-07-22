@@ -67,6 +67,7 @@ import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
@@ -96,6 +97,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl(), sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => MoveGoodsScreenCubit(sl(),));
   sl.registerFactory(() => SignatureScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));
@@ -238,6 +240,7 @@ Future<void> initLocator() async {
   );
   sl.registerLazySingleton<MoveDataRepository>(
     () => MoveDataRepositoryImpl(
+      sl(),
       sl(),
       sl(),
       sl(),
