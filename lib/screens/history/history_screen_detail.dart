@@ -535,6 +535,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       Text(
                         'Пересорт серий:   ${widget.good.reSorting}'
                             .toUpperCase(),
+                      ), Text(
+                        'Возврат:   ${widget.good.refund}'
+                            .toUpperCase(),
                       ),
                     ],
                   )

@@ -410,6 +410,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         container: orders[index].container ?? 0,
                                         createdAt: orders[index].createdAt,
                                         counteragent: orders[index].sender,
+                                        incomingNumber:
+                                            orders[index].incomingNumber,
                                       ),
                                     ),
                                   ),
@@ -791,7 +793,8 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            if (pharmacyOrderDTO?.refundStatus == 0)
+            if (pharmacyOrderDTO?.refundStatus == 0 ||
+                pharmacyOrderDTO?.refundStatus == 1)
               CustomButton(
                 height: 44,
                 onClick: () {
@@ -805,11 +808,14 @@ class _BuildOrderData extends StatelessWidget {
                       .updatePharmacyOrderStatus(
                     orderId: orderId,
                     refundStatus: 1,
+                    isFromHisPage: true,
                   );
                 },
-                body: const Text(
-                  'Создать возврата',
-                  style: TextStyle(),
+                body: Text(
+                  pharmacyOrderDTO?.refundStatus == 0
+                      ? 'Создать возврата'
+                      : "Продолжить возврат",
+                  style: const TextStyle(),
                 ),
                 style: pinkButtonStyle(),
               )

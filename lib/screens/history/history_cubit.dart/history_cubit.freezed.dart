@@ -36,6 +36,7 @@ mixin _$HistoryState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +56,7 @@ mixin _$HistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -74,6 +76,7 @@ mixin _$HistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -95,6 +98,8 @@ mixin _$HistoryState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -112,6 +117,8 @@ mixin _$HistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -129,6 +136,8 @@ mixin _$HistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) =>
@@ -210,6 +219,7 @@ class _$_InitialState implements _InitialState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -232,6 +242,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -254,6 +265,7 @@ class _$_InitialState implements _InitialState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -281,6 +293,8 @@ class _$_InitialState implements _InitialState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return initialState(this);
@@ -301,6 +315,8 @@ class _$_InitialState implements _InitialState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return initialState?.call(this);
@@ -321,6 +337,8 @@ class _$_InitialState implements _InitialState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -394,6 +412,7 @@ class _$_LoadingState implements _LoadingState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -416,6 +435,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -438,6 +458,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -465,6 +486,8 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadingState(this);
@@ -485,6 +508,8 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
@@ -505,6 +530,8 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -610,6 +637,7 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return pharmacyHistoryState(pharmacyOrders);
@@ -632,6 +660,7 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return pharmacyHistoryState?.call(pharmacyOrders);
@@ -654,6 +683,7 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -681,6 +711,8 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return pharmacyHistoryState(this);
@@ -701,6 +733,8 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return pharmacyHistoryState?.call(this);
@@ -721,6 +755,8 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -837,6 +873,7 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return pharmacyHistoryBySearch(pharmacyOrders);
@@ -859,6 +896,7 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return pharmacyHistoryBySearch?.call(pharmacyOrders);
@@ -881,6 +919,7 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -908,6 +947,8 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return pharmacyHistoryBySearch(this);
@@ -928,6 +969,8 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return pharmacyHistoryBySearch?.call(this);
@@ -948,6 +991,8 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1062,6 +1107,7 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return warehouseHistoryState(pharmacyOrders);
@@ -1084,6 +1130,7 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return warehouseHistoryState?.call(pharmacyOrders);
@@ -1106,6 +1153,7 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1133,6 +1181,8 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return warehouseHistoryState(this);
@@ -1153,6 +1203,8 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return warehouseHistoryState?.call(this);
@@ -1173,6 +1225,8 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1290,6 +1344,7 @@ class _$_WarehouseHistoryBySearchState
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return warehouseHistoryBySearch(warehouseOrders);
@@ -1312,6 +1367,7 @@ class _$_WarehouseHistoryBySearchState
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return warehouseHistoryBySearch?.call(warehouseOrders);
@@ -1334,6 +1390,7 @@ class _$_WarehouseHistoryBySearchState
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1361,6 +1418,8 @@ class _$_WarehouseHistoryBySearchState
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return warehouseHistoryBySearch(this);
@@ -1381,6 +1440,8 @@ class _$_WarehouseHistoryBySearchState
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return warehouseHistoryBySearch?.call(this);
@@ -1401,6 +1462,8 @@ class _$_WarehouseHistoryBySearchState
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1514,6 +1577,7 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return movingHistoryState(pharmacyOrders);
@@ -1536,6 +1600,7 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return movingHistoryState?.call(pharmacyOrders);
@@ -1558,6 +1623,7 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1585,6 +1651,8 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return movingHistoryState(this);
@@ -1605,6 +1673,8 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return movingHistoryState?.call(this);
@@ -1625,6 +1695,8 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1740,6 +1812,7 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return movingHistoryBySearch(pharmacyOrders);
@@ -1762,6 +1835,7 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return movingHistoryBySearch?.call(pharmacyOrders);
@@ -1784,6 +1858,7 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1811,6 +1886,8 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return movingHistoryBySearch(this);
@@ -1831,6 +1908,8 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return movingHistoryBySearch?.call(this);
@@ -1851,6 +1930,8 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1963,6 +2044,7 @@ class _$_RefundHistoryState implements _RefundHistoryState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return refundHistoryState(pharmacyOrders);
@@ -1985,6 +2067,7 @@ class _$_RefundHistoryState implements _RefundHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return refundHistoryState?.call(pharmacyOrders);
@@ -2007,6 +2090,7 @@ class _$_RefundHistoryState implements _RefundHistoryState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -2034,6 +2118,8 @@ class _$_RefundHistoryState implements _RefundHistoryState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return refundHistoryState(this);
@@ -2054,6 +2140,8 @@ class _$_RefundHistoryState implements _RefundHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return refundHistoryState?.call(this);
@@ -2074,6 +2162,8 @@ class _$_RefundHistoryState implements _RefundHistoryState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -2190,6 +2280,7 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return refundHistoryBySearch(pharmacyOrders);
@@ -2212,6 +2303,7 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return refundHistoryBySearch?.call(pharmacyOrders);
@@ -2234,6 +2326,7 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -2261,6 +2354,8 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return refundHistoryBySearch(this);
@@ -2281,6 +2376,8 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return refundHistoryBySearch?.call(this);
@@ -2301,6 +2398,8 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -2320,6 +2419,203 @@ abstract class _RefundHistoryBySearchState implements HistoryState {
   @JsonKey(ignore: true)
   _$$_RefundHistoryBySearchStateCopyWith<_$_RefundHistoryBySearchState>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_RefundHistoryFinishedStateCopyWith<$Res> {
+  factory _$$_RefundHistoryFinishedStateCopyWith(
+          _$_RefundHistoryFinishedState value,
+          $Res Function(_$_RefundHistoryFinishedState) then) =
+      __$$_RefundHistoryFinishedStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_RefundHistoryFinishedStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res>
+    implements _$$_RefundHistoryFinishedStateCopyWith<$Res> {
+  __$$_RefundHistoryFinishedStateCopyWithImpl(
+      _$_RefundHistoryFinishedState _value,
+      $Res Function(_$_RefundHistoryFinishedState) _then)
+      : super(_value, (v) => _then(v as _$_RefundHistoryFinishedState));
+
+  @override
+  _$_RefundHistoryFinishedState get _value =>
+      super._value as _$_RefundHistoryFinishedState;
+}
+
+/// @nodoc
+
+class _$_RefundHistoryFinishedState implements _RefundHistoryFinishedState {
+  const _$_RefundHistoryFinishedState();
+
+  @override
+  String toString() {
+    return 'HistoryState.refundHistoryFinishedState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RefundHistoryFinishedState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialState,
+    required TResult Function() loadingState,
+    required TResult Function(List<PharmacyOrderDTO> pharmacyOrders)
+        pharmacyHistoryState,
+    required TResult Function(List<PharmacyOrderDTO> pharmacyOrders)
+        pharmacyHistoryBySearch,
+    required TResult Function(List<WarehouseOrderDTO> pharmacyOrders)
+        warehouseHistoryState,
+    required TResult Function(List<WarehouseOrderDTO> warehouseOrders)
+        warehouseHistoryBySearch,
+    required TResult Function(List<MoveDataDTO> pharmacyOrders)
+        movingHistoryState,
+    required TResult Function(List<MoveDataDTO> pharmacyOrders)
+        movingHistoryBySearch,
+    required TResult Function(List<PharmacyOrderDTO> pharmacyOrders)
+        refundHistoryState,
+    required TResult Function(List<RefundDataDTO> pharmacyOrders)
+        refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
+    required TResult Function(String message) errorState,
+  }) {
+    return refundHistoryFinishedState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        pharmacyHistoryState,
+    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        pharmacyHistoryBySearch,
+    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+        warehouseHistoryState,
+    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+        warehouseHistoryBySearch,
+    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
+    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
+    TResult Function(String message)? errorState,
+  }) {
+    return refundHistoryFinishedState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        pharmacyHistoryState,
+    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        pharmacyHistoryBySearch,
+    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+        warehouseHistoryState,
+    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+        warehouseHistoryBySearch,
+    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
+    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (refundHistoryFinishedState != null) {
+      return refundHistoryFinishedState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialState value) initialState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_PharmacyHistoryState value) pharmacyHistoryState,
+    required TResult Function(_PharmacyHistoryBySearchState value)
+        pharmacyHistoryBySearch,
+    required TResult Function(_WarehouseHistoryState value)
+        warehouseHistoryState,
+    required TResult Function(_WarehouseHistoryBySearchState value)
+        warehouseHistoryBySearch,
+    required TResult Function(_MoveingHistoryState value) movingHistoryState,
+    required TResult Function(_MovingHistoryBySearchState value)
+        movingHistoryBySearch,
+    required TResult Function(_RefundHistoryState value) refundHistoryState,
+    required TResult Function(_RefundHistoryBySearchState value)
+        refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return refundHistoryFinishedState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult Function(_PharmacyHistoryBySearchState value)?
+        pharmacyHistoryBySearch,
+    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult Function(_WarehouseHistoryBySearchState value)?
+        warehouseHistoryBySearch,
+    TResult Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult Function(_RefundHistoryState value)? refundHistoryState,
+    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
+    TResult Function(_ErrorState value)? errorState,
+  }) {
+    return refundHistoryFinishedState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialState value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult Function(_PharmacyHistoryBySearchState value)?
+        pharmacyHistoryBySearch,
+    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult Function(_WarehouseHistoryBySearchState value)?
+        warehouseHistoryBySearch,
+    TResult Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult Function(_RefundHistoryState value)? refundHistoryState,
+    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (refundHistoryFinishedState != null) {
+      return refundHistoryFinishedState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RefundHistoryFinishedState implements HistoryState {
+  const factory _RefundHistoryFinishedState() = _$_RefundHistoryFinishedState;
 }
 
 /// @nodoc
@@ -2404,6 +2700,7 @@ class _$_ErrorState implements _ErrorState {
         refundHistoryState,
     required TResult Function(List<RefundDataDTO> pharmacyOrders)
         refundHistoryBySearch,
+    required TResult Function() refundHistoryFinishedState,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -2426,6 +2723,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -2448,6 +2746,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
     TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
     TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
+    TResult Function()? refundHistoryFinishedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -2475,6 +2774,8 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function(_RefundHistoryState value) refundHistoryState,
     required TResult Function(_RefundHistoryBySearchState value)
         refundHistoryBySearch,
+    required TResult Function(_RefundHistoryFinishedState value)
+        refundHistoryFinishedState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return errorState(this);
@@ -2495,6 +2796,8 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
@@ -2515,6 +2818,8 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
     TResult Function(_RefundHistoryState value)? refundHistoryState,
     TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult Function(_RefundHistoryFinishedState value)?
+        refundHistoryFinishedState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {

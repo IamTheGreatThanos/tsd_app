@@ -55,7 +55,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                     loadingState: () {
                       context.loaderOverlay.show();
                     },
-                    pharmacyHistoryState: (orders) {
+                    refundHistoryFinishedState: () {
                       context.loaderOverlay.hide();
                       BlocProvider.of<ReturnOrderPageCubit>(context)
                           .onRefreshOrders(refundStatus: 1);
@@ -74,6 +74,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                       onClick: () {
                         BlocProvider.of<HistoryCubit>(context)
                             .updatePharmacyOrderStatus(
+                              isFromHisPage: false,
                           orderId: widget.pharmacyOrder!.id,
                           refundStatus: 2,
                         );
@@ -517,7 +518,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                           child: const Padding(
                             padding: EdgeInsets.all(10.0),
                             child: Text(
-                              'Ввести сумму возравта',
+                              'Ввести количество возравта',
                               style: TextStyle(
                                 color: ColorPalette.white,
                                 fontWeight: FontWeight.w600,

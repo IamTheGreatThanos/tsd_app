@@ -35,6 +35,9 @@ class HistoryState with _$HistoryState {
     required List<RefundDataDTO> pharmacyOrders,
   }) = _RefundHistoryBySearchState;
 
+  const factory HistoryState.refundHistoryFinishedState() =
+      _RefundHistoryFinishedState;
+
   const factory HistoryState.errorState({
     required String message,
   }) = _ErrorState;

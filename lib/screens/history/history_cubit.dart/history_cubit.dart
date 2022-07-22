@@ -34,6 +34,7 @@ class HistoryCubit extends Cubit<HistoryState> {
   Future<void> updatePharmacyOrderStatus({
     required int orderId,
     int? refundStatus,
+    required bool isFromHisPage,
   }) async {
     emit(const HistoryState.loadingState());
     final result = await _updatePharmacyOrderStatus.call(
@@ -46,7 +47,13 @@ class HistoryCubit extends Cubit<HistoryState> {
         (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
         (r) {
       log('Refund Status updated successfully');
-      getPharmacyArrivalHistory();
+      if (isFromHisPage) {
+        getPharmacyArrivalHistory();
+      } else {
+        emit(const HistoryState.refundHistoryFinishedState());
+
+        getPharmacyArrivalHistory();
+      }
     });
   }
 
