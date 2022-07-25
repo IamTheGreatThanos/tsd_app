@@ -13,14 +13,14 @@ class BuildMoveGoodsDetail extends StatefulWidget {
   final ProductDTO good;
   final ProductDTO selectedProduct;
   final int orderID;
-  const BuildMoveGoodsDetail(
-      {Key? key,
-      required this.searchController,
-      required this.currentIndex,
-      required this.good,
-      required this.selectedProduct,
-      required this.orderID})
-      : super(key: key);
+  const BuildMoveGoodsDetail({
+    Key? key,
+    required this.searchController,
+    required this.currentIndex,
+    required this.good,
+    required this.selectedProduct,
+    required this.orderID,
+  }) : super(key: key);
 
   @override
   State<BuildMoveGoodsDetail> createState() => _BuildMoveGoodsDetailState();
@@ -144,15 +144,16 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                                       .updateMoveProductById(
                                     orderId: widget.orderID,
                                     productDTO: ProductDTO(
-                                        id: widget.good.id,
-                                        scanCount: widget.good.scanCount,
-                                        status: 2),
+                                      id: widget.good.id,
+                                      scanCount: widget.good.scanCount,
+                                      status: 2,
+                                    ),
                                   );
                                   BlocProvider.of<MoveGoodsScreenCubit>(context)
                                       .saveMoveSelectedProductToCache(
                                     selectedProduct: ProductDTO(
                                       id: -1,
-                                      orderID: widget.orderID,
+                                      movingId: widget.orderID,
                                     ),
                                   );
                                 }

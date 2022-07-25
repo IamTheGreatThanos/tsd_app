@@ -222,7 +222,9 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
       final response = await dio.patch(
         '$SERVER_/api/moving-product/${updatingProduct.id}',
         data: {
-          "scan_count": updatingProduct.scanCount,
+          if(updatingProduct.scanCount!=null)"scan_count": updatingProduct.scanCount,
+          if(updatingProduct.status!=null)"status": updatingProduct.status,
+
         },
       );
       log('##### updateMoveDataProduct api:: ${response.statusCode}');

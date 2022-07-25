@@ -220,7 +220,7 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
                       ) {
                         return _BuildBody(
                           searchController: searchController,
-                          orderStatus: widget.moveDataDTO.status!,
+                          orderStatus: widget.moveDataDTO.accept!,
                           orderId: widget.moveDataDTO.id,
                           unscannedProducts: unscannedProducts,
                           scannedProducts: scannedProducts,
@@ -435,7 +435,7 @@ class _BuildBodyState extends State<_BuildBody> {
             },
             controller: controller,
             child: itemCount == 0
-                ? widget.orderStatus == 2
+                ? widget.orderStatus == 1
                     ? ListView(
                         children: [
                           SizedBox(
