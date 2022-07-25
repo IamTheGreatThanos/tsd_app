@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
@@ -24,7 +23,8 @@ class BuildPharmacyGoodDetails extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<BuildPharmacyGoodDetails> createState() => _BuildPharmacyGoodDetailsState();
+  State<BuildPharmacyGoodDetails> createState() =>
+      _BuildPharmacyGoodDetailsState();
 }
 
 class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
@@ -138,7 +138,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           padding: EdgeInsets.zero,
-                          onPressed: (widget.good.totalCount ==
+                          onPressed: (widget.good.totalCount! <=
                                   widget.good.scanCount! +
                                       widget.good.defective! +
                                       widget.good.underachievement! +
@@ -201,7 +201,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              (widget.good.totalCount ==
+                              (widget.good.totalCount! <=
                                       widget.good.scanCount! +
                                           widget.good.defective! +
                                           widget.good.underachievement! +

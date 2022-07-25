@@ -7,6 +7,7 @@ import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
+import 'package:pharmacy_arrival/domain/repositories/move_data_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_moving_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_orders_by_search.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_history.dart';
@@ -23,12 +24,14 @@ class HistoryCubit extends Cubit<HistoryState> {
   final GetMovingHistory _getMovingHistory;
   final UpdatePharmacyOrderStatus _updatePharmacyOrderStatus;
   final GetOrdersBySearch _getOrdersBySearch;
+  final MoveDataRepository _moveDataRepository;
   HistoryCubit(
     this._getPharmacyArrivalHistory,
     this._getWarehouseArrivalHistory,
     this._getMovingHistory,
     this._updatePharmacyOrderStatus,
     this._getOrdersBySearch,
+    this._moveDataRepository,
   ) : super(const HistoryState.initialState());
 
   Future<void> updatePharmacyOrderStatus({
@@ -129,7 +132,7 @@ class HistoryCubit extends Cubit<HistoryState> {
 
   Future<void> getMovingHistory() async {
     emit(const HistoryState.loadingState());
-    final failureOrSuccess = await _getMovingHistory.call();
+    final failureOrSuccess = await _moveDataRepository.getMovingOrders(accept: 1);
     failureOrSuccess.fold(
         (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
         (r) {
@@ -139,7 +142,7 @@ class HistoryCubit extends Cubit<HistoryState> {
           orders.add(order);
         }
       }
-      emit(HistoryState.movingHistoryState(pharmacyOrders: orders));
+      emit(HistoryState.movingHistoryState(pharmacyOrders: r));
     });
   }
 

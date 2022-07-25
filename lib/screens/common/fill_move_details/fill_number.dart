@@ -212,45 +212,45 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           ],
                         ),
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: ColorPalette.background,
-                          hintText: "№ Серии",
-                          hintStyle: ThemeTextStyle.textStyle16w400.copyWith(
-                            color: ColorPalette.commonGrey,
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                            ),
-                            gapPadding: 0.0,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                            borderSide: BorderSide(
-                              color: (state is StateError)
-                                  ? ColorPalette.errorRed
-                                  : Colors.transparent,
-                            ),
-                            gapPadding: 0.0,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                            borderSide: BorderSide(
-                              color: (state is StateError)
-                                  ? ColorPalette.errorRed
-                                  : Colors.transparent,
-                            ),
-                            gapPadding: 0.0,
-                          ),
-                        ),
-                        controller: numberController,
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                      ),
+                      // TextField(
+                      //   decoration: InputDecoration(
+                      //     filled: true,
+                      //     fillColor: ColorPalette.background,
+                      //     hintText: "№ Серии",
+                      //     hintStyle: ThemeTextStyle.textStyle16w400.copyWith(
+                      //       color: ColorPalette.commonGrey,
+                      //     ),
+                      //     disabledBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(16.0),
+                      //       borderSide: const BorderSide(
+                      //         color: Colors.transparent,
+                      //       ),
+                      //       gapPadding: 0.0,
+                      //     ),
+                      //     enabledBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(16.0),
+                      //       borderSide: BorderSide(
+                      //         color: (state is StateError)
+                      //             ? ColorPalette.errorRed
+                      //             : Colors.transparent,
+                      //       ),
+                      //       gapPadding: 0.0,
+                      //     ),
+                      //     focusedBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(16.0),
+                      //       borderSide: BorderSide(
+                      //         color: (state is StateError)
+                      //             ? ColorPalette.errorRed
+                      //             : Colors.transparent,
+                      //       ),
+                      //       gapPadding: 0.0,
+                      //     ),
+                      //   ),
+                      //   controller: numberController,
+                      //   onChanged: (value) {
+                      //     setState(() {});
+                      //   },
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 24.0,
@@ -267,7 +267,7 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           disabledColor: ColorPalette.orangeInactive,
                           padding: EdgeInsets.zero,
                           onPressed:
-                              (count != 0 && numberController.text.isNotEmpty)
+                              (count != 0)
                                   ? () {
                                       BlocProvider.of<MoveProductsScreenCubit>(
                                         context,
@@ -275,7 +275,6 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                         moveOrderId: widget.moveOrderId,
                                         addingProduct: widget.moveData.copyWith(
                                           totalCount: count,
-                                          series: numberController.text,
                                         ),
                                       );
                                     }

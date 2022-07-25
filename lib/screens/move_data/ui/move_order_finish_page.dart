@@ -272,7 +272,8 @@ class _MoveOrderFinishPageState extends State<MoveOrderFinishPage> {
                               ///todo
 
                               onPressed: () {
-                                BlocProvider.of<MoveProductsScreenCubit>(
+                                if(dateController.text.isNotEmpty){
+                                   BlocProvider.of<MoveProductsScreenCubit>(
                                   context,
                                 ).updateMovingOrderStatus(
                                   moveOrderId: widget.orderData?.id ?? 0,
@@ -283,6 +284,10 @@ class _MoveOrderFinishPageState extends State<MoveOrderFinishPage> {
                                       ? null
                                       : commentController.text,
                                 );
+                                }else{
+                                  buildErrorCustomSnackBar(context, 'Выберите дату перемещения');
+                                }
+                               
                               },
                               child: Center(
                                 child: Text(

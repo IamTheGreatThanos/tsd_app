@@ -13,6 +13,7 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
+import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -32,8 +33,9 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
   @override
   void initState() {
     BlocProvider.of<MoveOrderCatCubit>(context).changeToAcceptOrdersCat();
-    BlocProvider.of<MoveOrderPageCubit>(context)
-        .onRefreshOrders(recipientId: userId);
+    BlocProvider.of<MoveOrderPageCubit>(context).onRefreshOrders(
+        //recipientId: userId
+        );
     super.initState();
   }
 
@@ -87,15 +89,15 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                         currentIndex = 0;
                         BlocProvider.of<MoveOrderPageCubit>(context)
                             .onRefreshOrders(
-                          recipientId: userId,
-                        );
+                                //recipientId: userId,
+                                );
                       },
                       send: () {
                         currentIndex = 1;
                         BlocProvider.of<MoveOrderPageCubit>(context)
                             .onRefreshOrders(
-                          senderId: userId,
-                        );
+                                // senderId: userId,
+                                );
                       },
                     );
                   },
@@ -200,13 +202,13 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                   ? BlocProvider.of<MoveOrderPageCubit>(
                                       context,
                                     ).onLoadOrders(
-                                      recipientId: userId,
-                                    )
+                                      // recipientId: userId,
+                                      )
                                   : BlocProvider.of<MoveOrderPageCubit>(
                                       context,
                                     ).onLoadOrders(
-                                      senderId: userId,
-                                    );
+                                      // senderId: userId,
+                                      );
 
                               refreshController.loadComplete();
                             },
@@ -214,10 +216,14 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                               currentIndex == 0
                                   ? BlocProvider.of<MoveOrderPageCubit>(
                                       context,
-                                    ).onRefreshOrders(recipientId: userId)
+                                    ).onRefreshOrders(
+                                      //  recipientId: userId
+                                      )
                                   : BlocProvider.of<MoveOrderPageCubit>(
                                       context,
-                                    ).onRefreshOrders(senderId: userId);
+                                    ).onRefreshOrders(
+                                      //  senderId: userId
+                                      );
                               refreshController.refreshCompleted();
                             },
                             controller: refreshController,
@@ -337,7 +343,7 @@ class _BuildOrderData extends StatelessWidget {
                     child: Center(
                       child: Text(
                         orderData.accept == 0
-                            ? "Необходимо принят"
+                            ? orderData.send==0?"Не отправлен":"Необходимо принять"
                             : "Уже принят",
                         style: ThemeTextStyle.textStyle12w600.copyWith(
                           color: orderData.accept == 0
@@ -430,12 +436,19 @@ class _BuildOrderData extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (orderData.accept == 0) {
-                    AppRouter.push(
+                    if(orderData.send==0){
+                      buildErrorCustomSnackBar(context, "Заказ еще не отправлен");
+                    }else{
+                      AppRouter.push(
                       context,
                       MoveGoodsListScreen(
                         moveDataDTO: orderData,
                       ),
                     );
+                    }
+                    
+                  }else{
+                    buildAlertDialog(context);
                   }
                 },
                 child: Container(
@@ -448,7 +461,7 @@ class _BuildOrderData extends StatelessWidget {
                   child: Center(
                     child: Text(
                       orderData.accept == 0
-                          ? "Оприходовать"
+                          ? orderData.send==0?"Заказ еще не отрпавлен":"Оприходовать"
                           : "Посмотреть детали заказа",
                       style: ThemeTextStyle.textStyle14w600
                           .copyWith(color: ColorPalette.white),

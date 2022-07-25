@@ -137,7 +137,7 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           padding: EdgeInsets.zero,
-                          onPressed: (widget.good.totalCount ==
+                          onPressed: (widget.good.totalCount! <=
                                   widget.good.scanCount!)
                               ? () {
                                   BlocProvider.of<MoveGoodsScreenCubit>(context)
@@ -186,7 +186,7 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              (widget.good.totalCount == widget.good.scanCount!)
+                              (widget.good.totalCount ! <= widget.good.scanCount!)
                                   ? 'Завершить'
                                   : "Указать вручную",
                               style: const TextStyle(

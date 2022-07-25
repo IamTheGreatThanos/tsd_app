@@ -427,7 +427,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       controller: refreshController,
                       onRefresh: () {
                         BlocProvider.of<HistoryCubit>(context)
-                            .getPharmacyArrivalHistory();
+                            .getWarehouseArrivalHistory();
                         refreshController.refreshCompleted();
                       },
                       child: orders.isEmpty
@@ -481,7 +481,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       controller: refreshController,
                       onRefresh: () {
                         BlocProvider.of<HistoryCubit>(context)
-                            .getPharmacyArrivalHistory();
+                            .getMovingHistory();
                         refreshController.refreshCompleted();
                       },
                       child: orders.isEmpty
@@ -613,7 +613,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       controller: refreshController,
                       onRefresh: () {
                         BlocProvider.of<HistoryCubit>(context)
-                            .getPharmacyArrivalHistory();
+                            .getRefundHistory(refundStatus: 2);
                         refreshController.refreshCompleted();
                       },
                       child: orders.isEmpty

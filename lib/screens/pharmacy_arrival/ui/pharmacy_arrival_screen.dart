@@ -11,6 +11,7 @@ import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -115,6 +116,40 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                   top: 18,
                   bottom: 18,
                   left: 13,
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                  leading: const Icon(
+                    Icons.filter_alt_outlined,
+                    color: ColorPalette.grey400,
+                  ),
+                  title: Transform.translate(
+                    offset: const Offset(-20, 0),
+                    child: const Text(
+                      'Фильтр',
+                      style: TextStyle(
+                        color: ColorPalette.grey400,
+                      ),
+                    ),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: ColorPalette.grey400,
+                    ),
+                    onPressed: () {
+                      AppRouter.push(context, const PharmacyFilterPage());
+                    },
+                  ),
                 ),
               ),
               const SizedBox(
@@ -379,7 +414,7 @@ class _BuildOrderData extends StatelessWidget {
                             ? ColorPalette.textGreen
                             : ColorPalette.textYellow,
                       ),
-                      textAlign: TextAlign.center
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -530,38 +565,41 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-           if (orderData.totalStatus==3||orderData.totalStatus==4) GestureDetector(
-              onTap: () {
-                BlocProvider.of<SignatureScreenCubit>(context)
-                    .updatePharmacyOrderStatus(
-                  orderId: orderData.id,
-                  status: 2,
-                );
-                context.read<FillInvoiceVModel>().init();
-                AppRouter.push(
-                  context,
-                  GoodsListScreen(
-                    isFromPharmacyPage: true,
-                    pharmacyOrder: orderData,
+            if (orderData.totalStatus == 3 || orderData.totalStatus == 4)
+              GestureDetector(
+                onTap: () {
+                  BlocProvider.of<SignatureScreenCubit>(context)
+                      .updatePharmacyOrderStatus(
+                    orderId: orderData.id,
+                    status: 2,
+                  );
+                  context.read<FillInvoiceVModel>().init();
+                  AppRouter.push(
+                    context,
+                    GoodsListScreen(
+                      isFromPharmacyPage: true,
+                      pharmacyOrder: orderData,
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 44,
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.orange,
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                );
-              },
-              child: Container(
-                height: 44,
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                decoration: BoxDecoration(
-                  color: ColorPalette.orange,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Center(
-                  child: Text(
-                    "Оприходовать",
-                    style: ThemeTextStyle.textStyle14w600
-                        .copyWith(color: ColorPalette.white),
+                  child: Center(
+                    child: Text(
+                      "Оприходовать",
+                      style: ThemeTextStyle.textStyle14w600
+                          .copyWith(color: ColorPalette.white),
+                    ),
                   ),
                 ),
-              ),
-            ) else const SizedBox(),
+              )
+            else
+              const SizedBox(),
           ],
         ),
       ),

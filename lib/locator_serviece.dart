@@ -128,7 +128,7 @@ Future<void> initLocator() async {
     ),
   );
   sl.registerFactory(() => HistoryCatCubit());
-  sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl(), sl(),sl()));
   sl.registerFactory(() => PharmacyQrScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalCatCubit());
   sl.registerFactory(() => WarehouseArrivalCatCubit());
