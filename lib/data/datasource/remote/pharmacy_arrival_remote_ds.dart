@@ -14,6 +14,12 @@ abstract class PharmacyArrivalRemoteDS {
     required String accessToken,
     required int page,
     required int status,
+    String? number,
+    int? senderId,
+    String? departureDate,
+    int? sortType,
+    String? amountStart,
+    String? amountEnd,
   });
 
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalHistory({
@@ -82,13 +88,35 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     required String accessToken,
     required int page,
     required int status,
+    String? number,
+    int? senderId,
+    String? departureDate,
+    int? sortType,
+    String? amountStart,
+    String? amountEnd,
   }) async {
+    String sort = "";
+    if (sortType == 0) {
+      sort = 'created_at_desc';
+    } else {
+      sort = 'created_at_asc';
+    }
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio
-          .get('$SERVER_/api/arrival-pharmacy?page=$page&status=$status');
+      final response = await dio.get(
+          '$SERVER_/api/arrival-pharmacy?page=$page&status=$status',
+          queryParameters: {
+            "page": page,
+            "status": status,
+            if (number != null) "number": number,
+            if (senderId != null) "sender_id": senderId,
+            if (departureDate != null) "departure_time": departureDate,
+            if (sortType != null) "sort": sort,
+            if (amountStart != null) "amount_start": amountStart,
+            if (amountEnd != null) "amount_end": amountEnd,
+          });
       log('##### getPharmacyArrivalOrders api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(

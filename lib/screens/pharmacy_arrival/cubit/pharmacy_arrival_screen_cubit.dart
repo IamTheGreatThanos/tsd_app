@@ -42,11 +42,29 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     );
   }
 
-  Future<void> onRefreshOrders({required int status}) async {
+  Future<void> onRefreshOrders({
+    required int status,
+    String? number,
+    int? senderId,
+    String? departureDate,
+    int? sortType,
+    String? amountStart,
+    String? amountEnd,
+  }) async {
     _currentPage = 1;
     emit(const PharmacyArrivalScreenState.loadingState());
-    final result = await _getPharmacyArrivalOrders
-        .call(GetPharmacyArrivalOrdersParams(_currentPage, status));
+    final result = await _getPharmacyArrivalOrders.call(
+      GetPharmacyArrivalOrdersParams(
+        number: number,
+        page: _currentPage,
+        status: status,
+        senderId: senderId,
+        departureDate: departureDate,
+        sortType: sortType,
+        amountEnd: amountEnd,
+        amountStart: amountStart,
+      ),
+    );
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -67,9 +85,27 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     );
   }
 
-  Future<void> onLoadOrders({required int status}) async {
-    final result = await _getPharmacyArrivalOrders
-        .call(GetPharmacyArrivalOrdersParams(_currentPage, status));
+  Future<void> onLoadOrders({
+    required int status,
+    String? number,
+    int? senderId,
+    String? departureDate,
+    int? sortType,
+    String? amountStart,
+    String? amountEnd,
+  }) async {
+    final result = await _getPharmacyArrivalOrders.call(
+      GetPharmacyArrivalOrdersParams(
+        number: number,
+        page: _currentPage,
+        status: status,
+        senderId: senderId,
+        departureDate: departureDate,
+        sortType: sortType,
+        amountEnd: amountEnd,
+        amountStart: amountStart,
+      ),
+    );
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -100,7 +136,8 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
   }) async {
     emit(const PharmacyArrivalScreenState.loadingState());
     final result = await _updatePharmacyOrderStatus.call(
-      UpdatePharmacyOrderStatusParams(orderId: orderId, status: status,totalStatus: totalStatus),
+      UpdatePharmacyOrderStatusParams(
+          orderId: orderId, status: status, totalStatus: totalStatus),
     );
 
     result.fold(

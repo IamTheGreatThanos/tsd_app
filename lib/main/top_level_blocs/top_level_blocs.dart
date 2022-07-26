@@ -20,6 +20,7 @@ import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_prod
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
@@ -27,6 +28,7 @@ import 'package:pharmacy_arrival/screens/return_data/return_data_cubit/return_da
 import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
+import 'package:provider/provider.dart';
 
 ///Providers for global blocs
 class TopLevelBlocs extends StatelessWidget {
@@ -36,86 +38,93 @@ class TopLevelBlocs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider(
-          create: (context) =>
-              LoginBloc(sl<AuthCheck>())..add(InitialLoginEvent()),
-        ),
-        BlocProvider<SignInCubit>(
-          create: (context) => sl<SignInCubit>(),
-        ),
-        BlocProvider<WarehouseArrivalScreenCubit>(
-          create: (context) => sl<WarehouseArrivalScreenCubit>(),
-        ),
-        BlocProvider<PharmacyArrivalScreenCubit>(
-          create: (context) => sl<PharmacyArrivalScreenCubit>(),
-        ),
-        BlocProvider<GoodsListScreenCubit>(
-          create: (context) => sl<GoodsListScreenCubit>(),
-        ),
-        BlocProvider<SignatureScreenCubit>(
-          create: (context) => sl<SignatureScreenCubit>(),
-        ),
-        BlocProvider<OrganizationCubit>(
-          create: (context) => sl<OrganizationCubit>(),
-        ),
-        BlocProvider<CounteragentsCubit>(
-          create: (context) => sl<CounteragentsCubit>(),
-        ),
-        BlocProvider<MoveCubit>(
-          create: (context) => sl<MoveCubit>(),
-        ),
-        BlocProvider<MoveDataScreenCubit>(
-          create: (context) => sl<MoveDataScreenCubit>(),
-        ),
-        BlocProvider<MoveBarcodeScreenCubit>(
-          create: (context) => sl<MoveBarcodeScreenCubit>(),
-        ),
-        BlocProvider<MoveProductsScreenCubit>(
-          create: (context) => sl<MoveProductsScreenCubit>(),
-        ),
-        BlocProvider<ReturnCubit>(
-          create: (context) => sl<ReturnCubit>(),
-        ),
-        BlocProvider<ReturnDataScreenCubit>(
-          create: (context) => sl<ReturnDataScreenCubit>(),
-        ),
-        BlocProvider<ReturnProductsScreenCubit>(
-          create: (context) => sl<ReturnProductsScreenCubit>(),
-        ),
-        BlocProvider<HistoryCatCubit>(
-          create: (context) => sl<HistoryCatCubit>(),
-        ),
-        BlocProvider<HistoryCubit>(
-          create: (context) => sl<HistoryCubit>(),
-        ),
-        BlocProvider<PharmacyQrScreenCubit>(
-          create: (context) => sl<PharmacyQrScreenCubit>(),
-        ),
-        BlocProvider<PharmacyArrivalCatCubit>(
-          create: (context) => sl<PharmacyArrivalCatCubit>(),
-        ),
-        BlocProvider<WarehouseArrivalCatCubit>(
-          create: (context) => sl<WarehouseArrivalCatCubit>(),
-        ),
-        BlocProvider<ReturnOrderPageCubit>(
-          create: (context) => sl<ReturnOrderPageCubit>(),
-        ),
-        BlocProvider<ReturnOrderCatCubit>(
-          create: (context) => sl<ReturnOrderCatCubit>(),
-        ),
-        BlocProvider<MoveOrderPageCubit>(
-          create: (context) => sl<MoveOrderPageCubit>(),
-        ),
-        BlocProvider<MoveOrderCatCubit>(
-          create: (context) => sl<MoveOrderCatCubit>(),
-        ),
-        BlocProvider<MoveGoodsScreenCubit>(
-          create: (context) => sl<MoveGoodsScreenCubit>(),
+        ChangeNotifierProvider(
+          create: (_) => PharmacyFilterVmodel(),
         ),
       ],
-      child: child,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                LoginBloc(sl<AuthCheck>())..add(InitialLoginEvent()),
+          ),
+          BlocProvider<SignInCubit>(
+            create: (context) => sl<SignInCubit>(),
+          ),
+          BlocProvider<WarehouseArrivalScreenCubit>(
+            create: (context) => sl<WarehouseArrivalScreenCubit>(),
+          ),
+          BlocProvider<PharmacyArrivalScreenCubit>(
+            create: (context) => sl<PharmacyArrivalScreenCubit>(),
+          ),
+          BlocProvider<GoodsListScreenCubit>(
+            create: (context) => sl<GoodsListScreenCubit>(),
+          ),
+          BlocProvider<SignatureScreenCubit>(
+            create: (context) => sl<SignatureScreenCubit>(),
+          ),
+          BlocProvider<OrganizationCubit>(
+            create: (context) => sl<OrganizationCubit>(),
+          ),
+          BlocProvider<CounteragentsCubit>(
+            create: (context) => sl<CounteragentsCubit>(),
+          ),
+          BlocProvider<MoveCubit>(
+            create: (context) => sl<MoveCubit>(),
+          ),
+          BlocProvider<MoveDataScreenCubit>(
+            create: (context) => sl<MoveDataScreenCubit>(),
+          ),
+          BlocProvider<MoveBarcodeScreenCubit>(
+            create: (context) => sl<MoveBarcodeScreenCubit>(),
+          ),
+          BlocProvider<MoveProductsScreenCubit>(
+            create: (context) => sl<MoveProductsScreenCubit>(),
+          ),
+          BlocProvider<ReturnCubit>(
+            create: (context) => sl<ReturnCubit>(),
+          ),
+          BlocProvider<ReturnDataScreenCubit>(
+            create: (context) => sl<ReturnDataScreenCubit>(),
+          ),
+          BlocProvider<ReturnProductsScreenCubit>(
+            create: (context) => sl<ReturnProductsScreenCubit>(),
+          ),
+          BlocProvider<HistoryCatCubit>(
+            create: (context) => sl<HistoryCatCubit>(),
+          ),
+          BlocProvider<HistoryCubit>(
+            create: (context) => sl<HistoryCubit>(),
+          ),
+          BlocProvider<PharmacyQrScreenCubit>(
+            create: (context) => sl<PharmacyQrScreenCubit>(),
+          ),
+          BlocProvider<PharmacyArrivalCatCubit>(
+            create: (context) => sl<PharmacyArrivalCatCubit>(),
+          ),
+          BlocProvider<WarehouseArrivalCatCubit>(
+            create: (context) => sl<WarehouseArrivalCatCubit>(),
+          ),
+          BlocProvider<ReturnOrderPageCubit>(
+            create: (context) => sl<ReturnOrderPageCubit>(),
+          ),
+          BlocProvider<ReturnOrderCatCubit>(
+            create: (context) => sl<ReturnOrderCatCubit>(),
+          ),
+          BlocProvider<MoveOrderPageCubit>(
+            create: (context) => sl<MoveOrderPageCubit>(),
+          ),
+          BlocProvider<MoveOrderCatCubit>(
+            create: (context) => sl<MoveOrderCatCubit>(),
+          ),
+          BlocProvider<MoveGoodsScreenCubit>(
+            create: (context) => sl<MoveGoodsScreenCubit>(),
+          ),
+        ],
+        child: child,
+      ),
     );
   }
 }

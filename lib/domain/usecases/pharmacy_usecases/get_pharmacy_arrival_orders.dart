@@ -13,8 +13,14 @@ class GetPharmacyArrivalOrders
     GetPharmacyArrivalOrdersParams params,
   ) {
     return _pharmacyRepository.getPharmacyArrivalOrders(
+      number: params.number,
       page: params.page,
       status: params.status,
+      senderId: params.senderId,
+      departureDate: params.departureDate,
+      sortType: params.sortType,
+      amountStart: params.amountStart,
+      amountEnd: params.amountEnd,
     );
   }
 }
@@ -22,6 +28,21 @@ class GetPharmacyArrivalOrders
 class GetPharmacyArrivalOrdersParams {
   final int page;
   final int status;
+  final String? number;
+  final int? senderId;
+  final String? departureDate;
+  final int? sortType;
+  final String? amountStart;
+  final String? amountEnd;
 
-  GetPharmacyArrivalOrdersParams(this.page, this.status);
+  GetPharmacyArrivalOrdersParams({
+    this.number,
+    this.senderId,
+    this.departureDate,
+    this.sortType,
+    this.amountStart,
+    this.amountEnd,
+    required this.page,
+    required this.status,
+  });
 }

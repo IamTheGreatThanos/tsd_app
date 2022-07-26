@@ -9,6 +9,12 @@ abstract class PharmacyRepository {
   Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalOrders({
     required int page,
     required int status,
+    String? number,
+    int? senderId,
+    String? departureDate,
+    int? sortType,
+    String? amountStart,
+    String? amountEnd,
   });
 
   Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalHistory({

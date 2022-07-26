@@ -31,15 +31,27 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalOrders({
     required int page,
     required int status,
+    String? number,
+    int? senderId,
+    String? departureDate,
+    int? sortType,
+    String? amountStart,
+    String? amountEnd,
   }) async {
     if (await networkInfo.isConnected) {
       try {
         final User user = await authLocalDS.getUserFromCache();
         final List<PharmacyOrderDTO> warehouseOrders =
             await arrivalRemoteDS.getPharmacyArrivalOrders(
+        number:number,
           accessToken: user.accessToken!,
           page: page,
           status: status,
+          senderId: senderId,
+          departureDate: departureDate,
+          sortType: sortType,
+          amountEnd: amountEnd,
+          amountStart: amountStart,
         );
         return Right(warehouseOrders);
       } on ServerException catch (e) {
