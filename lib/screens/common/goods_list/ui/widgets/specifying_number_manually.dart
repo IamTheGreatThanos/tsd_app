@@ -103,7 +103,7 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
                 if (controller.text.isEmpty) {
                   Navigator.pop(context);
                 } else {
-                  if (int.parse(controller.text) >
+                  if (0>=int.parse(controller.text)||int.parse(controller.text) >
                       widget.productDTO.totalCount! -
                           widget.productDTO.scanCount!) {
                     Navigator.pop(context);
