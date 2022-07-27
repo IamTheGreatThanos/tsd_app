@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/move_goods_list_screen.dart';
+import 'package:pharmacy_arrival/screens/history/history_move_screen_detail.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_page_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
@@ -34,8 +35,9 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
   void initState() {
     BlocProvider.of<MoveOrderCatCubit>(context).changeToAcceptOrdersCat();
     BlocProvider.of<MoveOrderPageCubit>(context).onRefreshOrders(
-        //recipientId: userId
-        );
+      accept: 0,
+      //recipientId: userId
+    );
     super.initState();
   }
 
@@ -78,9 +80,6 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                 height: 16,
               ),
               SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12.5,
-                ),
                 scrollDirection: Axis.horizontal,
                 child: BlocConsumer<MoveOrderCatCubit, MoveOrderCatState>(
                   listener: (context, state) {
@@ -89,8 +88,9 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                         currentIndex = 0;
                         BlocProvider.of<MoveOrderPageCubit>(context)
                             .onRefreshOrders(
-                                //recipientId: userId,
-                                );
+                          accept: 0,
+                          //recipientId: userId,
+                        );
                       },
                       send: () {
                         currentIndex = 1;
@@ -98,6 +98,14 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                             .onRefreshOrders(
                                 // senderId: userId,
                                 );
+                      },
+                      alreadyAccepted: () {
+                        currentIndex = 2;
+                        BlocProvider.of<MoveOrderPageCubit>(context)
+                            .onRefreshOrders(
+                          accept: 1, send: 1,
+                          // senderId: userId,
+                        );
                       },
                     );
                   },
@@ -131,7 +139,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                           ),
                         ),
                         const SizedBox(
-                          width: 25,
+                          width: 10,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -153,6 +161,40 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                               children: [
                                 Text(
                                   "Отрпавленные",
+                                  style:
+                                      ThemeTextStyle.textStyle14w500.copyWith(
+                                    color: currentIndex == 1
+                                        ? ColorPalette.grayText
+                                        : ColorPalette.grayTextDisabled,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<MoveOrderCatCubit>(context)
+                                .changeToAlreadyAcceptedCat();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: currentIndex == 2
+                                  ? ColorPalette.white
+                                  : ColorPalette.main,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Принятые",
                                   style:
                                       ThemeTextStyle.textStyle14w500.copyWith(
                                     color: currentIndex == 1
@@ -198,32 +240,64 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                           return SmartRefresher(
                             enablePullUp: true,
                             onLoading: () {
-                              currentIndex == 0
-                                  ? BlocProvider.of<MoveOrderPageCubit>(
-                                      context,
-                                    ).onLoadOrders(
-                                      // recipientId: userId,
-                                      )
-                                  : BlocProvider.of<MoveOrderPageCubit>(
-                                      context,
-                                    ).onLoadOrders(
+                              switch (currentIndex) {
+                                case 0:
+                                  BlocProvider.of<MoveOrderPageCubit>(
+                                    context,
+                                  ).onLoadOrders(
+                                    accept: 0,
+                                    // recipientId: userId,
+                                  );
+                                  break;
+                                case 1:
+                                  BlocProvider.of<MoveOrderPageCubit>(
+                                    context,
+                                  ).onLoadOrders(
                                       // senderId: userId,
                                       );
+                                  break;
+                                case 2:
+                                  BlocProvider.of<MoveOrderPageCubit>(
+                                    context,
+                                  ).onLoadOrders(
+                                    accept: 1,
+                                    send: 1,
+                                    // senderId: userId,
+                                  );
+                                  break;
+                                default:
+                              }
 
                               refreshController.loadComplete();
                             },
                             onRefresh: () {
-                              currentIndex == 0
-                                  ? BlocProvider.of<MoveOrderPageCubit>(
-                                      context,
-                                    ).onRefreshOrders(
-                                      //  recipientId: userId
-                                      )
-                                  : BlocProvider.of<MoveOrderPageCubit>(
-                                      context,
-                                    ).onRefreshOrders(
+                              switch (currentIndex) {
+                                case 0:
+                                  BlocProvider.of<MoveOrderPageCubit>(
+                                    context,
+                                  ).onRefreshOrders(
+                                    accept: 0,
+                                    //  recipientId: userId
+                                  );
+                                  break;
+                                case 1:
+                                  BlocProvider.of<MoveOrderPageCubit>(
+                                    context,
+                                  ).onRefreshOrders(
                                       //  senderId: userId
                                       );
+                                  break;
+                                case 2:
+                                  BlocProvider.of<MoveOrderPageCubit>(
+                                    context,
+                                  ).onRefreshOrders(
+                                    accept: 1,
+                                    send: 1,
+                                    // senderId: userId,
+                                  );
+                                  break;
+                                default:
+                              }
                               refreshController.refreshCompleted();
                             },
                             controller: refreshController,
@@ -325,7 +399,7 @@ class _BuildOrderData extends StatelessWidget {
                     style: ThemeTextStyle.textStyle20w600,
                   ),
                 ),
-                if (currentIndex == 0)
+                if (currentIndex == 0 || currentIndex == 2)
                   Container(
                     decoration: BoxDecoration(
                       color: orderData.accept == 0
@@ -343,7 +417,9 @@ class _BuildOrderData extends StatelessWidget {
                     child: Center(
                       child: Text(
                         orderData.accept == 0
-                            ? orderData.send==0?"Не отправлен":"Необходимо принять"
+                            ? orderData.send == 0
+                                ? "Не отправлен"
+                                : "Необходимо принять"
                             : "Уже принят",
                         style: ThemeTextStyle.textStyle12w600.copyWith(
                           color: orderData.accept == 0
@@ -432,23 +508,28 @@ class _BuildOrderData extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            if (currentIndex == 0)
+            if (currentIndex == 0 || currentIndex == 2)
               GestureDetector(
                 onTap: () {
                   if (orderData.accept == 0) {
-                    if(orderData.send==0){
-                      buildErrorCustomSnackBar(context, "Заказ еще не отправлен");
-                    }else{
+                    if (orderData.send == 0) {
+                      buildErrorCustomSnackBar(
+                        context,
+                        "Заказ еще не отправлен",
+                      );
+                    } else {
                       AppRouter.push(
-                      context,
-                      MoveGoodsListScreen(
-                        moveDataDTO: orderData,
-                      ),
-                    );
+                        context,
+                        MoveGoodsListScreen(
+                          moveDataDTO: orderData,
+                        ),
+                      );
                     }
-                    
-                  }else{
-                    buildAlertDialog(context);
+                  } else {
+                    AppRouter.push(
+                      context,
+                      HistoryMoveScreenDetail(moveDataDTO: orderData),
+                    );
                   }
                 },
                 child: Container(
@@ -461,7 +542,9 @@ class _BuildOrderData extends StatelessWidget {
                   child: Center(
                     child: Text(
                       orderData.accept == 0
-                          ? orderData.send==0?"Заказ еще не отрпавлен":"Оприходовать"
+                          ? orderData.send == 0
+                              ? "Заказ еще не отрпавлен"
+                              : "Оприходовать"
                           : "Посмотреть детали заказа",
                       style: ThemeTextStyle.textStyle14w600
                           .copyWith(color: ColorPalette.white),

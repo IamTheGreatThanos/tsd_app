@@ -132,7 +132,10 @@ class HistoryCubit extends Cubit<HistoryState> {
 
   Future<void> getMovingHistory() async {
     emit(const HistoryState.loadingState());
-    final failureOrSuccess = await _moveDataRepository.getMovingOrders(accept: 1);
+    final failureOrSuccess = await _moveDataRepository.getMovingOrders(
+      accept: 1,
+      send: 1,
+    );
     failureOrSuccess.fold(
         (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
         (r) {

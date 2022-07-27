@@ -17,4 +17,10 @@ class MoveOrderCatCubit extends Cubit<MoveOrderCatState> {
   void changeToSendCat() {
     emit(const MoveOrderCatState.send());
   }
+
+    void changeToAlreadyAcceptedCat() {
+    emit(const MoveOrderCatState.alreadyAccepted());
+  }
+
+
 }

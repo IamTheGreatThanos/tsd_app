@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
@@ -13,28 +12,22 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class HistoryScreenDetail extends StatefulWidget {
-  final bool isFromPharmacyPage;
-  final PharmacyOrderDTO? pharmacyOrder;
-  final WarehouseOrderDTO? warehouseOrder;
-  const HistoryScreenDetail({
-    Key? key,
-    required this.isFromPharmacyPage,
-    this.pharmacyOrder,
-    this.warehouseOrder,
-  }) : super(key: key);
+class HistoryMoveScreenDetail extends StatefulWidget {
+  final MoveDataDTO moveDataDTO;
+  const HistoryMoveScreenDetail({Key? key, required this.moveDataDTO})
+      : super(key: key);
 
   @override
-  State<HistoryScreenDetail> createState() => _HistoryScreenDetailState();
+  State<HistoryMoveScreenDetail> createState() =>
+      _HistoryMoveScreenDetailState();
 }
 
-class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
+class _HistoryMoveScreenDetailState extends State<HistoryMoveScreenDetail> {
   @override
   void initState() {
-    if (widget.isFromPharmacyPage) {
-      BlocProvider.of<GoodsListScreenCubit>(context)
-          .getPharmacyProducts(orderId: widget.pharmacyOrder!.id);
-    } else {}
+    BlocProvider.of<MoveGoodsScreenCubit>(context)
+        .getMoveProducts(orderId: widget.moveDataDTO.id);
+
     super.initState();
   }
 
@@ -57,7 +50,7 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
             )
           ],
         ),
-        body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+        body: BlocConsumer<MoveGoodsScreenCubit, MoveGoodsScreenState>(
           builder: (context, state) {
             return state.maybeWhen(
               loadingState: () {
@@ -73,18 +66,13 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                 selectedProduct,
               ) {
                 return _BuildBody(
-                  orderStatus: widget.isFromPharmacyPage
-                      ? widget.pharmacyOrder?.status ?? 0
-                      : widget.warehouseOrder?.status ?? 0,
-                  orderId: widget.isFromPharmacyPage
-                      ? widget.pharmacyOrder!.id
-                      : widget.warehouseOrder!.id,
+                  accept: widget.moveDataDTO.accept!,
+                  send: widget.moveDataDTO.send!,
+                  orderId: widget.moveDataDTO.id,
                   unscannedProducts: unscannedProducts,
                   scannedProducts: scannedProducts,
                   selectedProduct: selectedProduct,
-                  pharmacyOrder: widget.pharmacyOrder,
-                  warehouseOrder: widget.warehouseOrder,
-                  isFromPharmacyPage: widget.isFromPharmacyPage,
+                  pharmacyOrder: widget.moveDataDTO,
                 );
               },
               errorState: (String message) {
@@ -139,24 +127,22 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
 }
 
 class _BuildBody extends StatefulWidget {
-  final int orderStatus;
+  final int accept;
+  final int send;
   final int orderId;
   final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
-  final PharmacyOrderDTO? pharmacyOrder;
-  final WarehouseOrderDTO? warehouseOrder;
-  final bool isFromPharmacyPage;
+  final MoveDataDTO? pharmacyOrder;
   const _BuildBody({
     Key? key,
     required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
     required this.selectedProduct,
-    required this.orderStatus,
     this.pharmacyOrder,
-    this.warehouseOrder,
-    required this.isFromPharmacyPage,
+    required this.accept,
+    required this.send,
   }) : super(key: key);
 
   @override
@@ -283,12 +269,12 @@ class _BuildBodyState extends State<_BuildBody> {
         Expanded(
           child: SmartRefresher(
             onRefresh: () {
-              BlocProvider.of<GoodsListScreenCubit>(context)
-                  .getPharmacyProducts(orderId: widget.orderId);
+              BlocProvider.of<MoveGoodsScreenCubit>(context)
+                  .getMoveProducts(orderId: widget.orderId);
             },
             controller: controller,
             child: itemCount == 0
-                ? widget.orderStatus == 3
+                ? widget.accept == 1 && widget.send == 1
                     ? ListView(
                         children: [
                           SizedBox(

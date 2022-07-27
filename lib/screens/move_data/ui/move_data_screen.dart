@@ -149,15 +149,23 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                                   searchHint: "Отправитель",
                                   style: ThemeTextStyle.textStyle14w400,
                                   onChanged: (String? newValue) {
-                                    sender = newValue;
-                                    for (int i = 0;
-                                        i < counteragents.length;
-                                        i++) {
-                                      if (sender == counteragents[i].name &&
-                                          counteragents[i].id != -1) {
-                                        senderId = counteragents[i].id;
+                                    if (newValue == recipient) {
+                                      buildErrorCustomSnackBar(
+                                        context,
+                                        "Вы не можете сделать перемещение на свой адрес, пожалуйста, выберите другой адрес",
+                                      );
+                                    } else {
+                                      sender = newValue;
+                                      for (int i = 0;
+                                          i < counteragents.length;
+                                          i++) {
+                                        if (sender == counteragents[i].name &&
+                                            counteragents[i].id != -1) {
+                                          senderId = counteragents[i].id;
+                                        }
                                       }
                                     }
+
                                     setState(() {});
                                   },
                                   isExpanded: true,
@@ -241,15 +249,24 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                                   searchHint: "Получатель",
                                   style: ThemeTextStyle.textStyle14w400,
                                   onChanged: (String? newValue) {
-                                    recipient = newValue;
-                                    for (int i = 0;
-                                        i < counteragents.length;
-                                        i++) {
-                                      if (recipient == counteragents[i].name &&
-                                          counteragents[i].id != -1) {
-                                        recipientId = counteragents[i].id;
+                                    if (newValue == sender) {
+                                      buildErrorCustomSnackBar(
+                                        context,
+                                        "Вы не можете сделать перемещение на свой адрес, пожалуйста, выберите другой адрес",
+                                      );
+                                    } else {
+                                      recipient = newValue;
+                                      for (int i = 0;
+                                          i < counteragents.length;
+                                          i++) {
+                                        if (recipient ==
+                                                counteragents[i].name &&
+                                            counteragents[i].id != -1) {
+                                          recipientId = counteragents[i].id;
+                                        }
                                       }
                                     }
+
                                     setState(() {});
                                   },
                                   isExpanded: true,
@@ -297,8 +314,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
-                        if (senderId == -1 ||
-                            recipientId == -1) {
+                        if (senderId == -1 || recipientId == -1) {
                           buildErrorCustomSnackBar(
                             context,
                             "Вы не выбрали все пункты!!!",

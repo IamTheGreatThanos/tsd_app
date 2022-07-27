@@ -12,6 +12,7 @@ import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_move_screen_detail.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen_detail.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -504,101 +505,123 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 horizontal: 11.5,
                               ),
                               itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 16.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: ColorPalette.white,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 13,
-                                      horizontal: 11,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                return Material(
+                                  child: InkWell(
+                                    onTap: () {
+                                      AppRouter.push(
+                                        context,
+                                        HistoryMoveScreenDetail(
+                                          moveDataDTO: orders[index],
+                                        ),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: ColorPalette.white,
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 13,
+                                          horizontal: 11,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              '№.${orders[index].id}',
-                                              style: ThemeTextStyle
-                                                  .textStyle20w600,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  203,
-                                                  211,
-                                                  216,
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    94,
-                                                    96,
-                                                    97,
-                                                  ),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 4,
-                                                horizontal: 8,
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  "Завершенный",
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '№.${orders[index].id}',
                                                   style: ThemeTextStyle
-                                                      .textStyle12w600
-                                                      .copyWith(
+                                                      .textStyle20w600,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
                                                     color: const Color.fromARGB(
                                                       255,
-                                                      94,
-                                                      96,
-                                                      97,
+                                                      203,
+                                                      211,
+                                                      216,
+                                                    ),
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        94,
+                                                        96,
+                                                        97,
+                                                      ),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      100,
+                                                    ),
+                                                  ),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    vertical: 4,
+                                                    horizontal: 8,
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Завершенный",
+                                                      style: ThemeTextStyle
+                                                          .textStyle12w600
+                                                          .copyWith(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          94,
+                                                          96,
+                                                          97,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 27,
+                                            ),
+                                            _BuildOrderDetailItem(
+                                              icon: "container_ic",
+                                              title: "Организация",
+                                              data: (orders[index].recipientId)
+                                                  .toString(),
+                                            ),
+                                            _BuildOrderDetailItem(
+                                              icon: "calendar_ic",
+                                              title: "Дата создания",
+                                              data: orders[index].createdAt !=
+                                                      null
+                                                  ? DateFormat(
+                                                      "dd.MM.yyyy; hh:mm a",
+                                                    ).format(
+                                                      DateTime.parse(
+                                                        orders[index]
+                                                            .createdAt!,
+                                                      ),
+                                                    )
+                                                  : "No data",
+                                            ),
+                                            _BuildOrderDetailItem(
+                                              icon: "stock_ic",
+                                              title: "Отрпавитель",
+                                              data: orders[index]
+                                                  .senderId
+                                                  .toString(),
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 27,
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "container_ic",
-                                          title: "Организация",
-                                          data: (orders[index].recipientId)
-                                              .toString(),
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "calendar_ic",
-                                          title: "Дата создания",
-                                          data: orders[index].createdAt != null
-                                              ? DateFormat(
-                                                  "dd.MM.yyyy; hh:mm a",
-                                                ).format(
-                                                  DateTime.parse(
-                                                    orders[index].createdAt!,
-                                                  ),
-                                                )
-                                              : "No data",
-                                        ),
-                                        _BuildOrderDetailItem(
-                                          icon: "stock_ic",
-                                          title: "Отрпавитель",
-                                          data:
-                                              orders[index].senderId.toString(),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 );

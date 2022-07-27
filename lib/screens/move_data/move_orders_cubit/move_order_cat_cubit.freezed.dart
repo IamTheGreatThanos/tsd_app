@@ -20,18 +20,21 @@ mixin _$MoveOrderCatState {
   TResult when<TResult extends Object?>({
     required TResult Function() accept,
     required TResult Function() send,
+    required TResult Function() alreadyAccepted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? accept,
     TResult Function()? send,
+    TResult Function()? alreadyAccepted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? accept,
     TResult Function()? send,
+    TResult Function()? alreadyAccepted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$MoveOrderCatState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Accept value) accept,
     required TResult Function(_Send value) send,
+    required TResult Function(_AlreadyAccepted value) alreadyAccepted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Accept value)? accept,
     TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Accept value)? accept,
     TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +120,7 @@ class _$_Accept implements _Accept {
   TResult when<TResult extends Object?>({
     required TResult Function() accept,
     required TResult Function() send,
+    required TResult Function() alreadyAccepted,
   }) {
     return accept();
   }
@@ -123,6 +130,7 @@ class _$_Accept implements _Accept {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? accept,
     TResult Function()? send,
+    TResult Function()? alreadyAccepted,
   }) {
     return accept?.call();
   }
@@ -132,6 +140,7 @@ class _$_Accept implements _Accept {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? accept,
     TResult Function()? send,
+    TResult Function()? alreadyAccepted,
     required TResult orElse(),
   }) {
     if (accept != null) {
@@ -145,6 +154,7 @@ class _$_Accept implements _Accept {
   TResult map<TResult extends Object?>({
     required TResult Function(_Accept value) accept,
     required TResult Function(_Send value) send,
+    required TResult Function(_AlreadyAccepted value) alreadyAccepted,
   }) {
     return accept(this);
   }
@@ -154,6 +164,7 @@ class _$_Accept implements _Accept {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Accept value)? accept,
     TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
   }) {
     return accept?.call(this);
   }
@@ -163,6 +174,7 @@ class _$_Accept implements _Accept {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Accept value)? accept,
     TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
     required TResult orElse(),
   }) {
     if (accept != null) {
@@ -216,6 +228,7 @@ class _$_Send implements _Send {
   TResult when<TResult extends Object?>({
     required TResult Function() accept,
     required TResult Function() send,
+    required TResult Function() alreadyAccepted,
   }) {
     return send();
   }
@@ -225,6 +238,7 @@ class _$_Send implements _Send {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? accept,
     TResult Function()? send,
+    TResult Function()? alreadyAccepted,
   }) {
     return send?.call();
   }
@@ -234,6 +248,7 @@ class _$_Send implements _Send {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? accept,
     TResult Function()? send,
+    TResult Function()? alreadyAccepted,
     required TResult orElse(),
   }) {
     if (send != null) {
@@ -247,6 +262,7 @@ class _$_Send implements _Send {
   TResult map<TResult extends Object?>({
     required TResult Function(_Accept value) accept,
     required TResult Function(_Send value) send,
+    required TResult Function(_AlreadyAccepted value) alreadyAccepted,
   }) {
     return send(this);
   }
@@ -256,6 +272,7 @@ class _$_Send implements _Send {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Accept value)? accept,
     TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
   }) {
     return send?.call(this);
   }
@@ -265,6 +282,7 @@ class _$_Send implements _Send {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Accept value)? accept,
     TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
     required TResult orElse(),
   }) {
     if (send != null) {
@@ -276,4 +294,115 @@ class _$_Send implements _Send {
 
 abstract class _Send implements MoveOrderCatState {
   const factory _Send() = _$_Send;
+}
+
+/// @nodoc
+abstract class _$$_AlreadyAcceptedCopyWith<$Res> {
+  factory _$$_AlreadyAcceptedCopyWith(
+          _$_AlreadyAccepted value, $Res Function(_$_AlreadyAccepted) then) =
+      __$$_AlreadyAcceptedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_AlreadyAcceptedCopyWithImpl<$Res>
+    extends _$MoveOrderCatStateCopyWithImpl<$Res>
+    implements _$$_AlreadyAcceptedCopyWith<$Res> {
+  __$$_AlreadyAcceptedCopyWithImpl(
+      _$_AlreadyAccepted _value, $Res Function(_$_AlreadyAccepted) _then)
+      : super(_value, (v) => _then(v as _$_AlreadyAccepted));
+
+  @override
+  _$_AlreadyAccepted get _value => super._value as _$_AlreadyAccepted;
+}
+
+/// @nodoc
+
+class _$_AlreadyAccepted implements _AlreadyAccepted {
+  const _$_AlreadyAccepted();
+
+  @override
+  String toString() {
+    return 'MoveOrderCatState.alreadyAccepted()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_AlreadyAccepted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() accept,
+    required TResult Function() send,
+    required TResult Function() alreadyAccepted,
+  }) {
+    return alreadyAccepted();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? accept,
+    TResult Function()? send,
+    TResult Function()? alreadyAccepted,
+  }) {
+    return alreadyAccepted?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? accept,
+    TResult Function()? send,
+    TResult Function()? alreadyAccepted,
+    required TResult orElse(),
+  }) {
+    if (alreadyAccepted != null) {
+      return alreadyAccepted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Accept value) accept,
+    required TResult Function(_Send value) send,
+    required TResult Function(_AlreadyAccepted value) alreadyAccepted,
+  }) {
+    return alreadyAccepted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Accept value)? accept,
+    TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
+  }) {
+    return alreadyAccepted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Accept value)? accept,
+    TResult Function(_Send value)? send,
+    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
+    required TResult orElse(),
+  }) {
+    if (alreadyAccepted != null) {
+      return alreadyAccepted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AlreadyAccepted implements MoveOrderCatState {
+  const factory _AlreadyAccepted() = _$_AlreadyAccepted;
 }
