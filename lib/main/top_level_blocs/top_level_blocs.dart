@@ -17,6 +17,7 @@ import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_scr
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_page_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/move_data/vmodel/move_filter_vmodel.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
@@ -42,6 +43,9 @@ class TopLevelBlocs extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => PharmacyFilterVmodel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MoveFilterVmodel(),
         ),
       ],
       child: MultiBlocProvider(

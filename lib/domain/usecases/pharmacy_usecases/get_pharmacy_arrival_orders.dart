@@ -13,6 +13,9 @@ class GetPharmacyArrivalOrders
     GetPharmacyArrivalOrdersParams params,
   ) {
     return _pharmacyRepository.getPharmacyArrivalOrders(
+      incomingDate: params.incomingDate,
+      incomingNumber: params.incomingNumber,
+      refundStatus: params.refundStatus,
       number: params.number,
       page: params.page,
       status: params.status,
@@ -28,6 +31,10 @@ class GetPharmacyArrivalOrders
 class GetPharmacyArrivalOrdersParams {
   final int page;
   final int status;
+
+  final String? incomingDate;
+  final String? incomingNumber;
+  final int? refundStatus;
   final String? number;
   final int? senderId;
   final String? departureDate;
@@ -36,6 +43,9 @@ class GetPharmacyArrivalOrdersParams {
   final String? amountEnd;
 
   GetPharmacyArrivalOrdersParams({
+    this.refundStatus,
+    this.incomingDate,
+    this.incomingNumber,
     this.number,
     this.senderId,
     this.departureDate,

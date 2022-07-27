@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
@@ -15,8 +17,10 @@ import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/utils/constants.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/filter/pharmacy_filter_widget.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,6 +39,12 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
   TextEditingController invoiceDateController = TextEditingController();
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<PharmacyFilterVmodel>(
+        context,
+        listen: false,
+      ).clear();
+    });
     BlocProvider.of<ReturnOrderCatCubit>(context).changeToActiveOrdersCat();
     BlocProvider.of<ReturnOrderPageCubit>(context)
         .onRefreshOrders(refundStatus: status);
@@ -50,446 +60,407 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AppLoaderOverlay(
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: "Возврат".toUpperCase(),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 13,
-            vertical: 15,
-          ),
-          child: Column(
-            children: [
-              AppTextField(
-                focusNode: FocusNode(),
-                onFieldSubmitted: (value) {
-                  final productCubit =
-                      BlocProvider.of<ReturnOrderPageCubit>(context);
-
-                  if (value.isNotEmpty) {
-                    productCubit.getOrdersBySearch(
-                      incomingNumber: searchController.text,
-                      incomingDate: invoiceDateController.text.isEmpty
-                          ? null
-                          : invoiceDateController.text,
-                    );
-                  } else {
-                    invoiceDateController.text.isEmpty
-                        ? productCubit.onRefreshOrders(refundStatus: status)
-                        : productCubit.getOrdersBySearch(
-                            incomingDate: invoiceDateController.text,
-                          );
-                  }
-                },
-                onChanged: (String? text) {
-                  final productCubit =
-                      BlocProvider.of<ReturnOrderPageCubit>(context);
-
-                  if (text != null) {
-                    productCubit.getOrdersBySearch(
-                      incomingNumber: searchController.text,
-                      incomingDate: invoiceDateController.text.isEmpty
-                          ? null
-                          : invoiceDateController.text,
-                    );
-                  }
-                  if (text == null || text.isEmpty) {
-                    invoiceDateController.text.isEmpty
-                        ? productCubit.onRefreshOrders(refundStatus: status)
-                        : productCubit.getOrdersBySearch(
-                            incomingDate: invoiceDateController.text,
-                          );
-                  }
-                },
-                controller: searchController,
-                hintText: "Введите входящий номер",
-                hintStyle: ThemeTextStyle.textStyle14w400
-                    .copyWith(color: ColorPalette.grey400),
-                fillColor: ColorPalette.white,
-                prefixIcon: SvgPicture.asset(
-                  "assets/images/svg/search.svg",
-                  color: ColorPalette.grey400,
-                ),
-                contentPadding: const EdgeInsets.only(
-                  top: 18,
-                  bottom: 18,
-                  left: 13,
-                ),
+    return Consumer<PharmacyFilterVmodel>(
+      builder: (context, model, child) {
+        return AppLoaderOverlay(
+          child: Scaffold(
+            appBar: CustomAppBar(
+              title: "Возврат".toUpperCase(),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 13,
+                vertical: 15,
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              GestureDetector(
-                onTap: () async {
-                  final DateTime? date = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1950),
-                    lastDate: DateTime(2050),
-                    helpText: "Дата входящего номера",
-                    builder: (context, child) {
-                      return Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme: const ColorScheme.light(
-                            primary: ColorPalette.greyDark,
-                          ),
-                          textTheme: TextTheme(
-                            headline5: ThemeTextStyle.textTitleDella24w400,
-                            overline: ThemeTextStyle.textStyle16w600,
-                          ),
-                          textButtonTheme: TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                              primary: Colors.black,
-                              textStyle: ThemeTextStyle.textStyle14w600
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ),
+              child: Column(
+                children: [
+                  AppTextField(
+                    focusNode: FocusNode(),
+                    onFieldSubmitted: (value) {
+                      final productCubit =
+                          BlocProvider.of<ReturnOrderPageCubit>(context);
+
+                      if (value.isNotEmpty) {
+                        productCubit.onRefreshOrders(
+                          number: searchController.text,
+                          refundStatus: status,
+                          incomingDate: model.incomingDate,
+                          incomingNumber: model.incomingNumber,
+                          senderId: model.sender?.id,
+                          departureDate: model.departureDate,
+                          sortType: model.sortType,
+                          amountStart: model.amountStart,
+                          amountEnd: model.amountEnd,
+                        );
+                      } else {
+                        productCubit.onRefreshOrders(
+                          refundStatus: status,
+                          incomingDate: model.incomingDate,
+                          incomingNumber: model.incomingNumber,
+                          senderId: model.sender?.id,
+                          departureDate: model.departureDate,
+                          sortType: model.sortType,
+                          amountStart: model.amountStart,
+                          amountEnd: model.amountEnd,
+                        );
+                      }
+                    },
+                    onChanged: (String? text) {
+                      final productCubit =
+                          BlocProvider.of<ReturnOrderPageCubit>(context);
+
+                      if (text != null) {
+                        productCubit.onRefreshOrders(
+                          number: searchController.text,
+                          refundStatus: status,
+                          incomingDate: model.incomingDate,
+                          incomingNumber: model.incomingNumber,
+                          senderId: model.sender?.id,
+                          departureDate: model.departureDate,
+                          sortType: model.sortType,
+                          amountStart: model.amountStart,
+                          amountEnd: model.amountEnd,
+                        );
+                      }
+                      if (text == null || text.isEmpty) {
+                        productCubit.onRefreshOrders(
+                          refundStatus: status,
+                          incomingDate: model.incomingDate,
+                          incomingNumber: model.incomingNumber,
+                          senderId: model.sender?.id,
+                          departureDate: model.departureDate,
+                          sortType: model.sortType,
+                          amountStart: model.amountStart,
+                          amountEnd: model.amountEnd,
+                        );
+                      }
+                    },
+                    controller: searchController,
+                    hintText: "Искать по номеру заказа",
+                    hintStyle: ThemeTextStyle.textStyle14w400
+                        .copyWith(color: ColorPalette.grey400),
+                    fillColor: ColorPalette.white,
+                    prefixIcon: SvgPicture.asset(
+                      "assets/images/svg/search.svg",
+                      color: ColorPalette.grey400,
+                    ),
+                    contentPadding: const EdgeInsets.only(
+                      top: 18,
+                      bottom: 18,
+                      left: 13,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  PharmacyFilterWidget(
+                    onTap: () {
+                      AppRouter.push(
+                        context,
+                        PharmacyFilterPage(
+                          isFromPharmacyPage: false,
+                          callback: () {
+                            BlocProvider.of<ReturnOrderPageCubit>(
+                              context,
+                            ).onRefreshOrders(
+                              number: searchController.text.isEmpty
+                                  ? null
+                                  : searchController.text,
+                              refundStatus: status,
+                              incomingDate: model.incomingDate,
+                              incomingNumber: model.incomingNumber,
+                              senderId: model.sender?.id,
+                              departureDate: model.departureDate,
+                              sortType: model.sortType,
+                              amountStart: model.amountStart,
+                              amountEnd: model.amountEnd,
+                            );
+                          },
                         ),
-                        child: child!,
                       );
                     },
-                  );
-                  if (date != null) {
-                    setState(() {
-                      BlocProvider.of<ReturnOrderPageCubit>(context)
-                          .getOrdersBySearch(
-                        incomingNumber: searchController.text,
-                        incomingDate: DateFormat("yyyy-MM-dd").format(date),
+                    trailingCloseTap: () {
+                      model.clear();
+                      BlocProvider.of<ReturnOrderPageCubit>(
+                        context,
+                      ).onRefreshOrders(
+                        number: searchController.text.isEmpty
+                            ? null
+                            : searchController.text,
+                        refundStatus: status,
+                        incomingDate: model.incomingDate,
+                        incomingNumber: model.incomingNumber,
+                        senderId: model.sender?.id,
+                        departureDate: model.departureDate,
+                        sortType: model.sortType,
+                        amountStart: model.amountStart,
+                        amountEnd: model.amountEnd,
                       );
-                    });
-                    invoiceDateController.text =
-                        DateFormat("yyyy-MM-dd").format(date);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: ColorPalette.white,
-                    borderRadius: BorderRadius.circular(16),
+                    },
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Выберите дату накладной",
-                        style: ThemeTextStyle.textStyle14w400.copyWith(
-                          color: ColorPalette.grey400,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Flexible(
-                        child: AppTextField(
-                          contentPadding: EdgeInsets.zero,
-                          capitalize: false,
-                          controller: invoiceDateController,
-                          readonly: true,
-                          textAlign: TextAlign.right,
-                          showErrorMessages: false,
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: GestureDetector(
-                              onTap: invoiceDateController.text.isNotEmpty
-                                  ? () {
-                                      invoiceDateController.clear();
-                                      if (searchController.text.isEmpty) {
-                                        BlocProvider.of<ReturnOrderPageCubit>(
-                                                context)
-                                            .onRefreshOrders(
-                                          refundStatus: status,
-                                        );
-                                      } else {
-                                        BlocProvider.of<ReturnOrderPageCubit>(
-                                                context)
-                                            .getOrdersBySearch(
-                                          incomingNumber: searchController.text,
-                                        );
-                                      }
-                                      setState(() {});
-                                    }
-                                  : () async {
-                                      final DateTime? date =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2019),
-                                        lastDate: DateTime.now(),
-                                        helpText: "Дата входящего номера",
-                                        builder: (context, child) {
-                                          return Theme(
-                                            data: Theme.of(context).copyWith(
-                                              colorScheme:
-                                                  const ColorScheme.light(
-                                                primary: ColorPalette.greyDark,
-                                              ),
-                                              textTheme: TextTheme(
-                                                headline5: ThemeTextStyle
-                                                    .textTitleDella24w400,
-                                                overline: ThemeTextStyle
-                                                    .textStyle16w600,
-                                              ),
-                                              textButtonTheme:
-                                                  TextButtonThemeData(
-                                                style: TextButton.styleFrom(
-                                                  primary: Colors.black,
-                                                  textStyle: ThemeTextStyle
-                                                      .textStyle14w600
-                                                      .copyWith(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            child: child!,
-                                          );
-                                        },
-                                      );
-                                      if (date != null) {
-                                        setState(() {
-                                          BlocProvider.of<ReturnOrderPageCubit>(
-                                            context,
-                                          ).getOrdersBySearch(
-                                            incomingNumber:
-                                                searchController.text,
-                                            incomingDate:
-                                                DateFormat("yyyy-MM-dd")
-                                                    .format(date),
-                                          );
-                                        });
-                                        invoiceDateController.text =
-                                            DateFormat("yyyy-MM-dd")
-                                                .format(date);
-                                      }
-                                    },
-                              child: invoiceDateController.text.isNotEmpty
-                                  ? const Icon(
-                                      Icons.close,
-                                      size: 24,
-                                      color: ColorPalette.grey400,
-                                    )
-                                  : SvgPicture.asset(
-                                      "assets/images/svg/calendar_circle_ic.svg",
-                                      width: 24,
-                                    ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                  const SizedBox(
+                    height: 16,
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12.5,
-                ),
-                scrollDirection: Axis.horizontal,
-                child: BlocConsumer<ReturnOrderCatCubit, ReturnOrderCatState>(
-                  listener: (context, state) {
-                    state.when(
-                      activeOrdersCatState: () {
-                        currentIndex = 0;
-                        status = 1;
-                        BlocProvider.of<ReturnOrderPageCubit>(context)
-                            .onRefreshOrders(refundStatus: status);
-                      },
-                      finishedCatState: () {
-                        currentIndex = 1;
-                        status = 2;
-                        BlocProvider.of<ReturnOrderPageCubit>(context)
-                            .onRefreshOrders(refundStatus: status);
-                      },
-                    );
-                  },
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<ReturnOrderCatCubit>(context)
-                                .changeToActiveOrdersCat();
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12.5,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    child:
+                        BlocConsumer<ReturnOrderCatCubit, ReturnOrderCatState>(
+                      listener: (context, state) {
+                        state.when(
+                          activeOrdersCatState: () {
+                            currentIndex = 0;
+                            status = 1;
+                            BlocProvider.of<ReturnOrderPageCubit>(
+                              context,
+                            ).onRefreshOrders(
+                              number: searchController.text.isEmpty
+                                  ? null
+                                  : searchController.text,
+                              refundStatus: status,
+                              incomingDate: model.incomingDate,
+                              incomingNumber: model.incomingNumber,
+                              senderId: model.sender?.id,
+                              departureDate: model.departureDate,
+                              sortType: model.sortType,
+                              amountStart: model.amountStart,
+                              amountEnd: model.amountEnd,
+                            );
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: currentIndex == 0
-                                  ? ColorPalette.white
-                                  : ColorPalette.main,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              "Активные возвраты",
-                              style: ThemeTextStyle.textStyle14w500.copyWith(
-                                color: currentIndex == 0
-                                    ? ColorPalette.grayText
-                                    : ColorPalette.grayTextDisabled,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<ReturnOrderCatCubit>(context)
-                                .changeToFinishedCat();
+                          finishedCatState: () {
+                            currentIndex = 1;
+                            status = 2;
+                            BlocProvider.of<ReturnOrderPageCubit>(
+                              context,
+                            ).onRefreshOrders(
+                              number: searchController.text.isEmpty
+                                  ? null
+                                  : searchController.text,
+                              refundStatus: status,
+                              incomingDate: model.incomingDate,
+                              incomingNumber: model.incomingNumber,
+                              senderId: model.sender?.id,
+                              departureDate: model.departureDate,
+                              sortType: model.sortType,
+                              amountStart: model.amountStart,
+                              amountEnd: model.amountEnd,
+                            );
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: currentIndex == 1
-                                  ? ColorPalette.white
-                                  : ColorPalette.main,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Завершенные возвраты",
+                        );
+                      },
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<ReturnOrderCatCubit>(context)
+                                    .changeToActiveOrdersCat();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: currentIndex == 0
+                                      ? ColorPalette.white
+                                      : ColorPalette.main,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  "Активные возвраты",
                                   style:
                                       ThemeTextStyle.textStyle14w500.copyWith(
-                                    color: currentIndex == 1
+                                    color: currentIndex == 0
                                         ? ColorPalette.grayText
                                         : ColorPalette.grayTextDisabled,
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child:
-                      BlocConsumer<ReturnOrderPageCubit, ReturnOrderPageState>(
-                    listener: (context, state) {
-                      state.when(
-                        initialState: () {},
-                        loadingState: () {},
-                        loadedState: (orders) {},
-                        byFilterState: (orders) {},
-                        errorState: (String message) {
-                          buildErrorCustomSnackBar(context, message);
-                        },
-                      );
-                    },
-                    builder: (context, state) {
-                      return state.maybeWhen(
-                        loadingState: () {
-                          return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.amber),
+                            const SizedBox(
+                              width: 25,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<ReturnOrderCatCubit>(context)
+                                    .changeToFinishedCat();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: currentIndex == 1
+                                      ? ColorPalette.white
+                                      : ColorPalette.main,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Завершенные возвраты",
+                                      style: ThemeTextStyle.textStyle14w500
+                                          .copyWith(
+                                        color: currentIndex == 1
+                                            ? ColorPalette.grayText
+                                            : ColorPalette.grayTextDisabled,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: BlocConsumer<ReturnOrderPageCubit,
+                          ReturnOrderPageState>(
+                        listener: (context, state) {
+                          state.when(
+                            initialState: () {},
+                            loadingState: () {},
+                            loadedState: (orders) {},
+                            byFilterState: (orders) {},
+                            errorState: (String message) {
+                              buildErrorCustomSnackBar(context, message);
+                            },
                           );
                         },
-                        byFilterState: (orders) {
-                          return ListView.builder(
-                            itemCount: orders.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return _BuildOrderData(
-                                orderData: orders[index],
+                        builder: (context, state) {
+                          return state.maybeWhen(
+                            loadingState: () {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.amber),
+                              );
+                            },
+                            byFilterState: (orders) {
+                              return ListView.builder(
+                                itemCount: orders.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return _BuildOrderData(
+                                    orderData: orders[index],
+                                  );
+                                },
+                              );
+                            },
+                            loadedState: (orders) {
+                              return SmartRefresher(
+                                enablePullUp: true,
+                                onLoading: () {
+                                  BlocProvider.of<ReturnOrderPageCubit>(
+                                    context,
+                                  ).onLoadOrders(
+                                    number: searchController.text.isEmpty
+                                        ? null
+                                        : searchController.text,
+                                    refundStatus: status,
+                                    incomingDate: model.incomingDate,
+                                    incomingNumber: model.incomingNumber,
+                                    senderId: model.sender?.id,
+                                    departureDate: model.departureDate,
+                                    sortType: model.sortType,
+                                    amountStart: model.amountStart,
+                                    amountEnd: model.amountEnd,
+                                  );
+                                  refreshController.loadComplete();
+                                },
+                                onRefresh: () {
+                                  BlocProvider.of<ReturnOrderPageCubit>(
+                                    context,
+                                  ).onRefreshOrders(
+                                    number: searchController.text.isEmpty
+                                        ? null
+                                        : searchController.text,
+                                    refundStatus: status,
+                                    incomingDate: model.incomingDate,
+                                    incomingNumber: model.incomingNumber,
+                                    senderId: model.sender?.id,
+                                    departureDate: model.departureDate,
+                                    sortType: model.sortType,
+                                    amountStart: model.amountStart,
+                                    amountEnd: model.amountEnd,
+                                  );
+                                  refreshController.refreshCompleted();
+                                },
+                                controller: refreshController,
+                                child: orders.isEmpty
+                                    ? ListView(
+                                        children: [
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.1,
+                                          ),
+                                          Center(
+                                            child: Lottie.asset(
+                                              'assets/lotties/empty_box.json',
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    : ListView.builder(
+                                        itemCount: orders.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return _BuildOrderData(
+                                            orderData: orders[index],
+                                          );
+                                        },
+                                      ),
+                              );
+                            },
+                            errorState: (String message) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const CircularProgressIndicator(
+                                      color: Colors.red,
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      message,
+                                      style: const TextStyle(color: Colors.red),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                            orElse: () {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.red,
+                                ),
                               );
                             },
                           );
                         },
-                        loadedState: (orders) {
-                          return SmartRefresher(
-                            enablePullUp: true,
-                            onLoading: () {
-                              BlocProvider.of<ReturnOrderPageCubit>(
-                                context,
-                              ).onLoadOrders(refundStatus: status);
-                              refreshController.loadComplete();
-                            },
-                            onRefresh: () {
-                              BlocProvider.of<ReturnOrderPageCubit>(
-                                context,
-                              ).onRefreshOrders(refundStatus: status);
-                              refreshController.refreshCompleted();
-                            },
-                            controller: refreshController,
-                            child: orders.isEmpty
-                                ? ListView(
-                                    children: [
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.1,
-                                      ),
-                                      Center(
-                                        child: Lottie.asset(
-                                          'assets/lotties/empty_box.json',
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                : ListView.builder(
-                                    itemCount: orders.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return _BuildOrderData(
-                                        orderData: orders[index],
-                                      );
-                                    },
-                                  ),
-                          );
-                        },
-                        errorState: (String message) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const CircularProgressIndicator(
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  message,
-                                  style: const TextStyle(color: Colors.red),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                        orElse: () {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.red,
-                            ),
-                          );
-                        },
-                      );
-                    },
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

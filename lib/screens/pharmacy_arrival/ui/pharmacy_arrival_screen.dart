@@ -20,6 +20,7 @@ import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/utils/constants.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/filter/pharmacy_filter_widget.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,12 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
   int status = 1;
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<PharmacyFilterVmodel>(
+        context,
+        listen: false,
+      ).clear();
+    });
     BlocProvider.of<PharmacyArrivalCatCubit>(context).changeToNewOrdersCat();
     BlocProvider.of<PharmacyArrivalScreenCubit>(context)
         .onRefreshOrders(status: status);
@@ -149,150 +156,46 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: ListTile(
-                      onTap: () {
-                        AppRouter.push(
-                          context,
-                          PharmacyFilterPage(
-                            callback: () {
-                              if (model.sortType != null) {
-                                model.filterCount += 1;
-                              }
-                              if (model.sender != null) {
-                                model.filterCount += 1;
-                              }
-                              if (model.departureDate != null) {
-                                model.filterCount += 1;
-                              }
-                              if (model.amountStart != null ||
-                                  model.amountEnd != null) {
-                                model.filterCount += 1;
-                              }
-
-                              BlocProvider.of<PharmacyArrivalScreenCubit>(
-                                context,
-                              ).onRefreshOrders(
-                                number: searchController.text.isEmpty
-                                    ? null
-                                    : searchController.text,
-                                status: status,
-                                senderId: model.sender?.id,
-                                departureDate: model.departureDate,
-                                sortType: model.sortType,
-                                amountStart: model.amountStart,
-                                amountEnd: model.amountEnd,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                      leading: const Icon(
-                        Icons.filter_alt_outlined,
-                        color: ColorPalette.grey400,
-                      ),
-                      title: Transform.translate(
-                        offset: const Offset(-20, 0),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Фильтр',
-                              style: TextStyle(
-                                color: ColorPalette.grey400,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            if (model.filterCount != 0)
-                              Container(
-                                width: 25,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color:
-                                      const Color.fromARGB(255, 107, 246, 179),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "${model.filterCount}",
-                                    style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 19, 123, 15)),
-                                  ),
-                                ),
-                              )
-                          ],
+                  PharmacyFilterWidget(
+                    onTap: () {
+                      AppRouter.push(
+                        context,
+                        PharmacyFilterPage(
+                          isFromPharmacyPage: true,
+                          callback: () {
+                            BlocProvider.of<PharmacyArrivalScreenCubit>(
+                              context,
+                            ).onRefreshOrders(
+                              number: searchController.text.isEmpty
+                                  ? null
+                                  : searchController.text,
+                              status: status,
+                              senderId: model.sender?.id,
+                              departureDate: model.departureDate,
+                              sortType: model.sortType,
+                              amountStart: model.amountStart,
+                              amountEnd: model.amountEnd,
+                            );
+                          },
                         ),
-                      ),
-                      trailing: model.filterCount == 0
-                          ? IconButton(
-                              icon: const Icon(
-                                Icons.arrow_forward_ios,
-                                color: ColorPalette.grey400,
-                              ),
-                              onPressed: () {
-                                AppRouter.push(
-                                  context,
-                                  PharmacyFilterPage(
-                                    callback: () {
-                                      if (model.sortType != null) {
-                                        model.filterCount += 1;
-                                      }
-                                      if (model.sender != null) {
-                                        model.filterCount += 1;
-                                      }
-                                      if (model.departureDate != null) {
-                                        model.filterCount += 1;
-                                      }
-                                      if (model.amountStart != null ||
-                                          model.amountEnd != null) {
-                                        model.filterCount += 1;
-                                      }
-
-                                      BlocProvider.of<
-                                          PharmacyArrivalScreenCubit>(
-                                        context,
-                                      ).onRefreshOrders(
-                                        number: searchController.text.isEmpty
-                                            ? null
-                                            : searchController.text,
-                                        status: status,
-                                        senderId: model.sender?.id,
-                                        departureDate: model.departureDate,
-                                        sortType: model.sortType,
-                                        amountStart: model.amountStart,
-                                        amountEnd: model.amountEnd,
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            )
-                          : IconButton(
-                              onPressed: () {
-                                model.clear();
-                                BlocProvider.of<PharmacyArrivalScreenCubit>(
-                                  context,
-                                ).onRefreshOrders(
-                                  number: searchController.text.isEmpty
-                                      ? null
-                                      : searchController.text,
-                                  status: status,
-                                  senderId: model.sender?.id,
-                                  departureDate: model.departureDate,
-                                  sortType: model.sortType,
-                                  amountStart: model.amountStart,
-                                  amountEnd: model.amountEnd,
-                                );
-                              },
-                              icon: const Icon(Icons.close),
-                            ),
-                    ),
+                      );
+                    },
+                    trailingCloseTap: () {
+                      model.clear();
+                      BlocProvider.of<PharmacyArrivalScreenCubit>(
+                        context,
+                      ).onRefreshOrders(
+                        number: searchController.text.isEmpty
+                            ? null
+                            : searchController.text,
+                        status: status,
+                        senderId: model.sender?.id,
+                        departureDate: model.departureDate,
+                        sortType: model.sortType,
+                        amountStart: model.amountStart,
+                        amountEnd: model.amountEnd,
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,

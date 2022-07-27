@@ -113,7 +113,7 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
         ),
       ),
       (r) {
-        List<PharmacyOrderDTO> _loadOrders = [];
+        final List<PharmacyOrderDTO> _loadOrders = [];
         log("ON LOADING:: , page:: $_currentPage");
         if (r.isNotEmpty) {
           _currentPage++;

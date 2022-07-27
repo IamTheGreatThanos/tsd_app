@@ -31,6 +31,9 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   Future<Either<Failure, List<PharmacyOrderDTO>>> getPharmacyArrivalOrders({
     required int page,
     required int status,
+    String? incomingDate,
+    String? incomingNumber,
+    int? refundStatus,
     String? number,
     int? senderId,
     String? departureDate,
@@ -43,7 +46,10 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
         final User user = await authLocalDS.getUserFromCache();
         final List<PharmacyOrderDTO> warehouseOrders =
             await arrivalRemoteDS.getPharmacyArrivalOrders(
-        number:number,
+          number: number,
+          refundStatus: refundStatus,
+          incomingDate: incomingDate,
+          incomingNumber: incomingNumber,
           accessToken: user.accessToken!,
           page: page,
           status: status,

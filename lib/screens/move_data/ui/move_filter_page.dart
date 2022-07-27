@@ -1,44 +1,36 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
+import 'package:pharmacy_arrival/screens/move_data/vmodel/move_filter_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
+import 'package:provider/provider.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
     as countragents;
-import 'package:provider/provider.dart';
 import 'package:search_choices/search_choices.dart';
 
-class PharmacyFilterPage extends StatefulWidget {
+class MoveFilterPage extends StatefulWidget {
   final VoidCallback callback;
-  final bool isFromPharmacyPage;
-  const PharmacyFilterPage({
-    Key? key,
-    required this.callback,
-    required this.isFromPharmacyPage,
-  }) : super(key: key);
+  const MoveFilterPage({Key? key, required this.callback}) : super(key: key);
 
   @override
-  State<PharmacyFilterPage> createState() => _PharmacyFilterPageState();
+  State<MoveFilterPage> createState() => _MoveFilterPageState();
 }
 
-class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
-  TextEditingController departureDateController = TextEditingController();
-  TextEditingController incomingDateController = TextEditingController();
-  TextEditingController incomingNumberController = TextEditingController();
-  TextEditingController amountStartController = TextEditingController();
-  TextEditingController amountEndController = TextEditingController();
+class _MoveFilterPageState extends State<MoveFilterPage> {
+  TextEditingController dateController = TextEditingController();
+
+  String? recipient;
+  int recipientId = -1;
   String? sender;
   int senderId = -1;
   String sortType = "Не выбрана";
+
   List<DropdownMenuItem<String>> get dropdownItems {
     const List<DropdownMenuItem<String>> moveTypes = [
       DropdownMenuItem(value: "Не выбрана", child: Text("Не выбрана")),
@@ -50,8 +42,8 @@ class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
 
   @override
   void initState() {
-    final PharmacyFilterVmodel myProvider =
-        Provider.of<PharmacyFilterVmodel>(context, listen: false);
+    final MoveFilterVmodel myProvider =
+        Provider.of<MoveFilterVmodel>(context, listen: false);
     if (myProvider.sortType != null) {
       if (myProvider.sortType == 0) {
         sortType = 'Сначало новые';
@@ -61,20 +53,11 @@ class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
     }
     senderId = myProvider.sender?.id ?? -1;
     sender = myProvider.sender?.name;
-    if (myProvider.departureDate != null) {
-      departureDateController.text = myProvider.departureDate!;
-    }
-    if (myProvider.incomingDate != null) {
-      incomingDateController.text = myProvider.incomingDate!;
-    }
-    if (myProvider.incomingNumber != null) {
-      incomingNumberController.text = myProvider.incomingNumber!;
-    }
-    if (myProvider.amountStart != null) {
-      amountStartController.text = myProvider.amountStart!;
-    }
-    if (myProvider.amountEnd != null) {
-      amountEndController.text = myProvider.amountEnd!;
+
+    recipientId = myProvider.recipient?.id ?? -1;
+    recipient = myProvider.recipient?.name;
+    if (myProvider.date != null) {
+      dateController.text = myProvider.date!;
     }
 
     super.initState();
@@ -86,7 +69,7 @@ class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Consumer<PharmacyFilterVmodel>(
+      child: Consumer<MoveFilterVmodel>(
         builder: (BuildContext context, model, Widget? child) {
           return Scaffold(
             floatingActionButton: Padding(
@@ -104,31 +87,18 @@ class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
                   } else {
                     model.sender = null;
                   }
-                  if (incomingDateController.text.isNotEmpty) {
-                    model.incomingDate = incomingDateController.text;
+                  if (recipientId != -1) {
+                    model.recipient =
+                        CounteragentDTO(id: recipientId, name: recipient);
                   } else {
-                    model.incomingDate = null;
+                    model.recipient = null;
                   }
-                  if (incomingNumberController.text.isNotEmpty) {
-                    model.incomingNumber = incomingNumberController.text;
+                  if (dateController.text.isNotEmpty) {
+                    model.date = dateController.text;
                   } else {
-                    model.incomingNumber = null;
+                    model.date = null;
                   }
-                  if (departureDateController.text.isNotEmpty) {
-                    model.departureDate = departureDateController.text;
-                  } else {
-                    model.departureDate = null;
-                  }
-                  if (amountStartController.text.isNotEmpty) {
-                    model.amountStart = amountStartController.text;
-                  } else {
-                    model.amountStart = null;
-                  }
-                  if (amountEndController.text.isNotEmpty) {
-                    model.amountEnd = amountEndController.text;
-                  } else {
-                    model.amountEnd = null;
-                  }
+
                   model.filterCount = 0;
                   if (model.sortType != null) {
                     model.filterCount += 1;
@@ -136,18 +106,13 @@ class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
                   if (model.sender != null) {
                     model.filterCount += 1;
                   }
-                  if (model.departureDate != null) {
+                  if (model.date != null) {
                     model.filterCount += 1;
                   }
-                  if (model.incomingDate != null) {
+                  if (model.recipient != null) {
                     model.filterCount += 1;
                   }
-                  if (model.incomingNumber != null) {
-                    model.filterCount += 1;
-                  }
-                  if (model.amountStart != null || model.amountEnd != null) {
-                    model.filterCount += 1;
-                  }
+
                   widget.callback();
                   Navigator.pop(context);
                 },
@@ -295,70 +260,107 @@ class _PharmacyFilterPageState extends State<PharmacyFilterPage> {
                       ),
                     ),
                     getDivider(),
-                    if (!widget.isFromPharmacyPage)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          getFilterTitle(title: 'Номер документа'),
-                          AppTextField(
-                            validator: (p0) {
-                              return [];
+                    getFilterTitle(title: "Получатель"),
+                    Container(
+                      padding: recipient != null
+                          ? const EdgeInsets.symmetric(horizontal: 8)
+                          : null,
+                      decoration: BoxDecoration(
+                        color: ColorPalette.white,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: BlocBuilder<countragents.CounteragentsCubit,
+                          countragents.CounteragentState>(
+                        builder: (context, state) {
+                          return state.maybeWhen(
+                            loadingState: () => const CircularProgressIndicator(
+                              color: Colors.amber,
+                            ),
+                            loadedState: (counteragents) {
+                              return SearchChoices.single(
+                                displayClearIcon: recipient != null,
+                                clearIcon: const Icon(Icons.close),
+                                onClear: recipient != null
+                                    ? () {
+                                        recipient = null;
+                                        recipientId = -1;
+                                      }
+                                    : null,
+                                padding: recipientId == -1 ? 14 : 7,
+                                closeButton: "Закрыть",
+                                items: counteragents
+                                    .map((e) => e.name)
+                                    .toList()
+                                    .map<DropdownMenuItem<String>>(
+                                        (String? value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      "$value",
+                                      style: ThemeTextStyle.textStyle14w400,
+                                    ),
+                                  );
+                                }).toList(),
+                                value: recipient,
+                                icon: recipient != null
+                                    ? null
+                                    : const Icon(Icons.arrow_forward_ios),
+                                hint: "Получатель",
+                                searchHint: "Получатель",
+                                style: ThemeTextStyle.textStyle14w400,
+                                onChanged: (String? newValue) {
+                                  recipient = newValue;
+                                  for (int i = 0;
+                                      i < counteragents.length;
+                                      i++) {
+                                    if (recipient == counteragents[i].name &&
+                                        counteragents[i].id != -1) {
+                                      recipientId = counteragents[i].id;
+                                    }
+                                  }
+                                  setState(() {});
+                                },
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                              );
                             },
-                            controller: incomingNumberController,
-                            hintText: "Введите номер документа",
-                          ),
-                          getDivider(),
-                          getFilterTitle(title: 'Дата накладной'),
-                          _DatePicker(
-                            controller: incomingDateController,
-                            hintText: "Дата накладной",
-                            onClose: () {
-                              incomingDateController.clear();
-                              model.incomingDate = null;
+                            errorState: (String message) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const CircularProgressIndicator(
+                                      color: Colors.red,
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      message,
+                                      style: const TextStyle(color: Colors.red),
+                                    )
+                                  ],
+                                ),
+                              );
                             },
-                          ),
-                          getDivider(),
-                        ],
-                      )
-                    else
-                      const SizedBox(),
-                    getFilterTitle(title: 'Время отправления'),
-                    _DatePicker(
-                      controller: departureDateController,
-                      hintText: "Дата отправления",
-                      onClose: () {
-                        departureDateController.clear();
-                        model.departureDate = null;
-                      },
+                            orElse: () {
+                              return const CircularProgressIndicator(
+                                color: Colors.red,
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                     getDivider(),
-                    getFilterTitle(title: "Сумма"),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppTextField(
-                            validator: (p0) {
-                              return [];
-                            },
-                            controller: amountStartController,
-                            hintText: "От",
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        Expanded(
-                          child: AppTextField(
-                            validator: (p0) {
-                              return [];
-                            },
-                            controller: amountEndController,
-                            hintText: "До",
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                      ],
+                    getFilterTitle(title: 'Время отправления'),
+                    _DatePicker(
+                      controller: dateController,
+                      hintText: "Дата отправления",
+                      onClose: () {
+                        dateController.clear();
+                        model.date = null;
+                      },
                     ),
                   ],
                 ),

@@ -9,14 +9,18 @@ import 'package:pharmacy_arrival/screens/history/history_move_screen_detail.dart
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_page_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
+import 'package:pharmacy_arrival/screens/move_data/ui/move_filter_page.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_products_screen.dart';
+import 'package:pharmacy_arrival/screens/move_data/vmodel/move_filter_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/filter/move_filter_widget.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MoveOrdersPage extends StatefulWidget {
@@ -33,6 +37,12 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
   int userId = 5;
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<MoveFilterVmodel>(
+        context,
+        listen: false,
+      ).clear();
+    });
     BlocProvider.of<MoveOrderCatCubit>(context).changeToAcceptOrdersCat();
     BlocProvider.of<MoveOrderPageCubit>(context).onRefreshOrders(
       accept: 0,
@@ -50,319 +60,442 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AppLoaderOverlay(
-      child: Scaffold(
-        floatingActionButton: SizedBox(
-          height: 80,
-          width: 80,
-          child: FloatingActionButton(
-            onPressed: () {
-              AppRouter.push(
-                context,
-                const MoveDataScreen(),
-              );
-            },
-            backgroundColor: ColorPalette.orange,
-            child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
-          ),
-        ),
-        appBar: CustomAppBar(
-          title: "Перемещение".toUpperCase(),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 13,
-            vertical: 15,
-          ),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 16,
+    return Consumer<MoveFilterVmodel>(
+      builder: (context, model, child) {
+        return AppLoaderOverlay(
+          child: Scaffold(
+            floatingActionButton: SizedBox(
+              height: 80,
+              width: 80,
+              child: FloatingActionButton(
+                onPressed: () {
+                  AppRouter.push(
+                    context,
+                    const MoveDataScreen(),
+                  );
+                },
+                backgroundColor: ColorPalette.orange,
+                child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: BlocConsumer<MoveOrderCatCubit, MoveOrderCatState>(
-                  listener: (context, state) {
-                    state.when(
-                      accept: () {
-                        currentIndex = 0;
-                        BlocProvider.of<MoveOrderPageCubit>(context)
-                            .onRefreshOrders(
-                          accept: 0,
-                          //recipientId: userId,
-                        );
-                      },
-                      send: () {
-                        currentIndex = 1;
-                        BlocProvider.of<MoveOrderPageCubit>(context)
-                            .onRefreshOrders(
-                                // senderId: userId,
+            ),
+            appBar: CustomAppBar(
+              title: "Перемещение".toUpperCase(),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 13,
+                vertical: 15,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  MoveFilterWidget(
+                    onTap: () {
+                      AppRouter.push(
+                        context,
+                        MoveFilterPage(
+                          callback: () {
+                            switch (currentIndex) {
+                              case 0:
+                                BlocProvider.of<MoveOrderPageCubit>(
+                                  context,
+                                ).onRefreshOrders(
+                                  accept: 0,
+                                  recipientId: model.recipient?.id,
+                                  senderId: model.sender?.id,
+                                  date: model.date,
+                                  //  recipientId: userId
                                 );
-                      },
-                      alreadyAccepted: () {
-                        currentIndex = 2;
-                        BlocProvider.of<MoveOrderPageCubit>(context)
-                            .onRefreshOrders(
-                          accept: 1, send: 1,
-                          // senderId: userId,
-                        );
-                      },
-                    );
-                  },
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<MoveOrderCatCubit>(context)
-                                .changeToAcceptOrdersCat();
+                                break;
+                              case 1:
+                                BlocProvider.of<MoveOrderPageCubit>(
+                                  context,
+                                ).onRefreshOrders(
+                                  recipientId: model.recipient?.id,
+                                  senderId: model.sender?.id,
+                                  date: model.date,
+                                  //  senderId: userId
+                                );
+                                break;
+                              case 2:
+                                BlocProvider.of<MoveOrderPageCubit>(
+                                  context,
+                                ).onRefreshOrders(
+                                  recipientId: model.recipient?.id,
+                                  senderId: model.sender?.id,
+                                  date: model.date,
+                                  accept: 1,
+                                  send: 1,
+                                  // senderId: userId,
+                                );
+                                break;
+                              default:
+                            }
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: currentIndex == 0
-                                  ? ColorPalette.white
-                                  : ColorPalette.main,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              "Необходимо принять",
-                              style: ThemeTextStyle.textStyle14w500.copyWith(
-                                color: currentIndex == 0
-                                    ? ColorPalette.grayText
-                                    : ColorPalette.grayTextDisabled,
-                              ),
-                            ),
-                          ),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<MoveOrderCatCubit>(context)
-                                .changeToSendCat();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: currentIndex == 1
-                                  ? ColorPalette.white
-                                  : ColorPalette.main,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Отрпавленные",
-                                  style:
-                                      ThemeTextStyle.textStyle14w500.copyWith(
-                                    color: currentIndex == 1
-                                        ? ColorPalette.grayText
-                                        : ColorPalette.grayTextDisabled,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<MoveOrderCatCubit>(context)
-                                .changeToAlreadyAcceptedCat();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: currentIndex == 2
-                                  ? ColorPalette.white
-                                  : ColorPalette.main,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Принятые",
-                                  style:
-                                      ThemeTextStyle.textStyle14w500.copyWith(
-                                    color: currentIndex == 1
-                                        ? ColorPalette.grayText
-                                        : ColorPalette.grayTextDisabled,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: BlocConsumer<MoveOrderPageCubit, MoveOrderPageState>(
-                    listener: (context, state) {
-                      state.when(
-                        initialState: () {},
-                        loadingState: () {},
-                        loadedState: (orders) {},
-                        errorState: (String message) {
-                          buildErrorCustomSnackBar(context, message);
-                        },
                       );
                     },
-                    builder: (context, state) {
-                      return state.maybeWhen(
-                        loadingState: () {
-                          return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.amber),
+                    trailingCloseTap: () {
+                      model.clear();
+                      switch (currentIndex) {
+                        case 0:
+                          BlocProvider.of<MoveOrderPageCubit>(
+                            context,
+                          ).onRefreshOrders(
+                            accept: 0,
+                            recipientId: model.recipient?.id,
+                            senderId: model.sender?.id,
+                            date: model.date,
+                            //  recipientId: userId
                           );
-                        },
-                        loadedState: (orders) {
-                          return SmartRefresher(
-                            enablePullUp: true,
-                            onLoading: () {
-                              switch (currentIndex) {
-                                case 0:
-                                  BlocProvider.of<MoveOrderPageCubit>(
-                                    context,
-                                  ).onLoadOrders(
-                                    accept: 0,
-                                    // recipientId: userId,
-                                  );
-                                  break;
-                                case 1:
-                                  BlocProvider.of<MoveOrderPageCubit>(
-                                    context,
-                                  ).onLoadOrders(
-                                      // senderId: userId,
-                                      );
-                                  break;
-                                case 2:
-                                  BlocProvider.of<MoveOrderPageCubit>(
-                                    context,
-                                  ).onLoadOrders(
-                                    accept: 1,
-                                    send: 1,
-                                    // senderId: userId,
-                                  );
-                                  break;
-                                default:
-                              }
-
-                              refreshController.loadComplete();
-                            },
-                            onRefresh: () {
-                              switch (currentIndex) {
-                                case 0:
-                                  BlocProvider.of<MoveOrderPageCubit>(
-                                    context,
-                                  ).onRefreshOrders(
-                                    accept: 0,
-                                    //  recipientId: userId
-                                  );
-                                  break;
-                                case 1:
-                                  BlocProvider.of<MoveOrderPageCubit>(
-                                    context,
-                                  ).onRefreshOrders(
-                                      //  senderId: userId
-                                      );
-                                  break;
-                                case 2:
-                                  BlocProvider.of<MoveOrderPageCubit>(
-                                    context,
-                                  ).onRefreshOrders(
-                                    accept: 1,
-                                    send: 1,
-                                    // senderId: userId,
-                                  );
-                                  break;
-                                default:
-                              }
-                              refreshController.refreshCompleted();
-                            },
-                            controller: refreshController,
-                            child: orders.isEmpty
-                                ? ListView(
-                                    children: [
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.1,
-                                      ),
-                                      Center(
-                                        child: Lottie.asset(
-                                          'assets/lotties/empty_box.json',
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                : ListView.builder(
-                                    itemCount: orders.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return _BuildOrderData(
-                                        currentIndex: currentIndex,
-                                        orderData: orders[index],
-                                      );
-                                    },
-                                  ),
+                          break;
+                        case 1:
+                          BlocProvider.of<MoveOrderPageCubit>(
+                            context,
+                          ).onRefreshOrders(
+                            recipientId: model.recipient?.id,
+                            senderId: model.sender?.id,
+                            date: model.date,
+                            //  senderId: userId
                           );
-                        },
-                        errorState: (String message) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const CircularProgressIndicator(
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  message,
-                                  style: const TextStyle(color: Colors.red),
-                                )
-                              ],
-                            ),
+                          break;
+                        case 2:
+                          BlocProvider.of<MoveOrderPageCubit>(
+                            context,
+                          ).onRefreshOrders(
+                            recipientId: model.recipient?.id,
+                            senderId: model.sender?.id,
+                            date: model.date,
+                            accept: 1,
+                            send: 1,
+                            // senderId: userId,
                           );
-                        },
-                        orElse: () {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.red,
-                            ),
-                          );
-                        },
-                      );
+                          break;
+                        default:
+                      }
                     },
                   ),
-                ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: BlocConsumer<MoveOrderCatCubit, MoveOrderCatState>(
+                      listener: (context, state) {
+                        state.when(
+                          accept: () {
+                            currentIndex = 0;
+                            BlocProvider.of<MoveOrderPageCubit>(context)
+                                .onRefreshOrders(
+                              recipientId: model.recipient?.id,
+                              senderId: model.sender?.id,
+                              date: model.date,
+                              accept: 0,
+                              //recipientId: userId,
+                            );
+                          },
+                          send: () {
+                            currentIndex = 1;
+                            BlocProvider.of<MoveOrderPageCubit>(context)
+                                .onRefreshOrders(
+                              recipientId: model.recipient?.id,
+                              senderId: model.sender?.id,
+                              date: model.date,
+                              // senderId: userId,
+                            );
+                          },
+                          alreadyAccepted: () {
+                            currentIndex = 2;
+                            BlocProvider.of<MoveOrderPageCubit>(context)
+                                .onRefreshOrders(
+                              recipientId: model.recipient?.id,
+                              senderId: model.sender?.id,
+                              date: model.date,
+                              accept: 1, send: 1,
+                              // senderId: userId,
+                            );
+                          },
+                        );
+                      },
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<MoveOrderCatCubit>(context)
+                                    .changeToAcceptOrdersCat();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: currentIndex == 0
+                                      ? ColorPalette.white
+                                      : ColorPalette.main,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  "Необходимо принять",
+                                  style:
+                                      ThemeTextStyle.textStyle14w500.copyWith(
+                                    color: currentIndex == 0
+                                        ? ColorPalette.grayText
+                                        : ColorPalette.grayTextDisabled,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<MoveOrderCatCubit>(context)
+                                    .changeToSendCat();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: currentIndex == 1
+                                      ? ColorPalette.white
+                                      : ColorPalette.main,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Отрпавленные",
+                                      style: ThemeTextStyle.textStyle14w500
+                                          .copyWith(
+                                        color: currentIndex == 1
+                                            ? ColorPalette.grayText
+                                            : ColorPalette.grayTextDisabled,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<MoveOrderCatCubit>(context)
+                                    .changeToAlreadyAcceptedCat();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: currentIndex == 2
+                                      ? ColorPalette.white
+                                      : ColorPalette.main,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Принятые",
+                                      style: ThemeTextStyle.textStyle14w500
+                                          .copyWith(
+                                        color: currentIndex == 1
+                                            ? ColorPalette.grayText
+                                            : ColorPalette.grayTextDisabled,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child:
+                          BlocConsumer<MoveOrderPageCubit, MoveOrderPageState>(
+                        listener: (context, state) {
+                          state.when(
+                            initialState: () {},
+                            loadingState: () {},
+                            loadedState: (orders) {},
+                            errorState: (String message) {
+                              buildErrorCustomSnackBar(context, message);
+                            },
+                          );
+                        },
+                        builder: (context, state) {
+                          return state.maybeWhen(
+                            loadingState: () {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.amber),
+                              );
+                            },
+                            loadedState: (orders) {
+                              return SmartRefresher(
+                                enablePullUp: true,
+                                onLoading: () {
+                                  switch (currentIndex) {
+                                    case 0:
+                                      BlocProvider.of<MoveOrderPageCubit>(
+                                        context,
+                                      ).onLoadOrders(
+                                        recipientId: model.recipient?.id,
+                                        senderId: model.sender?.id,
+                                        date: model.date,
+                                        accept: 0,
+                                        // recipientId: userId,
+                                      );
+                                      break;
+                                    case 1:
+                                      BlocProvider.of<MoveOrderPageCubit>(
+                                        context,
+                                      ).onLoadOrders(
+                                        recipientId: model.recipient?.id,
+                                        senderId: model.sender?.id,
+                                        date: model.date,
+                                        // senderId: userId,
+                                      );
+                                      break;
+                                    case 2:
+                                      BlocProvider.of<MoveOrderPageCubit>(
+                                        context,
+                                      ).onLoadOrders(
+                                        recipientId: model.recipient?.id,
+                                        senderId: model.sender?.id,
+                                        date: model.date,
+                                        accept: 1,
+                                        send: 1,
+                                        // senderId: userId,
+                                      );
+                                      break;
+                                    default:
+                                  }
+
+                                  refreshController.loadComplete();
+                                },
+                                onRefresh: () {
+                                  switch (currentIndex) {
+                                    case 0:
+                                      BlocProvider.of<MoveOrderPageCubit>(
+                                        context,
+                                      ).onRefreshOrders(
+                                        recipientId: model.recipient?.id,
+                                        senderId: model.sender?.id,
+                                        date: model.date,
+                                        accept: 0,
+                                        //  recipientId: userId
+                                      );
+                                      break;
+                                    case 1:
+                                      BlocProvider.of<MoveOrderPageCubit>(
+                                        context,
+                                      ).onRefreshOrders(
+                                        recipientId: model.recipient?.id,
+                                        senderId: model.sender?.id,
+                                        date: model.date,
+                                        //  senderId: userId
+                                      );
+                                      break;
+                                    case 2:
+                                      BlocProvider.of<MoveOrderPageCubit>(
+                                        context,
+                                      ).onRefreshOrders(
+                                        recipientId: model.recipient?.id,
+                                        senderId: model.sender?.id,
+                                        date: model.date,
+                                        accept: 1,
+                                        send: 1,
+                                        // senderId: userId,
+                                      );
+                                      break;
+                                    default:
+                                  }
+                                  refreshController.refreshCompleted();
+                                },
+                                controller: refreshController,
+                                child: orders.isEmpty
+                                    ? ListView(
+                                        children: [
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.1,
+                                          ),
+                                          Center(
+                                            child: Lottie.asset(
+                                              'assets/lotties/empty_box.json',
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    : ListView.builder(
+                                        itemCount: orders.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return _BuildOrderData(
+                                            currentIndex: currentIndex,
+                                            orderData: orders[index],
+                                          );
+                                        },
+                                      ),
+                              );
+                            },
+                            errorState: (String message) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const CircularProgressIndicator(
+                                      color: Colors.red,
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      message,
+                                      style: const TextStyle(color: Colors.red),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                            orElse: () {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.red,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

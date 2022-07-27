@@ -2,6 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 
 class PharmacyFilterVmodel extends ChangeNotifier {
+  String? _incomingNumber;
+  String? get incomingNumber => _incomingNumber;
+  set incomingNumber(String? value) {
+    _incomingNumber = value;
+    notifyListeners();
+  }
+
+  String? _incomingDate;
+  String? get incomingDate => _incomingDate;
+  set incomingDate(String? value) {
+    _incomingDate = value;
+    notifyListeners();
+  }
+
   int? _sortType;
   int? get sortType => _sortType;
   set sortType(int? value) {
@@ -47,6 +61,8 @@ class PharmacyFilterVmodel extends ChangeNotifier {
 
   void clear() {
     filterCount = 0;
+    _incomingDate = null;
+    _incomingNumber = null;
     _sortType = null;
     _sender = null;
     _departureDate = null;
