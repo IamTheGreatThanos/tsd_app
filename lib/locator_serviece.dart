@@ -97,7 +97,9 @@ Future<void> initLocator() async {
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl(), sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => MoveGoodsScreenCubit(sl(),));
+  sl.registerFactory(() => MoveGoodsScreenCubit(
+        sl(),
+      ));
   sl.registerFactory(() => SignatureScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));
@@ -128,7 +130,14 @@ Future<void> initLocator() async {
     ),
   );
   sl.registerFactory(() => HistoryCatCubit());
-  sl.registerFactory(() => HistoryCubit(sl(), sl(), sl(), sl(), sl(),sl()));
+  sl.registerFactory(
+    () => HistoryCubit(
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+    ),
+  );
   sl.registerFactory(() => PharmacyQrScreenCubit(sl()));
   sl.registerFactory(() => PharmacyArrivalCatCubit());
   sl.registerFactory(() => WarehouseArrivalCatCubit());

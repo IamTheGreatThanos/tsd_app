@@ -8,29 +8,23 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/domain/repositories/move_data_repository.dart';
-import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/get_moving_history.dart';
-import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_orders_by_search.dart';
-import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_history.dart';
+import 'package:pharmacy_arrival/domain/repositories/pharmacy_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_order_status.dart';
-import 'package:pharmacy_arrival/domain/usecases/refund_usecases/remote_usecases/get_refund_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_history.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 
 part 'history_state.dart';
 part 'history_cubit.freezed.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {
-  final GetPharmacyArrivalHistory _getPharmacyArrivalHistory;
   final GetWarehouseArrivalHistory _getWarehouseArrivalHistory;
-  final GetMovingHistory _getMovingHistory;
+  final PharmacyRepository _pharmacyRepository;
   final UpdatePharmacyOrderStatus _updatePharmacyOrderStatus;
-  final GetOrdersBySearch _getOrdersBySearch;
   final MoveDataRepository _moveDataRepository;
   HistoryCubit(
-    this._getPharmacyArrivalHistory,
     this._getWarehouseArrivalHistory,
-    this._getMovingHistory,
+    this._pharmacyRepository,
     this._updatePharmacyOrderStatus,
-    this._getOrdersBySearch,
     this._moveDataRepository,
   ) : super(const HistoryState.initialState());
 
@@ -61,19 +55,23 @@ class HistoryCubit extends Cubit<HistoryState> {
   }
 
   Future<void> getPharmacyArrivalHistory({
+    PharmacyFilterVmodel? pharmacyFilterVmodel,
     String? number,
-    int? senderId,
-    int? recipientId,
     int? refundStatus,
   }) async {
     emit(const HistoryState.loadingState());
-    final failureOrSuccess = await _getPharmacyArrivalHistory.call(
-      GetPharmacyArrivalHistoryParams(
-        number: number,
-        recipientId: recipientId,
-        senderId: senderId,
-        refundStatus: refundStatus,
-      ),
+    final failureOrSuccess = await _pharmacyRepository.getPharmacyArrivalOrders(
+      number: number,
+      page: 1,
+      refundStatus: refundStatus,
+      status: 3,
+      incomingDate: pharmacyFilterVmodel?.incomingDate,
+      incomingNumber: pharmacyFilterVmodel?.incomingNumber,
+      senderId: pharmacyFilterVmodel?.sender?.id,
+      departureDate: pharmacyFilterVmodel?.departureDate,
+      sortType: pharmacyFilterVmodel?.sortType,
+      amountEnd: pharmacyFilterVmodel?.amountEnd,
+      amountStart: pharmacyFilterVmodel?.amountStart,
     );
     failureOrSuccess.fold(
       (l) {
@@ -90,26 +88,6 @@ class HistoryCubit extends Cubit<HistoryState> {
         // }
         emit(HistoryState.pharmacyHistoryState(pharmacyOrders: r));
       },
-    );
-  }
-
-  Future<void> getPharmacyHistoryBySearch({
-    required String number,
-  }) async {
-    emit(const HistoryState.loadingState());
-    final result = await _getOrdersBySearch.call(
-      GetOrdersBySearchParams(
-        number: number,
-        status: 3,
-      ),
-    );
-    result.fold(
-      (l) => emit(
-        HistoryState.errorState(
-          message: mapFailureToMessage(l),
-        ),
-      ),
-      (r) => emit(HistoryState.pharmacyHistoryBySearch(pharmacyOrders: r)),
     );
   }
 
@@ -130,11 +108,19 @@ class HistoryCubit extends Cubit<HistoryState> {
     );
   }
 
-  Future<void> getMovingHistory() async {
+  Future<void> getMovingHistory({
+    int? status,
+    int? senderId,
+    int? recipientId,
+    String? date,
+  }) async {
     emit(const HistoryState.loadingState());
     final failureOrSuccess = await _moveDataRepository.getMovingOrders(
       accept: 1,
       send: 1,
+      senderId: senderId,
+      recipientId: recipientId,
+      date: date,
     );
     failureOrSuccess.fold(
         (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
@@ -149,10 +135,26 @@ class HistoryCubit extends Cubit<HistoryState> {
     });
   }
 
-  Future<void> getRefundHistory({int? refundStatus}) async {
+  Future<void> getRefundHistory({
+    PharmacyFilterVmodel? pharmacyFilterVmodel,
+    String? number,
+    int? recipientId,
+    int? refundStatus,
+  }) async {
     emit(const HistoryState.loadingState());
-    final failureOrSuccess = await _getPharmacyArrivalHistory
-        .call(GetPharmacyArrivalHistoryParams(refundStatus: refundStatus));
+    final failureOrSuccess = await _pharmacyRepository.getPharmacyArrivalOrders(
+      number: number,
+      page: 1,
+      refundStatus: refundStatus,
+      status: 3,
+      incomingDate: pharmacyFilterVmodel?.incomingDate,
+      incomingNumber: pharmacyFilterVmodel?.incomingNumber,
+      senderId: pharmacyFilterVmodel?.sender?.id,
+      departureDate: pharmacyFilterVmodel?.departureDate,
+      sortType: pharmacyFilterVmodel?.sortType,
+      amountEnd: pharmacyFilterVmodel?.amountEnd,
+      amountStart: pharmacyFilterVmodel?.amountStart,
+    );
     failureOrSuccess.fold(
         (l) => emit(HistoryState.errorState(message: mapFailureToMessage(l))),
         (r) {
