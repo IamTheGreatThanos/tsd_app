@@ -158,10 +158,12 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       if (selectedProduct.id == -1) {
         await savePharmacySelectedProductToCache(selectedProduct: productDTO);
         if (productDTO.totalCount! <=
-            productDTO.scanCount! +
-                productDTO.defective! +
-                productDTO.underachievement! +
-                productDTO.reSorting!) {
+              (productDTO.scanCount ?? 0) +
+                  (productDTO.defective ?? 0) +
+                  (productDTO.underachievement ?? 0) +
+                  (productDTO.reSorting ?? 0) +
+                  (productDTO.netovar ?? 0) +
+                  (productDTO.overdue ?? 0))  {
           emit(
             const GoodsListScreenState.errorState(
               message: 'Продукты уже отсканированы!',
@@ -190,10 +192,12 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
           );
         } else {
           if (productDTO.totalCount! <=
-              productDTO.scanCount! +
-                  productDTO.defective! +
-                  productDTO.underachievement! +
-                  productDTO.reSorting!) {
+              (productDTO.scanCount ?? 0) +
+                  (productDTO.defective ?? 0) +
+                  (productDTO.underachievement ?? 0) +
+                  (productDTO.reSorting ?? 0) +
+                  (productDTO.netovar ?? 0) +
+                  (productDTO.overdue ?? 0)) {
             emit(
               const GoodsListScreenState.errorState(
                 message: 'Продукты уже отсканированы!',

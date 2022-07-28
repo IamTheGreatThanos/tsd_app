@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
@@ -10,6 +11,7 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class DefectScreen extends StatefulWidget {
+  final bool isFromPharmacyPage;
   final ProductDTO product;
   final TextEditingController searchController;
   final int orderId;
@@ -18,6 +20,7 @@ class DefectScreen extends StatefulWidget {
     required this.product,
     required this.orderId,
     required this.searchController,
+    required this.isFromPharmacyPage,
   }) : super(key: key);
 
   @override
@@ -72,675 +75,712 @@ class _DefectScreenState extends State<DefectScreen> {
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
-      child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
-        listener: (context, state) {
-          state.when(
-            initialState: () {
-              context.loaderOverlay.hide();
-            },
-            loadingState: () {
-              context.loaderOverlay.show();
-            },
-            loadedState: (
-              scannedProducts,
-              unscannedProducts,
-              selectedProduct,
-            ) {
-              context.loaderOverlay.hide();
-              Navigator.pop(context);
-            },
-            successScannedState: (message) {},
-            errorState: (message) {
-              buildErrorCustomSnackBar(context, message);
-              context.loaderOverlay.hide();
-            },
-          );
-        },
-        builder: (context, state) {
-          return Scaffold(
-            backgroundColor: ColorPalette.white,
-            appBar: CustomAppBar(
-              title: productInfo.barcode ?? 'No data',
-              showLogo: false,
+      child: widget.isFromPharmacyPage
+          ? BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+              listener: (context, state) {
+                state.when(
+                  initialState: () {
+                    context.loaderOverlay.hide();
+                  },
+                  loadingState: () {
+                    context.loaderOverlay.show();
+                  },
+                  loadedState: (
+                    scannedProducts,
+                    unscannedProducts,
+                    selectedProduct,
+                  ) {
+                    context.loaderOverlay.hide();
+                    Navigator.pop(context);
+                  },
+                  successScannedState: (message) {},
+                  errorState: (message) {
+                    buildErrorCustomSnackBar(context, message);
+                    context.loaderOverlay.hide();
+                  },
+                );
+              },
+              builder: (context, state) {
+                return buildScaffold(context);
+              },
+            )
+          : BlocConsumer<MoveGoodsScreenCubit, MoveGoodsScreenState>(
+              listener: (context, state) {
+                state.when(
+                  initialState: () {
+                    context.loaderOverlay.hide();
+                  },
+                  loadingState: () {
+                    context.loaderOverlay.show();
+                  },
+                  loadedState: (
+                    scannedProducts,
+                    unscannedProducts,
+                    selectedProduct,
+                  ) {
+                    context.loaderOverlay.hide();
+                    Navigator.pop(context);
+                  },
+                  successScannedState: (message) {},
+                  errorState: (message) {
+                    buildErrorCustomSnackBar(context, message);
+                    context.loaderOverlay.hide();
+                  },
+                );
+              },
+              builder: (context, state) {
+                return buildScaffold(context);
+              },
             ),
-            body: SingleChildScrollView(
-              child: Column(
+    );
+  }
+
+  Scaffold buildScaffold(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorPalette.white,
+      appBar: CustomAppBar(
+        title: productInfo.barcode ?? 'No data',
+        showLogo: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          productInfo.name ?? "No data",
+                          style: ThemeTextStyle.textTitleDella20w400
+                              .copyWith(color: ColorPalette.black),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          productInfo.producer ?? "No data",
+                          style: ThemeTextStyle.textStyle14w400
+                              .copyWith(color: ColorPalette.grayText),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Image.network(
+                  //   productInfo.image ?? "null",
+                  //   width: 240,
+                  //   height: 240,
+                  // ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 14,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF3F6FB),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 8,
+                ),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
                         Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                productInfo.name ?? "No data",
-                                style: ThemeTextStyle.textTitleDella20w400
+                                "Количество",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "${productInfo.totalCount ?? 0}",
+                                style: ThemeTextStyle.textTitleDella40w400
                                     .copyWith(color: ColorPalette.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 3,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: ColorPalette.borderGrey,
+                          ),
+                        ),
+                        // const Padding(
+                        //   padding: EdgeInsets.only(
+                        //     right: 20,
+                        //     left: 20,
+                        //   ),
+                        //   child: VerticalDivider(
+                        //     color: ColorPalette.borderGrey,
+                        //   ),
+                        // ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Не отсканировано",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "${productInfo.totalCount! - (productInfo.scanCount!)}",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Container(
+                        height: 3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: ColorPalette.borderGrey,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Просрочен",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
                               Text(
-                                productInfo.producer ?? "No data",
+                                "$overdue",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            width: 3,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: ColorPalette.borderGrey,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Нетоварный вид",
+                                textAlign: TextAlign.center,
                                 style: ThemeTextStyle.textStyle14w400
                                     .copyWith(color: ColorPalette.grayText),
                               ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "$netovar",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
                             ],
                           ),
                         ),
-                        // Image.network(
-                        //   productInfo.image ?? "null",
-                        //   width: 240,
-                        //   height: 240,
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            width: 3,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: ColorPalette.borderGrey,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Брак",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "$defective",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF3F6FB),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 8,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Количество",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      "${productInfo.totalCount ?? 0}",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 3,
-                                height: 48,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: ColorPalette.borderGrey,
-                                ),
-                              ),
-                              // const Padding(
-                              //   padding: EdgeInsets.only(
-                              //     right: 20,
-                              //     left: 20,
-                              //   ),
-                              //   child: VerticalDivider(
-                              //     color: ColorPalette.borderGrey,
-                              //   ),
-                              // ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Не отсканировано",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      "${productInfo.totalCount! - (productInfo.scanCount!)}",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Container(
-                              height: 3,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorPalette.borderGrey,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Просрочен",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "$overdue",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: 3,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: ColorPalette.borderGrey,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Нетоварный вид",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "$netovar",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: 3,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: ColorPalette.borderGrey,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Брак",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "$defective",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Container(
-                              height: 3,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorPalette.borderGrey,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Излишек",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "$surplus",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: 3,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: ColorPalette.borderGrey,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Пересорт серий",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "$reSorting",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: 3,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: ColorPalette.borderGrey,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Недостача",
-                                      textAlign: TextAlign.center,
-                                      style: ThemeTextStyle.textStyle14w400
-                                          .copyWith(
-                                              color: ColorPalette.grayText),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "$underachievement",
-                                      style: ThemeTextStyle.textTitleDella40w400
-                                          .copyWith(color: ColorPalette.black,),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 34,
-                  ),
-                  ListView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      _BuildDefectiveDetail(
-                        textFieldController: defectControllers[4],
-                        isAll: isAll,
-                        title: defectDetails[4],
-                        onChanged: (index, isChecked, isFromTextField) {
-                          if (isChecked) {
-                            overdue = index;
-                            allCount = defective +
-                                underachievement +
-                                reSorting +
-                                netovar +
-                                overdue;
-                            if (isFromTextField &&
-                                overdue >
-                                    productInfo.totalCount! -
-                                        productInfo.scanCount! -
-                                        defective -
-                                        underachievement -
-                                        reSorting -
-                                        netovar) {
-                              buildErrorCustomSnackBar(
-                                context,
-                                "Количество просроченных товаров не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - reSorting - netovar} шт",
-                              );
-                              defectControllers[4].text =
-                                  (productInfo.totalCount! -
-                                          productInfo.scanCount! -
-                                          defective -
-                                          underachievement -
-                                          reSorting -
-                                          netovar)
-                                      .toString();
-                              overdue = int.parse(defectControllers[4].text);
-                              isAll = true;
-                            } else {
-                              if (allCount ==
-                                  productInfo.totalCount! -
-                                      productInfo.scanCount!) {
-                                isAll = true;
-                              } else {
-                                isAll = false;
-                              }
-                            }
-                            setState(() {});
-                          }
-                        },
-                        showDivider: 0 != defectDetails.length - 1,
-                      ),
-                      _BuildDefectiveDetail(
-                        textFieldController: defectControllers[5],
-                        isAll: isAll,
-                        title: defectDetails[5],
-                        onChanged: (index, isChecked, isFromTextField) {
-                          if (isChecked) {
-                            netovar = index;
-                            allCount = defective +
-                                underachievement +
-                                reSorting +
-                                overdue +
-                                netovar;
-                            if (isFromTextField &&
-                                netovar >
-                                    productInfo.totalCount! -
-                                        productInfo.scanCount! -
-                                        defective -
-                                        underachievement -
-                                        reSorting -
-                                        overdue) {
-                              buildErrorCustomSnackBar(
-                                context,
-                                "Количество товаров c неварным видом не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - reSorting - overdue} шт",
-                              );
-                              defectControllers[5].text =
-                                  (productInfo.totalCount! -
-                                          productInfo.scanCount! -
-                                          defective -
-                                          underachievement -
-                                          reSorting -
-                                          overdue)
-                                      .toString();
-                              netovar = int.parse(defectControllers[5].text);
-                              isAll = true;
-                            } else {
-                              if (allCount ==
-                                  productInfo.totalCount! -
-                                      productInfo.scanCount!) {
-                                isAll = true;
-                              } else {
-                                isAll = false;
-                              }
-                            }
-                            setState(() {});
-                          }
-                        },
-                        showDivider: 0 != defectDetails.length - 1,
-                      ),
-                      _BuildDefectiveDetail(
-                        textFieldController: defectControllers[0],
-                        isAll: isAll,
-                        title: defectDetails[0],
-                        onChanged: (index, isChecked, isFromTextField) {
-                          if (isChecked) {
-                            defective = index;
-                            allCount = defective +
-                                underachievement +
-                                reSorting +
-                                overdue +
-                                netovar;
-                            if (isFromTextField &&
-                                defective >
-                                    productInfo.totalCount! -
-                                        productInfo.scanCount! -
-                                        underachievement -
-                                        reSorting -
-                                        overdue -
-                                        netovar) {
-                              buildErrorCustomSnackBar(
-                                context,
-                                "Количество браков не может превышать ${productInfo.totalCount! - productInfo.scanCount! - underachievement - reSorting - overdue - netovar} шт",
-                              );
-                              defectControllers[0].text =
-                                  (productInfo.totalCount! -
-                                          productInfo.scanCount! -
-                                          underachievement -
-                                          reSorting -
-                                          overdue -
-                                          netovar)
-                                      .toString();
-                              defective = int.parse(defectControllers[0].text);
-                              isAll = true;
-                            } else {
-                              if (allCount ==
-                                  productInfo.totalCount! -
-                                      productInfo.scanCount!) {
-                                isAll = true;
-                              } else {
-                                isAll = false;
-                              }
-                            }
-                            setState(() {});
-                          }
-                        },
-                        showDivider: 0 != defectDetails.length - 1,
-                      ),
-                      _BuildDefectiveDetail(
-                        textFieldController: defectControllers[1],
-                        isAll: false,
-                        title: defectDetails[1],
-                        onChanged: (productInfo.scanCount! +
-                                    defective +
-                                    underachievement +
-                                    overdue +
-                                    netovar +
-                                    reSorting ==
-                                productInfo.totalCount)
-                            ? (index, isChecked, isFromTextField) {
-                                if (isChecked) {
-                                  surplus = index;
-
-                                  setState(() {});
-                                }
-                              }
-                            : null,
-                        showDivider: 1 != defectDetails.length - 1,
-                      ),
-                      _BuildDefectiveDetail(
-                        textFieldController: defectControllers[2],
-                        isAll: isAll,
-                        title: defectDetails[2],
-                        onChanged: (index, isChecked, isFromTextField) {
-                          if (isChecked) {
-                            underachievement = index;
-                            allCount = defective +
-                                underachievement +
-                                reSorting +
-                                overdue +
-                                netovar;
-                            if (isFromTextField &&
-                                underachievement >
-                                    productInfo.totalCount! -
-                                        productInfo.scanCount! -
-                                        defective -
-                                        reSorting -
-                                        overdue -
-                                        netovar) {
-                              buildErrorCustomSnackBar(
-                                context,
-                                "Количество недостач не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - reSorting - overdue - netovar} шт",
-                              );
-                              defectControllers[2].text =
-                                  (productInfo.totalCount! -
-                                          productInfo.scanCount! -
-                                          defective -
-                                          reSorting -
-                                          overdue -
-                                          netovar)
-                                      .toString();
-                              underachievement =
-                                  int.parse(defectControllers[2].text);
-                              isAll = true;
-                            } else {
-                              if (allCount ==
-                                  productInfo.totalCount! -
-                                      productInfo.scanCount!) {
-                                isAll = true;
-                              } else {
-                                isAll = false;
-                              }
-                            }
-                            setState(() {});
-                          }
-                        },
-                        showDivider: 2 != defectDetails.length - 1,
-                      ),
-                      _BuildDefectiveDetail(
-                        textFieldController: defectControllers[3],
-                        isAll: isAll,
-                        title: defectDetails[3],
-                        onChanged: (index, isChecked, isFromTextField) {
-                          if (isChecked) {
-                            reSorting = index;
-                            allCount = defective +
-                                underachievement +
-                                reSorting +
-                                overdue +
-                                netovar;
-                            if (isFromTextField &&
-                                reSorting >
-                                    productInfo.totalCount! -
-                                        productInfo.scanCount! -
-                                        defective -
-                                        underachievement -
-                                        overdue -
-                                        netovar) {
-                              buildErrorCustomSnackBar(
-                                context,
-                                "Количество паспорт серий не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - overdue - netovar} шт",
-                              );
-                              defectControllers[3].text =
-                                  (productInfo.totalCount! -
-                                          productInfo.scanCount! -
-                                          underachievement -
-                                          defective -
-                                          overdue -
-                                          netovar)
-                                      .toString();
-                              reSorting = int.parse(defectControllers[3].text);
-                              isAll = true;
-                            } else {
-                              if (allCount ==
-                                  productInfo.totalCount! -
-                                      productInfo.scanCount!) {
-                                isAll = true;
-                              } else {
-                                isAll = false;
-                              }
-                            }
-                            setState(() {});
-                          }
-                        },
-                        showDivider: 3 != defectDetails.length - 1,
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 24.0,
-                      right: 24.0,
-                      bottom: 24.0,
-                      top: 24,
-                    ),
-                    child: GestureDetector(
-                      onTap: () async {
-                        BlocProvider.of<GoodsListScreenCubit>(context)
-                            .changeToLoadingState();
-                        BlocProvider.of<GoodsListScreenCubit>(context)
-                            .updatePharmacyProductById(
-                          search: widget.searchController.text.isNotEmpty
-                              ? widget.searchController.text
-                              : null,
-                          orderId: widget.orderId,
-                          productId: productInfo.id,
-                          //    scanCount: productInfo.scanCount,
-                          defective: defective,
-                          surplus: surplus,
-                          underachievement: underachievement,
-                          reSorting: reSorting,
-                          overdue: overdue,
-                          netovar: netovar,
-                        );
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        height: 3,
                         decoration: BoxDecoration(
-                          color: ColorPalette.orange,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Отправить",
-                            style: ThemeTextStyle.textStyle14w600
-                                .copyWith(color: ColorPalette.white),
-                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          color: ColorPalette.borderGrey,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Излишек",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "$surplus",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            width: 3,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: ColorPalette.borderGrey,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Пересорт серий",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "$reSorting",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(color: ColorPalette.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            width: 3,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: ColorPalette.borderGrey,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Недостача",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "$underachievement",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(
+                                  color: ColorPalette.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
-          );
-        },
+            const SizedBox(
+              height: 34,
+            ),
+            ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[4],
+                  isAll: isAll,
+                  title: defectDetails[4],
+                  onChanged: (index, isChecked, isFromTextField) {
+                    if (isChecked) {
+                      overdue = index;
+                      allCount = defective +
+                          underachievement +
+                          reSorting +
+                          netovar +
+                          overdue;
+                      if (isFromTextField &&
+                          overdue >
+                              productInfo.totalCount! -
+                                  productInfo.scanCount! -
+                                  defective -
+                                  underachievement -
+                                  reSorting -
+                                  netovar) {
+                        buildErrorCustomSnackBar(
+                          context,
+                          "Количество просроченных товаров не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - reSorting - netovar} шт",
+                        );
+                        defectControllers[4].text = (productInfo.totalCount! -
+                                productInfo.scanCount! -
+                                defective -
+                                underachievement -
+                                reSorting -
+                                netovar)
+                            .toString();
+                        overdue = int.parse(defectControllers[4].text);
+                        isAll = true;
+                      } else {
+                        if (allCount ==
+                            productInfo.totalCount! - productInfo.scanCount!) {
+                          isAll = true;
+                        } else {
+                          isAll = false;
+                        }
+                      }
+                      setState(() {});
+                    }
+                  },
+                  showDivider: 0 != defectDetails.length - 1,
+                ),
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[5],
+                  isAll: isAll,
+                  title: defectDetails[5],
+                  onChanged: (index, isChecked, isFromTextField) {
+                    if (isChecked) {
+                      netovar = index;
+                      allCount = defective +
+                          underachievement +
+                          reSorting +
+                          overdue +
+                          netovar;
+                      if (isFromTextField &&
+                          netovar >
+                              productInfo.totalCount! -
+                                  productInfo.scanCount! -
+                                  defective -
+                                  underachievement -
+                                  reSorting -
+                                  overdue) {
+                        buildErrorCustomSnackBar(
+                          context,
+                          "Количество товаров c неварным видом не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - reSorting - overdue} шт",
+                        );
+                        defectControllers[5].text = (productInfo.totalCount! -
+                                productInfo.scanCount! -
+                                defective -
+                                underachievement -
+                                reSorting -
+                                overdue)
+                            .toString();
+                        netovar = int.parse(defectControllers[5].text);
+                        isAll = true;
+                      } else {
+                        if (allCount ==
+                            productInfo.totalCount! - productInfo.scanCount!) {
+                          isAll = true;
+                        } else {
+                          isAll = false;
+                        }
+                      }
+                      setState(() {});
+                    }
+                  },
+                  showDivider: 0 != defectDetails.length - 1,
+                ),
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[0],
+                  isAll: isAll,
+                  title: defectDetails[0],
+                  onChanged: (index, isChecked, isFromTextField) {
+                    if (isChecked) {
+                      defective = index;
+                      allCount = defective +
+                          underachievement +
+                          reSorting +
+                          overdue +
+                          netovar;
+                      if (isFromTextField &&
+                          defective >
+                              productInfo.totalCount! -
+                                  productInfo.scanCount! -
+                                  underachievement -
+                                  reSorting -
+                                  overdue -
+                                  netovar) {
+                        buildErrorCustomSnackBar(
+                          context,
+                          "Количество браков не может превышать ${productInfo.totalCount! - productInfo.scanCount! - underachievement - reSorting - overdue - netovar} шт",
+                        );
+                        defectControllers[0].text = (productInfo.totalCount! -
+                                productInfo.scanCount! -
+                                underachievement -
+                                reSorting -
+                                overdue -
+                                netovar)
+                            .toString();
+                        defective = int.parse(defectControllers[0].text);
+                        isAll = true;
+                      } else {
+                        if (allCount ==
+                            productInfo.totalCount! - productInfo.scanCount!) {
+                          isAll = true;
+                        } else {
+                          isAll = false;
+                        }
+                      }
+                      setState(() {});
+                    }
+                  },
+                  showDivider: 0 != defectDetails.length - 1,
+                ),
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[1],
+                  isAll: false,
+                  title: defectDetails[1],
+                  onChanged: (productInfo.scanCount! +
+                              defective +
+                              underachievement +
+                              overdue +
+                              netovar +
+                              reSorting ==
+                          productInfo.totalCount)
+                      ? (index, isChecked, isFromTextField) {
+                          if (isChecked) {
+                            surplus = index;
+
+                            setState(() {});
+                          }
+                        }
+                      : null,
+                  showDivider: 1 != defectDetails.length - 1,
+                ),
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[2],
+                  isAll: isAll,
+                  title: defectDetails[2],
+                  onChanged: (index, isChecked, isFromTextField) {
+                    if (isChecked) {
+                      underachievement = index;
+                      allCount = defective +
+                          underachievement +
+                          reSorting +
+                          overdue +
+                          netovar;
+                      if (isFromTextField &&
+                          underachievement >
+                              productInfo.totalCount! -
+                                  productInfo.scanCount! -
+                                  defective -
+                                  reSorting -
+                                  overdue -
+                                  netovar) {
+                        buildErrorCustomSnackBar(
+                          context,
+                          "Количество недостач не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - reSorting - overdue - netovar} шт",
+                        );
+                        defectControllers[2].text = (productInfo.totalCount! -
+                                productInfo.scanCount! -
+                                defective -
+                                reSorting -
+                                overdue -
+                                netovar)
+                            .toString();
+                        underachievement = int.parse(defectControllers[2].text);
+                        isAll = true;
+                      } else {
+                        if (allCount ==
+                            productInfo.totalCount! - productInfo.scanCount!) {
+                          isAll = true;
+                        } else {
+                          isAll = false;
+                        }
+                      }
+                      setState(() {});
+                    }
+                  },
+                  showDivider: 2 != defectDetails.length - 1,
+                ),
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[3],
+                  isAll: isAll,
+                  title: defectDetails[3],
+                  onChanged: (index, isChecked, isFromTextField) {
+                    if (isChecked) {
+                      reSorting = index;
+                      allCount = defective +
+                          underachievement +
+                          reSorting +
+                          overdue +
+                          netovar;
+                      if (isFromTextField &&
+                          reSorting >
+                              productInfo.totalCount! -
+                                  productInfo.scanCount! -
+                                  defective -
+                                  underachievement -
+                                  overdue -
+                                  netovar) {
+                        buildErrorCustomSnackBar(
+                          context,
+                          "Количество паспорт серий не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - overdue - netovar} шт",
+                        );
+                        defectControllers[3].text = (productInfo.totalCount! -
+                                productInfo.scanCount! -
+                                underachievement -
+                                defective -
+                                overdue -
+                                netovar)
+                            .toString();
+                        reSorting = int.parse(defectControllers[3].text);
+                        isAll = true;
+                      } else {
+                        if (allCount ==
+                            productInfo.totalCount! - productInfo.scanCount!) {
+                          isAll = true;
+                        } else {
+                          isAll = false;
+                        }
+                      }
+                      setState(() {});
+                    }
+                  },
+                  showDivider: 3 != defectDetails.length - 1,
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                bottom: 24.0,
+                top: 24,
+              ),
+              child: GestureDetector(
+                onTap: () async {
+                  if (widget.isFromPharmacyPage) {
+                    BlocProvider.of<GoodsListScreenCubit>(context)
+                        .changeToLoadingState();
+                    BlocProvider.of<GoodsListScreenCubit>(context)
+                        .updatePharmacyProductById(
+                      search: widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
+                      orderId: widget.orderId,
+                      productId: productInfo.id,
+                      //    scanCount: productInfo.scanCount,
+                      defective: defective,
+                      surplus: surplus,
+                      underachievement: underachievement,
+                      reSorting: reSorting,
+                      overdue: overdue,
+                      netovar: netovar,
+                    );
+                  } else {
+                    BlocProvider.of<MoveGoodsScreenCubit>(context)
+                        .changeToLoadingState();
+                    BlocProvider.of<MoveGoodsScreenCubit>(context)
+                        .updateMoveProductById(
+                      search: widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
+                      orderId: widget.orderId,
+                      productDTO: productInfo.copyWith(
+                        defective: defective,
+                        surplus: surplus,
+                        underachievement: underachievement,
+                        reSorting: reSorting,
+                        overdue: overdue,
+                        netovar: netovar,
+                      ),
+                      //    scanCount: productInfo.scanCount,
+                    );
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.orange,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Отправить",
+                      style: ThemeTextStyle.textStyle14w600
+                          .copyWith(color: ColorPalette.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

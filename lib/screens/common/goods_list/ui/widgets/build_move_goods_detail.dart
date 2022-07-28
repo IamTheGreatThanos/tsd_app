@@ -138,7 +138,12 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                           ),
                           padding: EdgeInsets.zero,
                           onPressed: (widget.good.totalCount! <=
-                                  widget.good.scanCount!)
+                                      (widget.good.scanCount ?? 0) +
+                                          (widget.good.defective ?? 0) +
+                                          (widget.good.underachievement ?? 0) +
+                                          (widget.good.reSorting ?? 0) +
+                                          (widget.good.overdue ?? 0) +
+                                          (widget.good.netovar ?? 0))
                               ? () {
                                   BlocProvider.of<MoveGoodsScreenCubit>(context)
                                       .updateMoveProductById(
@@ -147,6 +152,13 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                                       id: widget.good.id,
                                       scanCount: widget.good.scanCount,
                                       status: 2,
+                                       defective: widget.good.defective,
+                                    surplus: widget.good.surplus,
+                                    underachievement:
+                                        widget.good.underachievement,
+                                    reSorting: widget.good.reSorting,
+                                    overdue: widget.good.overdue,
+                                    netovar: widget.good.netovar,
                                     ),
                                   );
                                   BlocProvider.of<MoveGoodsScreenCubit>(context)
@@ -186,7 +198,13 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              (widget.good.totalCount ! <= widget.good.scanCount!)
+                              (widget.good.totalCount! <=
+                                      (widget.good.scanCount ?? 0) +
+                                          (widget.good.defective ?? 0) +
+                                          (widget.good.underachievement ?? 0) +
+                                          (widget.good.reSorting ?? 0) +
+                                          (widget.good.overdue ?? 0) +
+                                          (widget.good.netovar ?? 0))
                                   ? 'Завершить'
                                   : "Указать вручную",
                               style: const TextStyle(
@@ -210,6 +228,21 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                     children: [
                       Text('Кол-во:   ${widget.good.totalCount}'.toUpperCase()),
                       Text('Скан:   ${widget.good.scanCount}'.toUpperCase()),
+                      Text('Просрочен:   ${widget.good.overdue}'.toUpperCase()),
+                      Text(
+                        'Нетоварный вид:   ${widget.good.netovar}'
+                            .toUpperCase(),
+                      ),
+                      Text('Брак:   ${widget.good.defective}'.toUpperCase()),
+                      Text('Излишка:   ${widget.good.surplus}'.toUpperCase()),
+                      Text(
+                        'Недостача:   ${widget.good.underachievement}'
+                            .toUpperCase(),
+                      ),
+                      Text(
+                        'Пересорт серий:   ${widget.good.reSorting}'
+                            .toUpperCase(),
+                      ),
                     ],
                   )
                 ],

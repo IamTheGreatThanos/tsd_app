@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
+import 'package:pharmacy_arrival/domain/repositories/move_data_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/add_move_data_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/delete_move_data_from_cache.dart';
 import 'package:pharmacy_arrival/domain/usecases/move_data_usecases/delete_move_products_from_cahce.dart';
@@ -23,6 +24,8 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
   final AddMoveDataProduct _addMoveDataProduct;
   final UpdateMovingOrderStatus _movingOrderStatus;
   final DeleteMoveDataFromCache _deleteMoveDataFromCache;
+
+  final MoveDataRepository _moveDataRepository;
   List<ProductDTO> allProducts = [];
   bool isFinishable = false;
   MoveProductsScreenCubit(
@@ -33,6 +36,7 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
     this._saveMoveProductsToCache,
     this._movingOrderStatus,
     this._deleteMoveDataFromCache,
+    this._moveDataRepository,
   ) : super(const MoveProductsScreenState.initialState());
 
   Future<void> updateMovingOrderStatus({
@@ -131,6 +135,24 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
         allProducts.addAll(r);
       },
     );
+  }
+
+  Future<void> updateMoveDataProduct({
+    required int moveOrderId,
+    required ProductDTO updatingProduct,
+  }) async {
+    emit(const MoveProductsScreenState.loadingState());
+    final result = await _moveDataRepository.updateMoveProductById(
+        updatingProduct: updatingProduct);
+
+    result.fold(
+        (l) => emit(
+              MoveProductsScreenState.errorState(
+                message: mapFailureToMessage(l),
+              ),
+            ), (r) async {
+      await getProducts(moveOrderId: moveOrderId);
+    });
   }
 
   Future<void> addMoveDataProduct({

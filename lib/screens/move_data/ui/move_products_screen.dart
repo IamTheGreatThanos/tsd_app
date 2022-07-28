@@ -274,6 +274,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                           AppRouter.push(
                             context,
                             FillNumberScreen(
+                              change:false,
                               moveData: widget.good,
                               moveOrderId: widget.moveDataId,
                             ),
@@ -298,7 +299,40 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                     ],
                   )
                 else
-                  const SizedBox()
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          AppRouter.push(
+                            context,
+                            FillNumberScreen(
+                              change:true,
+                              moveData: widget.good,
+                              moveOrderId: widget.moveDataId,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15.5,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF3F6FB),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            'Изменить количество',
+                            style: ThemeTextStyle.textStyle14w600
+                                .copyWith(color: const Color(0xFF5CA7FF)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
               ],
             ),
           )

@@ -109,7 +109,7 @@ Future<void> initLocator() async {
     () => MoveBarcodeScreenCubit(sl(), sl(), sl(), sl(), sl()),
   );
   sl.registerFactory(
-    () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl()),
+    () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl(),sl()),
   );
   sl.registerFactory(
     () => ReturnDataScreenCubit(sl(), sl()),

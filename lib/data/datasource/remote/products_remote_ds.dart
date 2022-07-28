@@ -222,9 +222,23 @@ class ProductsRemoteDSImpl extends ProductsRemoteDS {
       final response = await dio.patch(
         '$SERVER_/api/moving-product/${updatingProduct.id}',
         data: {
-          if(updatingProduct.scanCount!=null)"scan_count": updatingProduct.scanCount,
-          if(updatingProduct.status!=null)"status": updatingProduct.status,
-
+          if (updatingProduct.totalCount != null)
+            "total_count": updatingProduct.totalCount,
+          if (updatingProduct.scanCount != null)
+            "scan_count": updatingProduct.scanCount,
+          if (updatingProduct.defective != null)
+            "defective": updatingProduct.defective,
+          if (updatingProduct.surplus != null)
+            "surplus": updatingProduct.surplus,
+          if (updatingProduct.underachievement != null)
+            "underachievement": updatingProduct.underachievement,
+          if (updatingProduct.reSorting != null)
+            "re_sorting": updatingProduct.reSorting,
+          if (updatingProduct.overdue != null)
+            "overdue": updatingProduct.overdue,
+          if (updatingProduct.netovar != null)
+            "netovar": updatingProduct.netovar,
+          if (updatingProduct.status != null) "status": updatingProduct.status,
         },
       );
       log('##### updateMoveDataProduct api:: ${response.statusCode}');

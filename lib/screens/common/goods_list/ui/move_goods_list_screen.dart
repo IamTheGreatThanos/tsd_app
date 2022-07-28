@@ -16,6 +16,7 @@ import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -482,14 +483,29 @@ class _BuildBodyState extends State<_BuildBody> {
                         ? widget.unscannedProducts.length
                         : widget.scannedProducts.length,
                     itemBuilder: (context, index) {
-                      return BuildMoveGoodsDetail(
-                        searchController: widget.searchController,
-                        currentIndex: currentIndex,
-                        orderID: widget.orderId,
-                        good: currentIndex == 0
-                            ? widget.unscannedProducts[index]
-                            : widget.scannedProducts[index],
-                        selectedProduct: widget.selectedProduct,
+                      return GestureDetector(
+                        onTap: () {
+                          if (currentIndex == 0) {
+                            AppRouter.push(
+                              context,
+                              DefectScreen(
+                                isFromPharmacyPage: false,
+                                searchController: widget.searchController,
+                                product: widget.unscannedProducts[index],
+                                orderId: widget.orderId,
+                              ),
+                            );
+                          }
+                        },
+                        child: BuildMoveGoodsDetail(
+                          searchController: widget.searchController,
+                          currentIndex: currentIndex,
+                          orderID: widget.orderId,
+                          good: currentIndex == 0
+                              ? widget.unscannedProducts[index]
+                              : widget.scannedProducts[index],
+                          selectedProduct: widget.selectedProduct,
+                        ),
                       );
                     },
                   ),

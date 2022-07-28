@@ -525,6 +525,7 @@ class _BuildBodyState extends State<_BuildBody> {
                             AppRouter.push(
                               context,
                               DefectScreen(
+                                isFromPharmacyPage: true,
                                 searchController: widget.searchController,
                                 product: widget.unscannedProducts[index],
                                 orderId: widget.orderId,

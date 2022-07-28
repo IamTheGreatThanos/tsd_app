@@ -10,6 +10,7 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_pag
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/return_data_screen.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -64,6 +65,20 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
       builder: (context, model, child) {
         return AppLoaderOverlay(
           child: Scaffold(
+            floatingActionButton: SizedBox(
+              height: 80,
+              width: 80,
+              child: FloatingActionButton(
+                onPressed: () {
+                  AppRouter.push(
+                    context,
+                    const ReturnDataScreen(),
+                  );
+                },
+                backgroundColor: ColorPalette.orange,
+                child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
+              ),
+            ),
             appBar: CustomAppBar(
               title: "Возврат".toUpperCase(),
             ),

@@ -29,6 +29,7 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
   Future<void> updateMoveProductById({
     required int orderId,
     required ProductDTO productDTO,
+    String? search,
   }) async {
     final result = await _moveDataRepository.updateMoveProductById(
       updatingProduct: productDTO,
@@ -62,7 +63,7 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
 
         //  }
         log("Update success:::::");
-        await _getMoveProducts(orderId,"");
+        await _getMoveProducts(orderId, search);
       },
     );
   }
@@ -131,7 +132,13 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
       if (selectedProduct.id == -1) {
         await saveMoveSelectedProductToCache(selectedProduct: productDTO);
-        if (productDTO.totalCount! <= productDTO.scanCount!) {
+        if (productDTO.totalCount! <=
+              (productDTO.scanCount ?? 0) +
+                  (productDTO.defective ?? 0) +
+                  (productDTO.underachievement ?? 0) +
+                  (productDTO.reSorting ?? 0) +
+                  (productDTO.netovar ?? 0) +
+                  (productDTO.overdue ?? 0))  {
           emit(
             const MoveGoodsScreenState.errorState(
               message: 'Продукты уже отсканированы!',
@@ -160,7 +167,13 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
             orderId: orderId,
           );
         } else {
-          if (productDTO.totalCount! <= productDTO.scanCount!) {
+          if (productDTO.totalCount! <=
+              (productDTO.scanCount ?? 0) +
+                  (productDTO.defective ?? 0) +
+                  (productDTO.underachievement ?? 0) +
+                  (productDTO.reSorting ?? 0) +
+                  (productDTO.netovar ?? 0) +
+                  (productDTO.overdue ?? 0)) {
             emit(
               const MoveGoodsScreenState.errorState(
                 message: 'Продукты уже отсканированы!',

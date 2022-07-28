@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
+import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -11,6 +12,7 @@ import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class FillNumberScreen extends StatefulWidget {
+  final bool change;
   final ProductDTO moveData;
   final int moveOrderId;
 
@@ -18,6 +20,7 @@ class FillNumberScreen extends StatefulWidget {
     Key? key,
     required this.moveData,
     required this.moveOrderId,
+    required this.change,
   }) : super(key: key);
 
   @override
@@ -266,22 +269,32 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           color: ColorPalette.orange,
                           disabledColor: ColorPalette.orangeInactive,
                           padding: EdgeInsets.zero,
-                          onPressed:
-                              (count != 0)
-                                  ? () {
-                                      BlocProvider.of<MoveProductsScreenCubit>(
-                                        context,
-                                      ).addMoveDataProduct(
-                                        moveOrderId: widget.moveOrderId,
-                                        addingProduct: widget.moveData.copyWith(
-                                          totalCount: count,
-                                        ),
-                                      );
-                                    }
-                                  : null,
+                          onPressed: (count != 0)
+                              ? () {
+                                  if (widget.change) {
+                                    BlocProvider.of<MoveProductsScreenCubit>(
+                                      context,
+                                    ).updateMoveDataProduct(
+                                      moveOrderId: widget.moveOrderId,
+                                      updatingProduct: widget.moveData.copyWith(
+                                        totalCount: count,
+                                      ),
+                                    );
+                                  } else {
+                                    BlocProvider.of<MoveProductsScreenCubit>(
+                                      context,
+                                    ).addMoveDataProduct(
+                                      moveOrderId: widget.moveOrderId,
+                                      addingProduct: widget.moveData.copyWith(
+                                        totalCount: count,
+                                      ),
+                                    );
+                                  }
+                                }
+                              : null,
                           child: Center(
                             child: Text(
-                              "Завершить",
+                              widget.change ? "Изменить" : "Завершить",
                               style: ThemeTextStyle.textStyle14w600
                                   .copyWith(color: ColorPalette.white),
                             ),
