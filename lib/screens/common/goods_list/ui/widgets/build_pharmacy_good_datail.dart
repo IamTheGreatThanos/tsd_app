@@ -174,29 +174,29 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                                 }
                               : () {
                                   bottomSheet(
-                                      SpecifyingNumberManually(
-                                        callback: (controller, focusNode) {
-                                          BlocProvider.of<GoodsListScreenCubit>(
-                                            context,
-                                          ).scannerBarCode(
-                                            widget.good.barcode!,
-                                            widget.orderID,
-                                            widget.searchController.text
-                                                    .isNotEmpty
-                                                ? widget.searchController.text
-                                                : null,
-                                            int.parse(controller.text),
-                                          );
-                                          controller.clear();
-                                          focusNode.dispose();
-                                          Navigator.pop(context);
-                                        },
-                                        searchController:
-                                            widget.searchController,
-                                        productDTO: widget.good,
-                                        orderID: widget.orderID,
-                                      ),
-                                      context);
+                                    SpecifyingNumberManually(
+                                      callback: (controller, focusNode) {
+                                        BlocProvider.of<GoodsListScreenCubit>(
+                                          context,
+                                        ).scannerBarCode(
+                                          widget.good.barcode!,
+                                          widget.orderID,
+                                          widget.searchController.text
+                                                  .isNotEmpty
+                                              ? widget.searchController.text
+                                              : null,
+                                          int.parse(controller.text),
+                                        );
+                                        controller.clear();
+                                        focusNode.dispose();
+                                        Navigator.pop(context);
+                                      },
+                                      searchController: widget.searchController,
+                                      productDTO: widget.good,
+                                      orderID: widget.orderID,
+                                    ),
+                                    context,
+                                  );
                                 },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),

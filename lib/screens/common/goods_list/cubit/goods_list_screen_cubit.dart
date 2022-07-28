@@ -64,16 +64,6 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         );
       },
       (r) async {
-        // log("SUM::::::: ${r.scanCount! + r.defective! + r.surplus! + r.underachievement! + r.reSorting!}");
-        // if (r.totalCount ==
-        //     r.scanCount! +
-        //         r.defective! +
-        //         r.underachievement! +
-        //         r.reSorting!) {
-        //  log("${r.scanCount! + r.defective!  + r.underachievement! + r.reSorting!}");
-        // await savePharmacySelectedProductToCache(
-        //   selectedProduct: ProductDTO(id: -1, orderID: orderId),
-        // );
         if (r.status == 2) {
           emit(
             const GoodsListScreenState.successScannedState(
@@ -84,6 +74,47 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
 
         //  }
         log("Update success:::::");
+        await _getPharmacyProducts(orderId, search);
+      },
+    );
+  }
+
+  Future<void> updateRefundProductById({
+    required int orderId,
+    required int productId,
+    String? status,
+    String? search,
+    int? refund,
+  }) async {
+    final result = await _updatePharmacyProductById.call(
+      UpdatePharmacyProductByIdParams(
+        productId: productId,
+        status: status,
+        refund: refund,
+      ),
+    );
+
+    result.fold(
+      (l) {
+        log(mapFailureToMessage(l));
+        emit(
+          GoodsListScreenState.errorState(message: mapFailureToMessage(l)),
+        );
+      },
+      (r) async {
+        log("REFUND::::::: ${r.refund}");
+        if (r.totalCount == r.refund) {
+          await savePharmacySelectedProductToCache(
+            selectedProduct: ProductDTO(id: -1, orderID: orderId),
+          );
+          emit(
+            const GoodsListScreenState.successScannedState(
+              message: 'Продукт полностью отсканирован',
+            ),
+          );
+        }
+
+        log("Refund update success:::::");
         await _getPharmacyProducts(orderId, search);
       },
     );
@@ -152,18 +183,19 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       orderId: orderId,
     );
     log("${selectedProduct.id},  ${selectedProduct.orderID}");
-    if (checkProductBarCode(_scannedResult) != null) {
-      final ProductDTO productDTO = checkProductBarCode(_scannedResult)!;
+    if (checkProductBarCodeFromUnscanned(_scannedResult) != null) {
+      final ProductDTO productDTO =
+          checkProductBarCodeFromUnscanned(_scannedResult)!;
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
       if (selectedProduct.id == -1) {
         await savePharmacySelectedProductToCache(selectedProduct: productDTO);
         if (productDTO.totalCount! <=
-              (productDTO.scanCount ?? 0) +
-                  (productDTO.defective ?? 0) +
-                  (productDTO.underachievement ?? 0) +
-                  (productDTO.reSorting ?? 0) +
-                  (productDTO.netovar ?? 0) +
-                  (productDTO.overdue ?? 0))  {
+            (productDTO.scanCount ?? 0) +
+                (productDTO.defective ?? 0) +
+                (productDTO.underachievement ?? 0) +
+                (productDTO.reSorting ?? 0) +
+                (productDTO.netovar ?? 0) +
+                (productDTO.overdue ?? 0)) {
           emit(
             const GoodsListScreenState.errorState(
               message: 'Продукты уже отсканированы!',
@@ -226,6 +258,44 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     }
   }
 
+//SCANNER REFUND PRODUCTS
+
+  Future<void> refundScannerBarCode(
+    String _scannedResult,
+    int orderId,
+    String? search,
+    int quantity,
+  ) async {
+    if (checkProductBarCodeFromScanned(_scannedResult) != null) {
+      final ProductDTO productDTO =
+          checkProductBarCodeFromScanned(_scannedResult)!;
+      if (productDTO.totalCount! <= (productDTO.refund ?? 0)) {
+        emit(
+          const GoodsListScreenState.errorState(
+            message: 'Продукты уже отсканированы!',
+          ),
+        );
+        changeToLoadedState(orderId: orderId);
+      } else {
+        updateRefundProductById(
+          orderId: orderId,
+          search: search,
+          productId: productDTO.id,
+          refund: productDTO.refund! + quantity,
+        );
+        log("SCANNED SUCCESSFULLY");
+      }
+    } else {
+      emit(
+        const GoodsListScreenState.errorState(
+          message: 'Нет такого товара в списке',
+        ),
+      );
+      changeToLoadedState(orderId: orderId);
+      log("SCANNED FAILED");
+    }
+  }
+
 // сохранение выбранного продукта в кэш
   Future<void> savePharmacySelectedProductToCache({
     required ProductDTO selectedProduct,
@@ -251,9 +321,21 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   }
 
 // чекаем баркод товара из несканированных товаров
-  ProductDTO? checkProductBarCode(String barcode) {
+  ProductDTO? checkProductBarCodeFromUnscanned(String barcode) {
     ProductDTO? product;
     for (final ProductDTO productDTO in unscannedProducts) {
+      if (productDTO.barcode!.contains(barcode)) {
+        product = productDTO;
+        break;
+      }
+    }
+    return product;
+  }
+
+  // чекаем баркод товара из сканированных товаров
+  ProductDTO? checkProductBarCodeFromScanned(String barcode) {
+    ProductDTO? product;
+    for (final ProductDTO productDTO in scannedProdcuts) {
       if (productDTO.barcode!.contains(barcode)) {
         product = productDTO;
         break;

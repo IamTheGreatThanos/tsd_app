@@ -6,12 +6,14 @@ import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
 class GoodsBarcodeScreen extends StatefulWidget {
+  final bool isFromPharmacyPage;
   final int orderId;
   final TextEditingController searchController;
   const GoodsBarcodeScreen({
     Key? key,
     required this.orderId,
     required this.searchController,
+    required this.isFromPharmacyPage,
   }) : super(key: key);
 
   @override
@@ -58,15 +60,27 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
                 height: (MediaQuery.of(context).size.width - 26) / 1.5,
                 width: MediaQuery.of(context).size.width - 26,
                 callback: (barcode) async {
-                  await BlocProvider.of<GoodsListScreenCubit>(context)
-                      .scannerBarCode(
-                    barcode,
-                    widget.orderId,
-                    widget.searchController.text.isNotEmpty
-                        ? widget.searchController.text
-                        : null,
-                    1,
-                  );
+                  if (widget.isFromPharmacyPage) {
+                    await BlocProvider.of<GoodsListScreenCubit>(context)
+                        .scannerBarCode(
+                      barcode,
+                      widget.orderId,
+                      widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
+                      1,
+                    );
+                  } else {
+                    await BlocProvider.of<GoodsListScreenCubit>(context)
+                        .refundScannerBarCode(
+                      barcode,
+                      widget.orderId,
+                      widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
+                      1,
+                    );
+                  }
                 },
               );
             },

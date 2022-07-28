@@ -89,27 +89,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               searchController.text.isNotEmpty ? searchController.text : null,
               1,
             );
-
-            // if (scannedCellId.isEmpty) {
-            //   scanCellBarCode(scanResult);
-            //   ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
-            //     SnackBar(
-            //       content: Text(
-            //         scanResult,
-            //         textAlign: TextAlign.center,
-            //         style: TextStyle(color: Colors.white),
-            //       ),
-            //       backgroundColor: Color.fromRGBO(
-            //         46,
-            //         164,
-            //         78,
-            //         1,
-            //       ),
-            //     ),
-            //   );
-            //   return;
-            // }
-
           }
         },
         child: Scaffold(
@@ -134,6 +113,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                           AppRouter.push(
                             context,
                             GoodsBarcodeScreen(
+                              isFromPharmacyPage: true,
                               searchController: searchController,
                               orderId: widget.isFromPharmacyPage
                                   ? widget.pharmacyOrder!.id
