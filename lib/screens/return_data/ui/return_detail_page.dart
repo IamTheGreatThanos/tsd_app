@@ -47,31 +47,36 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
       child: RawKeyboardListener(
         autofocus: true,
         focusNode: focusNode,
-        onKey: (event) async {
-          if (event.logicalKey.keyLabel != 'Enter') {
-            _currentScan += event.logicalKey.keyLabel;
-          } else if (_currentScan.isNotEmpty) {
-            _currentScan = _currentScan.replaceAll('Shift Left', '');
-            log('Current Scan: $_currentScan');
-            var scanResult = '';
-            for (var i = 0; i < _currentScan.length; i++) {
-              if (i % 2 == 0) {
-                scanResult += _currentScan[i];
-              }
-            }
+        onKey: widget.pharmacyOrder?.refundStatus == 2
+            ? null
+            : (event) async {
+                if (event.logicalKey.keyLabel != 'Enter') {
+                  _currentScan += event.logicalKey.keyLabel;
+                } else if (_currentScan.isNotEmpty) {
+                  _currentScan = _currentScan.replaceAll('Shift Left', '');
+                  log('Current Scan: $_currentScan');
+                  var scanResult = '';
+                  for (var i = 0; i < _currentScan.length; i++) {
+                    if (i % 2 == 0) {
+                      scanResult += _currentScan[i];
+                    }
+                  }
 
-            scanResult = scanResult.replaceAll(' ', '').toLowerCase();
-            setState(() {
-              _currentScan = '';
-            });
-            BlocProvider.of<GoodsListScreenCubit>(context).refundScannerBarCode(
-              scanResult,
-              widget.pharmacyOrder!.id,
-              searchController.text.isNotEmpty ? searchController.text : null,
-              1,
-            );
-          }
-        },
+                  scanResult = scanResult.replaceAll(' ', '').toLowerCase();
+                  setState(() {
+                    _currentScan = '';
+                  });
+                  BlocProvider.of<GoodsListScreenCubit>(context)
+                      .refundScannerBarCode(
+                    scanResult,
+                    widget.pharmacyOrder!.id,
+                    searchController.text.isNotEmpty
+                        ? searchController.text
+                        : null,
+                    1,
+                  );
+                }
+              },
         child: Scaffold(
           floatingActionButton: widget.pharmacyOrder?.refundStatus == 2
               ? null
@@ -285,7 +290,9 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                   },
                 ),
               ),
-              const SizedBox(height: 50,)
+              const SizedBox(
+                height: 50,
+              )
             ],
           ),
         ),

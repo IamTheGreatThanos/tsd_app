@@ -18,6 +18,7 @@ import 'package:pharmacy_arrival/screens/move_data/ui/move_filter_page.dart';
 import 'package:pharmacy_arrival/screens/move_data/vmodel/move_filter_vmodel.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
@@ -840,8 +841,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         onTap: () {
                                           AppRouter.push(
                                             context,
-                                            HistoryScreenDetail(
-                                              isFromPharmacyPage: true,
+                                            ReturnDetailPage(
                                               pharmacyOrder: orders[index],
                                             ),
                                           );

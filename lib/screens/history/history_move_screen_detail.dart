@@ -164,107 +164,43 @@ class _BuildBodyState extends State<_BuildBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  currentIndex = 0;
-                  itemCount = widget.unscannedProducts.length;
-                });
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                decoration: BoxDecoration(
-                  color: currentIndex == 0
-                      ? ColorPalette.white
-                      : ColorPalette.main,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      "Не отсканированные",
-                      style: ThemeTextStyle.textStyle14w500.copyWith(
-                        color: currentIndex == 0
-                            ? ColorPalette.grayText
-                            : ColorPalette.grayTextDisabled,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      decoration: BoxDecoration(
-                        color: ColorPalette.borderGrey,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Text(
-                        "${widget.unscannedProducts.length}",
-                        style: ThemeTextStyle.textStyle12w600.copyWith(
-                          color: ColorPalette.black,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+        const SizedBox(
+          height: 25,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+            decoration: BoxDecoration(
+              color: ColorPalette.white,
+              borderRadius: BorderRadius.circular(10),
             ),
-            const SizedBox(
-              width: 25,
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  currentIndex = 1;
-                  itemCount = widget.scannedProducts.length;
-                });
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                decoration: BoxDecoration(
-                  color: currentIndex == 1
-                      ? ColorPalette.white
-                      : ColorPalette.main,
-                  borderRadius: BorderRadius.circular(10),
+            child: Row(
+              children: [
+                Text(
+                  "Продукты",
+                  style: ThemeTextStyle.textStyle14w500
+                      .copyWith(color: ColorPalette.grayText),
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      "Отсканированные",
-                      style: ThemeTextStyle.textStyle14w500.copyWith(
-                        color: currentIndex == 1
-                            ? ColorPalette.grayText
-                            : ColorPalette.grayTextDisabled,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      decoration: BoxDecoration(
-                        color: ColorPalette.borderGrey,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Text(
-                        "${widget.scannedProducts.length}",
-                        style: ThemeTextStyle.textStyle12w600.copyWith(
-                          color: ColorPalette.black,
-                        ),
-                      ),
-                    )
-                  ],
+                const SizedBox(
+                  width: 8,
                 ),
-              ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.borderGrey,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    "${widget.scannedProducts.length}",
+                    style: ThemeTextStyle.textStyle12w600.copyWith(
+                      color: ColorPalette.black,
+                    ),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(
-              width: 25,
-            ),
-          ],
+          ),
         ),
         Expanded(
           child: SmartRefresher(
@@ -273,77 +209,36 @@ class _BuildBodyState extends State<_BuildBody> {
                   .getMoveProducts(orderId: widget.orderId);
             },
             controller: controller,
-            child: itemCount == 0
-                ? widget.accept == 1 && widget.send == 1
-                    ? ListView(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 100,
-                                  vertical: 16,
-                                ),
-                                child: Image.asset(
-                                  'assets/images/png/done_icon.png',
-                                ),
-                              ),
-                              Text(
-                                'Завершенный заказ!'.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    : ListView(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
-                          ),
-                          Center(
-                            child:
-                                Lottie.asset('assets/lotties/empty_box.json'),
-                          ),
-                        ],
-                      )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
-                    itemCount: currentIndex == 0
-                        ? widget.unscannedProducts.length
-                        : widget.scannedProducts.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          // if (currentIndex == 0) {
-                          //   AppRouter.push(
-                          //     context,
-                          //     DefectScreen(
-                          //       product: widget.unscannedProducts[index],
-                          //       orderId: widget.orderId,
-                          //     ),
-                          //   );
-                          // }
-                        },
-                        child: _BuildGoodDetails(
-                          currentIndex: currentIndex,
-                          orderID: widget.orderId,
-                          good: currentIndex == 0
-                              ? widget.unscannedProducts[index]
-                              : widget.scannedProducts[index],
-                          selectedProduct: widget.selectedProduct,
-                        ),
-                      );
-                    },
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
+              itemCount: currentIndex == 0
+                  ? widget.unscannedProducts.length
+                  : widget.scannedProducts.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    // if (currentIndex == 0) {
+                    //   AppRouter.push(
+                    //     context,
+                    //     DefectScreen(
+                    //       product: widget.unscannedProducts[index],
+                    //       orderId: widget.orderId,
+                    //     ),
+                    //   );
+                    // }
+                  },
+                  child: _BuildGoodDetails(
+                    currentIndex: currentIndex,
+                    orderID: widget.orderId,
+                    good: currentIndex == 0
+                        ? widget.unscannedProducts[index]
+                        : widget.scannedProducts[index],
+                    selectedProduct: widget.selectedProduct,
                   ),
+                );
+              },
+            ),
           ),
         ),
       ],

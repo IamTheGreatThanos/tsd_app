@@ -20,7 +20,7 @@ mixin _$ReturnDataScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(RefundDataDTO refundDataDTO) loadedState,
+    required TResult Function(PharmacyOrderDTO refundDataDTO) loadedState,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$ReturnDataScreenState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$ReturnDataScreenState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -128,7 +128,7 @@ class _$_InitialState implements _InitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(RefundDataDTO refundDataDTO) loadedState,
+    required TResult Function(PharmacyOrderDTO refundDataDTO) loadedState,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -139,7 +139,7 @@ class _$_InitialState implements _InitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -150,7 +150,7 @@ class _$_InitialState implements _InitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -245,7 +245,7 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(RefundDataDTO refundDataDTO) loadedState,
+    required TResult Function(PharmacyOrderDTO refundDataDTO) loadedState,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -256,7 +256,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -267,7 +267,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -324,9 +324,9 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
   factory _$$_LoadedStateCopyWith(
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
-  $Res call({RefundDataDTO refundDataDTO});
+  $Res call({PharmacyOrderDTO refundDataDTO});
 
-  $RefundDataDTOCopyWith<$Res> get refundDataDTO;
+  $PharmacyOrderDTOCopyWith<$Res> get refundDataDTO;
 }
 
 /// @nodoc
@@ -348,13 +348,13 @@ class __$$_LoadedStateCopyWithImpl<$Res>
       refundDataDTO: refundDataDTO == freezed
           ? _value.refundDataDTO
           : refundDataDTO // ignore: cast_nullable_to_non_nullable
-              as RefundDataDTO,
+              as PharmacyOrderDTO,
     ));
   }
 
   @override
-  $RefundDataDTOCopyWith<$Res> get refundDataDTO {
-    return $RefundDataDTOCopyWith<$Res>(_value.refundDataDTO, (value) {
+  $PharmacyOrderDTOCopyWith<$Res> get refundDataDTO {
+    return $PharmacyOrderDTOCopyWith<$Res>(_value.refundDataDTO, (value) {
       return _then(_value.copyWith(refundDataDTO: value));
     });
   }
@@ -366,7 +366,7 @@ class _$_LoadedState implements _LoadedState {
   const _$_LoadedState({required this.refundDataDTO});
 
   @override
-  final RefundDataDTO refundDataDTO;
+  final PharmacyOrderDTO refundDataDTO;
 
   @override
   String toString() {
@@ -396,7 +396,7 @@ class _$_LoadedState implements _LoadedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(RefundDataDTO refundDataDTO) loadedState,
+    required TResult Function(PharmacyOrderDTO refundDataDTO) loadedState,
     required TResult Function(String message) errorState,
   }) {
     return loadedState(refundDataDTO);
@@ -407,7 +407,7 @@ class _$_LoadedState implements _LoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
   }) {
     return loadedState?.call(refundDataDTO);
@@ -418,7 +418,7 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -467,10 +467,10 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements ReturnDataScreenState {
-  const factory _LoadedState({required final RefundDataDTO refundDataDTO}) =
+  const factory _LoadedState({required final PharmacyOrderDTO refundDataDTO}) =
       _$_LoadedState;
 
-  RefundDataDTO get refundDataDTO => throw _privateConstructorUsedError;
+  PharmacyOrderDTO get refundDataDTO => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -543,7 +543,7 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(RefundDataDTO refundDataDTO) loadedState,
+    required TResult Function(PharmacyOrderDTO refundDataDTO) loadedState,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -554,7 +554,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -565,7 +565,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(RefundDataDTO refundDataDTO)? loadedState,
+    TResult Function(PharmacyOrderDTO refundDataDTO)? loadedState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {

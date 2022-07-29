@@ -93,7 +93,7 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
                               padding: const EdgeInsets.only(bottom: 16.0),
                               child: _BuildGoodDetails(
                                 good: products[index],
-                                moveDataId: widget.moveDataDTO.id,
+                                moveData: widget.moveDataDTO,
                               ),
                             );
                           },
@@ -173,12 +173,12 @@ class _MoveProductsScreenState extends State<MoveProductsScreen> {
 
 class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO good;
-  final int moveDataId;
+  final MoveDataDTO moveData;
 
   const _BuildGoodDetails({
     Key? key,
     required this.good,
-    required this.moveDataId,
+    required this.moveData,
   }) : super(key: key);
 
   @override
@@ -274,9 +274,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                           AppRouter.push(
                             context,
                             FillNumberScreen(
-                              change:false,
+                              change: false,
                               moveData: widget.good,
-                              moveOrderId: widget.moveDataId,
+                              moveOrderId: widget.moveData.id,
                             ),
                           );
                         },
@@ -298,6 +298,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                       ),
                     ],
                   )
+                else if (widget.moveData.send == 1 ||
+                    widget.moveData.accept == 1)
+                  const SizedBox()
                 else
                   Column(
                     children: [
@@ -309,9 +312,9 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                           AppRouter.push(
                             context,
                             FillNumberScreen(
-                              change:true,
+                              change: true,
                               moveData: widget.good,
-                              moveOrderId: widget.moveDataId,
+                              moveOrderId: widget.moveData.id,
                             ),
                           );
                         },

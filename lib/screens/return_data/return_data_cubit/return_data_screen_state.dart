@@ -8,7 +8,7 @@ class ReturnDataScreenState with _$ReturnDataScreenState {
   const factory ReturnDataScreenState.loadingState() = _LoadingState;
 
   const factory ReturnDataScreenState.loadedState({
-    required RefundDataDTO refundDataDTO,
+    required PharmacyOrderDTO refundDataDTO,
   }) = _LoadedState;
 
   const factory ReturnDataScreenState.errorState({

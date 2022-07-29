@@ -327,13 +327,21 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           incomingDate: incomingDate,
           incomingNumber: incomingNumber,
         );
-        List<PharmacyOrderDTO> orders = [];
+        final List<PharmacyOrderDTO> orders = [];
         for (final PharmacyOrderDTO order in historyOrders) {
           if (order.status == 3) {
             orders.add(order);
           }
         }
-        return Right(orders);
+        if (orders.isEmpty) {
+          return Left(ServerFailure(message: 'Нет такого заказа!'));
+        } else {
+          if (orders.first.refundStatus != 0) {
+            return Left(ServerFailure(message: 'Для этого заказа возврат уже создан!'));
+          } else {
+            return Right(orders);
+          }
+        }
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
