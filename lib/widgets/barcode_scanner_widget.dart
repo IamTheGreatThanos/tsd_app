@@ -5,6 +5,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/camera/camera_shape.dart';
+import 'package:pharmacy_arrival/widgets/custom_button.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
   final double width;
@@ -27,7 +28,7 @@ class BarcodeScannerWidget extends StatefulWidget {
 
 class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   MobileScannerController controller = MobileScannerController();
-  List<String> codes = [];
+  String codes = "";
 
   @override
   void dispose() {
@@ -49,10 +50,8 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
               final String code = barcode.rawValue!;
               log("BARCODE CODE::::: $code");
               if (!codes.contains(code)) {
-                codes.add(code);
-                widget.callback(code);
-                controller.dispose();
-                controller.stop();
+                codes=code;
+               
                 // context
                 //     .read<BlocGoodsList>()
                 //     .add(EventScanItem(code: code));
@@ -80,6 +79,23 @@ class _BarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
               style: ThemeTextStyle.textStyle16w600
                   .copyWith(color: ColorPalette.white),
             ),
+          ),
+        ),
+        Positioned(
+          left: 16,
+          right: 16,
+          bottom: 50,
+          child: CustomButton(
+            height: 44,
+            body: const Text(
+              'Сканировать',
+              style: TextStyle(),
+            ),
+            style: pinkButtonStyle(),
+            onClick: () { 
+              widget.callback(codes);
+                controller.dispose();
+                controller.stop();},
           ),
         ),
       ],
