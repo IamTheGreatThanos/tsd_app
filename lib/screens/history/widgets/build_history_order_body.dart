@@ -106,34 +106,7 @@ class BuildHistoryOrderData extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            if (pharmacyOrderDTO?.refundStatus == 0 ||
-                pharmacyOrderDTO?.refundStatus == 1)
-              CustomButton(
-                height: 44,
-                onClick: () {
-                  AppRouter.push(
-                    context,
-                    ReturnDetailPage(
-                      pharmacyOrder: pharmacyOrderDTO,
-                    ),
-                  );
-                  BlocProvider.of<HistoryCubit>(context)
-                      .updatePharmacyOrderStatus(
-                    orderId: orderId,
-                    refundStatus: 1,
-                    isFromHisPage: true,
-                  );
-                },
-                body: Text(
-                  pharmacyOrderDTO?.refundStatus == 0
-                      ? 'Создать возврата'
-                      : "Продолжить возврат",
-                  style: const TextStyle(),
-                ),
-                style: pinkButtonStyle(),
-              )
-            else
-              const SizedBox(),
+           
           ],
         ),
       ),

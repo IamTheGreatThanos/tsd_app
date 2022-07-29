@@ -5,11 +5,15 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
+import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -42,6 +46,37 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
+        floatingActionButton: widget.isFromPharmacyPage&&( widget.pharmacyOrder!.refundStatus == 0 ||
+                widget.pharmacyOrder!.refundStatus == 1)?
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32,0,0,0),
+                child: CustomButton(
+                  height: 44,
+                  onClick: () {
+                    AppRouter.pushReplacement(
+                      context,
+                      ReturnDetailPage(
+                        pharmacyOrder: widget.pharmacyOrder,
+                      ),
+                    );
+                    BlocProvider.of<HistoryCubit>(context)
+                        .updatePharmacyOrderStatus(
+                      orderId: widget.pharmacyOrder!.id,
+                      refundStatus: 1,
+                      isFromHisPage: true,
+                    );
+                  },
+                  body: Text(
+                   widget. pharmacyOrder?.refundStatus == 0
+                        ? 'Создать возврата'
+                        : "Продолжить возврат",
+                    style: const TextStyle(),
+                  ),
+                  style: pinkButtonStyle(),
+                ),
+              )
+           :
+              const SizedBox(),
         backgroundColor: ColorPalette.main,
         appBar: CustomAppBar(
           title: "Список товаров".toUpperCase(),
