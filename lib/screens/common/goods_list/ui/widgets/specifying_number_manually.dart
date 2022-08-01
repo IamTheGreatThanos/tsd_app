@@ -104,8 +104,7 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
                   Navigator.pop(context);
                 } else {
                   if (0>=int.parse(controller.text)||int.parse(controller.text) >
-                      widget.productDTO.totalCount! -
-                          widget.productDTO.scanCount!) {
+                      widget.productDTO.totalCount!) {
                     Navigator.pop(context);
                     buildErrorCustomSnackBar(
                       context,

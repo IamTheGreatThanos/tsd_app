@@ -176,13 +176,15 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                                         BlocProvider.of<MoveGoodsScreenCubit>(
                                           context,
                                         ).scannerBarCode(
-                                          widget.good.barcode!,
-                                          widget.orderID,
-                                          widget.searchController.text
+
+                                         scannedResult:widget.good.barcode!,
+                                          orderId:widget.orderID,
+                                         search:widget.searchController.text
                                                   .isNotEmpty
                                               ? widget.searchController.text
                                               : null,
-                                          int.parse(controller.text),
+                                        quantity:  int.parse(controller.text),
+                                        scanType: 1,
                                         );
                                         controller.clear();
                                         focusNode.dispose();

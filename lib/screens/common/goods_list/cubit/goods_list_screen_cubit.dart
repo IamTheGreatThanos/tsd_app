@@ -74,21 +74,24 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
 
         //  }
         log("Update success:::::");
-        await _getPharmacyProducts(orderId, search);
+        await _getPharmacyProducts(
+          orderId: orderId,
+          search: search,
+        );
       },
     );
   }
 
   Future<void> updateRefundProductById({
     required int orderId,
-    required int productId,
+    required ProductDTO product,
     String? status,
     String? search,
     int? refund,
   }) async {
     final result = await _updatePharmacyProductById.call(
       UpdatePharmacyProductByIdParams(
-        productId: productId,
+        productId: product.id,
         status: status,
         refund: refund,
       ),
@@ -115,7 +118,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         }
 
         log("Refund update success:::::");
-        await _getPharmacyProducts(orderId, search);
+        await _getPharmacyProducts(orderId: orderId, search: search,refundSelectedProduct: product,);
       },
     );
   }
@@ -125,13 +128,23 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     String? search,
   }) async {
     emit(const GoodsListScreenState.loadingState());
-    await _getPharmacyProducts(orderId, search);
+    await _getPharmacyProducts(
+      orderId: orderId,
+      search: search,
+    );
   }
 
 //получение продуктов
-  Future<void> _getPharmacyProducts(int orderId, String? search) async {
-    final ProductDTO selectedProduct =
+  Future<void> _getPharmacyProducts({
+    required int orderId,
+    String? search,
+    ProductDTO? refundSelectedProduct,
+  }) async {
+    ProductDTO selectedProduct =
         await getPharmacySelectedProductFromCache(orderId: orderId);
+    if (refundSelectedProduct != null) {
+      selectedProduct = refundSelectedProduct;
+    }
     final result =
         await _getProductsPharmacyArrival.call(GetProductsPharmacyArrivalParams(
       orderId: orderId,
@@ -171,21 +184,23 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
 
   ////////////SCANNER PHARMACY ARRIVAL PRODUCTS
   ///Сканер бар кода
-  Future<void> scannerBarCode(
-    String _scannedResult,
-    int orderId,
+  Future<void> scannerBarCode({
+    required String scannedResult,
+    required int orderId,
     String? search,
-    int quantity,
-  ) async {
+    required int quantity,
+    required int scanType,
+    //scan type==0 is with barcode scan type ==1 is manual
+  }) async {
     //проверим есть ли выбранный продукт в кэше
     final ProductDTO selectedProduct =
         await getPharmacySelectedProductFromCache(
       orderId: orderId,
     );
     log("${selectedProduct.id},  ${selectedProduct.orderID}");
-    if (checkProductBarCodeFromUnscanned(_scannedResult) != null) {
+    if (checkProductBarCodeFromUnscanned(scannedResult) != null) {
       final ProductDTO productDTO =
-          checkProductBarCodeFromUnscanned(_scannedResult)!;
+          checkProductBarCodeFromUnscanned(scannedResult)!;
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
       if (selectedProduct.id == -1) {
         await savePharmacySelectedProductToCache(selectedProduct: productDTO);
@@ -207,7 +222,8 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
             orderId: orderId,
             search: search,
             productId: productDTO.id,
-            scanCount: productDTO.scanCount! + quantity,
+            scanCount:
+                scanType == 0 ? productDTO.scanCount! + quantity : quantity,
           );
           log("SCANNED SUCCESSFULLY");
         }
@@ -241,7 +257,8 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
               orderId: orderId,
               search: search,
               productId: productDTO.id,
-              scanCount: productDTO.scanCount! + quantity,
+              scanCount:
+                  scanType == 0 ? productDTO.scanCount! + quantity : quantity,
             );
             log("SCANNED SUCCESSFULLY");
           }
@@ -265,6 +282,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     int orderId,
     String? search,
     int quantity,
+    int scanType,
   ) async {
     if (checkProductBarCodeFromScanned(_scannedResult) != null) {
       final ProductDTO productDTO =
@@ -280,8 +298,8 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         updateRefundProductById(
           orderId: orderId,
           search: search,
-          productId: productDTO.id,
-          refund: productDTO.refund! + quantity,
+          product: productDTO,
+          refund: scanType == 0 ? productDTO.refund! + quantity : quantity,
         );
         log("SCANNED SUCCESSFULLY");
       }

@@ -40,6 +40,16 @@ class GoodsListScreen extends StatefulWidget {
 }
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
+  final ScrollController _controller = ScrollController();
+
+  void _animateToIndex(int index, double height) {
+    _controller.animateTo(
+      index * height,
+      duration: const Duration(seconds: 2),
+      curve: Curves.linear,
+    );
+  }
+
   bool isFloatingButtonVisible = true;
   String _currentScan = '';
   FocusNode focusNode = FocusNode();
@@ -82,12 +92,15 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               _currentScan = '';
             });
             BlocProvider.of<GoodsListScreenCubit>(context).scannerBarCode(
-              scanResult,
-              widget.isFromPharmacyPage
+              scannedResult: scanResult,
+              orderId: widget.isFromPharmacyPage
                   ? widget.pharmacyOrder!.id
                   : widget.warehouseOrder!.id,
-              searchController.text.isNotEmpty ? searchController.text : null,
-              1,
+              search: searchController.text.isNotEmpty
+                  ? searchController.text
+                  : null,
+              quantity: 1,
+              scanType: 0,
             );
           }
         },
@@ -226,6 +239,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                         selectedProduct,
                       ) {
                         return _BuildBody(
+                          scrollController: _controller,
                           searchController: searchController,
                           orderStatus: widget.isFromPharmacyPage
                               ? widget.pharmacyOrder?.status ?? 0
@@ -280,7 +294,14 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                         scannedProducts,
                         unscannedProducts,
                         selectedProductId,
-                      ) {},
+                      ) {
+                        for (int i = 0; i < unscannedProducts.length; i++) {
+                          if (unscannedProducts[i].id == selectedProductId.id) {
+                            _animateToIndex(
+                                i, MediaQuery.of(context).size.height * 0.5);
+                          }
+                        }
+                      },
                       errorState: (String message) {
                         buildErrorCustomSnackBar(context, message);
                       },
@@ -297,6 +318,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final ScrollController scrollController;
   final TextEditingController searchController;
   final int orderStatus;
   final int orderId;
@@ -317,6 +339,7 @@ class _BuildBody extends StatefulWidget {
     this.warehouseOrder,
     required this.isFromPharmacyPage,
     required this.searchController,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -492,6 +515,7 @@ class _BuildBodyState extends State<_BuildBody> {
                         ],
                       )
                 : ListView.builder(
+                    controller: widget.scrollController,
                     shrinkWrap: true,
                     padding:
                         const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),

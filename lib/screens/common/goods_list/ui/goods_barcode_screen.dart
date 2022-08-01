@@ -63,12 +63,13 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
                   if (widget.isFromPharmacyPage) {
                     await BlocProvider.of<GoodsListScreenCubit>(context)
                         .scannerBarCode(
-                      barcode,
-                      widget.orderId,
-                      widget.searchController.text.isNotEmpty
+                      scannedResult: barcode,
+                      orderId: widget.orderId,
+                      search: widget.searchController.text.isNotEmpty
                           ? widget.searchController.text
                           : null,
-                      1,
+                      quantity: 1,
+                      scanType: 0,
                     );
                   } else {
                     await BlocProvider.of<GoodsListScreenCubit>(context)
@@ -79,6 +80,7 @@ class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
                           ? widget.searchController.text
                           : null,
                       1,
+                      0,
                     );
                   }
                 },

@@ -69,7 +69,7 @@ class _HistoryMoveScreenDetailState extends State<HistoryMoveScreenDetail> {
                   accept: widget.moveDataDTO.accept!,
                   send: widget.moveDataDTO.send!,
                   orderId: widget.moveDataDTO.id,
-                  unscannedProducts: unscannedProducts,
+                  unscannedProducts: scannedProducts,
                   scannedProducts: scannedProducts,
                   selectedProduct: selectedProduct,
                   pharmacyOrder: widget.moveDataDTO,
@@ -386,7 +386,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                             .toUpperCase(),
                       ),
                       Text(
-                        'Возврат:   ${widget.good.refund}'.toUpperCase(),
+                        'Возврат:   ${widget.good.refund??0}'.toUpperCase(),
                       ),
                     ],
                   )

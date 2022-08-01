@@ -30,6 +30,16 @@ class ReturnDetailPage extends StatefulWidget {
 }
 
 class _ReturnDetailPageState extends State<ReturnDetailPage> {
+  final ScrollController _controller = ScrollController();
+
+  void _animateToIndex(int index, double height) {
+    _controller.animateTo(
+      index * height,
+      duration: const Duration(seconds: 2),
+      curve: Curves.linear,
+    );
+  }
+
   FocusNode focusNode = FocusNode();
   String _currentScan = '';
   TextEditingController searchController = TextEditingController();
@@ -74,6 +84,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                         ? searchController.text
                         : null,
                     1,
+                    0,
                   );
                 }
               },
@@ -235,6 +246,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                         selectedProduct,
                       ) {
                         return _BuildBody(
+                          scrollController: _controller,
                           searchController: searchController,
                           orderStatus: widget.pharmacyOrder?.status ?? 0,
                           orderId: widget.pharmacyOrder!.id,
@@ -282,7 +294,16 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                         scannedProducts,
                         unscannedProducts,
                         selectedProductId,
-                      ) {},
+                      ) {
+                        for (int i = 0; i < scannedProducts.length; i++) {
+                          if (scannedProducts[i].id == selectedProductId.id) {
+                            _animateToIndex(
+                              i,
+                              MediaQuery.of(context).size.height * 0.5,
+                            );
+                          }
+                        }
+                      },
                       errorState: (String message) {
                         buildErrorCustomSnackBar(context, message);
                       },
@@ -302,6 +323,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final ScrollController scrollController;
   final TextEditingController searchController;
   final int orderStatus;
   final int orderId;
@@ -316,6 +338,7 @@ class _BuildBody extends StatefulWidget {
     required this.orderStatus,
     this.pharmacyOrder,
     required this.searchController,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -377,6 +400,7 @@ class _BuildBodyState extends State<_BuildBody> {
             },
             controller: controller,
             child: ListView.builder(
+              controller: widget.scrollController,
               shrinkWrap: true,
               padding: const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
               itemCount: widget.scannedProducts.length,
@@ -768,6 +792,7 @@ class _SpecifyingNumberManuallyState extends State<_SpecifyingNumberManually> {
                           ? widget.searchController.text
                           : null,
                       int.parse(controller.text),
+                      1,
                     );
 
                     controller.clear();

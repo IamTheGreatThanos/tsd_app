@@ -34,6 +34,15 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
   bool isFloatingButtonVisible = true;
   String _currentScan = '';
   FocusNode focusNode = FocusNode();
+  final ScrollController _controller = ScrollController();
+
+  void _animateToIndex(int index, double height) {
+    _controller.animateTo(
+      index * height,
+      duration: const Duration(seconds: 2),
+      curve: Curves.linear,
+    );
+  }
 
   TextEditingController searchController = TextEditingController();
   @override
@@ -68,10 +77,13 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
               _currentScan = '';
             });
             BlocProvider.of<MoveGoodsScreenCubit>(context).scannerBarCode(
-              scanResult,
-              widget.moveDataDTO.id,
-              searchController.text.isNotEmpty ? searchController.text : null,
-              1,
+              scannedResult: scanResult,
+              orderId: widget.moveDataDTO.id,
+              search: searchController.text.isNotEmpty
+                  ? searchController.text
+                  : null,
+              quantity: 1,
+              scanType: 0,
             );
 
             // if (scannedCellId.isEmpty) {
@@ -220,6 +232,7 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
                         selectedProduct,
                       ) {
                         return _BuildBody(
+                          scrollController: _controller,
                           searchController: searchController,
                           orderStatus: widget.moveDataDTO.accept!,
                           orderId: widget.moveDataDTO.id,
@@ -268,7 +281,14 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
                         scannedProducts,
                         unscannedProducts,
                         selectedProductId,
-                      ) {},
+                      ) {
+                        for (int i = 0; i < unscannedProducts.length; i++) {
+                          if (unscannedProducts[i].id == selectedProductId.id) {
+                            _animateToIndex(
+                                i, MediaQuery.of(context).size.height * 0.5);
+                          }
+                        }
+                      },
                       errorState: (String message) {
                         buildErrorCustomSnackBar(context, message);
                       },
@@ -285,6 +305,7 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
+  final ScrollController scrollController;
   final TextEditingController searchController;
   final int orderStatus;
   final int orderId;
@@ -301,6 +322,7 @@ class _BuildBody extends StatefulWidget {
     required this.orderStatus,
     required this.moveDataDTO,
     required this.searchController,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -476,6 +498,7 @@ class _BuildBodyState extends State<_BuildBody> {
                         ],
                       )
                 : ListView.builder(
+                    controller: widget.scrollController,
                     shrinkWrap: true,
                     padding:
                         const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),

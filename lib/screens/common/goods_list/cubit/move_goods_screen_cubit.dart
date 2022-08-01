@@ -116,29 +116,31 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
 
   ////////////SCANNER MOVE PRODUCTS
   ///Сканер бар кода
-  Future<void> scannerBarCode(
-    String _scannedResult,
-    int orderId,
+  Future<void> scannerBarCode({
+    required String scannedResult,
+    required int orderId,
     String? search,
-    int quantity,
-  ) async {
+    required int quantity,
+    required int scanType,
+    //scan type==0 is with barcode scan type ==1 is manual
+  }) async {
     //проверим есть ли выбранный продукт в кэше
     final ProductDTO selectedProduct = await getMoveSelectedProductFromCache(
       orderId: orderId,
     );
     log("${selectedProduct.id},  ${selectedProduct.orderID}");
-    if (checkProductBarCode(_scannedResult) != null) {
-      final ProductDTO productDTO = checkProductBarCode(_scannedResult)!;
+    if (checkProductBarCode(scannedResult) != null) {
+      final ProductDTO productDTO = checkProductBarCode(scannedResult)!;
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
       if (selectedProduct.id == -1) {
         await saveMoveSelectedProductToCache(selectedProduct: productDTO);
         if (productDTO.totalCount! <=
-              (productDTO.scanCount ?? 0) +
-                  (productDTO.defective ?? 0) +
-                  (productDTO.underachievement ?? 0) +
-                  (productDTO.reSorting ?? 0) +
-                  (productDTO.netovar ?? 0) +
-                  (productDTO.overdue ?? 0))  {
+            (productDTO.scanCount ?? 0) +
+                (productDTO.defective ?? 0) +
+                (productDTO.underachievement ?? 0) +
+                (productDTO.reSorting ?? 0) +
+                (productDTO.netovar ?? 0) +
+                (productDTO.overdue ?? 0)) {
           emit(
             const MoveGoodsScreenState.errorState(
               message: 'Продукты уже отсканированы!',
@@ -150,7 +152,8 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
             orderId: orderId,
             productDTO: ProductDTO(
               id: productDTO.id,
-              scanCount: productDTO.scanCount! + quantity,
+              scanCount:
+                  scanType == 0 ? productDTO.scanCount! + quantity : quantity,
             ),
           );
           log("SCANNED SUCCESSFULLY");
@@ -185,7 +188,8 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
               orderId: orderId,
               productDTO: ProductDTO(
                 id: productDTO.id,
-                scanCount: productDTO.scanCount! + quantity,
+                scanCount:
+                    scanType == 0 ? productDTO.scanCount! + quantity : quantity,
               ),
             );
             log("SCANNED SUCCESSFULLY");

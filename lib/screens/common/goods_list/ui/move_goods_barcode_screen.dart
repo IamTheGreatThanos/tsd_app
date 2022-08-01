@@ -58,12 +58,13 @@ class _MoveGoodsBarcodeScreenState extends State<MoveGoodsBarcodeScreen> {
                 callback: (barcode) async {
                   await BlocProvider.of<MoveGoodsScreenCubit>(context)
                       .scannerBarCode(
-                    barcode,
-                    widget.orderId,
-                    widget.searchController.text.isNotEmpty
+                  scannedResult:  barcode,
+                 orderId:  widget.orderId,
+                 search:   widget.searchController.text.isNotEmpty
                         ? widget.searchController.text
                         : null,
-                    1,
+                  quantity:  1,
+                  scanType: 0,
                   );
                 },
               );
