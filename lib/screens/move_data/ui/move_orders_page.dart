@@ -354,7 +354,8 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                             loadingState: () {
                               return const Center(
                                 child: CircularProgressIndicator(
-                                    color: Colors.amber),
+                                  color: Colors.amber,
+                                ),
                               );
                             },
                             loadedState: (orders) {
