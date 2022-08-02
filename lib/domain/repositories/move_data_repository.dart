@@ -62,6 +62,7 @@ abstract class MoveDataRepository {
     int? accept,
     int? send,
     String? date,
+    int? sortType,
   });
 
   Future<Either<Failure, ProductDTO>> updateMoveProductById({

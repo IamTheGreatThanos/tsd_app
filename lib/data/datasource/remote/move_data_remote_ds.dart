@@ -17,6 +17,7 @@ abstract class MoveDataRemoteDS {
     int? accept,
     int? send,
     String? date,
+    int? sortType,
   });
 
   Future<MoveDataDTO> createMovingOrder({
@@ -185,10 +186,16 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
     int? accept,
     int? send,
     String? date,
+    int? sortType,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
-
+    String sort = "";
+    if (sortType == 0) {
+      sort = 'created_at_desc';
+    } else {
+      sort = 'created_at_asc';
+    }
     try {
       final response = await dio.get(
         '$SERVER_/api/moving',
@@ -201,6 +208,7 @@ class MoveDataRemoteDSImpl extends MoveDataRemoteDS {
           if (accept != null) "accept": accept,
           if (send != null) "send": send,
           if (date != null) "date": date,
+          if (sortType != null) "sort": sort,
         },
       );
       log('##### getMovingOrders api:: ${response.statusCode}');

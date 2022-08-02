@@ -102,6 +102,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                 BlocProvider.of<MoveOrderPageCubit>(
                                   context,
                                 ).onRefreshOrders(
+                                  sortType: model.sortType,
                                   accept: 0,
                                   recipientId: model.recipient?.id,
                                   senderId: model.sender?.id,
@@ -113,6 +114,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                 BlocProvider.of<MoveOrderPageCubit>(
                                   context,
                                 ).onRefreshOrders(
+                                  sortType: model.sortType,
                                   recipientId: model.recipient?.id,
                                   senderId: model.sender?.id,
                                   date: model.date,
@@ -123,6 +125,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                 BlocProvider.of<MoveOrderPageCubit>(
                                   context,
                                 ).onRefreshOrders(
+                                  sortType: model.sortType,
                                   recipientId: model.recipient?.id,
                                   senderId: model.sender?.id,
                                   date: model.date,
@@ -144,6 +147,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                           BlocProvider.of<MoveOrderPageCubit>(
                             context,
                           ).onRefreshOrders(
+                            sortType: model.sortType,
                             accept: 0,
                             recipientId: model.recipient?.id,
                             senderId: model.sender?.id,
@@ -155,6 +159,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                           BlocProvider.of<MoveOrderPageCubit>(
                             context,
                           ).onRefreshOrders(
+                            sortType: model.sortType,
                             recipientId: model.recipient?.id,
                             senderId: model.sender?.id,
                             date: model.date,
@@ -165,6 +170,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                           BlocProvider.of<MoveOrderPageCubit>(
                             context,
                           ).onRefreshOrders(
+                            sortType: model.sortType,
                             recipientId: model.recipient?.id,
                             senderId: model.sender?.id,
                             date: model.date,
@@ -189,6 +195,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                             currentIndex = 0;
                             BlocProvider.of<MoveOrderPageCubit>(context)
                                 .onRefreshOrders(
+                              sortType: model.sortType,
                               recipientId: model.recipient?.id,
                               senderId: model.sender?.id,
                               date: model.date,
@@ -203,6 +210,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                               recipientId: model.recipient?.id,
                               senderId: model.sender?.id,
                               date: model.date,
+                              sortType: model.sortType,
                               // senderId: userId,
                             );
                           },
@@ -214,6 +222,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                               senderId: model.sender?.id,
                               date: model.date,
                               accept: 1, send: 1,
+                              sortType: model.sortType,
                               // senderId: userId,
                             );
                           },
@@ -357,6 +366,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                       BlocProvider.of<MoveOrderPageCubit>(
                                         context,
                                       ).onLoadOrders(
+                                        sortType: model.sortType,
                                         recipientId: model.recipient?.id,
                                         senderId: model.sender?.id,
                                         date: model.date,
@@ -368,6 +378,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                       BlocProvider.of<MoveOrderPageCubit>(
                                         context,
                                       ).onLoadOrders(
+                                        sortType: model.sortType,
                                         recipientId: model.recipient?.id,
                                         senderId: model.sender?.id,
                                         date: model.date,
@@ -378,6 +389,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                       BlocProvider.of<MoveOrderPageCubit>(
                                         context,
                                       ).onLoadOrders(
+                                        sortType: model.sortType,
                                         recipientId: model.recipient?.id,
                                         senderId: model.sender?.id,
                                         date: model.date,
@@ -397,6 +409,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                       BlocProvider.of<MoveOrderPageCubit>(
                                         context,
                                       ).onRefreshOrders(
+                                        sortType: model.sortType,
                                         recipientId: model.recipient?.id,
                                         senderId: model.sender?.id,
                                         date: model.date,
@@ -408,6 +421,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                       BlocProvider.of<MoveOrderPageCubit>(
                                         context,
                                       ).onRefreshOrders(
+                                        sortType: model.sortType,
                                         recipientId: model.recipient?.id,
                                         senderId: model.sender?.id,
                                         date: model.date,
@@ -418,6 +432,7 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
                                       BlocProvider.of<MoveOrderPageCubit>(
                                         context,
                                       ).onRefreshOrders(
+                                        sortType: model.sortType,
                                         recipientId: model.recipient?.id,
                                         senderId: model.sender?.id,
                                         date: model.date,

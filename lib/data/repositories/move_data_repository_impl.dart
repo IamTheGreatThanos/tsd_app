@@ -259,6 +259,7 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
     int? accept,
     int? send,
     String? date,
+    int? sortType,
   }) async {
     if (await networkInfo.isConnected) {
       final User user = await authLocalDS.getUserFromCache();
@@ -271,6 +272,8 @@ class MoveDataRepositoryImpl extends MoveDataRepository {
         send: send,
         accept: accept,
         date: date,
+        
+      sortType: sortType,
       );
       return Right(history);
     } else {

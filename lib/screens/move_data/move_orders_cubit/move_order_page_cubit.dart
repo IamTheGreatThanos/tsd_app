@@ -23,6 +23,7 @@ class MoveOrderPageCubit extends Cubit<MoveOrderPageState> {
     int? accept,
     int? send,
     String? date,
+    int? sortType,
   }) async {
     _currentPage = 1;
     emit(const MoveOrderPageState.loadingState());
@@ -34,6 +35,7 @@ class MoveOrderPageCubit extends Cubit<MoveOrderPageState> {
       send: send,
       date: date,
       page: _currentPage,
+      sortType: sortType,
     );
     result.fold(
       (l) => emit(
@@ -58,6 +60,7 @@ class MoveOrderPageCubit extends Cubit<MoveOrderPageState> {
     int? accept,
     int? send,
     String? date,
+    int? sortType,
   }) async {
     final result = await _moveDataRepository.getMovingOrders(
       status: status,
@@ -67,6 +70,7 @@ class MoveOrderPageCubit extends Cubit<MoveOrderPageState> {
       send: send,
       date: date,
       page: _currentPage,
+      sortType: sortType,
     );
     result.fold(
       (l) => emit(
