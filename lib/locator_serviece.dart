@@ -2,16 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pharmacy_arrival/core/platform/network_info.dart';
+import 'package:pharmacy_arrival/data/datasource/local/accept_containers_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/move_data_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/products_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/refund_local_ds.dart';
+import 'package:pharmacy_arrival/data/datasource/remote/accept_containers_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/auth_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/move_data_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/pharmacy_arrival_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/products_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/refund_remote_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/warehouse_arrival_remote_ds.dart';
+import 'package:pharmacy_arrival/data/repositories/accept_containers_repository.dart';
 import 'package:pharmacy_arrival/data/repositories/auth_repository_impl.dart';
 import 'package:pharmacy_arrival/data/repositories/move_data_repository_impl.dart';
 import 'package:pharmacy_arrival/data/repositories/pharmacy_repository_impl.dart';
@@ -65,6 +68,9 @@ import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehous
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/update_warehouse_order_status.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_cubit/accept_cont_list_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_qr_cubit/accept_cont_qr_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
@@ -109,7 +115,8 @@ Future<void> initLocator() async {
     () => MoveBarcodeScreenCubit(sl(), sl(), sl(), sl(), sl()),
   );
   sl.registerFactory(
-    () => MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl(),sl()),
+    () =>
+        MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()),
   );
   sl.registerFactory(
     () => ReturnDataScreenCubit(sl(), sl()),
@@ -156,6 +163,9 @@ Future<void> initLocator() async {
     ),
   );
   sl.registerFactory(() => MoveOrderCatCubit());
+  sl.registerFactory(() => AcceptContLaunchCubit(sl()));
+  sl.registerFactory(() => AcceptContQrCubit(sl()));
+  sl.registerFactory(() => AcceptContListCubit(sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///
@@ -266,6 +276,14 @@ Future<void> initLocator() async {
       sl(),
     ),
   );
+  sl.registerLazySingleton<AcceptContainersRepository>(
+    () => AcceptContainersRepositoryImpl(
+      acceptContainersLocalDs: sl(),
+      acceptContainersRemoteDs: sl(),
+      authLocalDS: sl(),
+      networkInfo: sl(),
+    ),
+  );
 
   ///
   ///
@@ -288,6 +306,9 @@ Future<void> initLocator() async {
   sl.registerLazySingleton<RefundRemoteDS>(
     () => RefundRemoteDSImpl(sl()),
   );
+  sl.registerLazySingleton<AcceptContainersRemoteDs>(
+    () => AcceptContainersRemoteDsImpl(sl()),
+  );
 
   ///
   ///
@@ -303,6 +324,9 @@ Future<void> initLocator() async {
   );
   sl.registerLazySingleton<RefundLocalDS>(
     () => RefundLocalDSImpl(sl()),
+  );
+  sl.registerLazySingleton<AcceptContainersLocalDs>(
+    () => AcceptContainersLocalDsImpl(sl()),
   );
 
   ///

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_page.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
-import 'package:pharmacy_arrival/screens/move_data/ui/move_data_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_orders_page.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/_vmodel.dart';
-import 'package:pharmacy_arrival/screens/return_data/ui/return_data_launcher.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_orders_page.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -103,6 +102,19 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           onTap: () =>
                               AppRouter.push(context, const HistoryScreen()),
                         ),
+                        _BuildMenuOption(
+                          icon: "move_logo",
+                          title: "Перемещение",
+                          color: const Color(0xFFFFD33D),
+                          onTap: () => AppRouter.push(
+                            context,
+                            ChangeNotifierProvider(
+                              create: (context) => MoveDataVModel()..init(),
+                              child: const MoveOrdersPage(),
+                            ),
+                          ),
+                          pad: true,
+                        ),
                       ],
                     ),
                     Column(
@@ -130,18 +142,12 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           ),
                         ),
                         _BuildMenuOption(
-                          icon: "move_logo",
-                          title: "Перемещение",
-                          color: const Color(0xFFFFD33D),
-                          onTap: () => AppRouter.push(
-                            context,
-                            ChangeNotifierProvider(
-                              create: (context) => MoveDataVModel()..init(),
-                              child: const MoveOrdersPage(),
-                            ),
-                          ),
-                          pad: true,
-                        ),
+                          icon: "box-png-icon",
+                          title: "Прием\nконтейнеров",
+                          color: const Color.fromARGB(255, 24, 229, 198),
+                          onTap: () =>
+                              AppRouter.push(context, const AcceptContLauchPage()),
+                        )
                       ],
                     ),
                   ],
@@ -305,6 +311,7 @@ class _BuildMenuOption extends StatelessWidget {
                 else
                   Image.asset(
                     "assets/images/png/$icon.png",
+                    color: ColorPalette.white,
                     height: 64,
                     width: 64,
                   ),

@@ -5,6 +5,9 @@ import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_cubit/accept_cont_list_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_qr_cubit/accept_cont_qr_cubit.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
@@ -125,6 +128,15 @@ class TopLevelBlocs extends StatelessWidget {
           ),
           BlocProvider<MoveGoodsScreenCubit>(
             create: (context) => sl<MoveGoodsScreenCubit>(),
+          ),
+          BlocProvider<AcceptContLaunchCubit>(
+            create: (context) => sl<AcceptContLaunchCubit>(),
+          ),
+          BlocProvider<AcceptContQrCubit>(
+            create: (context) => sl<AcceptContQrCubit>(),
+          ),
+           BlocProvider<AcceptContListCubit>(
+            create: (context) => sl<AcceptContListCubit>(),
           ),
         ],
         child: child,
