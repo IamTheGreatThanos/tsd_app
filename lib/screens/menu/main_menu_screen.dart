@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_page.dart';
+import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_orders_page.dart';
@@ -13,6 +14,7 @@ import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
+import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
 class MainMenuScreen extends StatefulWidget {
@@ -44,6 +46,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
         color: ColorPalette.white.withOpacity(0.32),
       ),
     );
+    BlocProvider.of<SignInCubit>(context).getUserFromCache();
     super.initState();
   }
 
@@ -57,217 +60,285 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorPalette.backgroundColor,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            child: SvgPicture.asset(
-              "assets/images/svg/logo-e.svg",
-              fit: BoxFit.cover,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              child: SvgPicture.asset(
+                "assets/images/svg/logo-e.svg",
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 12,
-            right: 12,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 5,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(
-                          height: 45,
-                        ),
-                        _BuildMenuOption(
-                          icon: "stock_arrival_logo",
-                          title: "Приход\n на склад",
-                          color: const Color(0xFFD73A49),
-                          onTap: () => AppRouter.push(
-                            context,
-                            const WarehouseArrivalScreen(),
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 12,
+              right: 12,
+              child: ListView(
+                children: [
+                  BlocBuilder<SignInCubit, SignInState>(
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        orElse: () {
+                          return const SizedBox();
+                        },
+                        loadedState: (user) {
+                          return ListTile(
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(16, 0, 6, 0),
+                            leading: const Icon(
+                              Icons.person,
+                              color: ColorPalette.gray,
+                              size: 50,
+                            ),
+                            title: Transform.translate(
+                              offset: const Offset(-10, 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${user.name}",
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text("${user.login}"),
+                                      ],
+                                    ),
+                                  ),
+                                  CustomButton(
+                                    width: 100,
+                                    style: pinkButtonStyle(),
+                                    onClick: () {
+                                      BlocProvider.of<LoginBloc>(context)
+                                          .add(LogOutEvent());
+                                    },
+                                    body: Row(
+                                      children: const [
+                                        Text("Выйти"),
+                                        Icon(
+                                          Icons.exit_to_app_outlined,
+                                          color: ColorPalette.white,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 9,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(
+                            height: 45,
                           ),
-                          pad: true,
-                        ),
-                        _BuildMenuOption(
-                          icon: "open-24-hours",
-                          title: "История\nзаказов",
-                          color: const Color.fromARGB(255, 24, 102, 229),
-                          onTap: () =>
-                              AppRouter.push(context, const HistoryScreen()),
-                        ),
-                        _BuildMenuOption(
-                          icon: "move_logo",
-                          title: "Перемещение",
-                          color: const Color(0xFFFFD33D),
-                          onTap: () => AppRouter.push(
-                            context,
-                            ChangeNotifierProvider(
-                              create: (context) => MoveDataVModel()..init(),
-                              child: const MoveOrdersPage(),
+                          _BuildMenuOption(
+                            icon: "stock_arrival_logo",
+                            title: "Приход\n на склад",
+                            color: const Color(0xFFD73A49),
+                            onTap: () => AppRouter.push(
+                              context,
+                              const WarehouseArrivalScreen(),
+                            ),
+                            pad: true,
+                          ),
+                          _BuildMenuOption(
+                            icon: "open-24-hours",
+                            title: "История\nзаказов",
+                            color: const Color.fromARGB(255, 24, 102, 229),
+                            onTap: () =>
+                                AppRouter.push(context, const HistoryScreen()),
+                          ),
+                          _BuildMenuOption(
+                            icon: "move_logo",
+                            title: "Перемещение",
+                            color: const Color(0xFFFFD33D),
+                            onTap: () => AppRouter.push(
+                              context,
+                              ChangeNotifierProvider(
+                                create: (context) => MoveDataVModel()..init(),
+                                child: const MoveOrdersPage(),
+                              ),
+                            ),
+                            pad: true,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _BuildMenuOption(
+                            icon: "pharmacy_arrival_logo",
+                            title: "Приход\nАптека",
+                            color: const Color(0xFF28A745),
+                            onTap: () => AppRouter.push(
+                              context,
+                              const PharmacyArrivalScreen(),
                             ),
                           ),
-                          pad: true,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _BuildMenuOption(
-                          icon: "pharmacy_arrival_logo",
-                          title: "Приход\nАптека",
-                          color: const Color(0xFF28A745),
-                          onTap: () => AppRouter.push(
-                            context,
-                            const PharmacyArrivalScreen(),
-                          ),
-                        ),
-                        _BuildMenuOption(
-                          icon: "return_logo",
-                          title: "Возврат",
-                          color: const Color(0xFF6F42C1),
-                          onTap: () => AppRouter.push(
-                            context,
-                            ChangeNotifierProvider(
-                              create: (context) => ReturnDataVModel()..init(),
-                              child: const ReturnOrdersPage(),
+                          _BuildMenuOption(
+                            icon: "return_logo",
+                            title: "Возврат",
+                            color: const Color(0xFF6F42C1),
+                            onTap: () => AppRouter.push(
+                              context,
+                              ChangeNotifierProvider(
+                                create: (context) => ReturnDataVModel()..init(),
+                                child: const ReturnOrdersPage(),
+                              ),
                             ),
                           ),
-                        ),
-                        _BuildMenuOption(
-                          icon: "box-png-icon",
-                          title: "Прием\nконтейнеров",
-                          color: const Color.fromARGB(255, 24, 229, 198),
-                          onTap: () =>
-                              AppRouter.push(context, const AcceptContLauchPage()),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                // SizedBox(
-                //   width: MediaQuery.of(context).size.width,
-                //   height: MediaQuery.of(context).size.height,
-                //   child: Stack(
-                //     children: [
-                //       Positioned(
-                //           top: 30,
-                //           left: 60,
-                //           child: SvgPicture.asset(
-                //             "assets/images/svg/move_vector.svg",
-                //           )),
-                //       Positioned(
-                //           top: 84,
-                //           right: 26,
-                //           child: SvgPicture.asset(
-                //             "assets/images/svg/pharmacy_arrival_vector.svg",
-                //           )),
-                //       Positioned(
-                //           top: 154,
-                //           left: 33,
-                //           child: SvgPicture.asset(
-                //             "assets/images/svg/arrival_stock_vector.svg",
-                //           )),
-                //       Positioned(
-                //           top: 240,
-                //           right: 71,
-                //           child: SvgPicture.asset(
-                //             "assets/images/svg/return_vector.svg",
-                //           )),
-                //       Positioned(
-                //           top: 320,
-                //           left: 38,
-                //           child: SvgPicture.asset(
-                //             "assets/images/svg/order_history_vector.svg",
-                //           )),
-                //     ],
-                //   ),
-                // ),
-              ],
+                          _BuildMenuOption(
+                            icon: "box-png-icon",
+                            title: "Прием\nконтейнеров",
+                            color: const Color.fromARGB(255, 24, 229, 198),
+                            onTap: () => AppRouter.push(
+                              context,
+                              const AcceptContLauchPage(),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width,
+                  //   height: MediaQuery.of(context).size.height,
+                  //   child: Stack(
+                  //     children: [
+                  //       Positioned(
+                  //           top: 30,
+                  //           left: 60,
+                  //           child: SvgPicture.asset(
+                  //             "assets/images/svg/move_vector.svg",
+                  //           )),
+                  //       Positioned(
+                  //           top: 84,
+                  //           right: 26,
+                  //           child: SvgPicture.asset(
+                  //             "assets/images/svg/pharmacy_arrival_vector.svg",
+                  //           )),
+                  //       Positioned(
+                  //           top: 154,
+                  //           left: 33,
+                  //           child: SvgPicture.asset(
+                  //             "assets/images/svg/arrival_stock_vector.svg",
+                  //           )),
+                  //       Positioned(
+                  //           top: 240,
+                  //           right: 71,
+                  //           child: SvgPicture.asset(
+                  //             "assets/images/svg/return_vector.svg",
+                  //           )),
+                  //       Positioned(
+                  //           top: 320,
+                  //           left: 38,
+                  //           child: SvgPicture.asset(
+                  //             "assets/images/svg/order_history_vector.svg",
+                  //           )),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            top: 80,
-            right: 12,
-            child: _BuildMenuOption(
-              title: "Выйти",
-              color: ColorPalette.darkGrey,
-              onTap: () {
-                BlocProvider.of<LoginBloc>(context).add(LogOutEvent());
-              },
-            ),
-          ),
-          // SizedBox.expand(
-          //   child: DraggableScrollableSheet(
-          //     initialChildSize: 0.24,
-          //     minChildSize: 0.2,
-          //     maxChildSize: 0.9,
-          //     builder: (context, controller) {
-          //       return ClipPath(
-          //         clipper: MyClipper(
-          //           maxHeight: MediaQuery.of(context).size.height,
-          //         ),
-          //         child: Container(
-          //           padding:
-          //               const EdgeInsets.only(top: 30, left: 16, right: 16),
-          //           decoration: const BoxDecoration(
-          //             color: ColorPalette.white,
-          //           ),
-          //           child: Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               const Text(
-          //                 "Наши аптеки",
-          //                 style: ThemeTextStyle.textStyle20w600,
-          //               ),
-          //               Expanded(
-          //                 child: GridView.builder(
-          //                   shrinkWrap: true,
-          //                   controller: controller,
-          //                   itemCount: images.length,
-          //                   itemBuilder: (context, index) {
-          //                     return Container(
-          //                       decoration: BoxDecoration(
-          //                         // color: Colors.red,
-          //                         borderRadius: BorderRadius.circular(12),
-          //                         image: DecorationImage(
-          //                           fit: BoxFit.cover,
-          //                           image: NetworkImage(
-          //                             images[index],
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       // child: Container(
-          //                       //   height: 10,
-          //                       //   width: 10,
-          //                       //   color: Colors.red,
-          //                       // )
-          //                     );
-          //                   },
-          //                   gridDelegate:
-          //                       const SliverGridDelegateWithFixedCrossAxisCount(
-          //                     crossAxisCount: 2,
-          //                     crossAxisSpacing: 10,
-          //                     mainAxisSpacing: 10,
-          //                     mainAxisExtent: 96,
-          //                   ),
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
-        ],
+
+            // Positioned(
+            //   top: 80,
+            //   right: 12,
+            //   child: _BuildMenuOption(
+            //     title: "Выйти",
+            //     color: ColorPalette.darkGrey,
+            //     onTap: () {
+            //       BlocProvider.of<LoginBloc>(context).add(LogOutEvent());
+            //     },
+            //   ),
+            // ),
+
+            // SizedBox.expand(
+            //   child: DraggableScrollableSheet(
+            //     initialChildSize: 0.24,
+            //     minChildSize: 0.2,
+            //     maxChildSize: 0.9,
+            //     builder: (context, controller) {
+            //       return ClipPath(
+            //         clipper: MyClipper(
+            //           maxHeight: MediaQuery.of(context).size.height,
+            //         ),
+            //         child: Container(
+            //           padding:
+            //               const EdgeInsets.only(top: 30, left: 16, right: 16),
+            //           decoration: const BoxDecoration(
+            //             color: ColorPalette.white,
+            //           ),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               const Text(
+            //                 "Наши аптеки",
+            //                 style: ThemeTextStyle.textStyle20w600,
+            //               ),
+            //               Expanded(
+            //                 child: GridView.builder(
+            //                   shrinkWrap: true,
+            //                   controller: controller,
+            //                   itemCount: images.length,
+            //                   itemBuilder: (context, index) {
+            //                     return Container(
+            //                       decoration: BoxDecoration(
+            //                         // color: Colors.red,
+            //                         borderRadius: BorderRadius.circular(12),
+            //                         image: DecorationImage(
+            //                           fit: BoxFit.cover,
+            //                           image: NetworkImage(
+            //                             images[index],
+            //                           ),
+            //                         ),
+            //                       ),
+            //                       // child: Container(
+            //                       //   height: 10,
+            //                       //   width: 10,
+            //                       //   color: Colors.red,
+            //                       // )
+            //                     );
+            //                   },
+            //                   gridDelegate:
+            //                       const SliverGridDelegateWithFixedCrossAxisCount(
+            //                     crossAxisCount: 2,
+            //                     crossAxisSpacing: 10,
+            //                     mainAxisSpacing: 10,
+            //                     mainAxisExtent: 96,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

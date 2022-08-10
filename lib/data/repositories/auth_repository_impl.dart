@@ -74,7 +74,7 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
-  
+
   @override
   Future<Either<Failure, List<CounteragentDTO>>> getCountragents() async {
     if (await networkInfo.isConnected) {
@@ -87,6 +87,28 @@ class AuthRepositoryImpl extends AuthRepository {
       }
     } else {
       return Left(ServerFailure(message: 'Нет подключение к интернету!'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> logout() async {
+    try {
+      await localDS.removeUserFromCache();
+      log('AuthRepositoryImpl removeUser');
+      return const Right("Successfully removed from cache");
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> getUserFromCahce() async {
+    try {
+      final user = await localDS.getUserFromCache();
+      log('GET USER FROM CAHCE');
+      return Right(user);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
     }
   }
 }

@@ -99,7 +99,7 @@ final sl = GetIt.instance;
 
 Future<void> initLocator() async {
   // BLoC / Cubit
-  sl.registerFactory(() => SignInCubit(sl()));
+  sl.registerFactory(() => SignInCubit(sl(), sl()));
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl(), sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));

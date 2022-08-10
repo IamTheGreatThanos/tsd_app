@@ -1,15 +1,16 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/core/error/failure.dart';
+import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthCheck _authCheck;
+  final AuthRepository _authRepository;
 
-  LoginBloc(this._authCheck) : super(LoadingLoginState()) {
+  LoginBloc(this._authRepository) : super(LoadingLoginState()) {
     on<InitialLoginEvent>((event, emit) => _onInitialLoginEvent(emit));
     on<LogInEvent>((event, emit) => _onLogInEvent(event, emit));
     on<LogOutEvent>((event, emit) => _onLogOutEvent(event, emit));
@@ -34,20 +35,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  void _onLogOutEvent(LogOutEvent event, Emitter<LoginState> emit) {
+  Future<void> _onLogOutEvent(LogOutEvent event, Emitter<LoginState> emit) async {
     try {
-      emit(UnauthorizedState());
+      emit(LoadingLoginState());
+      final resut = await _authRepository.logout();
+      resut.fold(
+        (l) => emit(ErrorLoginState(mapFailureToMessage(l))),
+        (r) => emit(UnauthorizedState()),
+      );
     } catch (e) {
       emit(ErrorLoginState('errorMessage'));
       rethrow;
     }
   }
 
-  
   Future<void> _onInitialLoginEvent(
     Emitter<LoginState> emit,
   ) async {
-    final result = await _authCheck.call();
+    emit(LoadingLoginState());
+    final result = await _authRepository.authCheck();
 
     result.fold(
       (l) => emit(UnauthorizedState()),
@@ -56,5 +62,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       },
     );
   }
-
 }

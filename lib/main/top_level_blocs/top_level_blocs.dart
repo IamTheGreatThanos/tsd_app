@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
@@ -55,7 +56,7 @@ class TopLevelBlocs extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) =>
-                LoginBloc(sl<AuthCheck>())..add(InitialLoginEvent()),
+                LoginBloc(sl<AuthRepository>())..add(InitialLoginEvent()),
           ),
           BlocProvider<SignInCubit>(
             create: (context) => sl<SignInCubit>(),
