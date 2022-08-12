@@ -71,7 +71,7 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
               height: 15,
             ),
             const Text(
-              'Укажите число вручную ',
+              'Укажите количество вручную ',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -85,7 +85,7 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
               controller: controller,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Укажите число вручную',
+                hintText: 'Укажите количество вручную',
               ),
             ),
             const SizedBox(

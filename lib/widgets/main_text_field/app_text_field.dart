@@ -213,7 +213,19 @@ class _AppTextFieldState extends State<AppTextField> {
                             widget.obscureText = !widget.obscureText;
                           },
                         )
-                      : widget.suffixIcon,
+                      : widget.controller.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(
+                                Icons.close,
+                                size: 25,
+                                color: ColorPalette.gray,
+                              ),
+                              onPressed: () {
+                                widget.controller.clear();
+                                setState(() {});
+                              },
+                            )
+                          : null,
                   suffixIconConstraints: const BoxConstraints(
                     minHeight: 24,
                     minWidth: 24,
@@ -260,7 +272,6 @@ class _AppTextFieldState extends State<AppTextField> {
                               (state is StateError && widget.showErrorMessages)
                                   ? ColorPalette.errorRed
                                   : Colors.transparent,
-                        
                         ),
                         gapPadding: 0.0,
                       ),

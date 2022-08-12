@@ -23,7 +23,7 @@ class PharmacyOrderDTO with _$PharmacyOrderDTO {
     @JsonKey(name: 'from_city_name') String? fromCityName,
     @JsonKey(name: 'to_address') String? toAddress,
     @JsonKey(name: 'to_city_name') String? toCityName,
-    int? amount,
+    String? amount,
    // int? entrance
 
     @JsonKey(name: 'incoming_number') String? incomingNumber,

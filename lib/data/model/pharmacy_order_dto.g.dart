@@ -21,7 +21,7 @@ _$_PharmacyOrderDTO _$$_PharmacyOrderDTOFromJson(Map<String, dynamic> json) =>
       fromCityName: json['from_city_name'] as String?,
       toAddress: json['to_address'] as String?,
       toCityName: json['to_city_name'] as String?,
-      amount: json['amount'] as int?,
+      amount: json['amount'] as String?,
       incomingNumber: json['incoming_number'] as String?,
       incomingDate: json['incoming_date'] as String?,
       bin: json['bin'] as String?,

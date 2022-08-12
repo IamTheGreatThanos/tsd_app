@@ -42,7 +42,7 @@ mixin _$PharmacyOrderDTO {
   String? get toAddress => throw _privateConstructorUsedError;
   @JsonKey(name: 'to_city_name')
   String? get toCityName => throw _privateConstructorUsedError;
-  int? get amount => throw _privateConstructorUsedError; // int? entrance
+  String? get amount => throw _privateConstructorUsedError; // int? entrance
   @JsonKey(name: 'incoming_number')
   String? get incomingNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'incoming_date')
@@ -87,7 +87,7 @@ abstract class $PharmacyOrderDTOCopyWith<$Res> {
       @JsonKey(name: 'from_city_name') String? fromCityName,
       @JsonKey(name: 'to_address') String? toAddress,
       @JsonKey(name: 'to_city_name') String? toCityName,
-      int? amount,
+      String? amount,
       @JsonKey(name: 'incoming_number') String? incomingNumber,
       @JsonKey(name: 'incoming_date') String? incomingDate,
       String? bin,
@@ -198,7 +198,7 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res>
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       incomingNumber: incomingNumber == freezed
           ? _value.incomingNumber
           : incomingNumber // ignore: cast_nullable_to_non_nullable
@@ -301,7 +301,7 @@ abstract class _$$_PharmacyOrderDTOCopyWith<$Res>
       @JsonKey(name: 'from_city_name') String? fromCityName,
       @JsonKey(name: 'to_address') String? toAddress,
       @JsonKey(name: 'to_city_name') String? toCityName,
-      int? amount,
+      String? amount,
       @JsonKey(name: 'incoming_number') String? incomingNumber,
       @JsonKey(name: 'incoming_date') String? incomingDate,
       String? bin,
@@ -417,7 +417,7 @@ class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       incomingNumber: incomingNumber == freezed
           ? _value.incomingNumber
           : incomingNumber // ignore: cast_nullable_to_non_nullable
@@ -535,7 +535,7 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
   @JsonKey(name: 'to_city_name')
   final String? toCityName;
   @override
-  final int? amount;
+  final String? amount;
 // int? entrance
   @override
   @JsonKey(name: 'incoming_number')
@@ -672,7 +672,7 @@ abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
           @JsonKey(name: 'from_city_name') final String? fromCityName,
           @JsonKey(name: 'to_address') final String? toAddress,
           @JsonKey(name: 'to_city_name') final String? toCityName,
-          final int? amount,
+          final String? amount,
           @JsonKey(name: 'incoming_number') final String? incomingNumber,
           @JsonKey(name: 'incoming_date') final String? incomingDate,
           final String? bin,
@@ -725,7 +725,7 @@ abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
   @JsonKey(name: 'to_city_name')
   String? get toCityName => throw _privateConstructorUsedError;
   @override
-  int? get amount => throw _privateConstructorUsedError;
+  String? get amount => throw _privateConstructorUsedError;
   @override // int? entrance
   @JsonKey(name: 'incoming_number')
   String? get incomingNumber => throw _privateConstructorUsedError;

@@ -248,6 +248,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AppTextField(
+                  validator: (p0) {
+                    return [];
+                  },
                   focusNode: FocusNode(),
                   onFieldSubmitted: (value) {
                     final productCubit = BlocProvider.of<HistoryCubit>(context);
