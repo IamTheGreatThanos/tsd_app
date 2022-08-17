@@ -161,3 +161,33 @@ flutter_intl:
     - family: DelaGothicOne
       fonts:
         - asset: fonts/DelaGothicOne-Regular.ttf
+    - family: SFProDisplay
+      fonts:
+        - asset: fonts/ProductSans-Regular.ttf
+        - asset: fonts/ProductSans-Italic.ttf
+          style: italic
+        - asset: fonts/ProductSans-Thin.ttf
+          weight: 100
+        - asset: fonts/ProductSans-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: fonts/ProductSans-Light.ttf
+          weight: 300
+        - asset: fonts/ProductSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/ProductSans-Medium.ttf
+          weight: 500
+        - asset: fonts/ProductSans-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: fonts/ProductSans-Bold.ttf
+          weight: 700
+        - asset: fonts/ProductSans-BlackItalic.ttf
+          weight: 700
+          style: italic
+        - asset: fonts/ProductSans-Black.ttf
+          weight: 900
+        - asset: fonts/ProductSans-BlackItalic.ttf
+          weight: 900
+          style: italic

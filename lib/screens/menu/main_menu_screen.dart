@@ -393,7 +393,7 @@ class _BuildMenuOption extends StatelessWidget {
                 ),
                 Text(
                   title.toUpperCase(),
-                  style: ThemeTextStyle.textStyle16w600
+                  style: ThemeTextStyle.textStyle16w500
                       .copyWith(color: ColorPalette.white),
                   textAlign: TextAlign.center,
                 ),

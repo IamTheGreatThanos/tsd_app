@@ -77,7 +77,7 @@ void main() async {
                 backgroundColor: Colors.white,
               ),
               scaffoldBackgroundColor: ColorPalette.main,
-              fontFamily: 'Gilroy',
+              fontFamily: 'ProductSans',
               textSelectionTheme: const TextSelectionThemeData().copyWith(
                 cursorColor: ColorPalette.black,
               ),
