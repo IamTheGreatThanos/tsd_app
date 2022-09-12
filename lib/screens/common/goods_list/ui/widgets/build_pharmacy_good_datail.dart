@@ -36,7 +36,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: widget.good.id == widget.selectedProduct.id
+          color: (widget.good.status==1&&widget.good.scanCount!=null&&widget.good.scanCount!>0) 
               ? const Color.fromARGB(255, 183, 244, 215)
               : ColorPalette.white,
         ),

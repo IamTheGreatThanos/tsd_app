@@ -228,17 +228,18 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
           log("SCANNED SUCCESSFULLY");
         }
       } else {
-        if (selectedProduct.orderID == productDTO.orderID &&
-            selectedProduct.id != productDTO.id) {
-          emit(
-            const GoodsListScreenState.errorState(
-              message: 'Сначала отсканируйте выбранный товар до конца',
-            ),
-          );
-          changeToLoadedState(
-            orderId: orderId,
-          );
-        } else {
+        await savePharmacySelectedProductToCache(selectedProduct: productDTO);
+        // if (selectedProduct.orderID == productDTO.orderID &&
+        //     selectedProduct.id != productDTO.id) {
+        //   emit(
+        //     const GoodsListScreenState.errorState(
+        //       message: 'Сначала отсканируйте выбранный товар до конца',
+        //     ),
+        //   );
+        //   changeToLoadedState(
+        //     orderId: orderId,
+        //   );
+        // } else {
           if (productDTO.totalCount! <=
               (productDTO.scanCount ?? 0) +
                   (productDTO.defective ?? 0) +
@@ -262,7 +263,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
             );
             log("SCANNED SUCCESSFULLY");
           }
-        }
+        //}
       }
     } else {
       emit(
