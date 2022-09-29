@@ -179,6 +179,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                                         BlocProvider.of<GoodsListScreenCubit>(
                                           context,
                                         ).scannerBarCode(
+                                          productId: widget.good.id,
                                           scannedResult: widget.good.barcode!,
                                           orderId: widget.orderID,
                                           search: widget.searchController.text
@@ -189,7 +190,6 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                                           scanType: 1,
                                         );
                                         controller.clear();
-                                        focusNode.dispose();
                                         Navigator.pop(context);
                                       },
                                       searchController: widget.searchController,

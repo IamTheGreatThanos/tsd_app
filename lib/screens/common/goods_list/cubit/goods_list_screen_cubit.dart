@@ -118,7 +118,11 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         }
 
         log("Refund update success:::::");
-        await _getPharmacyProducts(orderId: orderId, search: search,refundSelectedProduct: product,);
+        await _getPharmacyProducts(
+          orderId: orderId,
+          search: search,
+          refundSelectedProduct: product,
+        );
       },
     );
   }
@@ -145,11 +149,12 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     if (refundSelectedProduct != null) {
       selectedProduct = refundSelectedProduct;
     }
-    final result =
-        await _getProductsPharmacyArrival.call(GetProductsPharmacyArrivalParams(
-      orderId: orderId,
-      search: search,
-    ));
+    final result = await _getProductsPharmacyArrival.call(
+      GetProductsPharmacyArrivalParams(
+        orderId: orderId,
+        search: search,
+      ),
+    );
     result.fold(
         (l) => emit(
               GoodsListScreenState.errorState(message: mapFailureToMessage(l)),
@@ -186,11 +191,56 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   ///Сканер бар кода
   Future<void> scannerBarCode({
     required String scannedResult,
+    int? productId,
     required int orderId,
     String? search,
     required int quantity,
     required int scanType,
     //scan type==0 is with barcode scan type ==1 is manual
+  }) async {
+    if (productId != null) {
+      if (checkProductIdFromUnscanned(productId) != null) {
+        scanBarCodeSuccess(
+          productDTO: checkProductIdFromUnscanned(productId)!,
+          orderId: orderId,
+          quantity: quantity,
+          scanType: scanType,
+        );
+      } else {
+        emit(
+          const GoodsListScreenState.errorState(
+            message: 'Нет такого товара в списке',
+          ),
+        );
+        changeToLoadedState(orderId: orderId);
+        log("SCANNED FAILED");
+      }
+    } else {
+      if (checkProductBarCodeFromUnscanned(scannedResult) != null) {
+        scanBarCodeSuccess(
+          productDTO: checkProductBarCodeFromUnscanned(scannedResult)!,
+          orderId: orderId,
+          quantity: quantity,
+          scanType: scanType,
+        );
+      } else {
+        emit(
+          const GoodsListScreenState.errorState(
+            message: 'Нет такого товара в списке',
+          ),
+        );
+        changeToLoadedState(orderId: orderId);
+        log("SCANNED FAILED");
+      }
+    }
+  }
+
+  Future<void> scanBarCodeSuccess({
+    required ProductDTO productDTO,
+    required int orderId,
+    String? search,
+    required int quantity,
+    required int scanType,
   }) async {
     //проверим есть ли выбранный продукт в кэше
     final ProductDTO selectedProduct =
@@ -198,81 +248,69 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       orderId: orderId,
     );
     log("${selectedProduct.id},  ${selectedProduct.orderID}");
-    if (checkProductBarCodeFromUnscanned(scannedResult) != null) {
-      final ProductDTO productDTO =
-          checkProductBarCodeFromUnscanned(scannedResult)!;
-      log("SELECTED PRODUCT ID: ${selectedProduct.id}");
-      if (selectedProduct.id == -1) {
-        await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-        if (productDTO.totalCount! <=
-            (productDTO.scanCount ?? 0) +
-                (productDTO.defective ?? 0) +
-                (productDTO.underachievement ?? 0) +
-                (productDTO.reSorting ?? 0) +
-                (productDTO.netovar ?? 0) +
-                (productDTO.overdue ?? 0)) {
-          emit(
-            const GoodsListScreenState.errorState(
-              message: 'Продукты уже отсканированы!',
-            ),
-          );
-          changeToLoadedState(orderId: orderId);
-        } else {
-          updatePharmacyProductById(
-            orderId: orderId,
-            search: search,
-            productId: productDTO.id,
-            scanCount:
-                scanType == 0 ? productDTO.scanCount! + quantity : quantity,
-          );
-          log("SCANNED SUCCESSFULLY");
-        }
+    log("SELECTED PRODUCT ID: ${selectedProduct.id}");
+    if (selectedProduct.id == -1) {
+      await savePharmacySelectedProductToCache(selectedProduct: productDTO);
+      if (productDTO.totalCount! <=
+          (productDTO.scanCount ?? 0) +
+              (productDTO.defective ?? 0) +
+              (productDTO.underachievement ?? 0) +
+              (productDTO.reSorting ?? 0) +
+              (productDTO.netovar ?? 0) +
+              (productDTO.overdue ?? 0)) {
+        emit(
+          const GoodsListScreenState.errorState(
+            message: 'Продукты уже отсканированы!',
+          ),
+        );
+        changeToLoadedState(orderId: orderId);
       } else {
-        await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-        // if (selectedProduct.orderID == productDTO.orderID &&
-        //     selectedProduct.id != productDTO.id) {
-        //   emit(
-        //     const GoodsListScreenState.errorState(
-        //       message: 'Сначала отсканируйте выбранный товар до конца',
-        //     ),
-        //   );
-        //   changeToLoadedState(
-        //     orderId: orderId,
-        //   );
-        // } else {
-          if (productDTO.totalCount! <=
-              (productDTO.scanCount ?? 0) +
-                  (productDTO.defective ?? 0) +
-                  (productDTO.underachievement ?? 0) +
-                  (productDTO.reSorting ?? 0) +
-                  (productDTO.netovar ?? 0) +
-                  (productDTO.overdue ?? 0)) {
-            emit(
-              const GoodsListScreenState.errorState(
-                message: 'Продукты уже отсканированы!',
-              ),
-            );
-            changeToLoadedState(orderId: orderId);
-          } else {
-            updatePharmacyProductById(
-              orderId: orderId,
-              search: search,
-              productId: productDTO.id,
-              scanCount:
-                  scanType == 0 ? productDTO.scanCount! + quantity : quantity,
-            );
-            log("SCANNED SUCCESSFULLY");
-          }
-        //}
+        updatePharmacyProductById(
+          orderId: orderId,
+          search: search,
+          productId: productDTO.id,
+          scanCount:
+              scanType == 0 ? productDTO.scanCount! + quantity : quantity,
+        );
+        log("SCANNED SUCCESSFULLY");
       }
     } else {
-      emit(
-        const GoodsListScreenState.errorState(
-          message: 'Нет такого товара в списке',
-        ),
-      );
-      changeToLoadedState(orderId: orderId);
-      log("SCANNED FAILED");
+      await savePharmacySelectedProductToCache(selectedProduct: productDTO);
+      // if (selectedProduct.orderID == productDTO.orderID &&
+      //     selectedProduct.id != productDTO.id) {
+      //   emit(
+      //     const GoodsListScreenState.errorState(
+      //       message: 'Сначала отсканируйте выбранный товар до конца',
+      //     ),
+      //   );
+      //   changeToLoadedState(
+      //     orderId: orderId,
+      //   );
+      // } else {
+      if (productDTO.totalCount! <=
+          (productDTO.scanCount ?? 0) +
+              (productDTO.defective ?? 0) +
+              (productDTO.underachievement ?? 0) +
+              (productDTO.reSorting ?? 0) +
+              (productDTO.netovar ?? 0) +
+              (productDTO.overdue ?? 0)) {
+        emit(
+          const GoodsListScreenState.errorState(
+            message: 'Продукты уже отсканированы!',
+          ),
+        );
+        changeToLoadedState(orderId: orderId);
+      } else {
+        updatePharmacyProductById(
+          orderId: orderId,
+          search: search,
+          productId: productDTO.id,
+          scanCount:
+              scanType == 0 ? productDTO.scanCount! + quantity : quantity,
+        );
+        log("SCANNED SUCCESSFULLY");
+      }
+      //}
     }
   }
 
@@ -340,6 +378,18 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   }
 
 // чекаем баркод товара из несканированных товаров
+
+  ProductDTO? checkProductIdFromUnscanned(int id) {
+    ProductDTO? product;
+    for (final ProductDTO productDTO in unscannedProducts) {
+      if (productDTO.id == id) {
+        product = productDTO;
+        break;
+      }
+    }
+    return product;
+  }
+
   ProductDTO? checkProductBarCodeFromUnscanned(String barcode) {
     ProductDTO? product;
     for (final ProductDTO productDTO in unscannedProducts) {

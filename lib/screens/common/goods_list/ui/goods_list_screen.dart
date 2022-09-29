@@ -298,7 +298,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                         for (int i = 0; i < unscannedProducts.length; i++) {
                           if (unscannedProducts[i].id == selectedProductId.id) {
                             _animateToIndex(
-                                i, MediaQuery.of(context).size.height * 0.5);
+                                i, MediaQuery.of(context).size.height * 0.4);
                           }
                         }
                       },
