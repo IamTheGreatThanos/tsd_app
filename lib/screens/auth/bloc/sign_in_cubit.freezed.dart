@@ -349,7 +349,7 @@ class _$_LoadedState implements _LoadedState {
 abstract class _LoadedState implements SignInState {
   const factory _LoadedState({required final User user}) = _$_LoadedState;
 
-  User get user => throw _privateConstructorUsedError;
+  User get user;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -611,7 +611,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements SignInState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

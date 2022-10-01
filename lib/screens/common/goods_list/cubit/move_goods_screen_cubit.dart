@@ -120,7 +120,7 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
     required String scannedResult,
     required int orderId,
     String? search,
-    required int quantity,
+    required double quantity,
     required int scanType,
     //scan type==0 is with barcode scan type ==1 is manual
   }) async {

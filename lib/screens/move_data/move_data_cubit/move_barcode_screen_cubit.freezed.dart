@@ -470,7 +470,7 @@ abstract class _LoadedState implements MoveBarcodeScreenState {
   const factory _LoadedState({required final ProductDTO scannedProduct}) =
       _$_LoadedState;
 
-  ProductDTO get scannedProduct => throw _privateConstructorUsedError;
+  ProductDTO get scannedProduct;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -616,7 +616,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements MoveBarcodeScreenState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

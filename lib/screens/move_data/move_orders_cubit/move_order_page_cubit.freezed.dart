@@ -465,7 +465,7 @@ abstract class _LoadedState implements MoveOrderPageState {
   const factory _LoadedState({required final List<MoveDataDTO> orders}) =
       _$_LoadedState;
 
-  List<MoveDataDTO> get orders => throw _privateConstructorUsedError;
+  List<MoveDataDTO> get orders;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -611,7 +611,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements MoveOrderPageState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

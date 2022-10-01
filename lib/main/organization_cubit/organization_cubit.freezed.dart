@@ -466,7 +466,7 @@ abstract class _LoadedState implements OrganizationState {
   const factory _LoadedState(
       {required final List<CounteragentDTO> organizations}) = _$_LoadedState;
 
-  List<CounteragentDTO> get organizations => throw _privateConstructorUsedError;
+  List<CounteragentDTO> get organizations;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -612,7 +612,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements OrganizationState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

@@ -273,7 +273,9 @@ class _$_RefundDataDTO implements _RefundDataDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RefundDataDTOToJson(this);
+    return _$$_RefundDataDTOToJson(
+      this,
+    );
   }
 }
 
@@ -292,27 +294,27 @@ abstract class _RefundDataDTO implements RefundDataDTO {
       _$_RefundDataDTO.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
   @JsonKey(name: 'sender_id')
-  int? get senderId => throw _privateConstructorUsedError;
+  int? get senderId;
   @override
   @JsonKey(name: 'from_counteragent_id')
-  int? get fromCounteragentId => throw _privateConstructorUsedError;
+  int? get fromCounteragentId;
   @override
   @JsonKey(name: 'organization_id')
-  int? get organizationId => throw _privateConstructorUsedError;
+  int? get organizationId;
   @override
   @JsonKey(name: 'counteragent_id')
-  int? get counteragentId => throw _privateConstructorUsedError;
+  int? get counteragentId;
   @override
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String? get updatedAt => throw _privateConstructorUsedError;
+  String? get updatedAt;
   @override
-  int? get status => throw _privateConstructorUsedError;
+  int? get status;
   @override
   @JsonKey(ignore: true)
   _$$_RefundDataDTOCopyWith<_$_RefundDataDTO> get copyWith =>

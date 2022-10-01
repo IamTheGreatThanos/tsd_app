@@ -32,7 +32,7 @@ mixin _$ProductDTO {
   @JsonKey(name: 'total_count')
   int? get totalCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'scan_count')
-  int? get scanCount => throw _privateConstructorUsedError;
+  double? get scanCount => throw _privateConstructorUsedError;
   String? get producer => throw _privateConstructorUsedError;
   String? get series => throw _privateConstructorUsedError;
   int? get defective => throw _privateConstructorUsedError;
@@ -70,7 +70,7 @@ abstract class $ProductDTOCopyWith<$Res> {
       String? barcode,
       int? status,
       @JsonKey(name: 'total_count') int? totalCount,
-      @JsonKey(name: 'scan_count') int? scanCount,
+      @JsonKey(name: 'scan_count') double? scanCount,
       String? producer,
       String? series,
       int? defective,
@@ -155,7 +155,7 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
       scanCount: scanCount == freezed
           ? _value.scanCount
           : scanCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       producer: producer == freezed
           ? _value.producer
           : producer // ignore: cast_nullable_to_non_nullable
@@ -228,7 +228,7 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       String? barcode,
       int? status,
       @JsonKey(name: 'total_count') int? totalCount,
-      @JsonKey(name: 'scan_count') int? scanCount,
+      @JsonKey(name: 'scan_count') double? scanCount,
       String? producer,
       String? series,
       int? defective,
@@ -315,7 +315,7 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
       scanCount: scanCount == freezed
           ? _value.scanCount
           : scanCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       producer: producer == freezed
           ? _value.producer
           : producer // ignore: cast_nullable_to_non_nullable
@@ -423,7 +423,7 @@ class _$_ProductDTO implements _ProductDTO {
   final int? totalCount;
   @override
   @JsonKey(name: 'scan_count')
-  final int? scanCount;
+  final double? scanCount;
   @override
   final String? producer;
   @override
@@ -526,7 +526,9 @@ class _$_ProductDTO implements _ProductDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProductDTOToJson(this);
+    return _$$_ProductDTOToJson(
+      this,
+    );
   }
 }
 
@@ -540,7 +542,7 @@ abstract class _ProductDTO implements ProductDTO {
       final String? barcode,
       final int? status,
       @JsonKey(name: 'total_count') final int? totalCount,
-      @JsonKey(name: 'scan_count') final int? scanCount,
+      @JsonKey(name: 'scan_count') final double? scanCount,
       final String? producer,
       final String? series,
       final int? defective,
@@ -559,56 +561,56 @@ abstract class _ProductDTO implements ProductDTO {
       _$_ProductDTO.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
   @JsonKey(name: 'arrival_pharmacy_id')
-  int? get arrivalPharmacyId => throw _privateConstructorUsedError;
+  int? get arrivalPharmacyId;
   @override
   @JsonKey(name: 'moving_id')
-  int? get movingId => throw _privateConstructorUsedError;
+  int? get movingId;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get image => throw _privateConstructorUsedError;
+  String? get image;
   @override
-  String? get barcode => throw _privateConstructorUsedError;
+  String? get barcode;
   @override
-  int? get status => throw _privateConstructorUsedError;
+  int? get status;
   @override
   @JsonKey(name: 'total_count')
-  int? get totalCount => throw _privateConstructorUsedError;
+  int? get totalCount;
   @override
   @JsonKey(name: 'scan_count')
-  int? get scanCount => throw _privateConstructorUsedError;
+  double? get scanCount;
   @override
-  String? get producer => throw _privateConstructorUsedError;
+  String? get producer;
   @override
-  String? get series => throw _privateConstructorUsedError;
+  String? get series;
   @override
-  int? get defective => throw _privateConstructorUsedError;
+  int? get defective;
   @override
-  int? get surplus => throw _privateConstructorUsedError;
+  int? get surplus;
   @override
-  int? get underachievement => throw _privateConstructorUsedError;
+  int? get underachievement;
   @override
   @JsonKey(name: 're_sorting')
-  int? get reSorting => throw _privateConstructorUsedError;
+  int? get reSorting;
   @override
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String? get updatedAt => throw _privateConstructorUsedError;
+  String? get updatedAt;
   @override
-  bool? get isReady => throw _privateConstructorUsedError;
+  bool? get isReady;
   @override
-  int? get orderID => throw _privateConstructorUsedError;
+  int? get orderID;
   @override
-  int? get overdue => throw _privateConstructorUsedError;
+  int? get overdue;
   @override
-  int? get netovar => throw _privateConstructorUsedError;
+  int? get netovar;
   @override
-  int? get refund => throw _privateConstructorUsedError;
+  int? get refund;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDTOCopyWith<_$_ProductDTO> get copyWith =>

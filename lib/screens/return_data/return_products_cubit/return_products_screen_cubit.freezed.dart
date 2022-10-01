@@ -552,9 +552,9 @@ abstract class _LoadedState implements ReturnProductsScreenState {
       required final RefundDataDTO refundDataDTO,
       required final bool isFinishable}) = _$_LoadedState;
 
-  List<ProductDTO> get products => throw _privateConstructorUsedError;
-  RefundDataDTO get refundDataDTO => throw _privateConstructorUsedError;
-  bool get isFinishable => throw _privateConstructorUsedError;
+  List<ProductDTO> get products;
+  RefundDataDTO get refundDataDTO;
+  bool get isFinishable;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -841,7 +841,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements ReturnProductsScreenState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

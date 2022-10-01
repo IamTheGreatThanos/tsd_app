@@ -16,7 +16,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       barcode: json['barcode'] as String?,
       status: json['status'] as int?,
       totalCount: json['total_count'] as int?,
-      scanCount: json['scan_count'] as int?,
+      scanCount: (json['scan_count'] as num?)?.toDouble(),
       producer: json['producer'] as String?,
       series: json['series'] as String?,
       defective: json['defective'] as int?,

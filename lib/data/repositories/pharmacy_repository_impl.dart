@@ -98,7 +98,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
   Future<Either<Failure, ProductDTO>> updatePharmacyProductById({
     required int productId,
     String? status,
-    int? scanCount,
+    double? scanCount,
     int? defective,
     int? surplus,
     int? underachievement,

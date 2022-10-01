@@ -653,7 +653,9 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PharmacyOrderDTOToJson(this);
+    return _$$_PharmacyOrderDTOToJson(
+      this,
+    );
   }
 }
 
@@ -690,71 +692,71 @@ abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
       _$_PharmacyOrderDTO.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
   @JsonKey(name: 'user_id')
-  int? get userId => throw _privateConstructorUsedError;
+  int? get userId;
   @override
   @JsonKey(name: 'driver_id')
-  int? get driverId => throw _privateConstructorUsedError;
+  int? get driverId;
   @override
   @JsonKey(name: 'sender_id')
-  int? get senderId => throw _privateConstructorUsedError;
+  int? get senderId;
   @override
   @JsonKey(name: 'recipient_id')
-  int? get recipientId => throw _privateConstructorUsedError;
+  int? get recipientId;
   @override
-  int? get status => throw _privateConstructorUsedError;
+  int? get status;
   @override
-  String? get number => throw _privateConstructorUsedError;
+  String? get number;
   @override
-  int? get container => throw _privateConstructorUsedError;
+  int? get container;
   @override
   @JsonKey(name: 'departure_time')
-  String? get departureTime => throw _privateConstructorUsedError;
+  String? get departureTime;
   @override
   @JsonKey(name: 'from_address')
-  String? get fromAddress => throw _privateConstructorUsedError;
+  String? get fromAddress;
   @override
   @JsonKey(name: 'from_city_name')
-  String? get fromCityName => throw _privateConstructorUsedError;
+  String? get fromCityName;
   @override
   @JsonKey(name: 'to_address')
-  String? get toAddress => throw _privateConstructorUsedError;
+  String? get toAddress;
   @override
   @JsonKey(name: 'to_city_name')
-  String? get toCityName => throw _privateConstructorUsedError;
+  String? get toCityName;
   @override
-  String? get amount => throw _privateConstructorUsedError;
+  String? get amount;
   @override // int? entrance
   @JsonKey(name: 'incoming_number')
-  String? get incomingNumber => throw _privateConstructorUsedError;
+  String? get incomingNumber;
   @override
   @JsonKey(name: 'incoming_date')
-  String? get incomingDate => throw _privateConstructorUsedError;
+  String? get incomingDate;
   @override
-  String? get bin => throw _privateConstructorUsedError;
+  String? get bin;
   @override
   @JsonKey(name: 'invoice_date')
-  String? get invoiceDate => throw _privateConstructorUsedError;
+  String? get invoiceDate;
   @override
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
   @override
-  User? get driver => throw _privateConstructorUsedError;
+  User? get driver;
   @override
-  CounteragentDTO? get sender => throw _privateConstructorUsedError;
+  CounteragentDTO? get sender;
   @override
-  CounteragentDTO? get recipient => throw _privateConstructorUsedError;
+  CounteragentDTO? get recipient;
   @override
   @JsonKey(name: 'total_status')
-  int? get totalStatus => throw _privateConstructorUsedError;
+  int? get totalStatus;
   @override
   @JsonKey(name: 'yandex_time')
-  String? get yandexTime => throw _privateConstructorUsedError;
+  String? get yandexTime;
   @override
   @JsonKey(name: 'refund_status')
-  int? get refundStatus => throw _privateConstructorUsedError;
+  int? get refundStatus;
   @override
   @JsonKey(ignore: true)
   _$$_PharmacyOrderDTOCopyWith<_$_PharmacyOrderDTO> get copyWith =>

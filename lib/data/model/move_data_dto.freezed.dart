@@ -301,7 +301,9 @@ class _$_MoveDataDTO implements _MoveDataDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MoveDataDTOToJson(this);
+    return _$$_MoveDataDTOToJson(
+      this,
+    );
   }
 }
 
@@ -322,29 +324,29 @@ abstract class _MoveDataDTO implements MoveDataDTO {
       _$_MoveDataDTO.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
   @JsonKey(name: 'sender_id')
-  int? get senderId => throw _privateConstructorUsedError;
+  int? get senderId;
   @override
   @JsonKey(name: 'recipient_id')
-  int? get recipientId => throw _privateConstructorUsedError;
+  int? get recipientId;
   @override
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String? get updatedAt => throw _privateConstructorUsedError;
+  String? get updatedAt;
   @override
-  int? get status => throw _privateConstructorUsedError;
+  int? get status;
   @override
-  String? get date => throw _privateConstructorUsedError;
+  String? get date;
   @override
-  String? get comment => throw _privateConstructorUsedError;
+  String? get comment;
   @override
-  int? get send => throw _privateConstructorUsedError;
+  int? get send;
   @override
-  int? get accept => throw _privateConstructorUsedError;
+  int? get accept;
   @override
   @JsonKey(ignore: true)
   _$$_MoveDataDTOCopyWith<_$_MoveDataDTO> get copyWith =>

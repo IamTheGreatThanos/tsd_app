@@ -560,9 +560,9 @@ abstract class _LoadedState implements MoveGoodsScreenState {
       required final List<ProductDTO> unscannedProducts,
       required final ProductDTO selectedProduct}) = _$_LoadedState;
 
-  List<ProductDTO> get scannedProducts => throw _privateConstructorUsedError;
-  List<ProductDTO> get unscannedProducts => throw _privateConstructorUsedError;
-  ProductDTO get selectedProduct => throw _privateConstructorUsedError;
+  List<ProductDTO> get scannedProducts;
+  List<ProductDTO> get unscannedProducts;
+  ProductDTO get selectedProduct;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -722,7 +722,7 @@ abstract class _SuccessScannedState implements MoveGoodsScreenState {
   const factory _SuccessScannedState({required final String message}) =
       _$_SuccessScannedState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_SuccessScannedStateCopyWith<_$_SuccessScannedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -880,7 +880,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements MoveGoodsScreenState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

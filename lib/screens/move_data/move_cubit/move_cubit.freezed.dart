@@ -498,8 +498,8 @@ abstract class _ActiveState implements MoveState {
       {required final MoveDataDTO moveDataDTO,
       required final List<ProductDTO> products}) = _$_ActiveState;
 
-  MoveDataDTO get moveDataDTO => throw _privateConstructorUsedError;
-  List<ProductDTO> get products => throw _privateConstructorUsedError;
+  MoveDataDTO get moveDataDTO;
+  List<ProductDTO> get products;
   @JsonKey(ignore: true)
   _$$_ActiveStateCopyWith<_$_ActiveState> get copyWith =>
       throw _privateConstructorUsedError;

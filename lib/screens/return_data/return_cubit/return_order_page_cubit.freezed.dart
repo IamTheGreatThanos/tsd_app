@@ -489,7 +489,7 @@ abstract class _LoadedState implements ReturnOrderPageState {
   const factory _LoadedState({required final List<PharmacyOrderDTO> orders}) =
       _$_LoadedState;
 
-  List<PharmacyOrderDTO> get orders => throw _privateConstructorUsedError;
+  List<PharmacyOrderDTO> get orders;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -647,7 +647,7 @@ abstract class _ByFilterState implements ReturnOrderPageState {
   const factory _ByFilterState({required final List<PharmacyOrderDTO> orders}) =
       _$_ByFilterState;
 
-  List<PharmacyOrderDTO> get orders => throw _privateConstructorUsedError;
+  List<PharmacyOrderDTO> get orders;
   @JsonKey(ignore: true)
   _$$_ByFilterStateCopyWith<_$_ByFilterState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -799,7 +799,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements ReturnOrderPageState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

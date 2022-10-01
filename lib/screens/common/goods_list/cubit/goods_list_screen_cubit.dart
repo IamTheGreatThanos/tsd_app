@@ -31,7 +31,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     required int orderId,
     required int productId,
     String? status,
-    int? scanCount,
+    double? scanCount,
     int? defective,
     int? surplus,
     int? underachievement,
@@ -194,7 +194,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     int? productId,
     required int orderId,
     String? search,
-    required int quantity,
+    required double quantity,
     required int scanType,
     //scan type==0 is with barcode scan type ==1 is manual
   }) async {
@@ -239,7 +239,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     required ProductDTO productDTO,
     required int orderId,
     String? search,
-    required int quantity,
+    required double quantity,
     required int scanType,
   }) async {
     //проверим есть ли выбранный продукт в кэше

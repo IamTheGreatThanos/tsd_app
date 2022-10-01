@@ -283,7 +283,9 @@ class _$_WarehouseOrderDTO implements _WarehouseOrderDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WarehouseOrderDTOToJson(this);
+    return _$$_WarehouseOrderDTOToJson(
+      this,
+    );
   }
 }
 
@@ -302,24 +304,24 @@ abstract class _WarehouseOrderDTO implements WarehouseOrderDTO {
       _$_WarehouseOrderDTO.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  int? get status => throw _privateConstructorUsedError;
+  int? get status;
   @override
-  String? get number => throw _privateConstructorUsedError;
+  String? get number;
   @override
   @JsonKey(name: 'counteragent_id')
-  int? get counteragentId => throw _privateConstructorUsedError;
+  int? get counteragentId;
   @override
   @JsonKey(name: 'user_id')
-  int? get userId => throw _privateConstructorUsedError;
+  int? get userId;
   @override
-  int? get container => throw _privateConstructorUsedError;
+  int? get container;
   @override
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
   @override
-  CounteragentDTO? get counteragent => throw _privateConstructorUsedError;
+  CounteragentDTO? get counteragent;
   @override
   @JsonKey(ignore: true)
   _$$_WarehouseOrderDTOCopyWith<_$_WarehouseOrderDTO> get copyWith =>

@@ -31,7 +31,7 @@ class UpdatePharmacyProductById
 class UpdatePharmacyProductByIdParams {
   final int productId;
   final String? status;
-  final int? scanCount;
+  final double? scanCount;
   final int? defective;
   final int? surplus;
   final int? underachievement;

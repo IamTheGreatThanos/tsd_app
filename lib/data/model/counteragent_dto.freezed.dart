@@ -144,7 +144,9 @@ class _$_CounteragentDTO implements _CounteragentDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CounteragentDTOToJson(this);
+    return _$$_CounteragentDTOToJson(
+      this,
+    );
   }
 }
 
@@ -156,9 +158,9 @@ abstract class _CounteragentDTO implements CounteragentDTO {
       _$_CounteragentDTO.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
   @JsonKey(ignore: true)
   _$$_CounteragentDTOCopyWith<_$_CounteragentDTO> get copyWith =>

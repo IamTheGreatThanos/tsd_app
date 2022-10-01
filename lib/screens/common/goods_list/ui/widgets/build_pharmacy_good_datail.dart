@@ -7,7 +7,7 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/constants.dart';
 
-class BuildPharmacyGoodDetails extends StatefulWidget {
+class BuildPharmacyGoodDetails extends StatelessWidget {
   final TextEditingController searchController;
   final int currentIndex;
   final ProductDTO good;
@@ -23,12 +23,6 @@ class BuildPharmacyGoodDetails extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<BuildPharmacyGoodDetails> createState() =>
-      _BuildPharmacyGoodDetailsState();
-}
-
-class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
@@ -36,7 +30,9 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: (widget.good.status==1&&widget.good.scanCount!=null&&widget.good.scanCount!>0) 
+          color: (good.status == 1 &&
+                  good.scanCount != null &&
+                  good.scanCount! > 0)
               ? const Color.fromARGB(255, 183, 244, 215)
               : ColorPalette.white,
         ),
@@ -46,7 +42,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
             Stack(
               children: [
                 Image.network(
-                  widget.good.image ??
+                  good.image ??
                       'https://teelindy.com/wp-content/uploads/2019/03/default_image.png',
                   width: 104,
                   height: 104,
@@ -72,7 +68,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                       ),
                     ),
                     child: Text(
-                      "${widget.good.totalCount} шт.",
+                      "${good.totalCount} шт.",
                       style: ThemeTextStyle.textStyle12w600.copyWith(
                         color: ColorPalette.red,
                       ),
@@ -93,7 +89,9 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${widget.good.scanCount!}x",
+                        (good.barcode?.length ?? 0) <= 2
+                            ? "${good.scanCount!}"
+                            : "${good.scanCount!.toStringAsFixed(0)}x",
                         style: ThemeTextStyle.textStyle14w400
                             .copyWith(color: ColorPalette.black),
                       ),
@@ -102,7 +100,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.good.barcode ?? 'null',
+                          good.barcode ?? 'null',
                           style: ThemeTextStyle.textStyle14w600
                               .copyWith(color: ColorPalette.grayText),
                         ),
@@ -113,7 +111,7 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                     height: 8,
                   ),
                   Text(
-                    '${widget.good.name}',
+                    '${good.name}',
                     overflow: TextOverflow.fade,
                     style: ThemeTextStyle.textStyle20w600,
                   ),
@@ -121,12 +119,12 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                     height: 8,
                   ),
                   Text(
-                    "${widget.good.producer}",
+                    "${good.producer}",
                     style: ThemeTextStyle.textStyle14w400.copyWith(
                       color: ColorPalette.grayText,
                     ),
                   ),
-                  if (widget.currentIndex == 0)
+                  if (currentIndex == 0)
                     Column(
                       children: [
                         const SizedBox(
@@ -138,63 +136,61 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           padding: EdgeInsets.zero,
-                          onPressed: (widget.good.totalCount! <=
-                                  widget.good.scanCount! +
-                                      widget.good.defective! +
-                                      widget.good.underachievement! +
-                                      widget.good.reSorting! +
-                                      widget.good.overdue! +
-                                      widget.good.netovar!)
+                          onPressed: (good.totalCount! <=
+                                  good.scanCount! +
+                                      good.defective! +
+                                      good.underachievement! +
+                                      good.reSorting! +
+                                      good.overdue! +
+                                      good.netovar!)
                               ? () {
                                   BlocProvider.of<GoodsListScreenCubit>(context)
                                       .updatePharmacyProductById(
                                     status: "2",
-                                    search:
-                                        widget.searchController.text.isNotEmpty
-                                            ? widget.searchController.text
-                                            : null,
-                                    orderId: widget.orderID,
-                                    productId: widget.good.id,
-                                    scanCount: widget.good.scanCount,
-                                    defective: widget.good.defective,
-                                    surplus: widget.good.surplus,
-                                    underachievement:
-                                        widget.good.underachievement,
-                                    reSorting: widget.good.reSorting,
-                                    overdue: widget.good.overdue,
-                                    netovar: widget.good.netovar,
+                                    search: searchController.text.isNotEmpty
+                                        ? searchController.text
+                                        : null,
+                                    orderId: orderID,
+                                    productId: good.id,
+                                    scanCount: good.scanCount?.toDouble(),
+                                    defective: good.defective,
+                                    surplus: good.surplus,
+                                    underachievement: good.underachievement,
+                                    reSorting: good.reSorting,
+                                    overdue: good.overdue,
+                                    netovar: good.netovar,
                                   );
                                   BlocProvider.of<GoodsListScreenCubit>(context)
                                       .savePharmacySelectedProductToCache(
                                     selectedProduct: ProductDTO(
                                       id: -1,
-                                      orderID: widget.orderID,
+                                      orderID: orderID,
                                     ),
                                   );
                                 }
                               : () {
                                   bottomSheet(
                                     SpecifyingNumberManually(
-                                      callback: (controller, focusNode) {
+                                      callback: (controller) {
+                                        Navigator.pop(context);
                                         BlocProvider.of<GoodsListScreenCubit>(
                                           context,
                                         ).scannerBarCode(
-                                          productId: widget.good.id,
-                                          scannedResult: widget.good.barcode!,
-                                          orderId: widget.orderID,
-                                          search: widget.searchController.text
-                                                  .isNotEmpty
-                                              ? widget.searchController.text
-                                              : null,
-                                          quantity: int.parse(controller.text),
+                                          productId: good.id,
+                                          scannedResult: good.barcode!,
+                                          orderId: orderID,
+                                          search:
+                                              searchController.text.isNotEmpty
+                                                  ? searchController.text
+                                                  : null,
+                                          quantity:
+                                              double.parse(controller.text),
                                           scanType: 1,
                                         );
                                         controller.clear();
-                                        Navigator.pop(context);
                                       },
-                                      searchController: widget.searchController,
-                                      productDTO: widget.good,
-                                      orderID: widget.orderID,
+                                      productDTO: good,
+                                      orderID: orderID,
                                     ),
                                     context,
                                   );
@@ -202,13 +198,13 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              (widget.good.totalCount! <=
-                                      widget.good.scanCount! +
-                                          widget.good.defective! +
-                                          widget.good.underachievement! +
-                                          widget.good.reSorting! +
-                                          widget.good.overdue! +
-                                          widget.good.netovar!)
+                              (good.totalCount! <=
+                                      good.scanCount! +
+                                          good.defective! +
+                                          good.underachievement! +
+                                          good.reSorting! +
+                                          good.overdue! +
+                                          good.netovar!)
                                   ? 'Завершить'
                                   : "Указать вручную",
                               style: const TextStyle(
@@ -230,22 +226,21 @@ class _BuildPharmacyGoodDetailsState extends State<BuildPharmacyGoodDetails> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Кол-во:   ${widget.good.totalCount}'.toUpperCase()),
-                      Text('Скан:   ${widget.good.scanCount}'.toUpperCase()),
-                      Text('Просрочен:   ${widget.good.overdue}'.toUpperCase()),
+                      Text('Кол-во:   ${good.totalCount}'.toUpperCase()),
+                      Text((good.barcode?.length ?? 0) <= 2
+                            ? "СКАН: ${good.scanCount!}"
+                            : "СКАН: ${good.scanCount!.toStringAsFixed(0)}",),
+                      Text('Просрочен:   ${good.overdue}'.toUpperCase()),
                       Text(
-                        'Нетоварный вид:   ${widget.good.netovar}'
-                            .toUpperCase(),
+                        'Нетоварный вид:   ${good.netovar}'.toUpperCase(),
                       ),
-                      Text('Брак:   ${widget.good.defective}'.toUpperCase()),
-                      Text('Излишка:   ${widget.good.surplus}'.toUpperCase()),
+                      Text('Брак:   ${good.defective}'.toUpperCase()),
+                      Text('Излишка:   ${good.surplus}'.toUpperCase()),
                       Text(
-                        'Недостача:   ${widget.good.underachievement}'
-                            .toUpperCase(),
+                        'Недостача:   ${good.underachievement}'.toUpperCase(),
                       ),
                       Text(
-                        'Пересорт серий:   ${widget.good.reSorting}'
-                            .toUpperCase(),
+                        'Пересорт серий:   ${good.reSorting}'.toUpperCase(),
                       ),
                     ],
                   )

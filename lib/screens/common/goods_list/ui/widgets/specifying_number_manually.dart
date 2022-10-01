@@ -1,3 +1,4 @@
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
@@ -6,15 +7,15 @@ import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class SpecifyingNumberManually extends StatefulWidget {
-  final TextEditingController searchController;
   final ProductDTO productDTO;
   final int orderID;
-  final Function(TextEditingController controller, FocusNode focusNode) callback;
+  final Function(TextEditingController controller)
+      callback;
   const SpecifyingNumberManually({
     Key? key,
     required this.productDTO,
     required this.orderID,
-    required this.searchController, required this.callback,
+    required this.callback,
   }) : super(key: key);
 
   @override
@@ -27,21 +28,12 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
   FocusNode focusNode = FocusNode();
 
   @override
-  void dispose() {
-    controller.clear();
-    controller.dispose();
-    focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.3,
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -78,10 +70,12 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const Spacer(),
+            const SizedBox(
+              height: 24,
+            ),
             TextField(
-              focusNode: focusNode,
-              keyboardType: TextInputType.number,
+            //  focusNode: focusNode,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               controller: controller,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -100,18 +94,49 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
               disabledColor: ColorPalette.orangeInactive,
               padding: EdgeInsets.zero,
               onPressed: () {
+                final bool isWeightGood =
+                    (widget.productDTO.barcode?.length ?? 0) <= 2;
                 if (controller.text.isEmpty) {
                   Navigator.pop(context);
                 } else {
-                  if (0>=int.parse(controller.text)||int.parse(controller.text) >
-                      widget.productDTO.totalCount!) {
+                  if (int.tryParse(controller.text) != null) {
+                    if (0 <= int.parse(controller.text) &&
+                        int.parse(controller.text) <=
+                            widget.productDTO.totalCount!) {
+                      widget.callback(controller);
+                    } else {
+                      Navigator.pop(context);
+                      buildErrorCustomSnackBar(
+                        context,
+                        'Укажите правильную количеству',
+                      );
+                    }
+                  } else if (double.tryParse(controller.text) != null) {
+                    if (0 <= double.parse(controller.text) &&
+                        double.parse(controller.text) <=
+                            widget.productDTO.totalCount!) {
+                      if (isWeightGood) {
+                        widget.callback(controller);
+                      } else {
+                        Navigator.pop(context);
+                        buildErrorCustomSnackBar(
+                          context,
+                          'Товар не относится к весовой категории',
+                        );
+                      }
+                    } else {
+                      Navigator.pop(context);
+                      buildErrorCustomSnackBar(
+                        context,
+                        'Укажите правильную количеству',
+                      );
+                    }
+                  } else {
                     Navigator.pop(context);
                     buildErrorCustomSnackBar(
                       context,
-                      'Укажите правильную количеству',
+                      'Ошибка',
                     );
-                  } else {
-                   widget.callback(controller,focusNode);
                   }
                 }
               },
@@ -124,7 +149,7 @@ class _SpecifyingNumberManuallyState extends State<SpecifyingNumberManually> {
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 50,
             ),
           ],
         ),

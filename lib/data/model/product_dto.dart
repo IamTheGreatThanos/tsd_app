@@ -18,7 +18,7 @@ class ProductDTO with _$ProductDTO {
     String? barcode,
     int? status,
     @JsonKey(name:'total_count') int? totalCount,
-    @JsonKey(name: 'scan_count') int? scanCount,
+    @JsonKey(name: 'scan_count') double? scanCount,
     String? producer,
     String? series,
     int? defective,

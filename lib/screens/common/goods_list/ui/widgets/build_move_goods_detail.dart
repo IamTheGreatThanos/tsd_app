@@ -172,7 +172,7 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                               : () {
                                   bottomSheet(
                                     SpecifyingNumberManually(
-                                      callback: (controller, focusNode) {
+                                      callback: (controller) {
                                         BlocProvider.of<MoveGoodsScreenCubit>(
                                           context,
                                         ).scannerBarCode(
@@ -183,14 +183,13 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                                                   .isNotEmpty
                                               ? widget.searchController.text
                                               : null,
-                                        quantity:  int.parse(controller.text),
+                                        quantity:  double.parse(controller.text),
                                         scanType: 1,
                                         );
                                         controller.clear();
-                                        focusNode.dispose();
+                                       // focusNode.dispose();
                                         Navigator.pop(context);
                                       },
-                                      searchController: widget.searchController,
                                       productDTO: widget.good,
                                       orderID: widget.orderID,
                                     ),

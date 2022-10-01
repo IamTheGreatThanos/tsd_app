@@ -22,6 +22,7 @@ import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class GoodsListScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
@@ -40,15 +41,6 @@ class GoodsListScreen extends StatefulWidget {
 }
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
-  final ScrollController _controller = ScrollController();
-
-  void _animateToIndex(int index, double height) {
-    _controller.animateTo(
-      index * height,
-      duration: const Duration(seconds: 2),
-      curve: Curves.linear,
-    );
-  }
 
   bool isFloatingButtonVisible = true;
   String _currentScan = '';
@@ -224,6 +216,23 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
               ),
               Expanded(
                 child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+                  listener: (context, state) {
+                    state.when(
+                      initialState: () {},
+                      loadingState: () {},
+                      successScannedState: (String message) {
+                        buildSuccessCustomSnackBar(context, message);
+                      },
+                      loadedState: (
+                        scannedProducts,
+                        unscannedProducts,
+                        selectedProductId,
+                      ) {},
+                      errorState: (String message) {
+                        buildErrorCustomSnackBar(context, message);
+                      },
+                    );
+                  },
                   builder: (context, state) {
                     return state.maybeWhen(
                       loadingState: () {
@@ -239,7 +248,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                         selectedProduct,
                       ) {
                         return _BuildBody(
-                          scrollController: _controller,
                           searchController: searchController,
                           orderStatus: widget.isFromPharmacyPage
                               ? widget.pharmacyOrder?.status ?? 0
@@ -283,30 +291,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                       },
                     );
                   },
-                  listener: (context, state) {
-                    state.when(
-                      initialState: () {},
-                      loadingState: () {},
-                      successScannedState: (String message) {
-                        buildSuccessCustomSnackBar(context, message);
-                      },
-                      loadedState: (
-                        scannedProducts,
-                        unscannedProducts,
-                        selectedProductId,
-                      ) {
-                        for (int i = 0; i < unscannedProducts.length; i++) {
-                          if (unscannedProducts[i].id == selectedProductId.id) {
-                            _animateToIndex(
-                                i, MediaQuery.of(context).size.height * 0.4);
-                          }
-                        }
-                      },
-                      errorState: (String message) {
-                        buildErrorCustomSnackBar(context, message);
-                      },
-                    );
-                  },
                 ),
               ),
             ],
@@ -318,7 +302,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
 }
 
 class _BuildBody extends StatefulWidget {
-  final ScrollController scrollController;
   final TextEditingController searchController;
   final int orderStatus;
   final int orderId;
@@ -339,7 +322,6 @@ class _BuildBody extends StatefulWidget {
     this.warehouseOrder,
     required this.isFromPharmacyPage,
     required this.searchController,
-    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -350,6 +332,20 @@ class _BuildBodyState extends State<_BuildBody> {
   int currentIndex = 0;
   RefreshController controller = RefreshController();
   int itemCount = 0;
+
+
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
+  final ScrollController _controller = ScrollController();
+  void _animateToIndex(int index, double height) {
+    _controller.animateTo(
+      index * height,
+      duration: const Duration(seconds: 2),
+      curve: Curves.linear,
+    );
+  }
+
   @override
   void initState() {
     itemCount = widget.unscannedProducts.length;
@@ -467,88 +463,112 @@ class _BuildBodyState extends State<_BuildBody> {
             ],
           ),
         ),
-        Expanded(
-          child: SmartRefresher(
-            onRefresh: () {
-              BlocProvider.of<GoodsListScreenCubit>(context)
-                  .getPharmacyProducts(orderId: widget.orderId);
-            },
-            controller: controller,
-            child: itemCount == 0
-                ? widget.orderStatus == 3
-                    ? ListView(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 100,
-                                  vertical: 16,
+        BlocListener<GoodsListScreenCubit, GoodsListScreenState>(
+          listener: (context, state) {
+            state.maybeWhen(
+              loadedState: (
+                scannedProducts,
+                unscannedProducts,
+                selectedProduct,
+              ) async {
+                for (int i = 0; i < unscannedProducts.length; i++) {
+                  if (unscannedProducts[i].id == selectedProduct.id) {
+                    _animateToIndex(i, 365);
+                  }
+                }
+              },
+              orElse: () {},
+            );
+          },
+          child: Expanded(
+            child: SmartRefresher(
+              onRefresh: () {
+                BlocProvider.of<GoodsListScreenCubit>(context)
+                    .getPharmacyProducts(orderId: widget.orderId);
+              },
+              controller: controller,
+              child: itemCount == 0
+                  ? widget.orderStatus == 3
+                      ? ListView(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.1,
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 100,
+                                    vertical: 16,
+                                  ),
+                                  child: Image.asset(
+                                    'assets/images/png/done_icon.png',
+                                  ),
                                 ),
-                                child: Image.asset(
-                                  'assets/images/png/done_icon.png',
+                                Text(
+                                  'Завершенный заказ!'.toUpperCase(),
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        )
+                      : ListView(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.1,
+                            ),
+                            Center(
+                              child:
+                                  Lottie.asset('assets/lotties/empty_box.json'),
+                            ),
+                          ],
+                        )
+                  : ListView.builder(
+                      controller: _controller,
+                      //shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                        left: 12.5,
+                        right: 12.5,
+                        top: 20,
+                      ),
+                      itemCount: currentIndex == 0
+                          ? widget.unscannedProducts.length
+                          : widget.scannedProducts.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (currentIndex == 0) {
+                              AppRouter.push(
+                                context,
+                                DefectScreen(
+                                  isFromPharmacyPage: true,
+                                  searchController: widget.searchController,
+                                  product: widget.unscannedProducts[index],
+                                  orderId: widget.orderId,
                                 ),
-                              ),
-                              Text(
-                                'Завершенный заказ!'.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    : ListView(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
+                              );
+                            }
+                          },
+                          child: SizedBox(
+                            height: 365,
+                            child: BuildPharmacyGoodDetails(
+                              searchController: widget.searchController,
+                              currentIndex: currentIndex,
+                              orderID: widget.orderId,
+                              good: currentIndex == 0
+                                  ? widget.unscannedProducts[index]
+                                  : widget.scannedProducts[index],
+                              selectedProduct: widget.selectedProduct,
+                            ),
                           ),
-                          Center(
-                            child:
-                                Lottie.asset('assets/lotties/empty_box.json'),
-                          ),
-                        ],
-                      )
-                : ListView.builder(
-                    controller: widget.scrollController,
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
-                    itemCount: currentIndex == 0
-                        ? widget.unscannedProducts.length
-                        : widget.scannedProducts.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (currentIndex == 0) {
-                            AppRouter.push(
-                              context,
-                              DefectScreen(
-                                isFromPharmacyPage: true,
-                                searchController: widget.searchController,
-                                product: widget.unscannedProducts[index],
-                                orderId: widget.orderId,
-                              ),
-                            );
-                          }
-                        },
-                        child: BuildPharmacyGoodDetails(
-                          searchController: widget.searchController,
-                          currentIndex: currentIndex,
-                          orderID: widget.orderId,
-                          good: currentIndex == 0
-                              ? widget.unscannedProducts[index]
-                              : widget.scannedProducts[index],
-                          selectedProduct: widget.selectedProduct,
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    ),
+            ),
           ),
         ),
         if (widget.unscannedProducts.isEmpty &&

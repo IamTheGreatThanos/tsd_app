@@ -772,8 +772,7 @@ abstract class _PharmacyHistoryState implements HistoryState {
           {required final List<PharmacyOrderDTO> pharmacyOrders}) =
       _$_PharmacyHistoryState;
 
-  List<PharmacyOrderDTO> get pharmacyOrders =>
-      throw _privateConstructorUsedError;
+  List<PharmacyOrderDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_PharmacyHistoryStateCopyWith<_$_PharmacyHistoryState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1008,8 +1007,7 @@ abstract class _PharmacyHistoryBySearchState implements HistoryState {
           {required final List<PharmacyOrderDTO> pharmacyOrders}) =
       _$_PharmacyHistoryBySearchState;
 
-  List<PharmacyOrderDTO> get pharmacyOrders =>
-      throw _privateConstructorUsedError;
+  List<PharmacyOrderDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_PharmacyHistoryBySearchStateCopyWith<_$_PharmacyHistoryBySearchState>
       get copyWith => throw _privateConstructorUsedError;
@@ -1242,8 +1240,7 @@ abstract class _WarehouseHistoryState implements HistoryState {
           {required final List<WarehouseOrderDTO> pharmacyOrders}) =
       _$_WarehouseHistoryState;
 
-  List<WarehouseOrderDTO> get pharmacyOrders =>
-      throw _privateConstructorUsedError;
+  List<WarehouseOrderDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_WarehouseHistoryStateCopyWith<_$_WarehouseHistoryState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1479,8 +1476,7 @@ abstract class _WarehouseHistoryBySearchState implements HistoryState {
           {required final List<WarehouseOrderDTO> warehouseOrders}) =
       _$_WarehouseHistoryBySearchState;
 
-  List<WarehouseOrderDTO> get warehouseOrders =>
-      throw _privateConstructorUsedError;
+  List<WarehouseOrderDTO> get warehouseOrders;
   @JsonKey(ignore: true)
   _$$_WarehouseHistoryBySearchStateCopyWith<_$_WarehouseHistoryBySearchState>
       get copyWith => throw _privateConstructorUsedError;
@@ -1712,7 +1708,7 @@ abstract class _MoveingHistoryState implements HistoryState {
           {required final List<MoveDataDTO> pharmacyOrders}) =
       _$_MoveingHistoryState;
 
-  List<MoveDataDTO> get pharmacyOrders => throw _privateConstructorUsedError;
+  List<MoveDataDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_MoveingHistoryStateCopyWith<_$_MoveingHistoryState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1947,7 +1943,7 @@ abstract class _MovingHistoryBySearchState implements HistoryState {
           {required final List<MoveDataDTO> pharmacyOrders}) =
       _$_MovingHistoryBySearchState;
 
-  List<MoveDataDTO> get pharmacyOrders => throw _privateConstructorUsedError;
+  List<MoveDataDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_MovingHistoryBySearchStateCopyWith<_$_MovingHistoryBySearchState>
       get copyWith => throw _privateConstructorUsedError;
@@ -2179,8 +2175,7 @@ abstract class _RefundHistoryState implements HistoryState {
           {required final List<PharmacyOrderDTO> pharmacyOrders}) =
       _$_RefundHistoryState;
 
-  List<PharmacyOrderDTO> get pharmacyOrders =>
-      throw _privateConstructorUsedError;
+  List<PharmacyOrderDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_RefundHistoryStateCopyWith<_$_RefundHistoryState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2415,7 +2410,7 @@ abstract class _RefundHistoryBySearchState implements HistoryState {
           {required final List<RefundDataDTO> pharmacyOrders}) =
       _$_RefundHistoryBySearchState;
 
-  List<RefundDataDTO> get pharmacyOrders => throw _privateConstructorUsedError;
+  List<RefundDataDTO> get pharmacyOrders;
   @JsonKey(ignore: true)
   _$$_RefundHistoryBySearchStateCopyWith<_$_RefundHistoryBySearchState>
       get copyWith => throw _privateConstructorUsedError;
@@ -2833,7 +2828,7 @@ class _$_ErrorState implements _ErrorState {
 abstract class _ErrorState implements HistoryState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;

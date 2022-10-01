@@ -251,7 +251,9 @@ class _$_User implements _User {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserToJson(this);
+    return _$$_UserToJson(
+      this,
+    );
   }
 }
 
@@ -269,21 +271,21 @@ abstract class _User implements User {
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  String? get accessToken => throw _privateConstructorUsedError;
+  String? get accessToken;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get login => throw _privateConstructorUsedError;
+  String? get login;
   @override
-  String? get password => throw _privateConstructorUsedError;
+  String? get password;
   @override
-  String? get phone => throw _privateConstructorUsedError;
+  String? get phone;
   @override
-  int? get role => throw _privateConstructorUsedError;
+  int? get role;
   @override
-  String? get avatar => throw _privateConstructorUsedError;
+  String? get avatar;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
