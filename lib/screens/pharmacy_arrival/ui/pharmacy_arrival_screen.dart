@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'dart:io' show Platform;
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -650,37 +652,111 @@ class _BuildOrderData extends StatelessWidget {
               height: 12,
             ),
             if (orderData.totalStatus == 3 || orderData.totalStatus == 4)
-              GestureDetector(
-                onTap: () {
-                  BlocProvider.of<SignatureScreenCubit>(context)
-                      .updatePharmacyOrderStatus(
-                    orderId: orderData.id,
-                    status: 2,
-                  );
-                  context.read<FillInvoiceVModel>().init();
-                  AppRouter.push(
-                    context,
-                    GoodsListScreen(
-                      isFromPharmacyPage: true,
-                      pharmacyOrder: orderData,
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      BlocProvider.of<SignatureScreenCubit>(context)
+                          .updatePharmacyOrderStatus(
+                        orderId: orderData.id,
+                        status: 2,
+                      );
+                      context.read<FillInvoiceVModel>().init();
+                      AppRouter.push(
+                        context,
+                        GoodsListScreen(
+                          isFromPharmacyPage: true,
+                          pharmacyOrder: orderData,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 44,
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      decoration: BoxDecoration(
+                        color: ColorPalette.orange,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Оприходовать",
+                          style: ThemeTextStyle.textStyle14w600
+                              .copyWith(color: ColorPalette.white),
+                        ),
+                      ),
                     ),
-                  );
-                },
-                child: Container(
-                  height: 44,
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  decoration: BoxDecoration(
-                    color: ColorPalette.orange,
-                    borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Center(
-                    child: Text(
-                      "Оприходовать",
-                      style: ThemeTextStyle.textStyle14w600
-                          .copyWith(color: ColorPalette.white),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      const String path = 'https://mgovsign.page.link';
+                      String platformPath = '';
+                      String platformPathLabel = '';
+                      if (Platform.isAndroid) {
+                        platformPath = 'kz.mobile.mgov';
+                        platformPathLabel = 'apn';
+                      } else if (Platform.isIOS) {
+                        platformPath = '1476128386&ibi=kz.egov.mobile';
+                        platformPathLabel = 'isi';
+                      }
+                      final String ourEncodedUrl = Uri.encodeQueryComponent(
+                        "https://185.125.88.129/api/ecp/first",
+                      );
+                      // log(ourEncodedUrl,name:"ENCODED DATA");
+                      await _launchUrl(
+                        Uri.parse(
+                          "$path/?link=$ourEncodedUrl&$platformPathLabel=$platformPath",
+                        ),
+                      );
+                      // _launchUrl(
+                      //   Uri(
+                      //     path: path,
+                      //     queryParameters: {
+                      //        'link': 'http://185.125.88.129/api/ecp/first',
+                      //        platformPathLabel: platformPath,
+                      //     },
+                      //   ),
+                      // );
+                      // AppRouter.push(
+                      //   context,
+                      //   FillInvoiceScreen(
+                      //     isFromPharmacyPage: true,
+                      //   ),
+                      // );
+
+                      // BlocProvider.of<SignatureScreenCubit>(context)
+                      //     .updatePharmacyOrderStatus(
+                      //   orderId: orderData.id,
+                      //   status: 2,
+                      // );
+                      // context.read<FillInvoiceVModel>().init();
+                      // AppRouter.push(
+                      //   context,
+                      //   GoodsListScreen(
+                      //     isFromPharmacyPage: true,
+                      //     pharmacyOrder: orderData,
+                      //   ),
+                      // );
+                    },
+                    child: Container(
+                      height: 44,
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      decoration: BoxDecoration(
+                        color: ColorPalette.orange,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Подписать",
+                          style: ThemeTextStyle.textStyle14w600
+                              .copyWith(color: ColorPalette.white),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               )
             else
               const SizedBox(),
@@ -691,7 +767,8 @@ class _BuildOrderData extends StatelessWidget {
   }
 
   Future<void> _launchUrl(Uri _url) async {
-    if (!await launchUrl(_url)) throw 'Could not launch $_url';
+    if (!await launchUrl(_url, mode: LaunchMode.externalApplication))
+      throw 'Could not launch $_url';
   }
 }
 

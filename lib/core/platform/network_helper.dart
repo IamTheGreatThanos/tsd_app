@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-const SERVER_ = 'http://185.129.50.172:8885';
-const SERVER_IP = '185.129.50.172:8885';
+const SERVER_ = 'http://185.125.88.129';
+const SERVER_IP = '185.129.50.172:8085';
 const SERVER_PATH = '/api';
 const SERVER_AUTH = '/api/';
 const SERVER_LOGIN = '/login';
