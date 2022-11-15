@@ -13,6 +13,7 @@ import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_generated_qr_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
@@ -691,54 +692,12 @@ class _BuildOrderData extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      const String path = 'https://mgovsign.page.link';
-                      String platformPath = '';
-                      String platformPathLabel = '';
-                      if (Platform.isAndroid) {
-                        platformPath = 'kz.mobile.mgov';
-                        platformPathLabel = 'apn';
-                      } else if (Platform.isIOS) {
-                        platformPath = '1476128386&ibi=kz.egov.mobile';
-                        platformPathLabel = 'isi';
-                      }
-                      final String ourEncodedUrl = Uri.encodeQueryComponent(
-                        "https://185.125.88.129/api/ecp/first",
+                      AppRouter.push(
+                        context,
+                         PharmacyGeneratedQrScreen(
+                          order: orderData,
+                         ),
                       );
-                      // log(ourEncodedUrl,name:"ENCODED DATA");
-                      await _launchUrl(
-                        Uri.parse(
-                          "$path/?link=$ourEncodedUrl&$platformPathLabel=$platformPath",
-                        ),
-                      );
-                      // _launchUrl(
-                      //   Uri(
-                      //     path: path,
-                      //     queryParameters: {
-                      //        'link': 'http://185.125.88.129/api/ecp/first',
-                      //        platformPathLabel: platformPath,
-                      //     },
-                      //   ),
-                      // );
-                      // AppRouter.push(
-                      //   context,
-                      //   FillInvoiceScreen(
-                      //     isFromPharmacyPage: true,
-                      //   ),
-                      // );
-
-                      // BlocProvider.of<SignatureScreenCubit>(context)
-                      //     .updatePharmacyOrderStatus(
-                      //   orderId: orderData.id,
-                      //   status: 2,
-                      // );
-                      // context.read<FillInvoiceVModel>().init();
-                      // AppRouter.push(
-                      //   context,
-                      //   GoodsListScreen(
-                      //     isFromPharmacyPage: true,
-                      //     pharmacyOrder: orderData,
-                      //   ),
-                      // );
                     },
                     child: Container(
                       height: 44,
@@ -769,6 +728,32 @@ class _BuildOrderData extends StatelessWidget {
   Future<void> _launchUrl(Uri _url) async {
     if (!await launchUrl(_url, mode: LaunchMode.externalApplication))
       throw 'Could not launch $_url';
+  }
+
+  ///
+  ///CROSS SIGNING METHOD
+  ///
+  Future<void> crossSigning() async {
+    const String path = 'https://mgovsign.page.link';
+    String platformPath = '';
+    String platformPathLabel = '';
+    if (Platform.isAndroid) {
+      platformPath = 'kz.mobile.mgov';
+      platformPathLabel = 'apn';
+    } else if (Platform.isIOS) {
+      platformPath = '1476128386&ibi=kz.egov.mobile';
+      platformPathLabel = 'isi';
+    }
+    final String ourEncodedUrl = Uri.encodeQueryComponent(
+      "https://tsd-aqnietgroup.kz/api/ecp/second",
+    );
+    // log(ourEncodedUrl,name:"ENCODED DATA");
+    log('$path/?link=https://tsd-aqnietgroup.kz/api/ecp/first/&$platformPathLabel=$platformPath');
+    await _launchUrl(
+      Uri.parse(
+        "$path/?link=https://tsd-aqnietgroup.kz/api/ecp/first/&$platformPathLabel=$platformPath",
+      ),
+    );
   }
 }
 
