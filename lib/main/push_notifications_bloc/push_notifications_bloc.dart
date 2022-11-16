@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'push_notifications_event.dart';
 part 'push_notifications_state.dart';
 
+// ignore: constant_identifier_names
 const String _TAG = 'PushNotificationsBloc';
 
 class PushNotificationsBloc

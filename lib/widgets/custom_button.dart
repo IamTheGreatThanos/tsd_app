@@ -41,12 +41,12 @@ class _CustomButtonState extends State<CustomButton> {
 
 ButtonStyle whiteButtonStyle() {
   return ElevatedButton.styleFrom(
-    onPrimary: Colors.black,
-    primary: Colors.white,
+    foregroundColor: Colors.black,
+    backgroundColor: Colors.white,
     shadowColor: Colors.black,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(7),
-    ), 
+    ),
     // shadowColor: MaterialStateProperty.all<Color>(
     //   Colors.black,
     //   // const Color.fromRGBO(255, 255, 255, 0),
@@ -67,8 +67,7 @@ ButtonStyle blackButtonStyle() {
     shadowColor: MaterialStateProperty.all<Color>(
       const Color.fromRGBO(255, 255, 255, 1),
     ),
-    backgroundColor:
-        MaterialStateProperty.all<Color>(const Color.fromRGBO(0, 0, 0, 1.0)),
+    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(0, 0, 0, 1.0)),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -80,8 +79,8 @@ ButtonStyle blackButtonStyle() {
 
 ButtonStyle pinkButtonStyle() {
   return ElevatedButton.styleFrom(
-    onPrimary: Colors.white,
-    primary: ColorPalette.orange,
+    foregroundColor: Colors.white,
+    backgroundColor: ColorPalette.orange,
     shadowColor: Colors.black,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12),
@@ -94,8 +93,8 @@ ButtonStyle gray50ButtonStyle({
   double elevation = 1,
 }) {
   return ElevatedButton.styleFrom(
-    onPrimary: Colors.white,
-    primary: color,
+    foregroundColor: Colors.white,
+    backgroundColor: color,
     elevation: elevation,
     shadowColor: Colors.black,
     shape: RoundedRectangleBorder(
@@ -109,8 +108,8 @@ ButtonStyle gray100ButtonStyle({
   double elevation = 1,
 }) {
   return ElevatedButton.styleFrom(
-    onPrimary: Colors.white,
-    primary: color,
+    foregroundColor: Colors.white,
+    backgroundColor: color,
     elevation: elevation,
     shadowColor: Colors.black,
     shape: RoundedRectangleBorder(

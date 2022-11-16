@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -44,9 +43,8 @@ class _DatePickerState extends State<DatePicker> {
                 ),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
-                    primary: Colors.black,
-                    textStyle: ThemeTextStyle.textStyle14w600
-                        .copyWith(color: Colors.black),
+                    foregroundColor: Colors.black,
+                    textStyle: ThemeTextStyle.textStyle14w600.copyWith(color: Colors.black),
                   ),
                 ),
               ),
@@ -121,16 +119,13 @@ class _DatePickerState extends State<DatePicker> {
                                       primary: ColorPalette.greyDark,
                                     ),
                                     textTheme: TextTheme(
-                                      headline5:
-                                          ThemeTextStyle.textTitleDella24w400,
+                                      headline5: ThemeTextStyle.textTitleDella24w400,
                                       overline: ThemeTextStyle.textStyle16w600,
                                     ),
                                     textButtonTheme: TextButtonThemeData(
                                       style: TextButton.styleFrom(
-                                        primary: Colors.black,
-                                        textStyle: ThemeTextStyle
-                                            .textStyle14w600
-                                            .copyWith(
+                                        foregroundColor: Colors.black,
+                                        textStyle: ThemeTextStyle.textStyle14w600.copyWith(
                                           color: Colors.black,
                                         ),
                                       ),
@@ -141,8 +136,7 @@ class _DatePickerState extends State<DatePicker> {
                               },
                             );
                             if (date != null) {
-                              widget.controller.text =
-                                  DateFormat("yyyy-MM-dd").format(date);
+                              widget.controller.text = DateFormat("yyyy-MM-dd").format(date);
                             }
                             setState(() {});
                           },

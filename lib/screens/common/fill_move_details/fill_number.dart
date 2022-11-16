@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class FillNumberScreen extends StatefulWidget {
@@ -90,16 +88,14 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                 children: [
                                   Text(
                                     productInfo.name ?? "No data",
-                                    style: ThemeTextStyle.textTitleDella20w400
-                                        .copyWith(color: ColorPalette.black),
+                                    style: ThemeTextStyle.textTitleDella20w400.copyWith(color: ColorPalette.black),
                                   ),
                                   const SizedBox(
                                     height: 8,
                                   ),
                                   Text(
                                     productInfo.producer ?? "No data",
-                                    style: ThemeTextStyle.textStyle14w400
-                                        .copyWith(color: ColorPalette.grayText),
+                                    style: ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grayText),
                                   ),
                                 ],
                               ),
@@ -128,8 +124,7 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           children: [
                             Text(
                               "Количество",
-                              style: ThemeTextStyle.textStyle14w600
-                                  .copyWith(color: ColorPalette.white),
+                              style: ThemeTextStyle.textStyle14w600.copyWith(color: ColorPalette.white),
                             ),
                             const SizedBox(
                               height: 16,
@@ -147,8 +142,7 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                             quantityController.text = "";
                                           } else {
                                             count--;
-                                            quantityController.text =
-                                                count.toString();
+                                            quantityController.text = count.toString();
                                           }
                                         }
                                       });
@@ -165,16 +159,13 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                 ),
                                 Expanded(
                                   child: TextField(
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                     controller: quantityController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: count.toString(),
-                                      hintStyle: ThemeTextStyle.textStyle48w300
-                                          .copyWith(color: ColorPalette.black),
+                                      hintStyle: ThemeTextStyle.textStyle48w300.copyWith(color: ColorPalette.black),
                                     ),
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
@@ -185,8 +176,7 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                       }
                                       setState(() {});
                                     },
-                                    style: ThemeTextStyle.textStyle48w300
-                                        .copyWith(color: ColorPalette.black),
+                                    style: ThemeTextStyle.textStyle48w300.copyWith(color: ColorPalette.black),
                                   ),
                                 ),
                                 const SizedBox(
@@ -198,8 +188,7 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                       setState(() {
                                         //if (count < widget.moveData.totalCount!) {
                                         count++;
-                                        quantityController.text =
-                                            count.toString();
+                                        quantityController.text = count.toString();
                                         //}
                                       });
                                     },
@@ -295,8 +284,7 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           child: Center(
                             child: Text(
                               widget.change ? "Изменить" : "Завершить",
-                              style: ThemeTextStyle.textStyle14w600
-                                  .copyWith(color: ColorPalette.white),
+                              style: ThemeTextStyle.textStyle14w600.copyWith(color: ColorPalette.white),
                             ),
                           ),
                         ),

@@ -8,9 +8,11 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 class MoveGoodsBarcodeScreen extends StatefulWidget {
   final int orderId;
   final TextEditingController searchController;
-  const MoveGoodsBarcodeScreen(
-      {Key? key, required this.orderId, required this.searchController})
-      : super(key: key);
+  const MoveGoodsBarcodeScreen({
+    Key? key,
+    required this.orderId,
+    required this.searchController,
+  }) : super(key: key);
 
   @override
   State<MoveGoodsBarcodeScreen> createState() => _MoveGoodsBarcodeScreenState();
@@ -56,15 +58,12 @@ class _MoveGoodsBarcodeScreenState extends State<MoveGoodsBarcodeScreen> {
                 height: (MediaQuery.of(context).size.width - 26) / 1.5,
                 width: MediaQuery.of(context).size.width - 26,
                 callback: (barcode) async {
-                  await BlocProvider.of<MoveGoodsScreenCubit>(context)
-                      .scannerBarCode(
-                  scannedResult:  barcode,
-                 orderId:  widget.orderId,
-                 search:   widget.searchController.text.isNotEmpty
-                        ? widget.searchController.text
-                        : null,
-                  quantity:  1,
-                  scanType: 0,
+                  await BlocProvider.of<MoveGoodsScreenCubit>(context).scannerBarCode(
+                    scannedResult: barcode,
+                    orderId: widget.orderId,
+                    search: widget.searchController.text.isNotEmpty ? widget.searchController.text : null,
+                    quantity: 1,
+                    scanType: 0,
                   );
                 },
               );

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-
-class ThemeTextStyle {
+mixin ThemeTextStyle {
   static const textStyle24w600 = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
@@ -64,25 +62,25 @@ class ThemeTextStyle {
     color: Colors.black,
   );
 
-  static TextStyle textTitleDella16w400 = TextStyle(
+  static TextStyle textTitleDella16w400 = const TextStyle(
     fontFamily: 'ProductSans',
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: Colors.black,
   );
-  static TextStyle textTitleDella20w400 = TextStyle(
+  static TextStyle textTitleDella20w400 = const TextStyle(
     fontFamily: 'ProductSans',
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
-  static TextStyle textTitleDella24w400 = TextStyle(
+  static TextStyle textTitleDella24w400 = const TextStyle(
     fontSize: 24,
     fontFamily: 'ProductSans',
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
-  static TextStyle textTitleDella40w400 = TextStyle(
+  static TextStyle textTitleDella40w400 = const TextStyle(
     fontFamily: 'ProductSans',
     fontSize: 30,
     fontWeight: FontWeight.w400,

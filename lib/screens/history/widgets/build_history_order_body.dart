@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
-import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
-import 'package:pharmacy_arrival/widgets/custom_button.dart';
 
 class BuildHistoryOrderData extends StatelessWidget {
   final String orderNumber;
@@ -60,8 +55,7 @@ class BuildHistoryOrderData extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Center(
                     child: Text(
                       pharmacyOrderDTO?.refundStatus == 0
@@ -93,10 +87,8 @@ class BuildHistoryOrderData extends StatelessWidget {
             BuildOrderDetailItem(
               icon: "calendar_ic",
               title: "Дата создания",
-              data: createdAt != null
-                  ? DateFormat("dd.MM.yyyy; hh:mm a")
-                      .format(DateTime.parse(createdAt!))
-                  : "No data",
+              data:
+                  createdAt != null ? DateFormat("dd.MM.yyyy; hh:mm a").format(DateTime.parse(createdAt!)) : "No data",
             ),
             BuildOrderDetailItem(
               icon: "stock_ic",
@@ -106,7 +98,6 @@ class BuildHistoryOrderData extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-           
           ],
         ),
       ),
@@ -140,8 +131,7 @@ class BuildOrderDetailItem extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: ThemeTextStyle.textStyle14w400
-                  .copyWith(color: ColorPalette.grey400),
+              style: ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grey400),
             ),
           ),
           Text(
