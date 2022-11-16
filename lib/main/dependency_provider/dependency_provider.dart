@@ -37,9 +37,10 @@ class DependenciesProvider extends StatelessWidget {
         RepositoryProvider(
           create: (_) => HiveRepository(),
         ),
-        RepositoryProvider(
-          create: (_) => FirebaseMessagingRepository(),
-        ),
+        // TODO
+        // RepositoryProvider(
+        //   create: (_) => FirebaseMessagingRepository(),
+        // ),
       ChangeNotifierProvider(
           create: (_) => FillInvoiceVModel()..init(),
         ),

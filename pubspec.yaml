@@ -24,16 +24,16 @@ dependencies:
   dropdown_search: ^5.0.2
   equatable: ^2.0.3
   file_picker: ^4.5.1
-  firebase_analytics: ^8.3.2
-  firebase_core: ^1.6.0
-  firebase_crashlytics: ^2.2.1
-  firebase_dynamic_links: ^3.0.1
-  firebase_messaging: ^11.1.0
+  # firebase_analytics: ^8.3.2
+  # firebase_core: ^1.6.0
+  # firebase_crashlytics: ^2.2.1
+  # firebase_dynamic_links: ^3.0.1
+  # firebase_messaging: ^11.1.0
   flutter:
     sdk: flutter
   flutter_barcode_scanner: ^2.0.0
   flutter_bloc: ^8.0.0
-  flutter_local_notifications: ^9.3.2
+  # flutter_local_notifications: ^9.3.2
   flutter_localizations:
     sdk: flutter
   flutter_masked_text: 0.8.0

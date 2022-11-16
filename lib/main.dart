@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +32,8 @@ void main() async {
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]);
-      await Firebase.initializeApp();
+      /// TODO
+      // await Firebase.initializeApp();
       // context.read<ErrorHandler>().initialize(S.of(context));
 
 

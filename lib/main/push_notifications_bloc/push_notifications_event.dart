@@ -1,12 +1,12 @@
-part of 'push_notifications_bloc.dart';
+// part of 'push_notifications_bloc.dart';
 
-@immutable
-abstract class PushNotificationsEvent {}
+// @immutable
+// abstract class PushNotificationsEvent {}
 
-class NavigateToScreenPushNotifyEvent extends PushNotificationsEvent {
-  // final BaseNotification notification;
-  //
-  // NavigateToScreenPushNotifyEvent(this.notification);
-}
+// class NavigateToScreenPushNotifyEvent extends PushNotificationsEvent {
+//   // final BaseNotification notification;
+//   //
+//   // NavigateToScreenPushNotifyEvent(this.notification);
+// }
 
-class InitialPushNotifyEvent extends PushNotificationsEvent {}
+// class InitialPushNotifyEvent extends PushNotificationsEvent {}
