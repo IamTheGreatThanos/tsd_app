@@ -12,12 +12,11 @@ import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
-import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class AcceptContListPage extends StatefulWidget {
-  const AcceptContListPage({Key? key}) : super(key: key);
+  const AcceptContListPage({super.key});
 
   @override
   State<AcceptContListPage> createState() => _AcceptContListPageState();
@@ -58,7 +57,7 @@ class _AcceptContListPageState extends State<AcceptContListPage> {
             log('Current Scan: $_currentScan');
             var scanResult = '';
             for (var i = 0; i < _currentScan.length; i++) {
-              if (i % 2 == 0) {
+              if (i.isEven) {
                 scanResult += _currentScan[i];
               }
             }
@@ -247,12 +246,11 @@ class _BuildBody extends StatefulWidget {
   final ProductDTO selectedContainer;
   final List<ProductDTO> containers;
   const _BuildBody({
-    Key? key,
     required this.containers,
     required this.selectedContainer,
     required this.searchController,
     required this.scrollController,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();
@@ -352,11 +350,10 @@ class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO container;
   final ProductDTO selectedProduct;
   const _BuildGoodDetails({
-    Key? key,
     required this.container,
     required this.selectedProduct,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();

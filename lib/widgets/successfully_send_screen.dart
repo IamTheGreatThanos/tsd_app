@@ -3,7 +3,7 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 
 class SuccessfullySend extends StatelessWidget {
-  const SuccessfullySend({Key? key}) : super(key: key);
+  const SuccessfullySend({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
 class AcceptContsBarcodeScreen extends StatefulWidget {
-  const AcceptContsBarcodeScreen({Key? key}) : super(key: key);
+  const AcceptContsBarcodeScreen({super.key});
 
   @override
   State<AcceptContsBarcodeScreen> createState() =>

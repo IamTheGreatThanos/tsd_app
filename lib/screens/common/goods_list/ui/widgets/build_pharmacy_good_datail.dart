@@ -1,3 +1,5 @@
+// ignore_for_file: noop_primitive_operations
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
@@ -14,13 +16,13 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
   final ProductDTO selectedProduct;
   final int orderID;
   const BuildPharmacyGoodDetails({
-    Key? key,
+    super.key,
     required this.good,
     required this.selectedProduct,
     required this.orderID,
     required this.currentIndex,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +112,13 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
-                    '${good.name}',
-                    overflow: TextOverflow.fade,
-                    style: ThemeTextStyle.textStyle20w600,
+                  SizedBox(
+                    height: 80,
+                    child: Text(
+                      '${good.name}',
+                      overflow: TextOverflow.clip,
+                      style: ThemeTextStyle.textStyle20w600,
+                    ),
                   ),
                   const SizedBox(
                     height: 8,

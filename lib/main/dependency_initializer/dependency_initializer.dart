@@ -8,11 +8,11 @@ class DependenciesInitializer<T extends Object> extends StatefulWidget {
   final Widget child;
 
   const DependenciesInitializer({
-    Key? key,
+    super.key,
     required this.loadingIndicatorScreen,
     required this.initializer,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _DependenciesInitializerState<T> createState() =>
@@ -32,7 +32,6 @@ class _DependenciesInitializerState<T extends Object>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      initialData: null,
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.hasData) {

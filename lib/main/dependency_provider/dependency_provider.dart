@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/app/network/dio_wrapper/dio_wrapper.dart';
 import 'package:pharmacy_arrival/app/network/repository/global_repository.dart';
 import 'package:pharmacy_arrival/app/network/repository/hive_repository.dart';
-import 'package:pharmacy_arrival/app/network/services/firebase_messaging_repository.dart';
 import 'package:pharmacy_arrival/app/network/services/network_service.dart';
 import 'package:pharmacy_arrival/app/network/tokens_repository/tokens_repository.dart';
 import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
@@ -13,7 +12,7 @@ import 'package:provider/provider.dart';
 class DependenciesProvider extends StatelessWidget {
   final Widget child;
 
-  const DependenciesProvider({Key? key, required this.child}) : super(key: key);
+  const DependenciesProvider({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

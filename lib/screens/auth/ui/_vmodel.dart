@@ -1,7 +1,6 @@
 
-import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
-
 import 'package:flutter/material.dart';
+import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 
 
 class SignInVModel extends ChangeNotifier {

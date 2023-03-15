@@ -9,10 +9,10 @@ class MoveGoodsBarcodeScreen extends StatefulWidget {
   final int orderId;
   final TextEditingController searchController;
   const MoveGoodsBarcodeScreen({
-    Key? key,
+    super.key,
     required this.orderId,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   @override
   State<MoveGoodsBarcodeScreen> createState() => _MoveGoodsBarcodeScreenState();

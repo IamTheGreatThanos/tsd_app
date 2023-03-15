@@ -108,7 +108,7 @@ class WarehouseArrivalRemoteDSImpl extends WarehouseArrivalRemoteDS {
       String? incomingDate,
       String? bin,
       String? invoiceDate,
-      int? counteragentId}) async {
+      int? counteragentId,}) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {

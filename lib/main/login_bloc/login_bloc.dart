@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
-import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

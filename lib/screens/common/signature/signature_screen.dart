@@ -1,14 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
@@ -30,11 +27,11 @@ class SignatureScreen extends StatefulWidget {
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
   const SignatureScreen({
-    Key? key,
+    super.key,
     required this.isFromPharmacyPage,
     this.pharmacyOrder,
     this.warehouseOrder,
-  }) : super(key: key);
+  });
 
   @override
   State<SignatureScreen> createState() => _SignatureScreenState();
@@ -62,7 +59,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
 
     final result = await ImageGallerySaver.saveImage(
         (await _controller.toPngBytes())!,
-        name: name);
+        name: name,);
     final isSuccess = result['isSuccess'] as bool;
 
     if (isSuccess) {
@@ -209,12 +206,12 @@ class _BuildButton extends StatelessWidget {
   final Color color;
 
   const _BuildButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.title,
     required this.icon,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

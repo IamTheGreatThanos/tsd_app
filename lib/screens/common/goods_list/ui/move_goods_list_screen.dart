@@ -23,8 +23,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MoveGoodsListScreen extends StatefulWidget {
   final MoveDataDTO moveDataDTO;
-  const MoveGoodsListScreen({Key? key, required this.moveDataDTO})
-      : super(key: key);
+  const MoveGoodsListScreen({super.key, required this.moveDataDTO});
 
   @override
   State<MoveGoodsListScreen> createState() => _MoveGoodsListScreenState();
@@ -67,7 +66,7 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
             log('Current Scan: $_currentScan');
             var scanResult = '';
             for (var i = 0; i < _currentScan.length; i++) {
-              if (i % 2 == 0) {
+              if (i.isEven) {
                 scanResult += _currentScan[i];
               }
             }
@@ -105,7 +104,6 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
             //   );
             //   return;
             // }
-
           }
         },
         child: Scaffold(
@@ -206,7 +204,10 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
                   fillColor: ColorPalette.white,
                   prefixIcon: SvgPicture.asset(
                     "assets/images/svg/search.svg",
-                    color: ColorPalette.grey400,
+                    colorFilter: const ColorFilter.mode(
+                      ColorPalette.grey400,
+                      BlendMode.srcIn,
+                    ),
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 17,
@@ -285,7 +286,9 @@ class _MoveGoodsListScreenState extends State<MoveGoodsListScreen> {
                         for (int i = 0; i < unscannedProducts.length; i++) {
                           if (unscannedProducts[i].id == selectedProductId.id) {
                             _animateToIndex(
-                                i, MediaQuery.of(context).size.height * 0.5);
+                              i,
+                              MediaQuery.of(context).size.height * 0.5,
+                            );
                           }
                         }
                       },
@@ -314,7 +317,6 @@ class _BuildBody extends StatefulWidget {
   final List<ProductDTO> scannedProducts;
   final MoveDataDTO moveDataDTO;
   const _BuildBody({
-    Key? key,
     required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
@@ -323,7 +325,7 @@ class _BuildBody extends StatefulWidget {
     required this.moveDataDTO,
     required this.searchController,
     required this.scrollController,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();

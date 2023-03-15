@@ -19,7 +19,6 @@ import 'package:pharmacy_arrival/main/top_level_blocs/top_level_blocs.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.dart';
 
-const String baseUrl = 'http://185.129.50.172:8085/api/';
 
 void main() async {
   ///Global managers initialization

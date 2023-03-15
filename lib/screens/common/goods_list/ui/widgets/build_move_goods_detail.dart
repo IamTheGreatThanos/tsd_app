@@ -14,13 +14,13 @@ class BuildMoveGoodsDetail extends StatefulWidget {
   final ProductDTO selectedProduct;
   final int orderID;
   const BuildMoveGoodsDetail({
-    Key? key,
+    super.key,
     required this.searchController,
     required this.currentIndex,
     required this.good,
     required this.selectedProduct,
     required this.orderID,
-  }) : super(key: key);
+  });
 
   @override
   State<BuildMoveGoodsDetail> createState() => _BuildMoveGoodsDetailState();

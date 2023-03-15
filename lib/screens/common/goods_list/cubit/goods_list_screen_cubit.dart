@@ -317,15 +317,15 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
 //SCANNER REFUND PRODUCTS
 
   Future<void> refundScannerBarCode(
-    String _scannedResult,
+    String scannedResult,
     int orderId,
     String? search,
     int quantity,
     int scanType,
   ) async {
-    if (checkProductBarCodeFromScanned(_scannedResult) != null) {
+    if (checkProductBarCodeFromScanned(scannedResult) != null) {
       final ProductDTO productDTO =
-          checkProductBarCodeFromScanned(_scannedResult)!;
+          checkProductBarCodeFromScanned(scannedResult)!;
       if (productDTO.totalCount! <= (productDTO.refund ?? 0)) {
         emit(
           const GoodsListScreenState.errorState(

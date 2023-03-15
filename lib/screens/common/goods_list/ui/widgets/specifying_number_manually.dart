@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
@@ -12,11 +11,11 @@ class SpecifyingNumberManually extends StatefulWidget {
   final Function(TextEditingController controller)
       callback;
   const SpecifyingNumberManually({
-    Key? key,
+    super.key,
     required this.productDTO,
     required this.orderID,
     required this.callback,
-  }) : super(key: key);
+  });
 
   @override
   State<SpecifyingNumberManually> createState() =>

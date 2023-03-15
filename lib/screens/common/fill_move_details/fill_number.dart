@@ -15,11 +15,11 @@ class FillNumberScreen extends StatefulWidget {
   final int moveOrderId;
 
   const FillNumberScreen({
-    Key? key,
+    super.key,
     required this.moveData,
     required this.moveOrderId,
     required this.change,
-  }) : super(key: key);
+  });
 
   @override
   _FillNumberScreenState createState() => _FillNumberScreenState();

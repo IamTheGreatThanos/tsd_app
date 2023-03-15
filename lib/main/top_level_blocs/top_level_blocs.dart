@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
-import 'package:pharmacy_arrival/domain/usecases/auth_check.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
@@ -39,7 +38,7 @@ import 'package:provider/provider.dart';
 class TopLevelBlocs extends StatelessWidget {
   final Widget child;
 
-  const TopLevelBlocs({Key? key, required this.child}) : super(key: key);
+  const TopLevelBlocs({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

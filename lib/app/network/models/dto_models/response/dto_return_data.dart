@@ -2,6 +2,8 @@
 //
 //     final welcome = welcomeFromJson(jsonString);
 
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 List<DTOReturnData> dtoReturnDataFromJson(String str) => List<DTOReturnData>.from(json.decode(str).map((x) => DTOReturnData.fromJson(x as Map<String, dynamic>)) as Iterable);

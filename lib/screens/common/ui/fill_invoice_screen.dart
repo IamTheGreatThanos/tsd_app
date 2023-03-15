@@ -23,11 +23,11 @@ class FillInvoiceScreen extends StatefulWidget {
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
   const FillInvoiceScreen({
-    Key? key,
+    super.key,
     this.warehouseOrder,
     this.pharmacyOrder,
     required this.isFromPharmacyPage,
-  }) : super(key: key);
+  });
 
   @override
   State<FillInvoiceScreen> createState() => _FillInvoiceScreenState();

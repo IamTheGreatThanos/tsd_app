@@ -105,7 +105,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => MoveGoodsScreenCubit(
         sl(),
-      ));
+      ),);
   sl.registerFactory(() => SignatureScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));

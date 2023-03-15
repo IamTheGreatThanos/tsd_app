@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, type_annotate_public_apis
 
 import 'dart:async';
 import 'dart:io';
@@ -64,7 +64,7 @@ class DioWrapper {
     data,
     Options? options,
   }) async {
-    return await _dio.download(urlPath, savePath);
+    return _dio.download(urlPath, savePath);
   }
 
   Future<dynamic> sendRequest({

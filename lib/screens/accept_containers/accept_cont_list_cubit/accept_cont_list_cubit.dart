@@ -89,11 +89,11 @@ class AcceptContListCubit extends Cubit<AcceptContListState> {
   }
 
   Future<void> refundScannerBarCode(
-    String _scannedResult,
+    String scannedResult,
   ) async {
-    if (checkProductBarCodeFromScanned(_scannedResult) != null) {
+    if (checkProductBarCodeFromScanned(scannedResult) != null) {
       final ProductDTO productDTO =
-          checkProductBarCodeFromScanned(_scannedResult)!;
+          checkProductBarCodeFromScanned(scannedResult)!;
       if (productDTO.status == 1) {
         emit(
           const AcceptContListState.errorState(

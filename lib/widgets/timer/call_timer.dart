@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 ///Custom timer widget
 class CallTimer extends StatefulWidget {
-  const CallTimer({Key? key}) : super(key: key);
+  const CallTimer({super.key});
 
   @override
   _CallTimerState createState() => _CallTimerState();

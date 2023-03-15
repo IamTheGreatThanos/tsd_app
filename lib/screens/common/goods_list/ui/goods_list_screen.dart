@@ -30,11 +30,11 @@ class GoodsListScreen extends StatefulWidget {
   final WarehouseOrderDTO? warehouseOrder;
 
   const GoodsListScreen({
-    Key? key,
+    super.key,
     required this.isFromPharmacyPage,
     this.pharmacyOrder,
     this.warehouseOrder,
-  }) : super(key: key);
+  });
 
   @override
   State<GoodsListScreen> createState() => _GoodsListScreenState();
@@ -74,7 +74,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
             log('Current Scan: $_currentScan');
             var scanResult = '';
             for (var i = 0; i < _currentScan.length; i++) {
-              if (i % 2 == 0) {
+              if (i.isEven) {
                 scanResult += _currentScan[i];
               }
             }
@@ -205,7 +205,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   fillColor: ColorPalette.white,
                   prefixIcon: SvgPicture.asset(
                     "assets/images/svg/search.svg",
-                    color: ColorPalette.grey400,
+                    colorFilter: const ColorFilter.mode(ColorPalette.grey400, BlendMode.srcIn),
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 17,
@@ -312,7 +312,6 @@ class _BuildBody extends StatefulWidget {
   final WarehouseOrderDTO? warehouseOrder;
   final bool isFromPharmacyPage;
   const _BuildBody({
-    Key? key,
     required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
@@ -322,7 +321,7 @@ class _BuildBody extends StatefulWidget {
     this.warehouseOrder,
     required this.isFromPharmacyPage,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();

@@ -16,7 +16,7 @@ class SignatureScreenCubit extends Cubit<SignatureScreenState> {
   final UpdateWarehouseOrderStatus _updateWarehouseOrderStatus;
   final SendSignature _sendSignature;
   SignatureScreenCubit(this._updatePharmacyOrderStatus, this._sendSignature,
-      this._updateWarehouseOrderStatus)
+      this._updateWarehouseOrderStatus,)
       : super(const SignatureScreenState.initialState());
 
       Future<void> changeStateToInitial()async{

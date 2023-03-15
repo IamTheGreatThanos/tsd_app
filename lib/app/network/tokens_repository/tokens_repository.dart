@@ -35,7 +35,6 @@ class TokensRepository {
       _accessToken = '';
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }

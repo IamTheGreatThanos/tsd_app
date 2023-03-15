@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
-import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_page.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_qr_cubit/accept_cont_qr_cubit.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class AcceptContQrPage extends StatefulWidget {
-  const AcceptContQrPage({Key? key}) : super(key: key);
+  const AcceptContQrPage({super.key});
 
   @override
   State<AcceptContQrPage> createState() => _AcceptContQrPageState();

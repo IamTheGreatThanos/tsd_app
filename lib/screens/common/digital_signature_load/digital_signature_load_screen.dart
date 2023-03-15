@@ -24,11 +24,11 @@ class DigitalSignatureLoadScreen extends StatefulWidget {
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
   const DigitalSignatureLoadScreen({
-    Key? key,
+    super.key,
     required this.isFromPharmacyPage,
     this.pharmacyOrder,
     this.warehouseOrder,
-  }) : super(key: key);
+  });
 
   @override
   State<DigitalSignatureLoadScreen> createState() =>
@@ -39,7 +39,7 @@ class _DigitalSignatureLoadScreenState
     extends State<DigitalSignatureLoadScreen> {
   @override
   Widget build(BuildContext context) {
-    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
+    final FillInvoiceVModel vmodel = context.read<FillInvoiceVModel>();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AppLoaderOverlay(
@@ -109,7 +109,7 @@ class _DigitalSignatureLoadScreenState
                             children: [
                               Expanded(
                                 child: Text(
-                                  _vmodel.auth,
+                                  vmodel.auth,
                                   overflow: TextOverflow.ellipsis,
                                   style: ThemeTextStyle.textStyle16w400,
                                 ),
@@ -126,7 +126,7 @@ class _DigitalSignatureLoadScreenState
                                   );
                                   if (file != null) {
                                     log('${file.paths}');
-                                    _vmodel.setCertName(file.files.first.name);
+                                    vmodel.setCertName(file.files.first.name);
                                   }
                                 },
                                 child: SvgPicture.asset(
@@ -156,7 +156,7 @@ class _DigitalSignatureLoadScreenState
                             children: [
                               Expanded(
                                 child: Text(
-                                  _vmodel.cert,
+                                  vmodel.cert,
                                   overflow: TextOverflow.ellipsis,
                                   style: ThemeTextStyle.textStyle16w400,
                                 ),
@@ -172,7 +172,7 @@ class _DigitalSignatureLoadScreenState
                                     type: FileType.custom,
                                   );
                                   if (file != null) {
-                                    _vmodel.setCertName(
+                                    vmodel.setCertName(
                                       file.files.first.name,
                                       isAuth: false,
                                     );
@@ -197,10 +197,10 @@ class _DigitalSignatureLoadScreenState
                               ),
                             ),
                             CupertinoSwitch(
-                              value: _vmodel.isTwoPassword,
+                              value: vmodel.isTwoPassword,
                               onChanged: (value) {
                                 FocusScope.of(context).unfocus();
-                                _vmodel.changeSwitch(value: value);
+                                vmodel.changeSwitch(value: value);
                               },
                             ),
                           ],
@@ -215,12 +215,12 @@ class _DigitalSignatureLoadScreenState
                         const SizedBox(
                           height: 4,
                         ),
-                        _vmodel.authPassword,
+                        vmodel.authPassword,
                         const SizedBox(
                           height: 15,
                         ),
                         Visibility(
-                          visible: _vmodel.isTwoPassword,
+                          visible: vmodel.isTwoPassword,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -231,7 +231,7 @@ class _DigitalSignatureLoadScreenState
                               const SizedBox(
                                 height: 4,
                               ),
-                              _vmodel.certificatePassword,
+                              vmodel.certificatePassword,
                             ],
                           ),
                         ),
@@ -253,27 +253,27 @@ class _DigitalSignatureLoadScreenState
                                         ? widget.pharmacyOrder!.id
                                         : widget.warehouseOrder!.id,
                                     status: 2,
-                                    incomingNumber: _vmodel.incomeNumber
+                                    incomingNumber: vmodel.incomeNumber
                                             .controller.text.isEmpty
                                         ? null
-                                        : _vmodel.incomeNumber.controller.text,
-                                    incomingDate: _vmodel
+                                        : vmodel.incomeNumber.controller.text,
+                                    incomingDate: vmodel
                                             .incomeNumberDateController
                                             .text
                                             .isEmpty
                                         ? null
-                                        : _vmodel
+                                        : vmodel
                                             .incomeNumberDateController.text,
-                                    bin: _vmodel.bin.controller.text.isEmpty
+                                    bin: vmodel.bin.controller.text.isEmpty
                                         ? null
-                                        : _vmodel.bin.controller.text,
+                                        : vmodel.bin.controller.text,
                                     invoiceDate:
-                                        _vmodel.invoiceDate.text.isEmpty
+                                        vmodel.invoiceDate.text.isEmpty
                                             ? null
-                                            : _vmodel.invoiceDate.text,
-                                    recipientId: _vmodel.recipientId == -1
+                                            : vmodel.invoiceDate.text,
+                                    recipientId: vmodel.recipientId == -1
                                         ? null
-                                        : _vmodel.recipientId,
+                                        : vmodel.recipientId,
                                   )
                                 : BlocProvider.of<SignatureScreenCubit>(context)
                                     .updateWarehouseOrderStatus(
@@ -281,27 +281,27 @@ class _DigitalSignatureLoadScreenState
                                         ? widget.pharmacyOrder!.id
                                         : widget.warehouseOrder!.id,
                                     status: 2,
-                                    incomingNumber: _vmodel.incomeNumber
+                                    incomingNumber: vmodel.incomeNumber
                                             .controller.text.isEmpty
                                         ? null
-                                        : _vmodel.incomeNumber.controller.text,
-                                    incomingDate: _vmodel
+                                        : vmodel.incomeNumber.controller.text,
+                                    incomingDate: vmodel
                                             .incomeNumberDateController
                                             .text
                                             .isEmpty
                                         ? null
-                                        : _vmodel
+                                        : vmodel
                                             .incomeNumberDateController.text,
-                                    bin: _vmodel.bin.controller.text.isEmpty
+                                    bin: vmodel.bin.controller.text.isEmpty
                                         ? null
-                                        : _vmodel.bin.controller.text,
+                                        : vmodel.bin.controller.text,
                                     invoiceDate:
-                                        _vmodel.invoiceDate.text.isEmpty
+                                        vmodel.invoiceDate.text.isEmpty
                                             ? null
-                                            : _vmodel.invoiceDate.text,
-                                    counteragentId: _vmodel.recipientId == -1
+                                            : vmodel.invoiceDate.text,
+                                    counteragentId: vmodel.recipientId == -1
                                         ? null
-                                        : _vmodel.recipientId,
+                                        : vmodel.recipientId,
                                   );
                           }
                         },
