@@ -141,17 +141,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
           backgroundColor: ColorPalette.main,
           appBar: CustomAppBar(
             title: "Список товаров".toUpperCase(),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  buildAlertDialog(context);
-                },
-                icon: const Icon(
-                  Icons.document_scanner_rounded,
-                  color: Colors.black,
-                ),
-              )
-            ],
+           
           ),
           body: Column(
             children: [
