@@ -4,12 +4,12 @@ import 'package:pharmacy_arrival/styles/text_styles.dart';
 
 class DayNumber extends StatelessWidget {
   const DayNumber({
-    Key? key,
+    super.key,
     required this.day,
     required this.isLastDay,
     required this.onTap,
     this.color,
-  }) : super(key: key);
+  });
 
   final int day;
   final Color? color;

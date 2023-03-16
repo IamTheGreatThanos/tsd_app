@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
@@ -22,11 +21,11 @@ class HistoryScreenDetail extends StatefulWidget {
   final PharmacyOrderDTO? pharmacyOrder;
   final WarehouseOrderDTO? warehouseOrder;
   const HistoryScreenDetail({
-    Key? key,
+    super.key,
     required this.isFromPharmacyPage,
     this.pharmacyOrder,
     this.warehouseOrder,
-  }) : super(key: key);
+  });
 
   @override
   State<HistoryScreenDetail> createState() => _HistoryScreenDetailState();
@@ -46,10 +45,11 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-        floatingActionButton: widget.isFromPharmacyPage&&( widget.pharmacyOrder!.refundStatus == 0 ||
-                widget.pharmacyOrder!.refundStatus == 1)?
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32,0,0,0),
+        floatingActionButton: widget.isFromPharmacyPage &&
+                (widget.pharmacyOrder!.refundStatus == 0 ||
+                    widget.pharmacyOrder!.refundStatus == 1)
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(32, 0, 0, 0),
                 child: CustomButton(
                   height: 44,
                   onClick: () {
@@ -67,7 +67,7 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                     );
                   },
                   body: Text(
-                   widget. pharmacyOrder?.refundStatus == 0
+                    widget.pharmacyOrder?.refundStatus == 0
                         ? 'Создать возврата'
                         : "Продолжить возврат",
                     style: const TextStyle(),
@@ -75,8 +75,7 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                   style: pinkButtonStyle(),
                 ),
               )
-           :
-              const SizedBox(),
+            : const SizedBox(),
         backgroundColor: ColorPalette.main,
         appBar: CustomAppBar(
           title: "Список товаров".toUpperCase(),
@@ -183,7 +182,6 @@ class _BuildBody extends StatefulWidget {
   final WarehouseOrderDTO? warehouseOrder;
   final bool isFromPharmacyPage;
   const _BuildBody({
-    Key? key,
     required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
@@ -192,7 +190,7 @@ class _BuildBody extends StatefulWidget {
     this.pharmacyOrder,
     this.warehouseOrder,
     required this.isFromPharmacyPage,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();
@@ -292,12 +290,11 @@ class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO selectedProduct;
   final int orderID;
   const _BuildGoodDetails({
-    Key? key,
     required this.good,
     required this.selectedProduct,
     required this.orderID,
     required this.currentIndex,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();

@@ -3,25 +3,22 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 
 class AppLoadingIndicator extends StatelessWidget {
   const AppLoadingIndicator({
-    Key? key,
+    super.key,
     this.value,
   })  : color = ColorPalette.dark,
-        isCircular = true,
-        super(key: key);
+        isCircular = true;
 
   const AppLoadingIndicator.inverted({
-    Key? key,
+    super.key,
     this.value,
   })  : color = ColorPalette.white,
-        isCircular = true,
-        super(key: key);
+        isCircular = true;
 
   const AppLoadingIndicator.linear({
-    Key? key,
+    super.key,
     this.value,
   })  : color = ColorPalette.dark,
-        isCircular = false,
-        super(key: key);
+        isCircular = false;
 
   final Color color;
   final bool isCircular;

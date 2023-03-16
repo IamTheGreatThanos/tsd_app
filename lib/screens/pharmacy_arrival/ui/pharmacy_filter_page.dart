@@ -1,20 +1,17 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
+    as countragents;
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:pharmacy_arrival/widgets/date_picker.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
-import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
-    as countragents;
 import 'package:provider/provider.dart';
 import 'package:search_choices/search_choices.dart';
 
@@ -22,10 +19,10 @@ class PharmacyFilterPage extends StatefulWidget {
   final VoidCallback callback;
   final bool isFromPharmacyPage;
   const PharmacyFilterPage({
-    Key? key,
+    super.key,
     required this.callback,
     required this.isFromPharmacyPage,
-  }) : super(key: key);
+  });
 
   @override
   State<PharmacyFilterPage> createState() => _PharmacyFilterPageState();

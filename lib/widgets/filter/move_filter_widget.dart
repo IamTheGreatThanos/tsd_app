@@ -7,10 +7,10 @@ class MoveFilterWidget extends StatefulWidget {
   final VoidCallback onTap;
   final VoidCallback trailingCloseTap;
   const MoveFilterWidget({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.trailingCloseTap,
-  }) : super(key: key);
+  });
 
   @override
   State<MoveFilterWidget> createState() => _MoveFilterWidgetState();

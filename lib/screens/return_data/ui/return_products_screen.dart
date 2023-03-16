@@ -13,7 +13,7 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/successfully_send_screen.dart';
 
 class ReturnProductsScreen extends StatefulWidget {
-  const ReturnProductsScreen({Key? key}) : super(key: key);
+  const ReturnProductsScreen();
 
   @override
   State<ReturnProductsScreen> createState() => _ReturnProductsScreenState();
@@ -171,10 +171,9 @@ class _BuildGoodDetails extends StatefulWidget {
   final RefundDataDTO refundDataDTO;
 
   const _BuildGoodDetails({
-    Key? key,
     required this.good,
     required this.refundDataDTO,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();
@@ -324,10 +323,9 @@ class _SpecifyQuantity extends StatefulWidget {
   final RefundDataDTO refundDataDTO;
   final ProductDTO productDTO;
   const _SpecifyQuantity({
-    Key? key,
     required this.refundDataDTO,
     required this.productDTO,
-  }) : super(key: key);
+  });
 
   @override
   State<_SpecifyQuantity> createState() => __SpecifyQuantityState();

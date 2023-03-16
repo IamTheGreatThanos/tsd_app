@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pharmacy_arrival/core/error/failure.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_pharmacy_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_refund_order_by_incoming.dart';
 

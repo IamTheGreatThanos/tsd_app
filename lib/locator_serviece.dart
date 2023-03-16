@@ -77,7 +77,6 @@ import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_scre
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
-import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_barcode_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
@@ -109,7 +108,6 @@ Future<void> initLocator() async {
   sl.registerFactory(() => SignatureScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => OrganizationCubit(sl()));
   sl.registerFactory(() => CounteragentsCubit(sl()));
-  sl.registerFactory(() => MoveCubit(sl(), sl()));
   sl.registerFactory(() => MoveDataScreenCubit(sl(), sl()));
   sl.registerFactory(
     () => MoveBarcodeScreenCubit(sl(), sl(), sl(), sl(), sl()),
@@ -119,7 +117,7 @@ Future<void> initLocator() async {
         MoveProductsScreenCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()),
   );
   sl.registerFactory(
-    () => ReturnDataScreenCubit(sl(), sl()),
+    () => ReturnDataScreenCubit(sl(),),
   );
   sl.registerFactory(
     () => ReturnCubit(sl()),

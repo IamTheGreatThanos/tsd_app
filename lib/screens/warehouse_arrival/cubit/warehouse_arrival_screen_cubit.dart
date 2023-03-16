@@ -81,17 +81,17 @@ class WarehouseArrivalScreenCubit extends Cubit<WarehouseArrivalScreenState> {
         ),
       ),
       (r) {
-        final List<WarehouseOrderDTO> _loadOrders = [];
+        final List<WarehouseOrderDTO> loadOrders = [];
         log("ON LOADING:: , page:: $_currentPage");
         if (r.isNotEmpty) {
           _currentPage++;
         }
         for (final WarehouseOrderDTO orderDTO in r) {
           if (orderDTO.status == 1 || orderDTO.status == 2) {
-            _loadOrders.add(orderDTO);
+            loadOrders.add(orderDTO);
           }
         }
-        _activeOrders += _loadOrders;
+        _activeOrders += loadOrders;
         emit(WarehouseArrivalScreenState.loadedState(orders: _activeOrders));
       },
     );

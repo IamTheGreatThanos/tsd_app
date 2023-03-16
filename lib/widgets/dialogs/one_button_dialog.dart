@@ -14,13 +14,13 @@ class OneButtonDialog extends StatelessWidget {
   final VoidCallback buttonHandler;
 
   const OneButtonDialog(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.subtitle,
       required this.buttonTitle,
       required this.buttonHandler,
       this.iconAsset,})
-      : super(key: key);
+     ;
 
   @override
   Widget build(BuildContext context) {

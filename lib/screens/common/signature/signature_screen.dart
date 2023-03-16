@@ -60,14 +60,14 @@ class _SignatureScreenState extends State<SignatureScreen> {
     final result = await ImageGallerySaver.saveImage(
         (await _controller.toPngBytes())!,
         name: name,);
-    final isSuccess = result['isSuccess'] as bool;
+    final isSuccess = (result as Map<String,dynamic>)['isSuccess'] as bool;
 
     if (isSuccess) {
       log('Saved to signature folder');
     } else {
       log('Failed to save signature');
     }
-    return (result as Map)["filePath"].toString();
+    return result["filePath"].toString();
   }
 
   @override
@@ -88,7 +88,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
+    final FillInvoiceVModel vmodel = context.read<FillInvoiceVModel>();
     return AppLoaderOverlay(
       child: BlocConsumer<SignatureScreenCubit, SignatureScreenState>(
         listener: (context, state) {
@@ -159,25 +159,25 @@ class _SignatureScreenState extends State<SignatureScreen> {
                                       ? widget.pharmacyOrder!.id
                                       : widget.warehouseOrder!.id,
                                   status: 2,
-                                  incomingNumber: _vmodel
+                                  incomingNumber: vmodel
                                           .incomeNumber.controller.text.isEmpty
                                       ? null
-                                      : _vmodel.incomeNumber.controller.text,
-                                  incomingDate: _vmodel
+                                      : vmodel.incomeNumber.controller.text,
+                                  incomingDate: vmodel
                                           .incomeNumberDateController
                                           .text
                                           .isEmpty
                                       ? null
-                                      : _vmodel.incomeNumberDateController.text,
-                                  bin: _vmodel.bin.controller.text.isEmpty
+                                      : vmodel.incomeNumberDateController.text,
+                                  bin: vmodel.bin.controller.text.isEmpty
                                       ? null
-                                      : _vmodel.bin.controller.text,
-                                  invoiceDate: _vmodel.invoiceDate.text.isEmpty
+                                      : vmodel.bin.controller.text,
+                                  invoiceDate: vmodel.invoiceDate.text.isEmpty
                                       ? null
-                                      : _vmodel.invoiceDate.text,
-                                  recipientId: _vmodel.recipientId == -1
+                                      : vmodel.invoiceDate.text,
+                                  recipientId: vmodel.recipientId == -1
                                       ? null
-                                      : _vmodel.recipientId,
+                                      : vmodel.recipientId,
                                   signature: await getImageFileFromAssets(
                                     await storeSignature(),
                                   ),
@@ -206,7 +206,6 @@ class _BuildButton extends StatelessWidget {
   final Color color;
 
   const _BuildButton({
-    super.key,
     required this.onTap,
     required this.title,
     required this.icon,

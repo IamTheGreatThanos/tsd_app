@@ -8,8 +8,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 class PharmacyGeneratedQrScreen extends StatefulWidget {
   final PharmacyOrderDTO order;
 
-  const PharmacyGeneratedQrScreen({Key? key, required this.order})
-      : super(key: key);
+  const PharmacyGeneratedQrScreen({super.key, required this.order})
+     ;
 
   @override
   State<PharmacyGeneratedQrScreen> createState() =>

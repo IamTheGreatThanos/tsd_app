@@ -2,28 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
-import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
     as countragents;
-import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart'
-    as organization;
-import 'package:pharmacy_arrival/screens/move_data/move_cubit/move_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_data_cubit/move_data_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_barcode_screen.dart';
-import 'package:pharmacy_arrival/screens/move_data/ui/move_products_screen.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:search_choices/search_choices.dart';
 
 class MoveDataScreen extends StatefulWidget {
   const MoveDataScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MoveDataScreen> createState() => _MoveDataScreenState();
@@ -44,7 +38,7 @@ class _MoveDataScreenState extends State<MoveDataScreen> {
 }
 
 class _BuildMoveScreenBody extends StatefulWidget {
-  const _BuildMoveScreenBody({Key? key}) : super(key: key);
+  const _BuildMoveScreenBody();
 
   @override
   State<_BuildMoveScreenBody> createState() => __BuildMoveScreenBodyState();

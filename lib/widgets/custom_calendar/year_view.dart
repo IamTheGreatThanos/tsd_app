@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy_arrival/widgets/custom_calendar/month_view.dart';
 
 class YearView extends StatelessWidget {
-  const YearView({Key? key,
+  const YearView({super.key,
     required this.context,
     required this.year,
     required this.currentDateColor,
@@ -13,7 +13,7 @@ class YearView extends StatelessWidget {
     this.monthNames,
     this.onMonthTap,
     this.monthTitleStyle,
-  }) : super(key: key);
+  });
 
   final BuildContext context;
   final int year;

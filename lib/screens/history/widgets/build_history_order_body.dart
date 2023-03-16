@@ -15,7 +15,7 @@ class BuildHistoryOrderData extends StatelessWidget {
   final PharmacyOrderDTO? pharmacyOrderDTO;
   final String? incomingNumber;
   const BuildHistoryOrderData({
-    Key? key,
+    super.key,
     required this.orderNumber,
     required this.orderId,
     required this.container,
@@ -23,7 +23,7 @@ class BuildHistoryOrderData extends StatelessWidget {
     this.counteragent,
     this.pharmacyOrderDTO,
     this.incomingNumber,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +111,11 @@ class BuildOrderDetailItem extends StatelessWidget {
   final String data;
 
   const BuildOrderDetailItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

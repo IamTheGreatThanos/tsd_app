@@ -31,7 +31,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
+  const HistoryScreen();
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -311,7 +311,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   fillColor: ColorPalette.white,
                   prefixIcon: SvgPicture.asset(
                     "assets/images/svg/search.svg",
-                    color: ColorPalette.grey400,
+                    colorFilter: const ColorFilter.mode(ColorPalette.grey400, BlendMode.srcIn),
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 18,

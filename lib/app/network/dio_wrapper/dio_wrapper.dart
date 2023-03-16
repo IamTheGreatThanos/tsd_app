@@ -223,11 +223,11 @@ class DioWrapper {
 
   String _transformQueryParametersToString(
       Map<String, dynamic> queryParameters,) {
-    String _query = '';
+    String query = '';
     queryParameters.forEach((key, value) {
-      _query += '$key=${value.toString()}&';
+      query += '$key=$value&';
     });
-    return _query.substring(0, _query.length - 1);
+    return query.substring(0, query.length - 1);
   }
 }
 
@@ -264,7 +264,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
     if(err.response?.statusCode == 302){
       loginBloc.add(LogOutEvent());
     }

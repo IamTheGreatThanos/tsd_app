@@ -13,8 +13,8 @@ import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class ReturnBarcodeScreen extends StatelessWidget {
   final bool isFromProductsPage;
-  const ReturnBarcodeScreen({Key? key, required this.isFromProductsPage})
-      : super(key: key);
+  const ReturnBarcodeScreen({super.key, required this.isFromProductsPage})
+     ;
 
   @override
   Widget build(BuildContext context) {

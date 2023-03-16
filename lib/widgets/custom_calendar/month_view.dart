@@ -6,7 +6,7 @@ import 'package:pharmacy_arrival/widgets/custom_calendar/utils/dates.dart';
 
 class MonthView extends StatelessWidget {
   const MonthView({
-    Key? key,
+    super.key,
     required this.context,
     required this.year,
     required this.month,
@@ -17,7 +17,7 @@ class MonthView extends StatelessWidget {
     this.highlightedDateColor,
     this.monthNames,
     this.titleStyle,
-  }) : super(key: key);
+  });
 
   final BuildContext context;
   final int year;

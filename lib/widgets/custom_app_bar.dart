@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.bottom,
     this.height = 60,
@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.textStyle,
     this.leadingColor,
     this.actions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: SvgPicture.asset(
           "assets/images/svg/${isChevrone ? "chevron_left" : "cross"}.svg",
-          color: leadingColor ?? Colors.black,
+          colorFilter: ColorFilter.mode(
+            leadingColor ?? Colors.black,
+            BlendMode.srcIn,
+          ),
         ),
         onPressed: () {
           Navigator.of(context, rootNavigator: rootNavigator).pop();

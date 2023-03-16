@@ -17,7 +17,7 @@ import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WarehouseArrivalScreen extends StatefulWidget {
-  const WarehouseArrivalScreen({Key? key}) : super(key: key);
+  const WarehouseArrivalScreen();
 
   @override
   State<WarehouseArrivalScreen> createState() => _WarehouseArrivalScreenState();
@@ -86,7 +86,10 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
               fillColor: ColorPalette.white,
               prefixIcon: SvgPicture.asset(
                 "assets/images/svg/search.svg",
-                color: ColorPalette.grey400,
+                colorFilter: const ColorFilter.mode(
+                  ColorPalette.grey400,
+                  BlendMode.srcIn,
+                ),
               ),
               contentPadding: const EdgeInsets.only(
                 top: 17,
@@ -236,7 +239,7 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
                           enablePullUp: true,
                           onLoading: () {
                             BlocProvider.of<WarehouseArrivalScreenCubit>(
-                                    context)
+                                    context,)
                                 .onLoadOrders(status: status);
                             refreshController.loadComplete();
                           },
@@ -314,7 +317,7 @@ class _WarehouseArrivalScreenState extends State<WarehouseArrivalScreen> {
 class _BuildOrderData extends StatelessWidget {
   final WarehouseOrderDTO orderData;
 
-  const _BuildOrderData({Key? key, required this.orderData}) : super(key: key);
+  const _BuildOrderData({required this.orderData});
 
   @override
   Widget build(BuildContext context) {
@@ -446,11 +449,10 @@ class _BuildOrderDetailItem extends StatelessWidget {
   final String data;
 
   const _BuildOrderDetailItem({
-    Key? key,
     required this.icon,
     required this.title,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -14,13 +14,13 @@ class BarcodeScannerWidget extends StatefulWidget {
   final double topPos;
   final Function(String) callback;
   const BarcodeScannerWidget({
-    Key? key,
+    super.key,
     required this.callback,
     required this.width,
     required this.height,
     required this.title,
     required this.topPos,
-  }) : super(key: key);
+  });
 
   @override
   State<BarcodeScannerWidget> createState() => _BarcodeScannerWidgetState();

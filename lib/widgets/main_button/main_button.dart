@@ -46,7 +46,7 @@ class MainButton extends StatelessWidget {
   final Color? disabledBackgroundColor;
 
   const MainButton({
-    Key? key,
+    super.key,
     this.title,
     this.color = ColorPalette.main,
     this.isEnabled = true,
@@ -61,7 +61,7 @@ class MainButton extends StatelessWidget {
     this.borderRadius = 12,
     this.disabledTextColor,
     this.disabledBackgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,28 +91,37 @@ class MainButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (icon != null) Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: SvgPicture.asset(
-                            icon!,
-                            color: iconColor,
-                            width: 20,
-                            height: 20,
-                          ),
+                if (icon != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: SvgPicture.asset(
+                        icon!,
+                        colorFilter: ColorFilter.mode(
+                          iconColor??Colors.black,
+                          BlendMode.srcIn,
                         ),
-                    ) else const SizedBox.shrink(),
-                if (title != null) Text(
-                        title!,
-                        style: ThemeTextStyle.textStyle14w600.copyWith(
-                          color: !isEnabled && disabledBackgroundColor != null
-                              ? disabledTextColor
-                              : textColor,
-                          height: 1.5,
-                          fontSize: fontSize,
-                        ),
-                      ) else const SizedBox.shrink(),
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                  )
+                else
+                  const SizedBox.shrink(),
+                if (title != null)
+                  Text(
+                    title!,
+                    style: ThemeTextStyle.textStyle14w600.copyWith(
+                      color: !isEnabled && disabledBackgroundColor != null
+                          ? disabledTextColor
+                          : textColor,
+                      height: 1.5,
+                      fontSize: fontSize,
+                    ),
+                  )
+                else
+                  const SizedBox.shrink(),
               ],
             ),
           ),

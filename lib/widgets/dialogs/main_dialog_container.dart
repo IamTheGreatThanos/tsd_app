@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 ///Base dialog for user as container for other dialogs widgets, inspired by ui kit
 class MainDialogContainer extends StatelessWidget {
   const MainDialogContainer(
-      {Key? key, required this.child, this.padding = EdgeInsets.zero,})
-      : super(key: key);
+      {super.key, required this.child, this.padding = EdgeInsets.zero,})
+     ;
 
   final EdgeInsets padding;
   final Widget child;

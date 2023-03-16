@@ -7,10 +7,10 @@ class PharmacyFilterWidget extends StatefulWidget {
   final VoidCallback onTap;
   final VoidCallback trailingCloseTap;
   const PharmacyFilterWidget({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.trailingCloseTap,
-  }) : super(key: key);
+  });
 
   @override
   State<PharmacyFilterWidget> createState() => _PharmacyFilterWidgetState();

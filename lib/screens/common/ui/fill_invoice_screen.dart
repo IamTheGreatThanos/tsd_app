@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,11 +45,9 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
     super.dispose();
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
-    final FillInvoiceVModel _vmodel = context.read<FillInvoiceVModel>();
+    final FillInvoiceVModel vmodel = context.read<FillInvoiceVModel>();
     return AppLoaderOverlay(
       child: BlocConsumer<SignatureScreenCubit, SignatureScreenState>(
         listener: (context, state) {
@@ -115,7 +112,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                           ),
                           child: Column(
                             children: [
-                              _vmodel.incomeNumber,
+                              vmodel.incomeNumber,
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 4),
                                 child: Divider(
@@ -137,14 +134,14 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                             primary: ColorPalette.greyDark,
                                           ),
                                           textTheme: TextTheme(
-                                            headline5: ThemeTextStyle
+                                            headlineSmall: ThemeTextStyle
                                                 .textTitleDella24w400,
-                                            overline:
+                                            labelSmall:
                                                 ThemeTextStyle.textStyle16w600,
                                           ),
                                           textButtonTheme: TextButtonThemeData(
                                             style: TextButton.styleFrom(
-                                              primary: Colors.black,
+                                              foregroundColor: Colors.black,
                                               textStyle: ThemeTextStyle
                                                   .textStyle14w600
                                                   .copyWith(
@@ -158,7 +155,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                     },
                                   );
                                   if (date != null) {
-                                    _vmodel.incomeNumberDateController.text =
+                                    vmodel.incomeNumberDateController.text =
                                         DateFormat("yyyy-MM-dd").format(date);
                                   }
                                 },
@@ -182,7 +179,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                         contentPadding: EdgeInsets.zero,
                                         capitalize: false,
                                         controller:
-                                            _vmodel.incomeNumberDateController,
+                                            vmodel.incomeNumberDateController,
                                         readonly: true,
                                         textAlign: TextAlign.right,
                                         showErrorMessages: false,
@@ -210,16 +207,19 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                                             .greyDark,
                                                       ),
                                                       textTheme: TextTheme(
-                                                        headline5: ThemeTextStyle
-                                                            .textTitleDella24w400,
-                                                        overline: ThemeTextStyle
-                                                            .textStyle16w600,
+                                                        headlineSmall:
+                                                            ThemeTextStyle
+                                                                .textTitleDella24w400,
+                                                        labelSmall:
+                                                            ThemeTextStyle
+                                                                .textStyle16w600,
                                                       ),
                                                       textButtonTheme:
                                                           TextButtonThemeData(
                                                         style: TextButton
                                                             .styleFrom(
-                                                          primary: Colors.black,
+                                                          foregroundColor:
+                                                              Colors.black,
                                                           textStyle:
                                                               ThemeTextStyle
                                                                   .textStyle14w600
@@ -234,7 +234,7 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                                 },
                                               );
                                               if (date != null) {
-                                                _vmodel
+                                                vmodel
                                                     .incomeNumberDateController
                                                     .text = DateFormat(
                                                   "yyyy-MM-dd",
@@ -255,207 +255,6 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                             ],
                           ),
                         ),
-                        // const SizedBox(
-                        //   height: 16,
-                        // ),
-                        // _vmodel.bin,
-                        // const SizedBox(
-                        //   height: 16,
-                        // ),
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 12),
-                        //   decoration: BoxDecoration(
-                        //     color: ColorPalette.white,
-                        //     borderRadius: BorderRadius.circular(16),
-                        //   ),
-                        //   child: BlocBuilder<countragents.CounteragentsCubit,
-                        //       countragents.CounteragentState>(
-                        //     builder: (context, state) {
-                        //       return state.maybeWhen(
-                        //         loadingState: () =>
-                        //             const CircularProgressIndicator(
-                        //           color: Colors.amber,
-                        //         ),
-                        //         loadedState: (counteragents) {
-                        //           return SearchChoices.single(
-                        //             padding: recipientId == -1 ? 14 : 7,
-                        //             displayClearIcon: false,
-                        //             closeButton: "Закрыть",
-                        //             items: counteragents
-                        //                 .map((e) => e.name)
-                        //                 .toList()
-                        //                 .map<DropdownMenuItem<String>>(
-                        //                     (String? value) {
-                        //               return DropdownMenuItem<String>(
-                        //                 value: value,
-                        //                 child: Text(
-                        //                   "",
-                        //                   style: ThemeTextStyle.textStyle14w400,
-                        //                 ),
-                        //               );
-                        //             }).toList(),
-                        //             value: recipient,
-                        //             hint: "Получатель",
-                        //             searchHint: "Получатель",
-                        //             style: ThemeTextStyle.textStyle14w400,
-                        //             onChanged: (String? newValue) {
-                        //               recipient = newValue;
-                        //               for (int i = 0;
-                        //                   i < counteragents.length;
-                        //                   i++) {
-                        //                 if (recipient ==
-                        //                         counteragents[i].name &&
-                        //                     counteragents[i].id != -1) {
-                        //                   recipientId = counteragents[i].id;
-                        //                   _vmodel.recipientId = recipientId;
-                        //                   log(_vmodel.recipientId.toString());
-                        //                 }
-                        //               }
-                        //               setState(() {});
-                        //             },
-                        //             isExpanded: true,
-                        //             icon: SvgPicture.asset(
-                        //               "assets/images/svg/chevron_right.svg",
-                        //             ),
-                        //             underline: const SizedBox(),
-                        //           );
-                        //         },
-                        //         orElse: () {
-                        //           return const CircularProgressIndicator(
-                        //             color: Colors.red,
-                        //           );
-                        //         },
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
-                        // const SizedBox(
-                        //   height: 16,
-                        // ),
-                        // GestureDetector(
-                        //   onTap: () async {
-                        //     final DateTime? date = await showDatePicker(
-                        //       context: context,
-                        //       initialDate: DateTime.now(),
-                        //       firstDate: DateTime(2019),
-                        //       lastDate: DateTime.now(),
-                        //       helpText: "Дата входящего номера",
-                        //       builder: (context, child) {
-                        //         return Theme(
-                        //           data: Theme.of(context).copyWith(
-                        //             colorScheme: const ColorScheme.light(
-                        //               primary: ColorPalette.greyDark,
-                        //             ),
-                        //             textTheme: TextTheme(
-                        //               headline5:
-                        //                   ThemeTextStyle.textTitleDella24w400,
-                        //               overline: ThemeTextStyle.textStyle16w600,
-                        //             ),
-                        //             textButtonTheme: TextButtonThemeData(
-                        //               style: TextButton.styleFrom(
-                        //                 primary: Colors.black,
-                        //                 textStyle: ThemeTextStyle
-                        //                     .textStyle14w600
-                        //                     .copyWith(color: Colors.black),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //           child: child!,
-                        //         );
-                        //       },
-                        //     );
-                        //     if (date != null) {
-                        //       _vmodel.invoiceDate.text =
-                        //           DateFormat("dd.MM.yyyy").format(date);
-                        //     }
-                        //   },
-                        //   child: Container(
-                        //     padding: const EdgeInsets.all(12),
-                        //     decoration: BoxDecoration(
-                        //       color: ColorPalette.white,
-                        //       borderRadius: BorderRadius.circular(16),
-                        //     ),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Text(
-                        //           "Дата накладной",
-                        //           style:
-                        //               ThemeTextStyle.textStyle14w400.copyWith(
-                        //             color: ColorPalette.grey400,
-                        //           ),
-                        //         ),
-                        //         const SizedBox(
-                        //           width: 16,
-                        //         ),
-                        //         Flexible(
-                        //           child: AppTextField(
-                        //             contentPadding: EdgeInsets.zero,
-                        //             capitalize: false,
-                        //             controller: _vmodel.invoiceDate,
-                        //             readonly: true,
-                        //             textAlign: TextAlign.right,
-                        //             showErrorMessages: false,
-                        //             suffixIcon: Padding(
-                        //               padding: const EdgeInsets.only(left: 8.0),
-                        //               child: GestureDetector(
-                        //                 onTap: () async {
-                        //                   final DateTime? date =
-                        //                       await showDatePicker(
-                        //                     context: context,
-                        //                     initialDate: DateTime.now(),
-                        //                     firstDate: DateTime(2019),
-                        //                     lastDate: DateTime.now(),
-                        //                     helpText: "Дата входящего номера",
-                        //                     builder: (context, child) {
-                        //                       return Theme(
-                        //                         data:
-                        //                             Theme.of(context).copyWith(
-                        //                           colorScheme:
-                        //                               const ColorScheme.light(
-                        //                             primary:
-                        //                                 ColorPalette.greyDark,
-                        //                           ),
-                        //                           textTheme: TextTheme(
-                        //                             headline5: ThemeTextStyle
-                        //                                 .textTitleDella24w400,
-                        //                             overline: ThemeTextStyle
-                        //                                 .textStyle16w600,
-                        //                           ),
-                        //                           textButtonTheme:
-                        //                               TextButtonThemeData(
-                        //                             style: TextButton.styleFrom(
-                        //                               primary: Colors.black,
-                        //                               textStyle: ThemeTextStyle
-                        //                                   .textStyle14w600
-                        //                                   .copyWith(
-                        //                                 color: Colors.black,
-                        //                               ),
-                        //                             ),
-                        //                           ),
-                        //                         ),
-                        //                         child: child!,
-                        //                       );
-                        //                     },
-                        //                   );
-                        //                   if (date != null) {
-                        //                     _vmodel.invoiceDate.text =
-                        //                         DateFormat("dd.MM.yyyy")
-                        //                             .format(date);
-                        //                   }
-                        //                 },
-                        //                 child: SvgPicture.asset(
-                        //                   "assets/images/svg/calendar_circle_ic.svg",
-                        //                   width: 24,
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                         const Spacer(),
                         MaterialButton(
                           height: 40,
@@ -465,21 +264,11 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                           color: ColorPalette.orange,
                           disabledColor: ColorPalette.orangeInactive,
                           padding: EdgeInsets.zero,
-                          // onTap: _vmodel.incomeNumber.validated ? () {
-                          //   AppRouter.push(context, DigitalSignatureLoadScreen());
-                          // } : null,
-                          ///todo
-
                           onPressed: () {
-                            // if (_vmodel.incomeNumberController.text.length < 2) {
-                            //   print(_vmodel.incomeNumberController.text.length);
-                            //   buildErrorCustomSnackBar(context, 'Не все поля заполнены!!!');
-                            // } else {
-                            if (
-                                _vmodel
+                            if (vmodel
                                     .incomeNumber.controller.text.isNotEmpty &&
-                                _vmodel.incomeNumberDateController.text
-                                    .isNotEmpty ) {
+                                vmodel.incomeNumberDateController.text
+                                    .isNotEmpty) {
                               widget.isFromPharmacyPage
                                   ? BlocProvider.of<SignatureScreenCubit>(
                                       context,
@@ -488,28 +277,27 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                           ? widget.pharmacyOrder!.id
                                           : widget.warehouseOrder!.id,
                                       status: 3,
-                                      incomingNumber: _vmodel.incomeNumber
+                                      incomingNumber: vmodel.incomeNumber
                                               .controller.text.isEmpty
                                           ? null
-                                          : _vmodel
-                                              .incomeNumber.controller.text,
-                                      incomingDate: _vmodel
+                                          : vmodel.incomeNumber.controller.text,
+                                      incomingDate: vmodel
                                               .incomeNumberDateController
                                               .text
                                               .isEmpty
                                           ? null
-                                          : _vmodel
+                                          : vmodel
                                               .incomeNumberDateController.text,
-                                      bin: _vmodel.bin.controller.text.isEmpty
+                                      bin: vmodel.bin.controller.text.isEmpty
                                           ? null
-                                          : _vmodel.bin.controller.text,
+                                          : vmodel.bin.controller.text,
                                       invoiceDate:
-                                          _vmodel.invoiceDate.text.isEmpty
+                                          vmodel.invoiceDate.text.isEmpty
                                               ? null
-                                              : _vmodel.invoiceDate.text,
-                                      recipientId: _vmodel.recipientId == -1
+                                              : vmodel.invoiceDate.text,
+                                      recipientId: vmodel.recipientId == -1
                                           ? null
-                                          : _vmodel.recipientId,
+                                          : vmodel.recipientId,
                                     )
                                   : BlocProvider.of<SignatureScreenCubit>(
                                       context,
@@ -518,28 +306,27 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                                           ? widget.pharmacyOrder!.id
                                           : widget.warehouseOrder!.id,
                                       status: 3,
-                                      incomingNumber: _vmodel.incomeNumber
+                                      incomingNumber: vmodel.incomeNumber
                                               .controller.text.isEmpty
                                           ? null
-                                          : _vmodel
-                                              .incomeNumber.controller.text,
-                                      incomingDate: _vmodel
+                                          : vmodel.incomeNumber.controller.text,
+                                      incomingDate: vmodel
                                               .incomeNumberDateController
                                               .text
                                               .isEmpty
                                           ? null
-                                          : _vmodel
+                                          : vmodel
                                               .incomeNumberDateController.text,
-                                      bin: _vmodel.bin.controller.text.isEmpty
+                                      bin: vmodel.bin.controller.text.isEmpty
                                           ? null
-                                          : _vmodel.bin.controller.text,
+                                          : vmodel.bin.controller.text,
                                       invoiceDate:
-                                          _vmodel.invoiceDate.text.isEmpty
+                                          vmodel.invoiceDate.text.isEmpty
                                               ? null
-                                              : _vmodel.invoiceDate.text,
-                                      counteragentId: _vmodel.recipientId == -1
+                                              : vmodel.invoiceDate.text,
+                                      counteragentId: vmodel.recipientId == -1
                                           ? null
-                                          : _vmodel.recipientId,
+                                          : vmodel.recipientId,
                                     );
                             } else {
                               buildErrorCustomSnackBar(
@@ -573,139 +360,4 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
       ),
     );
   }
-
-  Future _bottomSheet(Widget widget) {
-    return showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      context: context,
-      enableDrag: true,
-      isDismissible: false,
-      isScrollControlled: true,
-      builder: (context) {
-        return widget;
-      },
-    );
-  }
 }
-
-// class _TypeChooseBottomSheet extends StatelessWidget {
-//   final bool isFromPharmacyPage;
-//   final PharmacyOrderDTO? pharmacyOrder;
-//   final WarehouseOrderDTO? warehouseOrder;
-//   const _TypeChooseBottomSheet({
-//     Key? key,
-//     required this.isFromPharmacyPage,
-//     this.pharmacyOrder,
-//     this.warehouseOrder,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: MediaQuery.of(context).size.height * 0.3,
-//       decoration: const BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.only(
-//           topLeft: Radius.circular(10),
-//           topRight: Radius.circular(10),
-//         ),
-//       ),
-//       padding: const EdgeInsets.only(
-//         right: 16,
-//         left: 16,
-//       ),
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Container(
-//             width: 40,
-//             height: 4,
-//             margin: const EdgeInsets.only(
-//               top: 14,
-//             ),
-//             decoration: BoxDecoration(
-//               color: const Color(0xffD9DBE9),
-//               borderRadius: BorderRadius.circular(100),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 15,
-//           ),
-//           const Text(
-//             'Выберите способ подтверждения ',
-//             style: TextStyle(
-//               color: Colors.black,
-//               fontSize: 18,
-//               fontWeight: FontWeight.w500,
-//             ),
-//           ),
-//           const Spacer(),
-//           MaterialButton(
-//             height: 40,
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(8),
-//             ),
-//             color: ColorPalette.orange,
-//             disabledColor: ColorPalette.orangeInactive,
-//             padding: EdgeInsets.zero,
-//             onPressed: () {
-//               AppRouter.pushReplacement(
-//                 context,
-//                 DigitalSignatureLoadScreen(
-//                   isFromPharmacyPage: isFromPharmacyPage,
-//                   warehouseOrder: warehouseOrder,
-//                   pharmacyOrder: pharmacyOrder,
-//                 ),
-//               );
-//             },
-//             child: Center(
-//               child: Text(
-//                 "Подписать с ЭЦП",
-//                 style: ThemeTextStyle.textStyle14w600
-//                     .copyWith(color: ColorPalette.white),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 15,
-//           ),
-//           MaterialButton(
-//             height: 40,
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(8),
-//             ),
-//             color: ColorPalette.orange,
-//             disabledColor: ColorPalette.orangeInactive,
-//             padding: EdgeInsets.zero,
-//             onPressed: () {
-//               AppRouter.pushReplacement(
-//                 context,
-//                 SignatureScreen(
-//                   isFromPharmacyPage: isFromPharmacyPage,
-//                   warehouseOrder: warehouseOrder,
-//                   pharmacyOrder: pharmacyOrder,
-//                 ),
-//               );
-//               // }
-//             },
-//             child: Center(
-//               child: Text(
-//                 "Подписать вручную",
-//                 style: ThemeTextStyle.textStyle14w600
-//                     .copyWith(color: ColorPalette.white),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 15,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

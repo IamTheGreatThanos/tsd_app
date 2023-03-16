@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/app/generated/l10n.dart';
 
 
-class Formatters {
+mixin Formatters {
   static String mainTime(DateTime dateTime) {
     return DateFormat("hh:mm a").format(dateTime.toLocal());
   }
@@ -36,7 +36,7 @@ class Formatters {
   }
 
   static String nameFormatter(String? lastName, String? firstName, S lang) {
-    final name = ((lastName ?? '') + ' ' + (firstName ?? '')).trim();
+    final name = '${lastName ?? ''} ${firstName ?? ''}'.trim();
     if (name.isNotEmpty) return name;
     return lang.no_data;
   }

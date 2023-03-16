@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
+import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
+    as countragents;
 import 'package:pharmacy_arrival/screens/move_data/vmodel/move_filter_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
@@ -10,13 +12,11 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
-    as countragents;
 import 'package:search_choices/search_choices.dart';
 
 class MoveFilterPage extends StatefulWidget {
   final VoidCallback callback;
-  const MoveFilterPage({Key? key, required this.callback}) : super(key: key);
+  const MoveFilterPage({super.key, required this.callback});
 
   @override
   State<MoveFilterPage> createState() => _MoveFilterPageState();
@@ -397,11 +397,10 @@ class _DatePicker extends StatefulWidget {
   final String hintText;
   final VoidCallback onClose;
   const _DatePicker({
-    Key? key,
     required this.controller,
     required this.hintText,
     required this.onClose,
-  }) : super(key: key);
+  });
 
   @override
   State<_DatePicker> createState() => _DatePickerState();
@@ -425,13 +424,12 @@ class _DatePickerState extends State<_DatePicker> {
                   primary: ColorPalette.greyDark,
                 ),
                 textTheme: TextTheme(
-                  headline5: ThemeTextStyle.textTitleDella24w400,
-                  overline: ThemeTextStyle.textStyle16w600,
+                  headlineSmall: ThemeTextStyle.textTitleDella24w400,
+                  labelSmall: ThemeTextStyle.textStyle16w600,
                 ),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
-                    primary: Colors.black,
-                    textStyle: ThemeTextStyle.textStyle14w600
+                    foregroundColor: Colors.black, textStyle: ThemeTextStyle.textStyle14w600
                         .copyWith(color: Colors.black),
                   ),
                 ),
@@ -507,14 +505,13 @@ class _DatePickerState extends State<_DatePicker> {
                                       primary: ColorPalette.greyDark,
                                     ),
                                     textTheme: TextTheme(
-                                      headline5:
+                                      headlineSmall:
                                           ThemeTextStyle.textTitleDella24w400,
-                                      overline: ThemeTextStyle.textStyle16w600,
+                                      labelSmall: ThemeTextStyle.textStyle16w600,
                                     ),
                                     textButtonTheme: TextButtonThemeData(
                                       style: TextButton.styleFrom(
-                                        primary: Colors.black,
-                                        textStyle: ThemeTextStyle
+                                        foregroundColor: Colors.black, textStyle: ThemeTextStyle
                                             .textStyle14w600
                                             .copyWith(
                                           color: Colors.black,

@@ -8,8 +8,8 @@ import 'package:pharmacy_arrival/widgets/dynamic_link_layer/bloc/dynamic_link_la
 class DynamicLinkLayer extends StatelessWidget {
   final bool isAuthenticated;
 
-  const DynamicLinkLayer({Key? key, required this.isAuthenticated})
-      : super(key: key);
+  const DynamicLinkLayer({super.key, required this.isAuthenticated})
+     ;
 
   @override
   Widget build(BuildContext context) {

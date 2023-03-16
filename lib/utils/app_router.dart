@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-abstract class AppRouter {
+mixin AppRouter {
   static Future push(
     BuildContext? context,
     Widget screen, {

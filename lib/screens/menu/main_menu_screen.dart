@@ -18,7 +18,7 @@ import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
 class MainMenuScreen extends StatefulWidget {
-  const MainMenuScreen({Key? key}) : super(key: key);
+  const MainMenuScreen();
 
   @override
   State<MainMenuScreen> createState() => _MainMenuScreenState();
@@ -354,13 +354,12 @@ class _BuildMenuOption extends StatelessWidget {
   final VoidCallback onTap;
 
   const _BuildMenuOption({
-    Key? key,
     this.icon,
     required this.title,
     required this.color,
     required this.onTap,
     this.pad = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

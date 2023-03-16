@@ -7,9 +7,9 @@ export 'package:loader_overlay/src/overlay_controller_widget_extension.dart';
 
 class AppLoaderOverlay extends StatelessWidget {
   const AppLoaderOverlay({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
 

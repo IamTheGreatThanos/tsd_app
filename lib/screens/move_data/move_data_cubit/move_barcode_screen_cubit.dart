@@ -89,11 +89,12 @@ class MoveBarcodeScreenCubit extends Cubit<MoveBarcodeScreenState> {
 
     cahceProducts.add(scannedProduct.copyWith(isReady: true));
 
-    final saveResult =
-        await _saveMoveProductsToCache(SaveMoveProductsToCacheParams(
-      products: cahceProducts,
-      moveOrderId: orderId,
-    ));
+    final saveResult = await _saveMoveProductsToCache(
+      SaveMoveProductsToCacheParams(
+        products: cahceProducts,
+        moveOrderId: orderId,
+      ),
+    );
     saveResult.fold((l) {
       log(mapFailureToMessage(l));
     }, (r) {

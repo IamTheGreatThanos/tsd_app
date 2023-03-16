@@ -16,7 +16,6 @@ import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
-import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/filter/move_filter_widget.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
@@ -24,7 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MoveOrdersPage extends StatefulWidget {
-  const MoveOrdersPage({Key? key}) : super(key: key);
+  const MoveOrdersPage();
 
   @override
   State<MoveOrdersPage> createState() => _MoveOrdersPageState();
@@ -521,10 +520,9 @@ class _BuildOrderData extends StatelessWidget {
   final MoveDataDTO orderData;
 
   const _BuildOrderData({
-    Key? key,
     required this.orderData,
     required this.currentIndex,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -743,12 +741,11 @@ class _BuildOrderDetailItem extends StatelessWidget {
   final bool hasImage;
 
   const _BuildOrderDetailItem({
-    Key? key,
     required this.icon,
     required this.title,
     required this.data,
-    this.hasImage = false,
-  }) : super(key: key);
+     this.hasImage = false,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
@@ -14,8 +13,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HistoryMoveScreenDetail extends StatefulWidget {
   final MoveDataDTO moveDataDTO;
-  const HistoryMoveScreenDetail({Key? key, required this.moveDataDTO})
-      : super(key: key);
+  const HistoryMoveScreenDetail({super.key, required this.moveDataDTO})
+     ;
 
   @override
   State<HistoryMoveScreenDetail> createState() =>
@@ -135,7 +134,6 @@ class _BuildBody extends StatefulWidget {
   final List<ProductDTO> scannedProducts;
   final MoveDataDTO? pharmacyOrder;
   const _BuildBody({
-    Key? key,
     required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
@@ -143,7 +141,7 @@ class _BuildBody extends StatefulWidget {
     this.pharmacyOrder,
     required this.accept,
     required this.send,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();
@@ -252,12 +250,11 @@ class _BuildGoodDetails extends StatefulWidget {
   final ProductDTO selectedProduct;
   final int orderID;
   const _BuildGoodDetails({
-    Key? key,
     required this.good,
     required this.selectedProduct,
     required this.orderID,
     required this.currentIndex,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();

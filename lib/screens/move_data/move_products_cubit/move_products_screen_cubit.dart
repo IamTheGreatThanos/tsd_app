@@ -143,7 +143,7 @@ class MoveProductsScreenCubit extends Cubit<MoveProductsScreenState> {
   }) async {
     emit(const MoveProductsScreenState.loadingState());
     final result = await _moveDataRepository.updateMoveProductById(
-        updatingProduct: updatingProduct);
+        updatingProduct: updatingProduct,);
 
     result.fold(
         (l) => emit(

@@ -11,7 +11,7 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class PharmacyQrScreen extends StatefulWidget {
-  const PharmacyQrScreen({Key? key}) : super(key: key);
+  const PharmacyQrScreen();
 
   @override
   State<PharmacyQrScreen> createState() => _PharmacyQrScreenState();

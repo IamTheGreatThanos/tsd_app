@@ -28,10 +28,12 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     required int status,
   }) async {
     emit(const PharmacyArrivalScreenState.loadingState());
-    final result = await _getOrdersBySearch.call(GetOrdersBySearchParams(
-      number: number,
-      status: status,
-    ));
+    final result = await _getOrdersBySearch.call(
+      GetOrdersBySearchParams(
+        number: number,
+        status: status,
+      ),
+    );
     result.fold(
       (l) => emit(
         PharmacyArrivalScreenState.errorState(
@@ -113,17 +115,17 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
         ),
       ),
       (r) {
-        final List<PharmacyOrderDTO> _loadOrders = [];
+        final List<PharmacyOrderDTO> loadOrders = [];
         log("ON LOADING:: , page:: $_currentPage");
         if (r.isNotEmpty) {
           _currentPage++;
         }
         for (final PharmacyOrderDTO orderDTO in r) {
           if (orderDTO.status == 1 || orderDTO.status == 2) {
-            _loadOrders.add(orderDTO);
+            loadOrders.add(orderDTO);
           }
         }
-        _activeOrders += _loadOrders;
+        _activeOrders += loadOrders;
         emit(PharmacyArrivalScreenState.loadedState(orders: _activeOrders));
       },
     );
@@ -137,7 +139,10 @@ class PharmacyArrivalScreenCubit extends Cubit<PharmacyArrivalScreenState> {
     emit(const PharmacyArrivalScreenState.loadingState());
     final result = await _updatePharmacyOrderStatus.call(
       UpdatePharmacyOrderStatusParams(
-          orderId: orderId, status: status, totalStatus: totalStatus),
+        orderId: orderId,
+        status: status,
+        totalStatus: totalStatus,
+      ),
     );
 
     result.fold(

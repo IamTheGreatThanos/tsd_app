@@ -12,8 +12,8 @@ import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class MoveOrderFinishPage extends StatefulWidget {
   final MoveDataDTO? orderData;
-  const MoveOrderFinishPage({Key? key, required this.orderData})
-      : super(key: key);
+  const MoveOrderFinishPage({super.key, required this.orderData})
+     ;
 
   @override
   State<MoveOrderFinishPage> createState() => _MoveOrderFinishPageState();
@@ -134,16 +134,15 @@ class _MoveOrderFinishPageState extends State<MoveOrderFinishPage> {
                                                 primary: ColorPalette.greyDark,
                                               ),
                                               textTheme: TextTheme(
-                                                headline5: ThemeTextStyle
+                                                headlineSmall: ThemeTextStyle
                                                     .textTitleDella24w400,
-                                                overline: ThemeTextStyle
+                                                labelSmall: ThemeTextStyle
                                                     .textStyle16w600,
                                               ),
                                               textButtonTheme:
                                                   TextButtonThemeData(
                                                 style: TextButton.styleFrom(
-                                                  primary: Colors.black,
-                                                  textStyle: ThemeTextStyle
+                                                  foregroundColor: Colors.black, textStyle: ThemeTextStyle
                                                       .textStyle14w600
                                                       .copyWith(
                                                     color: Colors.black,
@@ -210,19 +209,17 @@ class _MoveOrderFinishPageState extends State<MoveOrderFinishPage> {
                                                                     .greyDark,
                                                           ),
                                                           textTheme: TextTheme(
-                                                            headline5:
+                                                            headlineSmall:
                                                                 ThemeTextStyle
                                                                     .textTitleDella24w400,
-                                                            overline: ThemeTextStyle
+                                                            labelSmall: ThemeTextStyle
                                                                 .textStyle16w600,
                                                           ),
                                                           textButtonTheme:
                                                               TextButtonThemeData(
                                                             style: TextButton
                                                                 .styleFrom(
-                                                              primary:
-                                                                  Colors.black,
-                                                              textStyle:
+                                                              foregroundColor: Colors.black, textStyle:
                                                                   ThemeTextStyle
                                                                       .textStyle14w600
                                                                       .copyWith(

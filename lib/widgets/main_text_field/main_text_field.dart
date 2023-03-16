@@ -36,7 +36,7 @@
 //   final TextInputType? keyboardType;
 //
 //   const MainTextField({
-//     Key? key,
+//     super.key,
 //     this.controller,
 //     this.hintText,
 //     this.focusNode,
@@ -48,7 +48,7 @@
 //     this.onEditingComplete,
 //     this.inputFormatters,
 //     this.keyboardType,
-//   }) : super(key: key);
+//   });
 //
 //   @override
 //   Widget build(BuildContext context) {

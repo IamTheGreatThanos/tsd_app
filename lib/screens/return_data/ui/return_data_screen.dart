@@ -28,7 +28,7 @@
 // import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 // class ReturnDataScreen extends StatefulWidget {
-//   const ReturnDataScreen({Key? key}) : super(key: key);
+//   const ReturnDataScreen({Key? key});
 
 //   @override
 //   State<ReturnDataScreen> createState() => _ReturnDataScreenState();
@@ -304,7 +304,7 @@ import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
 class ReturnDataScreen extends StatefulWidget {
-  const ReturnDataScreen({Key? key}) : super(key: key);
+  const ReturnDataScreen();
 
   @override
   State<ReturnDataScreen> createState() => _ReturnDataScreenState();

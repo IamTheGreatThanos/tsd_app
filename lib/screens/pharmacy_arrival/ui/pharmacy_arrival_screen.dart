@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io' show Platform;
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,11 +11,10 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/ui/_vmodel.dart';
-import 'package:pharmacy_arrival/screens/common/ui/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_generated_qr_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_generated_qr_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_qr_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 import 'package:pharmacy_arrival/styles/color_palette.dart';
@@ -31,7 +31,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PharmacyArrivalScreen extends StatefulWidget {
-  const PharmacyArrivalScreen({Key? key}) : super(key: key);
+  const PharmacyArrivalScreen();
 
   @override
   State<PharmacyArrivalScreen> createState() => _PharmacyArrivalScreenState();
@@ -148,7 +148,10 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
                     fillColor: ColorPalette.white,
                     prefixIcon: SvgPicture.asset(
                       "assets/images/svg/search.svg",
-                      color: ColorPalette.grey400,
+                      colorFilter: const ColorFilter.mode(
+                        ColorPalette.grey400,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.only(
                       top: 18,
@@ -455,7 +458,7 @@ class _PharmacyArrivalScreenState extends State<PharmacyArrivalScreen> {
 class _BuildOrderData extends StatelessWidget {
   final PharmacyOrderDTO orderData;
 
-  const _BuildOrderData({Key? key, required this.orderData}) : super(key: key);
+  const _BuildOrderData({required this.orderData});
 
   @override
   Widget build(BuildContext context) {
@@ -694,9 +697,9 @@ class _BuildOrderData extends StatelessWidget {
                     onTap: () async {
                       AppRouter.push(
                         context,
-                         PharmacyGeneratedQrScreen(
+                        PharmacyGeneratedQrScreen(
                           order: orderData,
-                         ),
+                        ),
                       );
                     },
                     child: Container(
@@ -725,9 +728,10 @@ class _BuildOrderData extends StatelessWidget {
     );
   }
 
-  Future<void> _launchUrl(Uri _url) async {
-    if (!await launchUrl(_url, mode: LaunchMode.externalApplication))
-      throw 'Could not launch $_url';
+  Future<void> _launchUrl(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
   }
 
   ///
@@ -744,9 +748,6 @@ class _BuildOrderData extends StatelessWidget {
       platformPath = '1476128386&ibi=kz.egov.mobile';
       platformPathLabel = 'isi';
     }
-    final String ourEncodedUrl = Uri.encodeQueryComponent(
-      "https://tsd-aqnietgroup.kz/api/ecp/second",
-    );
     // log(ourEncodedUrl,name:"ENCODED DATA");
     log('$path/?link=https://tsd-aqnietgroup.kz/api/ecp/first/&$platformPathLabel=$platformPath');
     await _launchUrl(
@@ -764,12 +765,11 @@ class _BuildOrderDetailItem extends StatelessWidget {
   final bool hasImage;
 
   const _BuildOrderDetailItem({
-    Key? key,
     required this.icon,
     required this.title,
     required this.data,
     this.hasImage = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

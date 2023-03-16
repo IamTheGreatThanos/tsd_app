@@ -16,12 +16,12 @@ class DefectScreen extends StatefulWidget {
   final TextEditingController searchController;
   final int orderId;
   const DefectScreen({
-    Key? key,
+    super.key,
     required this.product,
     required this.orderId,
     required this.searchController,
     required this.isFromPharmacyPage,
-  }) : super(key: key);
+  });
 
   @override
   _DefectScreenState createState() => _DefectScreenState();
@@ -793,13 +793,12 @@ class _BuildDefectiveDetail extends StatefulWidget {
   final bool isAll;
   final TextEditingController textFieldController;
   const _BuildDefectiveDetail({
-    Key? key,
     required this.isAll,
     required this.title,
     required this.onChanged,
     required this.showDivider,
     required this.textFieldController,
-  }) : super(key: key);
+  });
 
   @override
   _BuildDefectiveDetailState createState() => _BuildDefectiveDetailState();

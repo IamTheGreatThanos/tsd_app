@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
@@ -23,7 +22,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ReturnDetailPage extends StatefulWidget {
   final PharmacyOrderDTO? pharmacyOrder;
-  const ReturnDetailPage({Key? key, this.pharmacyOrder}) : super(key: key);
+  const ReturnDetailPage({super.key, this.pharmacyOrder});
 
   @override
   State<ReturnDetailPage> createState() => _ReturnDetailPageState();
@@ -67,7 +66,7 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                   log('Current Scan: $_currentScan');
                   var scanResult = '';
                   for (var i = 0; i < _currentScan.length; i++) {
-                    if (i % 2 == 0) {
+                    if (i.isEven) {
                       scanResult += _currentScan[i];
                     }
                   }
@@ -220,7 +219,8 @@ class _ReturnDetailPageState extends State<ReturnDetailPage> {
                   fillColor: ColorPalette.white,
                   prefixIcon: SvgPicture.asset(
                     "assets/images/svg/search.svg",
-                    color: ColorPalette.grey400,
+                    colorFilter: const ColorFilter.mode(
+                        ColorPalette.grey400, BlendMode.srcIn,),
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 17,
@@ -331,7 +331,6 @@ class _BuildBody extends StatefulWidget {
   final List<ProductDTO> scannedProducts;
   final PharmacyOrderDTO? pharmacyOrder;
   const _BuildBody({
-    Key? key,
     required this.orderId,
     required this.scannedProducts,
     required this.selectedProduct,
@@ -339,7 +338,7 @@ class _BuildBody extends StatefulWidget {
     this.pharmacyOrder,
     required this.searchController,
     required this.scrollController,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildBody> createState() => _BuildBodyState();
@@ -441,13 +440,12 @@ class _BuildGoodDetails extends StatefulWidget {
   final int orderID;
   final PharmacyOrderDTO? pharmacyOrderDTO;
   const _BuildGoodDetails({
-    Key? key,
     required this.good,
     required this.selectedProduct,
     required this.orderID,
     required this.searchController,
     required this.pharmacyOrderDTO,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();
@@ -681,11 +679,10 @@ class _SpecifyingNumberManually extends StatefulWidget {
   final ProductDTO productDTO;
   final int orderID;
   const _SpecifyingNumberManually({
-    Key? key,
     required this.productDTO,
     required this.orderID,
     required this.searchController,
-  }) : super(key: key);
+  });
 
   @override
   State<_SpecifyingNumberManually> createState() =>

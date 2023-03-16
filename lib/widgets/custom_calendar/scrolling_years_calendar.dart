@@ -5,7 +5,7 @@ import 'package:pharmacy_arrival/widgets/custom_calendar/year_view.dart';
 
 class ScrollingYearsCalendar extends StatefulWidget {
   ScrollingYearsCalendar({
-    Key? key,
+    super.key,
     required this.context,
     required this.initialDate,
     required this.firstDate,
@@ -35,8 +35,7 @@ class ScrollingYearsCalendar extends StatefulWidget {
         assert(
           monthNames == null || monthNames.length == DateTime.monthsPerYear,
           'monthNames must contain all months of the year',
-        ),
-        super(key: key);
+        );
 
   final BuildContext context;
   final DateTime initialDate;
@@ -78,7 +77,7 @@ class _ScrollingYearsCalendarState extends State<ScrollingYearsCalendar> {
 
     return ListView.builder(
       shrinkWrap: true,
-      padding:  EdgeInsets.zero,
+      padding: EdgeInsets.zero,
       controller: _scrollController,
       itemCount: _itemCount,
       itemBuilder: (BuildContext context, int index) {

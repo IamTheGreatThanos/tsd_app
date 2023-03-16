@@ -7,7 +7,7 @@ import 'package:pharmacy_arrival/styles/text_styles.dart';
 class AppListTile extends StatelessWidget {
   ///typically [leading] is a CircleAvatar with radius 30.0
   const AppListTile({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     this.onTap,
@@ -19,9 +19,7 @@ class AppListTile extends StatelessWidget {
     this.titleStyle = ThemeTextStyle.textStyle16w400,
     this.chevronVisible = true,
     TextStyle? subtitleStyle,
-  })  : subtitleStyle = subtitleStyle ??
-      ThemeTextStyle.textStyle14w400,
-        super(key: key);
+  }) : subtitleStyle = subtitleStyle ?? ThemeTextStyle.textStyle14w400;
 
   final Color color;
   final EdgeInsetsGeometry contentPadding;
@@ -81,12 +79,15 @@ class AppListTile extends StatelessWidget {
               ),
             ),
             if (trailing != null) trailing!,
-            if (chevronVisible && onTap != null) Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: SvgPicture.asset(
-                "assets/images/svg/arrow_right.svg",
-              ),
-            ) else const SizedBox.shrink()
+            if (chevronVisible && onTap != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: SvgPicture.asset(
+                  "assets/images/svg/arrow_right.svg",
+                ),
+              )
+            else
+              const SizedBox.shrink()
           ],
         ),
       ),

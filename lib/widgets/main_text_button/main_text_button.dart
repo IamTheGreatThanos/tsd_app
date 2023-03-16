@@ -18,12 +18,12 @@ class MainTextButton extends StatelessWidget {
   final bool isCentered;
 
   const MainTextButton({
-    Key? key,
+    super.key,
     this.isButtonEnabled = true,
     required this.title,
     required this.onPressed,
     this.isCentered = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

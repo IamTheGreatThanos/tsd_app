@@ -26,14 +26,14 @@ class TwoButtonsDialog extends StatelessWidget {
   final VoidCallback? onSecondTap;
 
   const TwoButtonsDialog({
-    Key? key,
+    super.key,
     this.onFirstTap,
     this.onSecondTap,
     required this.title,
     required this.subtitle,
     required this.firstButtonText,
     required this.secondButtonText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

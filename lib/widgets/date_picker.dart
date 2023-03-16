@@ -10,11 +10,11 @@ class DatePicker extends StatefulWidget {
   final String hintText;
   final VoidCallback onClose;
   const DatePicker({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     required this.onClose,
-  }) : super(key: key);
+  });
 
   @override
   State<DatePicker> createState() => _DatePickerState();
@@ -38,8 +38,8 @@ class _DatePickerState extends State<DatePicker> {
                   primary: ColorPalette.greyDark,
                 ),
                 textTheme: TextTheme(
-                  headline5: ThemeTextStyle.textTitleDella24w400,
-                  overline: ThemeTextStyle.textStyle16w600,
+                  headlineSmall: ThemeTextStyle.textTitleDella24w400,
+                  labelSmall: ThemeTextStyle.textStyle16w600,
                 ),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
@@ -119,8 +119,8 @@ class _DatePickerState extends State<DatePicker> {
                                       primary: ColorPalette.greyDark,
                                     ),
                                     textTheme: TextTheme(
-                                      headline5: ThemeTextStyle.textTitleDella24w400,
-                                      overline: ThemeTextStyle.textStyle16w600,
+                                      headlineSmall: ThemeTextStyle.textTitleDella24w400,
+                                      labelSmall: ThemeTextStyle.textStyle16w600,
                                     ),
                                     textButtonTheme: TextButtonThemeData(
                                       style: TextButton.styleFrom(

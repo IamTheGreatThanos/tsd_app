@@ -10,14 +10,14 @@ extension StringUtils on String {
   }
 
   String get formatAsPhone {
-    final _digits = extractDigits;
-    if (_digits.isEmpty) return '';
+    final digits = extractDigits;
+    if (digits.isEmpty) return '';
     final output = <String>[];
-    output.add('+${_digits.substring(0, 1)}');
-    output.add(' (${_digits.substring(1, 4)})');
-    output.add(' ${_digits.substring(4, 7)}-');
-    output.add('${_digits.substring(7, 9)}-');
-    output.add(_digits.substring(9, _digits.length));
+    output.add('+${digits.substring(0, 1)}');
+    output.add(' (${digits.substring(1, 4)})');
+    output.add(' ${digits.substring(4, 7)}-');
+    output.add('${digits.substring(7, 9)}-');
+    output.add(digits.substring(9, digits.length));
     return output.join();
   }
 

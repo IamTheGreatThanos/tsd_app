@@ -9,7 +9,7 @@ import 'package:pharmacy_arrival/widgets/main_text_field/vmodel/input_cubit.dart
 
 class AppTextField extends StatefulWidget {
   AppTextField({
-    Key? key,
+    super.key,
     this.textAlign,
     this.inputFormatters,
     bool obscureText = false,
@@ -48,8 +48,7 @@ class AppTextField extends StatefulWidget {
     FocusNode? focusNode,
   })  : contentPadding = contentPadding ?? const EdgeInsets.all(17.0),
         controller = controller ?? TextEditingController(text: initial),
-        focusNode = focusNode ?? FocusNode(),
-        super(key: key) {
+        focusNode = focusNode ?? FocusNode() {
     cubit = InputCubit<String>(
       validator: validator,
       autovalidate: autovalidate,

@@ -17,9 +17,9 @@ class MoveBarcodeScreen extends StatefulWidget {
   final MoveDataDTO moveDataDTO;
   const MoveBarcodeScreen({
     required this.moveDataDTO,
-    Key? key,
+    super.key,
     required this.isFromProductsPage,
-  }) : super(key: key);
+  });
 
   @override
   State<MoveBarcodeScreen> createState() => _MoveBarcodeScreenState();

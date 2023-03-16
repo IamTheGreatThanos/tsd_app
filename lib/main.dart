@@ -99,7 +99,7 @@ void main() async {
 }
 
 class MainAuthorization extends StatefulWidget {
-  const MainAuthorization({Key? key}) : super(key: key);
+  const MainAuthorization();
 
   @override
   State<MainAuthorization> createState() => _MainAuthorizationState();
@@ -162,8 +162,8 @@ class Application extends StatelessWidget {
 
   const Application({
     required this.isAuthenticated,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +172,7 @@ class Application extends StatelessWidget {
 }
 
 class RestartWidget extends StatefulWidget {
-  const RestartWidget({Key? key, required this.child}) : super(key: key);
+  const RestartWidget({super.key, required this.child});
 
   final Widget child;
 

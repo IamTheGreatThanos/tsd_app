@@ -6,7 +6,7 @@ import 'package:pharmacy_arrival/screens/return_data/ui/return_products_screen.d
 import 'package:pharmacy_arrival/utils/app_router.dart';
 
 class ReturnDataLauncher extends StatefulWidget {
-  const ReturnDataLauncher({Key? key}) : super(key: key);
+  const ReturnDataLauncher();
 
   @override
   State<ReturnDataLauncher> createState() => _ReturnDataLauncherState();

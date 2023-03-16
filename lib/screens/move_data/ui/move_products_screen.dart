@@ -15,8 +15,8 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
 class MoveProductsScreen extends StatefulWidget {
   final MoveDataDTO moveDataDTO;
-  const MoveProductsScreen({Key? key, required this.moveDataDTO})
-      : super(key: key);
+  const MoveProductsScreen({super.key, required this.moveDataDTO})
+     ;
 
   @override
   State<MoveProductsScreen> createState() => _MoveProductsScreenState();
@@ -176,10 +176,9 @@ class _BuildGoodDetails extends StatefulWidget {
   final MoveDataDTO moveData;
 
   const _BuildGoodDetails({
-    Key? key,
     required this.good,
     required this.moveData,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildGoodDetails> createState() => _BuildGoodDetailsState();

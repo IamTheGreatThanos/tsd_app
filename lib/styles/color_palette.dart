@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorPalette {
+mixin ColorPalette {
   static const Color dark = Color(0xFF166F5D);
   static const Color secondaryMain = Color(0xFF803FE5);
   static const Color main = Color(0xFFF6F8FA);

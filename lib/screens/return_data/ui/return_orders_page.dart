@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
@@ -23,10 +22,9 @@ import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ReturnOrdersPage extends StatefulWidget {
-  const ReturnOrdersPage({Key? key}) : super(key: key);
+  const ReturnOrdersPage();
 
   @override
   State<ReturnOrdersPage> createState() => _ReturnOrdersPageState();
@@ -157,7 +155,10 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                     fillColor: ColorPalette.white,
                     prefixIcon: SvgPicture.asset(
                       "assets/images/svg/search.svg",
-                      color: ColorPalette.grey400,
+                      colorFilter: const ColorFilter.mode(
+                        ColorPalette.grey400,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.only(
                       top: 18,
@@ -358,7 +359,8 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
                             loadingState: () {
                               return const Center(
                                 child: CircularProgressIndicator(
-                                    color: Colors.amber),
+                                  color: Colors.amber,
+                                ),
                               );
                             },
                             byFilterState: (orders) {
@@ -483,7 +485,7 @@ class _ReturnOrdersPageState extends State<ReturnOrdersPage> {
 class _BuildOrderData extends StatelessWidget {
   final PharmacyOrderDTO orderData;
 
-  const _BuildOrderData({Key? key, required this.orderData}) : super(key: key);
+  const _BuildOrderData({required this.orderData});
 
   @override
   Widget build(BuildContext context) {
@@ -732,10 +734,6 @@ class _BuildOrderData extends StatelessWidget {
       ),
     );
   }
-
-  Future<void> _launchUrl(Uri _url) async {
-    if (!await launchUrl(_url)) throw 'Could not launch $_url';
-  }
 }
 
 class _BuildOrderDetailItem extends StatelessWidget {
@@ -745,12 +743,11 @@ class _BuildOrderDetailItem extends StatelessWidget {
   final bool hasImage;
 
   const _BuildOrderDetailItem({
-    Key? key,
     required this.icon,
     required this.title,
     required this.data,
     this.hasImage = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

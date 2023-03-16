@@ -9,13 +9,13 @@ class CustomButton extends StatefulWidget {
   final double? height;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.body,
     required this.onClick,
     required this.style,
     this.width,
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   _CustomButtonState createState() => _CustomButtonState();
