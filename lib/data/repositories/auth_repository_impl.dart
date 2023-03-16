@@ -9,7 +9,7 @@ import 'package:pharmacy_arrival/data/datasource/remote/auth_remote_ds.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
-
+//TODO Репо для прием авторизации
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDS remoteDS;
   final AuthLocalDS localDS;

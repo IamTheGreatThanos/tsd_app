@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+//TODO Локальная бд для сохранение продуктов 
 
 abstract class ProductsLocalDS {
   Future<ProductDTO> getPharmacySelectedProductFromCahce({

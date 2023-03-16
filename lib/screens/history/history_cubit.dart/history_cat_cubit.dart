@@ -7,7 +7,7 @@ part 'history_cat_cubit.freezed.dart';
 
 class HistoryCatCubit extends Cubit<HistoryCatState> {
   HistoryCatCubit() : super(const HistoryCatState.pharmacyHistoryCatState());
-
+  //TODO На странице истории у нас есть 4 таба. Для этого у нас есть HistoryCatCubit и HistoryCatState
   void changeToPharmacyCat() {
     emit(const HistoryCatState.pharmacyHistoryCatState());
   }

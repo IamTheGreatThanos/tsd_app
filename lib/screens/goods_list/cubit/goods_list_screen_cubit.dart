@@ -137,7 +137,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       search: search,
     );
   }
-
+//TODO Логика сканирование и получение товаров в определенном заказе
 //получение продуктов
   Future<void> _getPharmacyProducts({
     required int orderId,
@@ -188,7 +188,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   }
 
   ////////////SCANNER PHARMACY ARRIVAL PRODUCTS
-  ///Сканер бар кода
+  ///Сканер бар кода. Сканировать можно 3 способами. 1)Через баркод сканнер 2)Через камеры 3)Вручную
   Future<void> scannerBarCode({
     required String scannedResult,
     int? productId,
@@ -276,17 +276,6 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       }
     } else {
       await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-      // if (selectedProduct.orderID == productDTO.orderID &&
-      //     selectedProduct.id != productDTO.id) {
-      //   emit(
-      //     const GoodsListScreenState.errorState(
-      //       message: 'Сначала отсканируйте выбранный товар до конца',
-      //     ),
-      //   );
-      //   changeToLoadedState(
-      //     orderId: orderId,
-      //   );
-      // } else {
       if (scanType==0&&productDTO.totalCount! <=
           (productDTO.scanCount ?? 0) +
               (productDTO.defective ?? 0) +

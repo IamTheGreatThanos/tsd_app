@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//TODO Локальная ДС для сохранение элементов от блока прием контейнеров
 abstract class AcceptContainersLocalDs {
   Future<String> getContainerNumberFromCache();
 

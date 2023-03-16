@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/auth_bloc.dart';
 import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
-import 'package:pharmacy_arrival/app/bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/app/bloc/organization_cubit.dart';
 import 'package:pharmacy_arrival/app/network/dio_wrapper/dio_wrapper.dart';
 import 'package:pharmacy_arrival/app/network/services/network_service.dart';
@@ -90,7 +90,7 @@ class _MainAuthorizationState extends State<MainAuthorization> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthorizedState) {
           Navigator.of(context).popUntil((route) => route.isFirst);

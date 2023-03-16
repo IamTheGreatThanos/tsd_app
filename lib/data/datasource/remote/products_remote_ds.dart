@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_helper.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-
+//TODO Продукты ДС
 abstract class ProductsRemoteDS {
   Future<List<ProductDTO>> getProductsPharmacyArrival({
     required String accessToken,

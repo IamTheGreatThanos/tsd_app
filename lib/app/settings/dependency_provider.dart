@@ -5,7 +5,7 @@ import 'package:pharmacy_arrival/app/network/repository/global_repository.dart';
 import 'package:pharmacy_arrival/app/network/repository/hive_repository.dart';
 import 'package:pharmacy_arrival/app/network/services/network_service.dart';
 import 'package:pharmacy_arrival/app/network/tokens_repository/tokens_repository.dart';
-import 'package:pharmacy_arrival/screens/common/_vmodel.dart';
+import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_vmodel.dart';
 import 'package:provider/provider.dart';
 
 ///Providers for global managers

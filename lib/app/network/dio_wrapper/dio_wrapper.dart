@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:pharmacy_arrival/app/bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/auth_bloc.dart';
 import 'package:pharmacy_arrival/app/network/models/dto_models/encodable.dart';
 import 'package:pharmacy_arrival/app/network/models/dto_models/response/dto_tokens_reaponse.dart';
 import 'package:pharmacy_arrival/app/network/repository/global_repository.dart';
@@ -22,7 +22,7 @@ class DioWrapper {
     String baseURL = '',
     required TokensRepository tokensRepository,
     required GlobalRepository globalRepository,
-    required LoginBloc loginBloc,
+    required AuthBloc loginBloc,
   }) async {
     _dio.options.baseUrl = baseURL;
 
@@ -235,7 +235,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   final TokensRepository tokensRepository;
   final Dio baseDio;
   final Dio dioRefresher;
-  final LoginBloc loginBloc;
+  final AuthBloc loginBloc;
 
   AuthInterceptor({
     required this.tokensRepository,

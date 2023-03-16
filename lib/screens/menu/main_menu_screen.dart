@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_arrival/app/bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/auth_bloc.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/app_router.dart';
@@ -16,7 +16,7 @@ import 'package:pharmacy_arrival/screens/return_data/ui/return_orders_page.dart'
 import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
-
+//TODO Главная страница 
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen();
 
@@ -118,7 +118,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                                     width: 100,
                                     style: pinkButtonStyle(),
                                     onClick: () {
-                                      BlocProvider.of<LoginBloc>(context)
+                                      BlocProvider.of<AuthBloc>(context)
                                           .add(LogOutEvent());
                                     },
                                     body: Row(

@@ -15,6 +15,7 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter
 
 part 'history_state.dart';
 part 'history_cubit.freezed.dart';
+//TODO История разделено на 4 части: Для Приход Аптека, Приход на склад, Возврат, Перемещение
 
 class HistoryCubit extends Cubit<HistoryState> {
   final GetWarehouseArrivalHistory _getWarehouseArrivalHistory;

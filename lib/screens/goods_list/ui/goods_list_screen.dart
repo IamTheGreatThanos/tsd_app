@@ -12,7 +12,7 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/defect_screen.dart';
-import 'package:pharmacy_arrival/screens/common/fill_invoice_screen.dart';
+import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/goods_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/widgets/build_pharmacy_good_datail.dart';
@@ -62,6 +62,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
+      //TODO RawKeyboardListener используется для сканирования товаров через баркод сканнер.
       child: RawKeyboardListener(
         autofocus: true,
         focusNode: focusNode,

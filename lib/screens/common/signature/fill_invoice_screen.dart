@@ -7,8 +7,8 @@ import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_vmodel.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
@@ -17,6 +17,7 @@ import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 
+//TODO страница подписания накладная
 class FillInvoiceScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
   final PharmacyOrderDTO? pharmacyOrder;

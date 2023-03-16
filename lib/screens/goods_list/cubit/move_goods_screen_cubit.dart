@@ -14,16 +14,8 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
   List<ProductDTO> unscannedProducts = [];
   List<ProductDTO> scannedProdcuts = [];
   final MoveDataRepository _moveDataRepository;
-  // final GetProductsPharmacyArrival _getProductsPharmacyArrival;
-  // final UpdatePharmacyProductById _updatePharmacyProductById;
-  // final GetPharmacySelectedProduct _getPharmacySelectedProduct;
-  // final SavePharmacySelectedProduct _savePharmacySelectedProduct;
   MoveGoodsScreenCubit(
     this._moveDataRepository,
-    // this._getProductsPharmacyArrival,
-    // this._updatePharmacyProductById,
-    // this._getPharmacySelectedProduct,
-    // this._savePharmacySelectedProduct,
   ) : super(const MoveGoodsScreenState.initialState());
 
   Future<void> updateMoveProductById({
@@ -43,16 +35,6 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
         );
       },
       (r) async {
-        // log("SUM::::::: ${r.scanCount! + r.defective! + r.surplus! + r.underachievement! + r.reSorting!}");
-        // if (r.totalCount ==
-        //     r.scanCount! +
-        //         r.defective! +
-        //         r.underachievement! +
-        //         r.reSorting!) {
-        //  log("${r.scanCount! + r.defective!  + r.underachievement! + r.reSorting!}");
-        // await savePharmacySelectedProductToCache(
-        //   selectedProduct: ProductDTO(id: -1, orderID: orderId),
-        // );
         if (r.status == 2) {
           emit(
             const MoveGoodsScreenState.successScannedState(
@@ -75,7 +57,7 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
     emit(const MoveGoodsScreenState.loadingState());
     await _getMoveProducts(orderId, search);
   }
-
+//TODO Логика получение и сканирование товаров возврата
 //получение продуктов
   Future<void> _getMoveProducts(int orderId, String? search) async {
     final ProductDTO selectedProduct =

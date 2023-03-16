@@ -9,7 +9,8 @@ import 'package:pharmacy_arrival/screens/goods_list/cubit/move_goods_screen_cubi
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
-
+// TODO в папке common размещены страницы которые используется в нескольких местах
+// TODO Defect Screen детальная страница брака 
 class DefectScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
   final ProductDTO product;

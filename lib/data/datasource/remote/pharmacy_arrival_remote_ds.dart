@@ -7,7 +7,7 @@ import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_helper.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-
+//TODO Приход аптека ДС
 abstract class PharmacyArrivalRemoteDS {
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
     required String accessToken,
