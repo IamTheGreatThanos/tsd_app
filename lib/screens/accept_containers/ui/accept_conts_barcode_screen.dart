@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_cubit/accept_cont_list_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/bloc/accept_cont_list_cubit/accept_cont_list_cubit.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';

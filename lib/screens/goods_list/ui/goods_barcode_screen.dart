@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/barcode_scanner_widget.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 
-class MoveGoodsBarcodeScreen extends StatefulWidget {
+class GoodsBarcodeScreen extends StatefulWidget {
+  final bool isFromPharmacyPage;
   final int orderId;
   final TextEditingController searchController;
-  const MoveGoodsBarcodeScreen({
+  const GoodsBarcodeScreen({
     super.key,
     required this.orderId,
     required this.searchController,
+    required this.isFromPharmacyPage,
   });
 
   @override
-  State<MoveGoodsBarcodeScreen> createState() => _MoveGoodsBarcodeScreenState();
+  State<GoodsBarcodeScreen> createState() => _GoodsBarcodeScreenState();
 }
 
-class _MoveGoodsBarcodeScreenState extends State<MoveGoodsBarcodeScreen> {
+class _GoodsBarcodeScreenState extends State<GoodsBarcodeScreen> {
   @override
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
@@ -28,7 +30,7 @@ class _MoveGoodsBarcodeScreenState extends State<MoveGoodsBarcodeScreen> {
           showLogo: false,
         ),
         body: SafeArea(
-          child: BlocConsumer<MoveGoodsScreenCubit, MoveGoodsScreenState>(
+          child: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
             listener: (context, state) {
               state.when(
                 initialState: () {
@@ -58,13 +60,29 @@ class _MoveGoodsBarcodeScreenState extends State<MoveGoodsBarcodeScreen> {
                 height: (MediaQuery.of(context).size.width - 26) / 1.5,
                 width: MediaQuery.of(context).size.width - 26,
                 callback: (barcode) async {
-                  await BlocProvider.of<MoveGoodsScreenCubit>(context).scannerBarCode(
-                    scannedResult: barcode,
-                    orderId: widget.orderId,
-                    search: widget.searchController.text.isNotEmpty ? widget.searchController.text : null,
-                    quantity: 1,
-                    scanType: 0,
-                  );
+                  if (widget.isFromPharmacyPage) {
+                    await BlocProvider.of<GoodsListScreenCubit>(context)
+                        .scannerBarCode(
+                      scannedResult: barcode,
+                      orderId: widget.orderId,
+                      search: widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
+                      quantity: 1,
+                      scanType: 0,
+                    );
+                  } else {
+                    await BlocProvider.of<GoodsListScreenCubit>(context)
+                        .refundScannerBarCode(
+                      barcode,
+                      widget.orderId,
+                      widget.searchController.text.isNotEmpty
+                          ? widget.searchController.text
+                          : null,
+                      1,
+                      0,
+                    );
+                  }
                 },
               );
             },

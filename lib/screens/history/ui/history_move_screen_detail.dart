@@ -2,42 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
-import 'package:pharmacy_arrival/core/utils/app_router.dart';
-import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
+import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/history/history_cubit.dart/history_cubit.dart';
-import 'package:pharmacy_arrival/screens/return_data/ui/return_detail_page.dart';
+import 'package:pharmacy_arrival/screens/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
-import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class HistoryScreenDetail extends StatefulWidget {
-  final bool isFromPharmacyPage;
-  final PharmacyOrderDTO? pharmacyOrder;
-  final WarehouseOrderDTO? warehouseOrder;
-  const HistoryScreenDetail({
-    super.key,
-    required this.isFromPharmacyPage,
-    this.pharmacyOrder,
-    this.warehouseOrder,
-  });
+class HistoryMoveScreenDetail extends StatefulWidget {
+  final MoveDataDTO moveDataDTO;
+  const HistoryMoveScreenDetail({super.key, required this.moveDataDTO})
+     ;
 
   @override
-  State<HistoryScreenDetail> createState() => _HistoryScreenDetailState();
+  State<HistoryMoveScreenDetail> createState() =>
+      _HistoryMoveScreenDetailState();
 }
 
-class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
+class _HistoryMoveScreenDetailState extends State<HistoryMoveScreenDetail> {
   @override
   void initState() {
-    if (widget.isFromPharmacyPage) {
-      BlocProvider.of<GoodsListScreenCubit>(context)
-          .getPharmacyProducts(orderId: widget.pharmacyOrder!.id);
-    } else {}
+    BlocProvider.of<MoveGoodsScreenCubit>(context)
+        .getMoveProducts(orderId: widget.moveDataDTO.id);
+
     super.initState();
   }
 
@@ -45,43 +33,12 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
   Widget build(BuildContext context) {
     return AppLoaderOverlay(
       child: Scaffold(
-        floatingActionButton: widget.isFromPharmacyPage &&
-                (widget.pharmacyOrder!.refundStatus == 0 ||
-                    widget.pharmacyOrder!.refundStatus == 1)
-            ? Padding(
-                padding: const EdgeInsets.fromLTRB(32, 0, 0, 0),
-                child: CustomButton(
-                  height: 44,
-                  onClick: () {
-                    AppRouter.pushReplacement(
-                      context,
-                      ReturnDetailPage(
-                        pharmacyOrder: widget.pharmacyOrder,
-                      ),
-                    );
-                    BlocProvider.of<HistoryCubit>(context)
-                        .updatePharmacyOrderStatus(
-                      orderId: widget.pharmacyOrder!.id,
-                      refundStatus: 1,
-                      isFromHisPage: true,
-                    );
-                  },
-                  body: Text(
-                    widget.pharmacyOrder?.refundStatus == 0
-                        ? 'Создать возврата'
-                        : "Продолжить возврат",
-                    style: const TextStyle(),
-                  ),
-                  style: pinkButtonStyle(),
-                ),
-              )
-            : const SizedBox(),
         backgroundColor: ColorPalette.main,
         appBar: CustomAppBar(
           title: "Список товаров".toUpperCase(),
-         
+          
         ),
-        body: BlocConsumer<GoodsListScreenCubit, GoodsListScreenState>(
+        body: BlocConsumer<MoveGoodsScreenCubit, MoveGoodsScreenState>(
           builder: (context, state) {
             return state.maybeWhen(
               loadingState: () {
@@ -97,18 +54,13 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
                 selectedProduct,
               ) {
                 return _BuildBody(
-                  orderStatus: widget.isFromPharmacyPage
-                      ? widget.pharmacyOrder?.status ?? 0
-                      : widget.warehouseOrder?.status ?? 0,
-                  orderId: widget.isFromPharmacyPage
-                      ? widget.pharmacyOrder!.id
-                      : widget.warehouseOrder!.id,
-                  unscannedProducts: unscannedProducts,
+                  accept: widget.moveDataDTO.accept!,
+                  send: widget.moveDataDTO.send!,
+                  orderId: widget.moveDataDTO.id,
+                  unscannedProducts: scannedProducts,
                   scannedProducts: scannedProducts,
                   selectedProduct: selectedProduct,
-                  pharmacyOrder: widget.pharmacyOrder,
-                  warehouseOrder: widget.warehouseOrder,
-                  isFromPharmacyPage: widget.isFromPharmacyPage,
+                  pharmacyOrder: widget.moveDataDTO,
                 );
               },
               errorState: (String message) {
@@ -163,23 +115,21 @@ class _HistoryScreenDetailState extends State<HistoryScreenDetail> {
 }
 
 class _BuildBody extends StatefulWidget {
-  final int orderStatus;
+  final int accept;
+  final int send;
   final int orderId;
   final ProductDTO selectedProduct;
   final List<ProductDTO> unscannedProducts;
   final List<ProductDTO> scannedProducts;
-  final PharmacyOrderDTO? pharmacyOrder;
-  final WarehouseOrderDTO? warehouseOrder;
-  final bool isFromPharmacyPage;
+  final MoveDataDTO? pharmacyOrder;
   const _BuildBody({
     required this.orderId,
     required this.scannedProducts,
     required this.unscannedProducts,
     required this.selectedProduct,
-    required this.orderStatus,
     this.pharmacyOrder,
-    this.warehouseOrder,
-    required this.isFromPharmacyPage,
+    required this.accept,
+    required this.send,
   });
 
   @override
@@ -201,69 +151,78 @@ class _BuildBodyState extends State<_BuildBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          children: [
-            const SizedBox(
-              height: 25,
+        const SizedBox(
+          height: 25,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+            decoration: BoxDecoration(
+              color: ColorPalette.white,
+              borderRadius: BorderRadius.circular(10),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                decoration: BoxDecoration(
-                  color: ColorPalette.white,
-                  borderRadius: BorderRadius.circular(10),
+            child: Row(
+              children: [
+                Text(
+                  "Продукты",
+                  style: ThemeTextStyle.textStyle14w500
+                      .copyWith(color: ColorPalette.grayText),
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      "Продукты",
-                      style: ThemeTextStyle.textStyle14w500
-                          .copyWith(color: ColorPalette.grayText),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      decoration: BoxDecoration(
-                        color: ColorPalette.borderGrey,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Text(
-                        "${widget.scannedProducts.length}",
-                        style: ThemeTextStyle.textStyle12w600.copyWith(
-                          color: ColorPalette.black,
-                        ),
-                      ),
-                    )
-                  ],
+                const SizedBox(
+                  width: 8,
                 ),
-              ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.borderGrey,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    "${widget.scannedProducts.length}",
+                    style: ThemeTextStyle.textStyle12w600.copyWith(
+                      color: ColorPalette.black,
+                    ),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(
-              width: 25,
-            ),
-          ],
+          ),
         ),
         Expanded(
           child: SmartRefresher(
             onRefresh: () {
-              BlocProvider.of<GoodsListScreenCubit>(context)
-                  .getPharmacyProducts(orderId: widget.orderId);
+              BlocProvider.of<MoveGoodsScreenCubit>(context)
+                  .getMoveProducts(orderId: widget.orderId);
             },
             controller: controller,
             child: ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.only(left: 12.5, right: 12.5, top: 20),
-              itemCount: widget.scannedProducts.length,
+              itemCount: currentIndex == 0
+                  ? widget.unscannedProducts.length
+                  : widget.scannedProducts.length,
               itemBuilder: (context, index) {
-                return _BuildGoodDetails(
-                  currentIndex: currentIndex,
-                  orderID: widget.orderId,
-                  good: widget.scannedProducts[index],
-                  selectedProduct: widget.selectedProduct,
+                return GestureDetector(
+                  onTap: () {
+                    // if (currentIndex == 0) {
+                    //   AppRouter.push(
+                    //     context,
+                    //     DefectScreen(
+                    //       product: widget.unscannedProducts[index],
+                    //       orderId: widget.orderId,
+                    //     ),
+                    //   );
+                    // }
+                  },
+                  child: _BuildGoodDetails(
+                    currentIndex: currentIndex,
+                    orderID: widget.orderId,
+                    good: currentIndex == 0
+                        ? widget.unscannedProducts[index]
+                        : widget.scannedProducts[index],
+                    selectedProduct: widget.selectedProduct,
+                  ),
                 );
               },
             ),
@@ -413,7 +372,7 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
                             .toUpperCase(),
                       ),
                       Text(
-                        'Возврат:   ${widget.good.refund}'.toUpperCase(),
+                        'Возврат:   ${widget.good.refund??0}'.toUpperCase(),
                       ),
                     ],
                   )

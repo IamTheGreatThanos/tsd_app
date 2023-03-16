@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
-import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_page.dart';
-import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_qr_page.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/bloc/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/ui/accept_cont_list_page.dart';
+import 'package:pharmacy_arrival/screens/accept_containers/ui/accept_cont_qr_page.dart';
 
 class AcceptContLauchPage extends StatefulWidget {
   const AcceptContLauchPage({super.key});

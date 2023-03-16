@@ -12,7 +12,7 @@ class MoveGoodsScreenState with _$MoveGoodsScreenState {
     required ProductDTO selectedProduct,
   }) = _LoadedState;
 
-    const factory MoveGoodsScreenState.successScannedState({
+  const factory MoveGoodsScreenState.successScannedState({
     required String message,
   }) = _SuccessScannedState;
 

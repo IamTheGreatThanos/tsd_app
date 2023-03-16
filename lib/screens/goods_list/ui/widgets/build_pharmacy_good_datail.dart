@@ -6,8 +6,8 @@ import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/constants.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/cubit/goods_list_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/common/goods_list/ui/widgets/specifying_number_manually.dart';
+import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/goods_list/ui/widgets/specifying_number_manually.dart';
 
 class BuildPharmacyGoodDetails extends StatelessWidget {
   final TextEditingController searchController;
