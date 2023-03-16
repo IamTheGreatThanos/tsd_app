@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 

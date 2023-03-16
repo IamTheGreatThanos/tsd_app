@@ -5,16 +5,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/app/main/counteragent_cubit/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/app/main/dependency_initializer/dependency_initializer.dart';
+import 'package:pharmacy_arrival/app/main/dependency_provider/dependency_provider.dart';
+import 'package:pharmacy_arrival/app/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/main/organization_cubit/organization_cubit.dart';
+import 'package:pharmacy_arrival/app/main/top_level_blocs/top_level_blocs.dart';
 import 'package:pharmacy_arrival/app/network/dio_wrapper/dio_wrapper.dart';
 import 'package:pharmacy_arrival/app/network/services/network_service.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
-import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
-import 'package:pharmacy_arrival/main/dependency_initializer/dependency_initializer.dart';
-import 'package:pharmacy_arrival/main/dependency_provider/dependency_provider.dart';
-import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
-import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
-import 'package:pharmacy_arrival/main/top_level_blocs/top_level_blocs.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.dart';
 
 

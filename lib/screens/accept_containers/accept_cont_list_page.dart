@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
+import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_cubit/accept_cont_list_cubit.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_conts_barcode_screen.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
@@ -375,32 +375,6 @@ class _BuildGoodDetailsState extends State<_BuildGoodDetails> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Stack(
-            //   children: [
-            //     Positioned(
-            //       bottom: 8,
-            //       left: 24,
-            //       child: Container(
-            //         padding:
-            //             const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(100),
-            //           color: ColorPalette.white,
-            //           border: Border.all(
-            //             color: ColorPalette.red,
-            //           ),
-            //         ),
-            //         child: Text(
-            //           "${widget.container.totalCount} шт.",
-            //           style: ThemeTextStyle.textStyle12w600.copyWith(
-            //             color: ColorPalette.red,
-            //           ),
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            // ),
-
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -15,15 +15,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LogOutEvent>((event, emit) => _onLogOutEvent(event, emit));
   }
 
-  // _onInitialLoginEvent(InitialLoginEvent event, Emitter<LoginState> emit) async {
-  //   // await _tokensRepository.save("5|QoBqf9Mf4lYLLU2zLW0dIzd57u2s4TyHPv2PF6g7");
-  //   if (_tokensRepository.call()) {
-  //     emit(AuthorizedState());
-  //   } else {
-  //     emit(UnauthorizedState());
-  //   }
-  // }
-
   Future<void> _onLogInEvent(LogInEvent event, Emitter<LoginState> emit) async {
     try {
       emit(AuthorizedState());

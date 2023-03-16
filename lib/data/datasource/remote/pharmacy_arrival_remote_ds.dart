@@ -204,19 +204,6 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
     try {
-      // final FormData formData = FormData.fromMap({
-      //   'status': status,
-      //   if (incomingNumber != null) 'incoming_number': incomingNumber,
-      //   if (incomingDate != null) 'incoming_date': incomingDate,
-      //   if (bin != null) 'bin': bin,
-      //   if (invoiceDate != null) 'invoice_date': invoiceDate,
-      //   if (recipientId != null) 'recipient_id': recipientId,
-      //   if (signature != null)
-      //     'signature': await MultipartFile.fromFile(
-      //       'data/data/com.thousand.pharmacy_arrival/files/uri_to_file/signature_2022-06-12T20_58_27_616920.jpg',
-      //     ),
-      // });
-      // log(signature!.path);
       final response = await dio.patch(
         '$SERVER_/api/arrival-pharmacy/$orderId',
         data: {

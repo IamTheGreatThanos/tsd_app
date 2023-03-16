@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 
 class CustomButton extends StatefulWidget {
   final Widget body;

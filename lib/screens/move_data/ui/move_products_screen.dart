@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
+import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/screens/common/fill_move_details/fill_number.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_order_finish_page.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 

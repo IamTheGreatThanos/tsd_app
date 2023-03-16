@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
 import 'package:provider/provider.dart';
 
 class PharmacyFilterWidget extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 
 ///Base button which can be one of design button
 class MainButton extends StatelessWidget {

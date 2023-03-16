@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
-import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart'
+import 'package:pharmacy_arrival/app/main/counteragent_cubit/counteragent_cubit.dart'
     as countragents;
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
+import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:pharmacy_arrival/widgets/date_picker.dart';

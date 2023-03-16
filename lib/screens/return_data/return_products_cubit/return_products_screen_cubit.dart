@@ -89,31 +89,6 @@ class ReturnProductsScreenCubit extends Cubit<ReturnProductsScreenState> {
 
   Future<void> _getProductsFromCache() async {
     isFinishable = false;
-    //   const ProductDTO productDTO = ProductDTO(
-    //     id: 11,
-    //     name: "Акнекутан капс. 16мг №30",
-    //     barcode: "110115",
-    //     producer: "Jadran",
-    //     totalCount: 86,
-    //     isReady: true,
-    //   );
-    //  const ProductDTO productDTO2 = ProductDTO(
-    //     id: 8,
-    //     name: "Оптинол Глубокое увлажнение 0,4% 10мл",
-    //     barcode: "96542",
-    //     producer: "Jadran",
-    //     totalCount: 45,
-    //     isReady: true,
-    //   );
-    //      const ProductDTO productDTO3 = ProductDTO(
-    //     id: 91,
-    //     name: "Example5",
-    //     barcode: "18858",
-    //     producer: "Europharma",
-    //     totalCount: 96,
-    //     isReady: true,
-    //   );
-    //    final saveResult = await _saveMoveProductsToCache([productDTO,productDTO2]);
     final result = await _getRefundProductsFromCache.call();
     result.fold(
       (l) {

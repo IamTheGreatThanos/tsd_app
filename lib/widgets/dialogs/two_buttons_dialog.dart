@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/widgets/dialogs/main_dialog_container.dart';
 import 'package:pharmacy_arrival/widgets/main_button/main_button.dart';
 import 'package:pharmacy_arrival/widgets/main_text_button/main_text_button.dart';

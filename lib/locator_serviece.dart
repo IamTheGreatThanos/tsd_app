@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pharmacy_arrival/app/main/counteragent_cubit/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/app/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/core/platform/network_info.dart';
 import 'package:pharmacy_arrival/data/datasource/local/accept_containers_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
@@ -66,8 +68,6 @@ import 'package:pharmacy_arrival/domain/usecases/sign_in_user.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_history.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/get_warehouse_arrival_orders.dart';
 import 'package:pharmacy_arrival/domain/usecases/warehouse_usecases/update_warehouse_order_status.dart';
-import 'package:pharmacy_arrival/main/counteragent_cubit/counteragent_cubit.dart';
-import 'package:pharmacy_arrival/main/organization_cubit/organization_cubit.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_list_cubit/accept_cont_list_cubit.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_qr_cubit/accept_cont_qr_cubit.dart';
@@ -93,6 +93,7 @@ import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/retur
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 final sl = GetIt.instance;
 

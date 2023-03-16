@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/core/styles/color_palette.dart';
+import 'package:pharmacy_arrival/core/styles/text_styles.dart';
+import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_page.dart';
 import 'package:pharmacy_arrival/screens/auth/bloc/sign_in_cubit.dart';
 import 'package:pharmacy_arrival/screens/history/history_screen.dart';
@@ -11,9 +14,6 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_sc
 import 'package:pharmacy_arrival/screens/return_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_orders_page.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
-import 'package:pharmacy_arrival/styles/color_palette.dart';
-import 'package:pharmacy_arrival/styles/text_styles.dart';
-import 'package:pharmacy_arrival/utils/app_router.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
@@ -222,123 +222,9 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                       ),
                     ],
                   ),
-                  // SizedBox(
-                  //   width: MediaQuery.of(context).size.width,
-                  //   height: MediaQuery.of(context).size.height,
-                  //   child: Stack(
-                  //     children: [
-                  //       Positioned(
-                  //           top: 30,
-                  //           left: 60,
-                  //           child: SvgPicture.asset(
-                  //             "assets/images/svg/move_vector.svg",
-                  //           )),
-                  //       Positioned(
-                  //           top: 84,
-                  //           right: 26,
-                  //           child: SvgPicture.asset(
-                  //             "assets/images/svg/pharmacy_arrival_vector.svg",
-                  //           )),
-                  //       Positioned(
-                  //           top: 154,
-                  //           left: 33,
-                  //           child: SvgPicture.asset(
-                  //             "assets/images/svg/arrival_stock_vector.svg",
-                  //           )),
-                  //       Positioned(
-                  //           top: 240,
-                  //           right: 71,
-                  //           child: SvgPicture.asset(
-                  //             "assets/images/svg/return_vector.svg",
-                  //           )),
-                  //       Positioned(
-                  //           top: 320,
-                  //           left: 38,
-                  //           child: SvgPicture.asset(
-                  //             "assets/images/svg/order_history_vector.svg",
-                  //           )),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
             ),
-
-            // Positioned(
-            //   top: 80,
-            //   right: 12,
-            //   child: _BuildMenuOption(
-            //     title: "Выйти",
-            //     color: ColorPalette.darkGrey,
-            //     onTap: () {
-            //       BlocProvider.of<LoginBloc>(context).add(LogOutEvent());
-            //     },
-            //   ),
-            // ),
-
-            // SizedBox.expand(
-            //   child: DraggableScrollableSheet(
-            //     initialChildSize: 0.24,
-            //     minChildSize: 0.2,
-            //     maxChildSize: 0.9,
-            //     builder: (context, controller) {
-            //       return ClipPath(
-            //         clipper: MyClipper(
-            //           maxHeight: MediaQuery.of(context).size.height,
-            //         ),
-            //         child: Container(
-            //           padding:
-            //               const EdgeInsets.only(top: 30, left: 16, right: 16),
-            //           decoration: const BoxDecoration(
-            //             color: ColorPalette.white,
-            //           ),
-            //           child: Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               const Text(
-            //                 "Наши аптеки",
-            //                 style: ThemeTextStyle.textStyle20w600,
-            //               ),
-            //               Expanded(
-            //                 child: GridView.builder(
-            //                   shrinkWrap: true,
-            //                   controller: controller,
-            //                   itemCount: images.length,
-            //                   itemBuilder: (context, index) {
-            //                     return Container(
-            //                       decoration: BoxDecoration(
-            //                         // color: Colors.red,
-            //                         borderRadius: BorderRadius.circular(12),
-            //                         image: DecorationImage(
-            //                           fit: BoxFit.cover,
-            //                           image: NetworkImage(
-            //                             images[index],
-            //                           ),
-            //                         ),
-            //                       ),
-            //                       // child: Container(
-            //                       //   height: 10,
-            //                       //   width: 10,
-            //                       //   color: Colors.red,
-            //                       // )
-            //                     );
-            //                   },
-            //                   gridDelegate:
-            //                       const SliverGridDelegateWithFixedCrossAxisCount(
-            //                     crossAxisCount: 2,
-            //                     crossAxisSpacing: 10,
-            //                     mainAxisSpacing: 10,
-            //                     mainAxisExtent: 96,
-            //                   ),
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),

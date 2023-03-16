@@ -5,11 +5,11 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:pharmacy_arrival/app/main/login_bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/app/network/models/dto_models/encodable.dart';
 import 'package:pharmacy_arrival/app/network/models/dto_models/response/dto_tokens_reaponse.dart';
 import 'package:pharmacy_arrival/app/network/repository/global_repository.dart';
 import 'package:pharmacy_arrival/app/network/tokens_repository/tokens_repository.dart';
-import 'package:pharmacy_arrival/main/login_bloc/login_bloc.dart';
 
 enum NetworkMethod { get, post, put, patch, delete }
 
