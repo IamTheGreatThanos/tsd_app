@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+//TODO SERVER
+
 const SERVER_ = 'https://tsd-aqnietgroup.kz';
 // const SERVER_ = '185.129.50.172:8085';
 const SERVER_PATH = '/api';
