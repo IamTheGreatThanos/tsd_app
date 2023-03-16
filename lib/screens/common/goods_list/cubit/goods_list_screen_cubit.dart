@@ -251,7 +251,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     log("SELECTED PRODUCT ID: ${selectedProduct.id}");
     if (selectedProduct.id == -1) {
       await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-      if (productDTO.totalCount! <=
+      if (scanType==0&&productDTO.totalCount! <=
           (productDTO.scanCount ?? 0) +
               (productDTO.defective ?? 0) +
               (productDTO.underachievement ?? 0) +
@@ -287,7 +287,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       //     orderId: orderId,
       //   );
       // } else {
-      if (productDTO.totalCount! <=
+      if (scanType==0&&productDTO.totalCount! <=
           (productDTO.scanCount ?? 0) +
               (productDTO.defective ?? 0) +
               (productDTO.underachievement ?? 0) +

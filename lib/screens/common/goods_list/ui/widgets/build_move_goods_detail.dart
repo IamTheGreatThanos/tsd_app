@@ -131,20 +131,23 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                         const SizedBox(
                           height: 8,
                         ),
-                        MaterialButton(
-                          color: ColorPalette.orange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          padding: EdgeInsets.zero,
-                          onPressed: (widget.good.totalCount! <=
-                                      (widget.good.scanCount ?? 0) +
-                                          (widget.good.defective ?? 0) +
-                                          (widget.good.underachievement ?? 0) +
-                                          (widget.good.reSorting ?? 0) +
-                                          (widget.good.overdue ?? 0) +
-                                          (widget.good.netovar ?? 0))
-                              ? () {
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (widget.good.totalCount! <=
+                                (widget.good.scanCount ?? 0) +
+                                    (widget.good.defective ?? 0) +
+                                    (widget.good.underachievement ?? 0) +
+                                    (widget.good.reSorting ?? 0) +
+                                    (widget.good.overdue ?? 0) +
+                                    (widget.good.netovar ?? 0))
+                              MaterialButton(
+                                color: ColorPalette.orange,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
                                   BlocProvider.of<MoveGoodsScreenCubit>(context)
                                       .updateMoveProductById(
                                     orderId: widget.orderID,
@@ -152,13 +155,13 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                                       id: widget.good.id,
                                       scanCount: widget.good.scanCount,
                                       status: 2,
-                                       defective: widget.good.defective,
-                                    surplus: widget.good.surplus,
-                                    underachievement:
-                                        widget.good.underachievement,
-                                    reSorting: widget.good.reSorting,
-                                    overdue: widget.good.overdue,
-                                    netovar: widget.good.netovar,
+                                      defective: widget.good.defective,
+                                      surplus: widget.good.surplus,
+                                      underachievement:
+                                          widget.good.underachievement,
+                                      reSorting: widget.good.reSorting,
+                                      overdue: widget.good.overdue,
+                                      netovar: widget.good.netovar,
                                     ),
                                   );
                                   BlocProvider.of<MoveGoodsScreenCubit>(context)
@@ -168,52 +171,62 @@ class _BuildMoveGoodsDetailState extends State<BuildMoveGoodsDetail> {
                                       movingId: widget.orderID,
                                     ),
                                   );
-                                }
-                              : () {
-                                  bottomSheet(
-                                    SpecifyingNumberManually(
-                                      callback: (controller) {
-                                        BlocProvider.of<MoveGoodsScreenCubit>(
-                                          context,
-                                        ).scannerBarCode(
-
-                                         scannedResult:widget.good.barcode!,
-                                          orderId:widget.orderID,
-                                         search:widget.searchController.text
-                                                  .isNotEmpty
-                                              ? widget.searchController.text
-                                              : null,
-                                        quantity:  double.parse(controller.text),
-                                        scanType: 1,
-                                        );
-                                        controller.clear();
-                                       // focusNode.dispose();
-                                        Navigator.pop(context);
-                                      },
-                                      productDTO: widget.good,
-                                      orderID: widget.orderID,
-                                    ),
-                                    context,
-                                  );
                                 },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              (widget.good.totalCount! <=
-                                      (widget.good.scanCount ?? 0) +
-                                          (widget.good.defective ?? 0) +
-                                          (widget.good.underachievement ?? 0) +
-                                          (widget.good.reSorting ?? 0) +
-                                          (widget.good.overdue ?? 0) +
-                                          (widget.good.netovar ?? 0))
-                                  ? 'Завершить'
-                                  : "Указать вручную",
-                              style: const TextStyle(
-                                color: ColorPalette.white,
-                                fontWeight: FontWeight.w600,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'Завершить',
+                                    style: TextStyle(
+                                      color: ColorPalette.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            MaterialButton(
+                              color: ColorPalette.orange,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                bottomSheet(
+                                  SpecifyingNumberManually(
+                                    callback: (controller) {
+                                      BlocProvider.of<MoveGoodsScreenCubit>(
+                                        context,
+                                      ).scannerBarCode(
+                                        scannedResult: widget.good.barcode!,
+                                        orderId: widget.orderID,
+                                        search: widget.searchController.text
+                                                .isNotEmpty
+                                            ? widget.searchController.text
+                                            : null,
+                                        quantity: double.parse(controller.text),
+                                        scanType: 1,
+                                      );
+                                      controller.clear();
+                                      // focusNode.dispose();
+                                      Navigator.pop(context);
+                                    },
+                                    productDTO: widget.good,
+                                    orderID: widget.orderID,
+                                  ),
+                                  context,
+                                );
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  "Указать вручную",
+                                  style: TextStyle(
+                                    color: ColorPalette.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                         const SizedBox(
                           height: 8,

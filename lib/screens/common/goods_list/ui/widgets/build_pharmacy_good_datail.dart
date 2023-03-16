@@ -135,20 +135,23 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                         const SizedBox(
                           height: 8,
                         ),
-                        MaterialButton(
-                          color: ColorPalette.orange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          padding: EdgeInsets.zero,
-                          onPressed: (good.totalCount! <=
-                                  good.scanCount! +
-                                      good.defective! +
-                                      good.underachievement! +
-                                      good.reSorting! +
-                                      good.overdue! +
-                                      good.netovar!)
-                              ? () {
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (good.totalCount! <=
+                                good.scanCount! +
+                                    good.defective! +
+                                    good.underachievement! +
+                                    good.reSorting! +
+                                    good.overdue! +
+                                    good.netovar!)
+                              MaterialButton(
+                                color: ColorPalette.orange,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
                                   BlocProvider.of<GoodsListScreenCubit>(context)
                                       .updatePharmacyProductById(
                                     status: "2",
@@ -172,52 +175,61 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                                       orderID: orderID,
                                     ),
                                   );
-                                }
-                              : () {
-                                  bottomSheet(
-                                    SpecifyingNumberManually(
-                                      callback: (controller) {
-                                        Navigator.pop(context);
-                                        BlocProvider.of<GoodsListScreenCubit>(
-                                          context,
-                                        ).scannerBarCode(
-                                          productId: good.id,
-                                          scannedResult: good.barcode!,
-                                          orderId: orderID,
-                                          search:
-                                              searchController.text.isNotEmpty
-                                                  ? searchController.text
-                                                  : null,
-                                          quantity:
-                                              double.parse(controller.text),
-                                          scanType: 1,
-                                        );
-                                        controller.clear();
-                                      },
-                                      productDTO: good,
-                                      orderID: orderID,
-                                    ),
-                                    context,
-                                  );
                                 },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              (good.totalCount! <=
-                                      good.scanCount! +
-                                          good.defective! +
-                                          good.underachievement! +
-                                          good.reSorting! +
-                                          good.overdue! +
-                                          good.netovar!)
-                                  ? 'Завершить'
-                                  : "Указать вручную",
-                              style: const TextStyle(
-                                color: ColorPalette.white,
-                                fontWeight: FontWeight.w600,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'Завершить',
+                                    style: TextStyle(
+                                      color: ColorPalette.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            MaterialButton(
+                              color: ColorPalette.orange,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                bottomSheet(
+                                  SpecifyingNumberManually(
+                                    callback: (controller) {
+                                      Navigator.pop(context);
+                                      BlocProvider.of<GoodsListScreenCubit>(
+                                        context,
+                                      ).scannerBarCode(
+                                        productId: good.id,
+                                        scannedResult: good.barcode!,
+                                        orderId: orderID,
+                                        search: searchController.text.isNotEmpty
+                                            ? searchController.text
+                                            : null,
+                                        quantity: double.parse(controller.text),
+                                        scanType: 1,
+                                      );
+                                      controller.clear();
+                                    },
+                                    productDTO: good,
+                                    orderID: orderID,
+                                  ),
+                                  context,
+                                );
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  "Указать вручную",
+                                  style: TextStyle(
+                                    color: ColorPalette.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                         const SizedBox(
                           height: 8,
@@ -232,9 +244,11 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Кол-во:   ${good.totalCount}'.toUpperCase()),
-                      Text((good.barcode?.length ?? 0) <= 2
+                      Text(
+                        (good.barcode?.length ?? 0) <= 2
                             ? "СКАН: ${good.scanCount!}"
-                            : "СКАН: ${good.scanCount!.toStringAsFixed(0)}",),
+                            : "СКАН: ${good.scanCount!.toStringAsFixed(0)}",
+                      ),
                       Text('Просрочен:   ${good.overdue}'.toUpperCase()),
                       Text(
                         'Нетоварный вид:   ${good.netovar}'.toUpperCase(),

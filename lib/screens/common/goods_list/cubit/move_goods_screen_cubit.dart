@@ -134,7 +134,7 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
       log("SELECTED PRODUCT ID: ${selectedProduct.id}");
       if (selectedProduct.id == -1) {
         await saveMoveSelectedProductToCache(selectedProduct: productDTO);
-        if (productDTO.totalCount! <=
+        if (scanType==0&&productDTO.totalCount! <=
             (productDTO.scanCount ?? 0) +
                 (productDTO.defective ?? 0) +
                 (productDTO.underachievement ?? 0) +
@@ -170,7 +170,7 @@ class MoveGoodsScreenCubit extends Cubit<MoveGoodsScreenState> {
             orderId: orderId,
           );
         } else {
-          if (productDTO.totalCount! <=
+          if (scanType==0&&productDTO.totalCount! <=
               (productDTO.scanCount ?? 0) +
                   (productDTO.defective ?? 0) +
                   (productDTO.underachievement ?? 0) +
