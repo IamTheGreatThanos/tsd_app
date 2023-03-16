@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:pharmacy_arrival/app/generated/l10n.dart';
 import 'package:pharmacy_arrival/app/network/dio_wrapper/dio_wrapper.dart';
 import 'package:pharmacy_arrival/app/network/services/network_service.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
@@ -63,14 +61,6 @@ void main() async {
             // },
             title: 'Europharm',
             debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            locale: const Locale('zh'),
-            supportedLocales: S.delegate.supportedLocales,
             theme: ThemeData(
               appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.white,

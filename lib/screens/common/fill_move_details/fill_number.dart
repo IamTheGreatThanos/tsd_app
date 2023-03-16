@@ -88,14 +88,16 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                 children: [
                                   Text(
                                     productInfo.name ?? "No data",
-                                    style: ThemeTextStyle.textTitleDella20w400.copyWith(color: ColorPalette.black),
+                                    style: ThemeTextStyle.textTitleDella20w400
+                                        .copyWith(color: ColorPalette.black),
                                   ),
                                   const SizedBox(
                                     height: 8,
                                   ),
                                   Text(
                                     productInfo.producer ?? "No data",
-                                    style: ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grayText),
+                                    style: ThemeTextStyle.textStyle14w400
+                                        .copyWith(color: ColorPalette.grayText),
                                   ),
                                 ],
                               ),
@@ -124,7 +126,8 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           children: [
                             Text(
                               "Количество",
-                              style: ThemeTextStyle.textStyle14w600.copyWith(color: ColorPalette.white),
+                              style: ThemeTextStyle.textStyle14w600
+                                  .copyWith(color: ColorPalette.white),
                             ),
                             const SizedBox(
                               height: 16,
@@ -142,7 +145,8 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                             quantityController.text = "";
                                           } else {
                                             count--;
-                                            quantityController.text = count.toString();
+                                            quantityController.text =
+                                                count.toString();
                                           }
                                         }
                                       });
@@ -159,13 +163,16 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                 ),
                                 Expanded(
                                   child: TextField(
-                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                     controller: quantityController,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: count.toString(),
-                                      hintStyle: ThemeTextStyle.textStyle48w300.copyWith(color: ColorPalette.black),
+                                      hintStyle: ThemeTextStyle.textStyle48w300
+                                          .copyWith(color: ColorPalette.black),
                                     ),
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
@@ -176,7 +183,8 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                       }
                                       setState(() {});
                                     },
-                                    style: ThemeTextStyle.textStyle48w300.copyWith(color: ColorPalette.black),
+                                    style: ThemeTextStyle.textStyle48w300
+                                        .copyWith(color: ColorPalette.black),
                                   ),
                                 ),
                                 const SizedBox(
@@ -188,7 +196,8 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                                       setState(() {
                                         //if (count < widget.moveData.totalCount!) {
                                         count++;
-                                        quantityController.text = count.toString();
+                                        quantityController.text =
+                                            count.toString();
                                         //}
                                       });
                                     },
@@ -204,45 +213,6 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           ],
                         ),
                       ),
-                      // TextField(
-                      //   decoration: InputDecoration(
-                      //     filled: true,
-                      //     fillColor: ColorPalette.background,
-                      //     hintText: "№ Серии",
-                      //     hintStyle: ThemeTextStyle.textStyle16w400.copyWith(
-                      //       color: ColorPalette.commonGrey,
-                      //     ),
-                      //     disabledBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(16.0),
-                      //       borderSide: const BorderSide(
-                      //         color: Colors.transparent,
-                      //       ),
-                      //       gapPadding: 0.0,
-                      //     ),
-                      //     enabledBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(16.0),
-                      //       borderSide: BorderSide(
-                      //         color: (state is StateError)
-                      //             ? ColorPalette.errorRed
-                      //             : Colors.transparent,
-                      //       ),
-                      //       gapPadding: 0.0,
-                      //     ),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(16.0),
-                      //       borderSide: BorderSide(
-                      //         color: (state is StateError)
-                      //             ? ColorPalette.errorRed
-                      //             : Colors.transparent,
-                      //       ),
-                      //       gapPadding: 0.0,
-                      //     ),
-                      //   ),
-                      //   controller: numberController,
-                      //   onChanged: (value) {
-                      //     setState(() {});
-                      //   },
-                      // ),
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 24.0,
@@ -284,7 +254,8 @@ class _FillNumberScreenState extends State<FillNumberScreen> {
                           child: Center(
                             child: Text(
                               widget.change ? "Изменить" : "Завершить",
-                              style: ThemeTextStyle.textStyle14w600.copyWith(color: ColorPalette.white),
+                              style: ThemeTextStyle.textStyle14w600
+                                  .copyWith(color: ColorPalette.white),
                             ),
                           ),
                         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/app/generated/l10n.dart';
 
 
 class InputCubit<T> extends Cubit<StateInputCubit> {
@@ -59,7 +58,7 @@ class InputCubit<T> extends Cubit<StateInputCubit> {
   List<String> _defaultValidatorAny(T? value) {
     final output = <String>[];
     if (value == null) {
-      output.add(S.current.inputErrorGeneral);
+      output.add('Input Error');
     }
     return output;
   }
@@ -67,7 +66,7 @@ class InputCubit<T> extends Cubit<StateInputCubit> {
   List<String> _defaultValidatorString(dynamic value) {
     final output = <String>[];
     if (value == null || value.isEmpty as bool) {
-      output.add(S.current.inputErrorGeneral);
+      output.add("Input Error");
     }
     return output;
   }
