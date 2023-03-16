@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/app/main/counteragent_cubit/counteragent_cubit.dart';
-import 'package:pharmacy_arrival/app/main/login_bloc/login_bloc.dart';
-import 'package:pharmacy_arrival/app/main/organization_cubit/organization_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/organization_cubit.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';

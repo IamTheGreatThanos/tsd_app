@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'return_order_cat_cubit.dart';
 
@@ -24,8 +24,8 @@ mixin _$ReturnOrderCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? activeOrdersCatState,
-    TResult Function()? finishedCatState,
+    TResult? Function()? activeOrdersCatState,
+    TResult? Function()? finishedCatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$ReturnOrderCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ActiveOrdersCatState value)? activeOrdersCatState,
-    TResult Function(_FinishedCatState value)? finishedCatState,
+    TResult? Function(_ActiveOrdersCatState value)? activeOrdersCatState,
+    TResult? Function(_FinishedCatState value)? finishedCatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,18 @@ mixin _$ReturnOrderCatState {
 abstract class $ReturnOrderCatStateCopyWith<$Res> {
   factory $ReturnOrderCatStateCopyWith(
           ReturnOrderCatState value, $Res Function(ReturnOrderCatState) then) =
-      _$ReturnOrderCatStateCopyWithImpl<$Res>;
+      _$ReturnOrderCatStateCopyWithImpl<$Res, ReturnOrderCatState>;
 }
 
 /// @nodoc
-class _$ReturnOrderCatStateCopyWithImpl<$Res>
+class _$ReturnOrderCatStateCopyWithImpl<$Res, $Val extends ReturnOrderCatState>
     implements $ReturnOrderCatStateCopyWith<$Res> {
   _$ReturnOrderCatStateCopyWithImpl(this._value, this._then);
 
-  final ReturnOrderCatState _value;
   // ignore: unused_field
-  final $Res Function(ReturnOrderCatState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -82,14 +83,11 @@ abstract class _$$_ActiveOrdersCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ActiveOrdersCatStateCopyWithImpl<$Res>
-    extends _$ReturnOrderCatStateCopyWithImpl<$Res>
+    extends _$ReturnOrderCatStateCopyWithImpl<$Res, _$_ActiveOrdersCatState>
     implements _$$_ActiveOrdersCatStateCopyWith<$Res> {
   __$$_ActiveOrdersCatStateCopyWithImpl(_$_ActiveOrdersCatState _value,
       $Res Function(_$_ActiveOrdersCatState) _then)
-      : super(_value, (v) => _then(v as _$_ActiveOrdersCatState));
-
-  @override
-  _$_ActiveOrdersCatState get _value => super._value as _$_ActiveOrdersCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -123,8 +121,8 @@ class _$_ActiveOrdersCatState implements _ActiveOrdersCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? activeOrdersCatState,
-    TResult Function()? finishedCatState,
+    TResult? Function()? activeOrdersCatState,
+    TResult? Function()? finishedCatState,
   }) {
     return activeOrdersCatState?.call();
   }
@@ -154,8 +152,8 @@ class _$_ActiveOrdersCatState implements _ActiveOrdersCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ActiveOrdersCatState value)? activeOrdersCatState,
-    TResult Function(_FinishedCatState value)? finishedCatState,
+    TResult? Function(_ActiveOrdersCatState value)? activeOrdersCatState,
+    TResult? Function(_FinishedCatState value)? finishedCatState,
   }) {
     return activeOrdersCatState?.call(this);
   }
@@ -187,14 +185,11 @@ abstract class _$$_FinishedCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_FinishedCatStateCopyWithImpl<$Res>
-    extends _$ReturnOrderCatStateCopyWithImpl<$Res>
+    extends _$ReturnOrderCatStateCopyWithImpl<$Res, _$_FinishedCatState>
     implements _$$_FinishedCatStateCopyWith<$Res> {
   __$$_FinishedCatStateCopyWithImpl(
       _$_FinishedCatState _value, $Res Function(_$_FinishedCatState) _then)
-      : super(_value, (v) => _then(v as _$_FinishedCatState));
-
-  @override
-  _$_FinishedCatState get _value => super._value as _$_FinishedCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -228,8 +223,8 @@ class _$_FinishedCatState implements _FinishedCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? activeOrdersCatState,
-    TResult Function()? finishedCatState,
+    TResult? Function()? activeOrdersCatState,
+    TResult? Function()? finishedCatState,
   }) {
     return finishedCatState?.call();
   }
@@ -259,8 +254,8 @@ class _$_FinishedCatState implements _FinishedCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ActiveOrdersCatState value)? activeOrdersCatState,
-    TResult Function(_FinishedCatState value)? finishedCatState,
+    TResult? Function(_ActiveOrdersCatState value)? activeOrdersCatState,
+    TResult? Function(_FinishedCatState value)? finishedCatState,
   }) {
     return finishedCatState?.call(this);
   }

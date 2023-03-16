@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'refund_data_dto.dart';
 
@@ -45,7 +45,8 @@ mixin _$RefundDataDTO {
 abstract class $RefundDataDTOCopyWith<$Res> {
   factory $RefundDataDTOCopyWith(
           RefundDataDTO value, $Res Function(RefundDataDTO) then) =
-      _$RefundDataDTOCopyWithImpl<$Res>;
+      _$RefundDataDTOCopyWithImpl<$Res, RefundDataDTO>;
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'sender_id') int? senderId,
@@ -58,17 +59,19 @@ abstract class $RefundDataDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RefundDataDTOCopyWithImpl<$Res>
+class _$RefundDataDTOCopyWithImpl<$Res, $Val extends RefundDataDTO>
     implements $RefundDataDTOCopyWith<$Res> {
   _$RefundDataDTOCopyWithImpl(this._value, this._then);
 
-  final RefundDataDTO _value;
   // ignore: unused_field
-  final $Res Function(RefundDataDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? senderId = freezed,
     Object? fromCounteragentId = freezed,
     Object? organizationId = freezed,
@@ -78,39 +81,39 @@ class _$RefundDataDTOCopyWithImpl<$Res>
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      senderId: senderId == freezed
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      fromCounteragentId: fromCounteragentId == freezed
+      fromCounteragentId: freezed == fromCounteragentId
           ? _value.fromCounteragentId
           : fromCounteragentId // ignore: cast_nullable_to_non_nullable
               as int?,
-      organizationId: organizationId == freezed
+      organizationId: freezed == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int?,
-      counteragentId: counteragentId == freezed
+      counteragentId: freezed == counteragentId
           ? _value.counteragentId
           : counteragentId // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -121,6 +124,7 @@ abstract class _$$_RefundDataDTOCopyWith<$Res>
           _$_RefundDataDTO value, $Res Function(_$_RefundDataDTO) then) =
       __$$_RefundDataDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'sender_id') int? senderId,
@@ -134,18 +138,16 @@ abstract class _$$_RefundDataDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_RefundDataDTOCopyWithImpl<$Res>
-    extends _$RefundDataDTOCopyWithImpl<$Res>
+    extends _$RefundDataDTOCopyWithImpl<$Res, _$_RefundDataDTO>
     implements _$$_RefundDataDTOCopyWith<$Res> {
   __$$_RefundDataDTOCopyWithImpl(
       _$_RefundDataDTO _value, $Res Function(_$_RefundDataDTO) _then)
-      : super(_value, (v) => _then(v as _$_RefundDataDTO));
+      : super(_value, _then);
 
-  @override
-  _$_RefundDataDTO get _value => super._value as _$_RefundDataDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? senderId = freezed,
     Object? fromCounteragentId = freezed,
     Object? organizationId = freezed,
@@ -155,35 +157,35 @@ class __$$_RefundDataDTOCopyWithImpl<$Res>
     Object? status = freezed,
   }) {
     return _then(_$_RefundDataDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      senderId: senderId == freezed
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      fromCounteragentId: fromCounteragentId == freezed
+      fromCounteragentId: freezed == fromCounteragentId
           ? _value.fromCounteragentId
           : fromCounteragentId // ignore: cast_nullable_to_non_nullable
               as int?,
-      organizationId: organizationId == freezed
+      organizationId: freezed == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int?,
-      counteragentId: counteragentId == freezed
+      counteragentId: freezed == counteragentId
           ? _value.counteragentId
           : counteragentId // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -240,34 +242,30 @@ class _$_RefundDataDTO implements _RefundDataDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RefundDataDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.senderId, senderId) &&
-            const DeepCollectionEquality()
-                .equals(other.fromCounteragentId, fromCounteragentId) &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId) &&
-            const DeepCollectionEquality()
-                .equals(other.counteragentId, counteragentId) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.fromCounteragentId, fromCounteragentId) ||
+                other.fromCounteragentId == fromCounteragentId) &&
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId) &&
+            (identical(other.counteragentId, counteragentId) ||
+                other.counteragentId == counteragentId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(senderId),
-      const DeepCollectionEquality().hash(fromCounteragentId),
-      const DeepCollectionEquality().hash(organizationId),
-      const DeepCollectionEquality().hash(counteragentId),
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(runtimeType, id, senderId, fromCounteragentId,
+      organizationId, counteragentId, createdAt, updatedAt, status);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RefundDataDTOCopyWith<_$_RefundDataDTO> get copyWith =>
       __$$_RefundDataDTOCopyWithImpl<_$_RefundDataDTO>(this, _$identity);
 

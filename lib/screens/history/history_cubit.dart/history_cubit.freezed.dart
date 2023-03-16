@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'history_cubit.dart';
 
@@ -42,22 +42,24 @@ mixin _$HistoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -105,21 +107,21 @@ mixin _$HistoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -148,16 +150,18 @@ mixin _$HistoryState {
 abstract class $HistoryStateCopyWith<$Res> {
   factory $HistoryStateCopyWith(
           HistoryState value, $Res Function(HistoryState) then) =
-      _$HistoryStateCopyWithImpl<$Res>;
+      _$HistoryStateCopyWithImpl<$Res, HistoryState>;
 }
 
 /// @nodoc
-class _$HistoryStateCopyWithImpl<$Res> implements $HistoryStateCopyWith<$Res> {
+class _$HistoryStateCopyWithImpl<$Res, $Val extends HistoryState>
+    implements $HistoryStateCopyWith<$Res> {
   _$HistoryStateCopyWithImpl(this._value, this._then);
 
-  final HistoryState _value;
   // ignore: unused_field
-  final $Res Function(HistoryState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -169,14 +173,11 @@ abstract class _$$_InitialStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_InitialState>
     implements _$$_InitialStateCopyWith<$Res> {
   __$$_InitialStateCopyWithImpl(
       _$_InitialState _value, $Res Function(_$_InitialState) _then)
-      : super(_value, (v) => _then(v as _$_InitialState));
-
-  @override
-  _$_InitialState get _value => super._value as _$_InitialState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -228,22 +229,24 @@ class _$_InitialState implements _InitialState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
   }
@@ -303,21 +306,21 @@ class _$_InitialState implements _InitialState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return initialState?.call(this);
   }
@@ -362,14 +365,11 @@ abstract class _$$_LoadingStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_LoadingState>
     implements _$$_LoadingStateCopyWith<$Res> {
   __$$_LoadingStateCopyWithImpl(
       _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
-      : super(_value, (v) => _then(v as _$_LoadingState));
-
-  @override
-  _$_LoadingState get _value => super._value as _$_LoadingState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -421,22 +421,24 @@ class _$_LoadingState implements _LoadingState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
   }
@@ -496,21 +498,21 @@ class _$_LoadingState implements _LoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
   }
@@ -551,26 +553,25 @@ abstract class _$$_PharmacyHistoryStateCopyWith<$Res> {
   factory _$$_PharmacyHistoryStateCopyWith(_$_PharmacyHistoryState value,
           $Res Function(_$_PharmacyHistoryState) then) =
       __$$_PharmacyHistoryStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<PharmacyOrderDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_PharmacyHistoryStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_PharmacyHistoryState>
     implements _$$_PharmacyHistoryStateCopyWith<$Res> {
   __$$_PharmacyHistoryStateCopyWithImpl(_$_PharmacyHistoryState _value,
       $Res Function(_$_PharmacyHistoryState) _then)
-      : super(_value, (v) => _then(v as _$_PharmacyHistoryState));
+      : super(_value, _then);
 
-  @override
-  _$_PharmacyHistoryState get _value => super._value as _$_PharmacyHistoryState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_PharmacyHistoryState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<PharmacyOrderDTO>,
@@ -588,6 +589,7 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
   final List<PharmacyOrderDTO> _pharmacyOrders;
   @override
   List<PharmacyOrderDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -612,6 +614,7 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PharmacyHistoryStateCopyWith<_$_PharmacyHistoryState> get copyWith =>
       __$$_PharmacyHistoryStateCopyWithImpl<_$_PharmacyHistoryState>(
           this, _$identity);
@@ -646,22 +649,24 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return pharmacyHistoryState?.call(pharmacyOrders);
   }
@@ -721,21 +726,21 @@ class _$_PharmacyHistoryState implements _PharmacyHistoryState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return pharmacyHistoryState?.call(this);
   }
@@ -784,28 +789,26 @@ abstract class _$$_PharmacyHistoryBySearchStateCopyWith<$Res> {
           _$_PharmacyHistoryBySearchState value,
           $Res Function(_$_PharmacyHistoryBySearchState) then) =
       __$$_PharmacyHistoryBySearchStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<PharmacyOrderDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_PharmacyHistoryBySearchStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_PharmacyHistoryBySearchState>
     implements _$$_PharmacyHistoryBySearchStateCopyWith<$Res> {
   __$$_PharmacyHistoryBySearchStateCopyWithImpl(
       _$_PharmacyHistoryBySearchState _value,
       $Res Function(_$_PharmacyHistoryBySearchState) _then)
-      : super(_value, (v) => _then(v as _$_PharmacyHistoryBySearchState));
+      : super(_value, _then);
 
-  @override
-  _$_PharmacyHistoryBySearchState get _value =>
-      super._value as _$_PharmacyHistoryBySearchState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_PharmacyHistoryBySearchState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<PharmacyOrderDTO>,
@@ -823,6 +826,7 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
   final List<PharmacyOrderDTO> _pharmacyOrders;
   @override
   List<PharmacyOrderDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -847,6 +851,7 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PharmacyHistoryBySearchStateCopyWith<_$_PharmacyHistoryBySearchState>
       get copyWith => __$$_PharmacyHistoryBySearchStateCopyWithImpl<
           _$_PharmacyHistoryBySearchState>(this, _$identity);
@@ -881,22 +886,24 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return pharmacyHistoryBySearch?.call(pharmacyOrders);
   }
@@ -956,21 +963,21 @@ class _$_PharmacyHistoryBySearchState implements _PharmacyHistoryBySearchState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return pharmacyHistoryBySearch?.call(this);
   }
@@ -1018,27 +1025,25 @@ abstract class _$$_WarehouseHistoryStateCopyWith<$Res> {
   factory _$$_WarehouseHistoryStateCopyWith(_$_WarehouseHistoryState value,
           $Res Function(_$_WarehouseHistoryState) then) =
       __$$_WarehouseHistoryStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<WarehouseOrderDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_WarehouseHistoryStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_WarehouseHistoryState>
     implements _$$_WarehouseHistoryStateCopyWith<$Res> {
   __$$_WarehouseHistoryStateCopyWithImpl(_$_WarehouseHistoryState _value,
       $Res Function(_$_WarehouseHistoryState) _then)
-      : super(_value, (v) => _then(v as _$_WarehouseHistoryState));
+      : super(_value, _then);
 
-  @override
-  _$_WarehouseHistoryState get _value =>
-      super._value as _$_WarehouseHistoryState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_WarehouseHistoryState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<WarehouseOrderDTO>,
@@ -1056,6 +1061,7 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
   final List<WarehouseOrderDTO> _pharmacyOrders;
   @override
   List<WarehouseOrderDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -1080,6 +1086,7 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WarehouseHistoryStateCopyWith<_$_WarehouseHistoryState> get copyWith =>
       __$$_WarehouseHistoryStateCopyWithImpl<_$_WarehouseHistoryState>(
           this, _$identity);
@@ -1114,22 +1121,24 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return warehouseHistoryState?.call(pharmacyOrders);
   }
@@ -1189,21 +1198,21 @@ class _$_WarehouseHistoryState implements _WarehouseHistoryState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return warehouseHistoryState?.call(this);
   }
@@ -1252,28 +1261,26 @@ abstract class _$$_WarehouseHistoryBySearchStateCopyWith<$Res> {
           _$_WarehouseHistoryBySearchState value,
           $Res Function(_$_WarehouseHistoryBySearchState) then) =
       __$$_WarehouseHistoryBySearchStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<WarehouseOrderDTO> warehouseOrders});
 }
 
 /// @nodoc
 class __$$_WarehouseHistoryBySearchStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_WarehouseHistoryBySearchState>
     implements _$$_WarehouseHistoryBySearchStateCopyWith<$Res> {
   __$$_WarehouseHistoryBySearchStateCopyWithImpl(
       _$_WarehouseHistoryBySearchState _value,
       $Res Function(_$_WarehouseHistoryBySearchState) _then)
-      : super(_value, (v) => _then(v as _$_WarehouseHistoryBySearchState));
+      : super(_value, _then);
 
-  @override
-  _$_WarehouseHistoryBySearchState get _value =>
-      super._value as _$_WarehouseHistoryBySearchState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? warehouseOrders = freezed,
+    Object? warehouseOrders = null,
   }) {
     return _then(_$_WarehouseHistoryBySearchState(
-      warehouseOrders: warehouseOrders == freezed
+      warehouseOrders: null == warehouseOrders
           ? _value._warehouseOrders
           : warehouseOrders // ignore: cast_nullable_to_non_nullable
               as List<WarehouseOrderDTO>,
@@ -1292,6 +1299,7 @@ class _$_WarehouseHistoryBySearchState
   final List<WarehouseOrderDTO> _warehouseOrders;
   @override
   List<WarehouseOrderDTO> get warehouseOrders {
+    if (_warehouseOrders is EqualUnmodifiableListView) return _warehouseOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_warehouseOrders);
   }
@@ -1316,6 +1324,7 @@ class _$_WarehouseHistoryBySearchState
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WarehouseHistoryBySearchStateCopyWith<_$_WarehouseHistoryBySearchState>
       get copyWith => __$$_WarehouseHistoryBySearchStateCopyWithImpl<
           _$_WarehouseHistoryBySearchState>(this, _$identity);
@@ -1350,22 +1359,24 @@ class _$_WarehouseHistoryBySearchState
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return warehouseHistoryBySearch?.call(warehouseOrders);
   }
@@ -1425,21 +1436,21 @@ class _$_WarehouseHistoryBySearchState
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return warehouseHistoryBySearch?.call(this);
   }
@@ -1487,26 +1498,25 @@ abstract class _$$_MoveingHistoryStateCopyWith<$Res> {
   factory _$$_MoveingHistoryStateCopyWith(_$_MoveingHistoryState value,
           $Res Function(_$_MoveingHistoryState) then) =
       __$$_MoveingHistoryStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MoveDataDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_MoveingHistoryStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_MoveingHistoryState>
     implements _$$_MoveingHistoryStateCopyWith<$Res> {
   __$$_MoveingHistoryStateCopyWithImpl(_$_MoveingHistoryState _value,
       $Res Function(_$_MoveingHistoryState) _then)
-      : super(_value, (v) => _then(v as _$_MoveingHistoryState));
+      : super(_value, _then);
 
-  @override
-  _$_MoveingHistoryState get _value => super._value as _$_MoveingHistoryState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_MoveingHistoryState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<MoveDataDTO>,
@@ -1524,6 +1534,7 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
   final List<MoveDataDTO> _pharmacyOrders;
   @override
   List<MoveDataDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -1548,6 +1559,7 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MoveingHistoryStateCopyWith<_$_MoveingHistoryState> get copyWith =>
       __$$_MoveingHistoryStateCopyWithImpl<_$_MoveingHistoryState>(
           this, _$identity);
@@ -1582,22 +1594,24 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return movingHistoryState?.call(pharmacyOrders);
   }
@@ -1657,21 +1671,21 @@ class _$_MoveingHistoryState implements _MoveingHistoryState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return movingHistoryState?.call(this);
   }
@@ -1720,28 +1734,26 @@ abstract class _$$_MovingHistoryBySearchStateCopyWith<$Res> {
           _$_MovingHistoryBySearchState value,
           $Res Function(_$_MovingHistoryBySearchState) then) =
       __$$_MovingHistoryBySearchStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MoveDataDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_MovingHistoryBySearchStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_MovingHistoryBySearchState>
     implements _$$_MovingHistoryBySearchStateCopyWith<$Res> {
   __$$_MovingHistoryBySearchStateCopyWithImpl(
       _$_MovingHistoryBySearchState _value,
       $Res Function(_$_MovingHistoryBySearchState) _then)
-      : super(_value, (v) => _then(v as _$_MovingHistoryBySearchState));
+      : super(_value, _then);
 
-  @override
-  _$_MovingHistoryBySearchState get _value =>
-      super._value as _$_MovingHistoryBySearchState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_MovingHistoryBySearchState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<MoveDataDTO>,
@@ -1759,6 +1771,7 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
   final List<MoveDataDTO> _pharmacyOrders;
   @override
   List<MoveDataDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -1783,6 +1796,7 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MovingHistoryBySearchStateCopyWith<_$_MovingHistoryBySearchState>
       get copyWith => __$$_MovingHistoryBySearchStateCopyWithImpl<
           _$_MovingHistoryBySearchState>(this, _$identity);
@@ -1817,22 +1831,24 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return movingHistoryBySearch?.call(pharmacyOrders);
   }
@@ -1892,21 +1908,21 @@ class _$_MovingHistoryBySearchState implements _MovingHistoryBySearchState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return movingHistoryBySearch?.call(this);
   }
@@ -1954,26 +1970,25 @@ abstract class _$$_RefundHistoryStateCopyWith<$Res> {
   factory _$$_RefundHistoryStateCopyWith(_$_RefundHistoryState value,
           $Res Function(_$_RefundHistoryState) then) =
       __$$_RefundHistoryStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<PharmacyOrderDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_RefundHistoryStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_RefundHistoryState>
     implements _$$_RefundHistoryStateCopyWith<$Res> {
   __$$_RefundHistoryStateCopyWithImpl(
       _$_RefundHistoryState _value, $Res Function(_$_RefundHistoryState) _then)
-      : super(_value, (v) => _then(v as _$_RefundHistoryState));
+      : super(_value, _then);
 
-  @override
-  _$_RefundHistoryState get _value => super._value as _$_RefundHistoryState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_RefundHistoryState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<PharmacyOrderDTO>,
@@ -1991,6 +2006,7 @@ class _$_RefundHistoryState implements _RefundHistoryState {
   final List<PharmacyOrderDTO> _pharmacyOrders;
   @override
   List<PharmacyOrderDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -2015,6 +2031,7 @@ class _$_RefundHistoryState implements _RefundHistoryState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RefundHistoryStateCopyWith<_$_RefundHistoryState> get copyWith =>
       __$$_RefundHistoryStateCopyWithImpl<_$_RefundHistoryState>(
           this, _$identity);
@@ -2049,22 +2066,24 @@ class _$_RefundHistoryState implements _RefundHistoryState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return refundHistoryState?.call(pharmacyOrders);
   }
@@ -2124,21 +2143,21 @@ class _$_RefundHistoryState implements _RefundHistoryState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return refundHistoryState?.call(this);
   }
@@ -2187,28 +2206,26 @@ abstract class _$$_RefundHistoryBySearchStateCopyWith<$Res> {
           _$_RefundHistoryBySearchState value,
           $Res Function(_$_RefundHistoryBySearchState) then) =
       __$$_RefundHistoryBySearchStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<RefundDataDTO> pharmacyOrders});
 }
 
 /// @nodoc
 class __$$_RefundHistoryBySearchStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_RefundHistoryBySearchState>
     implements _$$_RefundHistoryBySearchStateCopyWith<$Res> {
   __$$_RefundHistoryBySearchStateCopyWithImpl(
       _$_RefundHistoryBySearchState _value,
       $Res Function(_$_RefundHistoryBySearchState) _then)
-      : super(_value, (v) => _then(v as _$_RefundHistoryBySearchState));
+      : super(_value, _then);
 
-  @override
-  _$_RefundHistoryBySearchState get _value =>
-      super._value as _$_RefundHistoryBySearchState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pharmacyOrders = freezed,
+    Object? pharmacyOrders = null,
   }) {
     return _then(_$_RefundHistoryBySearchState(
-      pharmacyOrders: pharmacyOrders == freezed
+      pharmacyOrders: null == pharmacyOrders
           ? _value._pharmacyOrders
           : pharmacyOrders // ignore: cast_nullable_to_non_nullable
               as List<RefundDataDTO>,
@@ -2226,6 +2243,7 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
   final List<RefundDataDTO> _pharmacyOrders;
   @override
   List<RefundDataDTO> get pharmacyOrders {
+    if (_pharmacyOrders is EqualUnmodifiableListView) return _pharmacyOrders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pharmacyOrders);
   }
@@ -2250,6 +2268,7 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RefundHistoryBySearchStateCopyWith<_$_RefundHistoryBySearchState>
       get copyWith => __$$_RefundHistoryBySearchStateCopyWithImpl<
           _$_RefundHistoryBySearchState>(this, _$identity);
@@ -2284,22 +2303,24 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return refundHistoryBySearch?.call(pharmacyOrders);
   }
@@ -2359,21 +2380,21 @@ class _$_RefundHistoryBySearchState implements _RefundHistoryBySearchState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return refundHistoryBySearch?.call(this);
   }
@@ -2426,16 +2447,12 @@ abstract class _$$_RefundHistoryFinishedStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_RefundHistoryFinishedStateCopyWithImpl<$Res>
-    extends _$HistoryStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_RefundHistoryFinishedState>
     implements _$$_RefundHistoryFinishedStateCopyWith<$Res> {
   __$$_RefundHistoryFinishedStateCopyWithImpl(
       _$_RefundHistoryFinishedState _value,
       $Res Function(_$_RefundHistoryFinishedState) _then)
-      : super(_value, (v) => _then(v as _$_RefundHistoryFinishedState));
-
-  @override
-  _$_RefundHistoryFinishedState get _value =>
-      super._value as _$_RefundHistoryFinishedState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -2488,22 +2505,24 @@ class _$_RefundHistoryFinishedState implements _RefundHistoryFinishedState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return refundHistoryFinishedState?.call();
   }
@@ -2563,21 +2582,21 @@ class _$_RefundHistoryFinishedState implements _RefundHistoryFinishedState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return refundHistoryFinishedState?.call(this);
   }
@@ -2618,25 +2637,25 @@ abstract class _$$_ErrorStateCopyWith<$Res> {
   factory _$$_ErrorStateCopyWith(
           _$_ErrorState value, $Res Function(_$_ErrorState) then) =
       __$$_ErrorStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorStateCopyWithImpl<$Res> extends _$HistoryStateCopyWithImpl<$Res>
+class __$$_ErrorStateCopyWithImpl<$Res>
+    extends _$HistoryStateCopyWithImpl<$Res, _$_ErrorState>
     implements _$$_ErrorStateCopyWith<$Res> {
   __$$_ErrorStateCopyWithImpl(
       _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
-      : super(_value, (v) => _then(v as _$_ErrorState));
+      : super(_value, _then);
 
-  @override
-  _$_ErrorState get _value => super._value as _$_ErrorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$_ErrorState(
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2662,15 +2681,15 @@ class _$_ErrorState implements _ErrorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ErrorState &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
 
@@ -2704,22 +2723,24 @@ class _$_ErrorState implements _ErrorState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryState,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)?
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
         pharmacyHistoryBySearch,
-    TResult Function(List<WarehouseOrderDTO> pharmacyOrders)?
+    TResult? Function(List<WarehouseOrderDTO> pharmacyOrders)?
         warehouseHistoryState,
-    TResult Function(List<WarehouseOrderDTO> warehouseOrders)?
+    TResult? Function(List<WarehouseOrderDTO> warehouseOrders)?
         warehouseHistoryBySearch,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
-    TResult Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
-    TResult Function(List<PharmacyOrderDTO> pharmacyOrders)? refundHistoryState,
-    TResult Function(List<RefundDataDTO> pharmacyOrders)? refundHistoryBySearch,
-    TResult Function()? refundHistoryFinishedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryState,
+    TResult? Function(List<MoveDataDTO> pharmacyOrders)? movingHistoryBySearch,
+    TResult? Function(List<PharmacyOrderDTO> pharmacyOrders)?
+        refundHistoryState,
+    TResult? Function(List<RefundDataDTO> pharmacyOrders)?
+        refundHistoryBySearch,
+    TResult? Function()? refundHistoryFinishedState,
+    TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
   }
@@ -2779,21 +2800,21 @@ class _$_ErrorState implements _ErrorState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_PharmacyHistoryState value)? pharmacyHistoryState,
-    TResult Function(_PharmacyHistoryBySearchState value)?
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_PharmacyHistoryState value)? pharmacyHistoryState,
+    TResult? Function(_PharmacyHistoryBySearchState value)?
         pharmacyHistoryBySearch,
-    TResult Function(_WarehouseHistoryState value)? warehouseHistoryState,
-    TResult Function(_WarehouseHistoryBySearchState value)?
+    TResult? Function(_WarehouseHistoryState value)? warehouseHistoryState,
+    TResult? Function(_WarehouseHistoryBySearchState value)?
         warehouseHistoryBySearch,
-    TResult Function(_MoveingHistoryState value)? movingHistoryState,
-    TResult Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
-    TResult Function(_RefundHistoryState value)? refundHistoryState,
-    TResult Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
-    TResult Function(_RefundHistoryFinishedState value)?
+    TResult? Function(_MoveingHistoryState value)? movingHistoryState,
+    TResult? Function(_MovingHistoryBySearchState value)? movingHistoryBySearch,
+    TResult? Function(_RefundHistoryState value)? refundHistoryState,
+    TResult? Function(_RefundHistoryBySearchState value)? refundHistoryBySearch,
+    TResult? Function(_RefundHistoryFinishedState value)?
         refundHistoryFinishedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
   }

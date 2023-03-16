@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'goods_list_screen_cubit.dart';
 
@@ -29,13 +29,13 @@ mixin _$GoodsListScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<ProductDTO> scannedProducts,
             List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
         loadedState,
-    TResult Function(String message)? successScannedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(String message)? successScannedState,
+    TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,11 +61,11 @@ mixin _$GoodsListScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadedState value)? loadedState,
-    TResult Function(_SuccessScannedState value)? successScannedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_SuccessScannedState value)? successScannedState,
+    TResult? Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,17 +84,19 @@ mixin _$GoodsListScreenState {
 abstract class $GoodsListScreenStateCopyWith<$Res> {
   factory $GoodsListScreenStateCopyWith(GoodsListScreenState value,
           $Res Function(GoodsListScreenState) then) =
-      _$GoodsListScreenStateCopyWithImpl<$Res>;
+      _$GoodsListScreenStateCopyWithImpl<$Res, GoodsListScreenState>;
 }
 
 /// @nodoc
-class _$GoodsListScreenStateCopyWithImpl<$Res>
+class _$GoodsListScreenStateCopyWithImpl<$Res,
+        $Val extends GoodsListScreenState>
     implements $GoodsListScreenStateCopyWith<$Res> {
   _$GoodsListScreenStateCopyWithImpl(this._value, this._then);
 
-  final GoodsListScreenState _value;
   // ignore: unused_field
-  final $Res Function(GoodsListScreenState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -106,14 +108,11 @@ abstract class _$$_InitialStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialStateCopyWithImpl<$Res>
-    extends _$GoodsListScreenStateCopyWithImpl<$Res>
+    extends _$GoodsListScreenStateCopyWithImpl<$Res, _$_InitialState>
     implements _$$_InitialStateCopyWith<$Res> {
   __$$_InitialStateCopyWithImpl(
       _$_InitialState _value, $Res Function(_$_InitialState) _then)
-      : super(_value, (v) => _then(v as _$_InitialState));
-
-  @override
-  _$_InitialState get _value => super._value as _$_InitialState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -152,13 +151,13 @@ class _$_InitialState implements _InitialState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<ProductDTO> scannedProducts,
             List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
         loadedState,
-    TResult Function(String message)? successScannedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(String message)? successScannedState,
+    TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
   }
@@ -196,11 +195,11 @@ class _$_InitialState implements _InitialState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadedState value)? loadedState,
-    TResult Function(_SuccessScannedState value)? successScannedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_SuccessScannedState value)? successScannedState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return initialState?.call(this);
   }
@@ -235,14 +234,11 @@ abstract class _$$_LoadingStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$GoodsListScreenStateCopyWithImpl<$Res>
+    extends _$GoodsListScreenStateCopyWithImpl<$Res, _$_LoadingState>
     implements _$$_LoadingStateCopyWith<$Res> {
   __$$_LoadingStateCopyWithImpl(
       _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
-      : super(_value, (v) => _then(v as _$_LoadingState));
-
-  @override
-  _$_LoadingState get _value => super._value as _$_LoadingState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -281,13 +277,13 @@ class _$_LoadingState implements _LoadingState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<ProductDTO> scannedProducts,
             List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
         loadedState,
-    TResult Function(String message)? successScannedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(String message)? successScannedState,
+    TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
   }
@@ -325,11 +321,11 @@ class _$_LoadingState implements _LoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadedState value)? loadedState,
-    TResult Function(_SuccessScannedState value)? successScannedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_SuccessScannedState value)? successScannedState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
   }
@@ -360,6 +356,7 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
   factory _$$_LoadedStateCopyWith(
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {List<ProductDTO> scannedProducts,
       List<ProductDTO> unscannedProducts,
@@ -370,31 +367,29 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadedStateCopyWithImpl<$Res>
-    extends _$GoodsListScreenStateCopyWithImpl<$Res>
+    extends _$GoodsListScreenStateCopyWithImpl<$Res, _$_LoadedState>
     implements _$$_LoadedStateCopyWith<$Res> {
   __$$_LoadedStateCopyWithImpl(
       _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
-      : super(_value, (v) => _then(v as _$_LoadedState));
+      : super(_value, _then);
 
-  @override
-  _$_LoadedState get _value => super._value as _$_LoadedState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scannedProducts = freezed,
-    Object? unscannedProducts = freezed,
-    Object? selectedProduct = freezed,
+    Object? scannedProducts = null,
+    Object? unscannedProducts = null,
+    Object? selectedProduct = null,
   }) {
     return _then(_$_LoadedState(
-      scannedProducts: scannedProducts == freezed
+      scannedProducts: null == scannedProducts
           ? _value._scannedProducts
           : scannedProducts // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
-      unscannedProducts: unscannedProducts == freezed
+      unscannedProducts: null == unscannedProducts
           ? _value._unscannedProducts
           : unscannedProducts // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
-      selectedProduct: selectedProduct == freezed
+      selectedProduct: null == selectedProduct
           ? _value.selectedProduct
           : selectedProduct // ignore: cast_nullable_to_non_nullable
               as ProductDTO,
@@ -402,6 +397,7 @@ class __$$_LoadedStateCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProductDTOCopyWith<$Res> get selectedProduct {
     return $ProductDTOCopyWith<$Res>(_value.selectedProduct, (value) {
       return _then(_value.copyWith(selectedProduct: value));
@@ -422,6 +418,7 @@ class _$_LoadedState implements _LoadedState {
   final List<ProductDTO> _scannedProducts;
   @override
   List<ProductDTO> get scannedProducts {
+    if (_scannedProducts is EqualUnmodifiableListView) return _scannedProducts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_scannedProducts);
   }
@@ -429,6 +426,8 @@ class _$_LoadedState implements _LoadedState {
   final List<ProductDTO> _unscannedProducts;
   @override
   List<ProductDTO> get unscannedProducts {
+    if (_unscannedProducts is EqualUnmodifiableListView)
+      return _unscannedProducts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_unscannedProducts);
   }
@@ -450,8 +449,8 @@ class _$_LoadedState implements _LoadedState {
                 .equals(other._scannedProducts, _scannedProducts) &&
             const DeepCollectionEquality()
                 .equals(other._unscannedProducts, _unscannedProducts) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedProduct, selectedProduct));
+            (identical(other.selectedProduct, selectedProduct) ||
+                other.selectedProduct == selectedProduct));
   }
 
   @override
@@ -459,10 +458,11 @@ class _$_LoadedState implements _LoadedState {
       runtimeType,
       const DeepCollectionEquality().hash(_scannedProducts),
       const DeepCollectionEquality().hash(_unscannedProducts),
-      const DeepCollectionEquality().hash(selectedProduct));
+      selectedProduct);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
 
@@ -483,13 +483,13 @@ class _$_LoadedState implements _LoadedState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<ProductDTO> scannedProducts,
             List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
         loadedState,
-    TResult Function(String message)? successScannedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(String message)? successScannedState,
+    TResult? Function(String message)? errorState,
   }) {
     return loadedState?.call(
         scannedProducts, unscannedProducts, selectedProduct);
@@ -528,11 +528,11 @@ class _$_LoadedState implements _LoadedState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadedState value)? loadedState,
-    TResult Function(_SuccessScannedState value)? successScannedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_SuccessScannedState value)? successScannedState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return loadedState?.call(this);
   }
@@ -573,26 +573,25 @@ abstract class _$$_SuccessScannedStateCopyWith<$Res> {
   factory _$$_SuccessScannedStateCopyWith(_$_SuccessScannedState value,
           $Res Function(_$_SuccessScannedState) then) =
       __$$_SuccessScannedStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
 class __$$_SuccessScannedStateCopyWithImpl<$Res>
-    extends _$GoodsListScreenStateCopyWithImpl<$Res>
+    extends _$GoodsListScreenStateCopyWithImpl<$Res, _$_SuccessScannedState>
     implements _$$_SuccessScannedStateCopyWith<$Res> {
   __$$_SuccessScannedStateCopyWithImpl(_$_SuccessScannedState _value,
       $Res Function(_$_SuccessScannedState) _then)
-      : super(_value, (v) => _then(v as _$_SuccessScannedState));
+      : super(_value, _then);
 
-  @override
-  _$_SuccessScannedState get _value => super._value as _$_SuccessScannedState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$_SuccessScannedState(
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -618,15 +617,15 @@ class _$_SuccessScannedState implements _SuccessScannedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SuccessScannedState &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuccessScannedStateCopyWith<_$_SuccessScannedState> get copyWith =>
       __$$_SuccessScannedStateCopyWithImpl<_$_SuccessScannedState>(
           this, _$identity);
@@ -648,13 +647,13 @@ class _$_SuccessScannedState implements _SuccessScannedState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<ProductDTO> scannedProducts,
             List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
         loadedState,
-    TResult Function(String message)? successScannedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(String message)? successScannedState,
+    TResult? Function(String message)? errorState,
   }) {
     return successScannedState?.call(message);
   }
@@ -692,11 +691,11 @@ class _$_SuccessScannedState implements _SuccessScannedState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadedState value)? loadedState,
-    TResult Function(_SuccessScannedState value)? successScannedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_SuccessScannedState value)? successScannedState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return successScannedState?.call(this);
   }
@@ -733,26 +732,25 @@ abstract class _$$_ErrorStateCopyWith<$Res> {
   factory _$$_ErrorStateCopyWith(
           _$_ErrorState value, $Res Function(_$_ErrorState) then) =
       __$$_ErrorStateCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
 class __$$_ErrorStateCopyWithImpl<$Res>
-    extends _$GoodsListScreenStateCopyWithImpl<$Res>
+    extends _$GoodsListScreenStateCopyWithImpl<$Res, _$_ErrorState>
     implements _$$_ErrorStateCopyWith<$Res> {
   __$$_ErrorStateCopyWithImpl(
       _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
-      : super(_value, (v) => _then(v as _$_ErrorState));
+      : super(_value, _then);
 
-  @override
-  _$_ErrorState get _value => super._value as _$_ErrorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$_ErrorState(
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -778,15 +776,15 @@ class _$_ErrorState implements _ErrorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ErrorState &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
 
@@ -807,13 +805,13 @@ class _$_ErrorState implements _ErrorState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function(List<ProductDTO> scannedProducts,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function(List<ProductDTO> scannedProducts,
             List<ProductDTO> unscannedProducts, ProductDTO selectedProduct)?
         loadedState,
-    TResult Function(String message)? successScannedState,
-    TResult Function(String message)? errorState,
+    TResult? Function(String message)? successScannedState,
+    TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
   }
@@ -851,11 +849,11 @@ class _$_ErrorState implements _ErrorState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadedState value)? loadedState,
-    TResult Function(_SuccessScannedState value)? successScannedState,
-    TResult Function(_ErrorState value)? errorState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_SuccessScannedState value)? successScannedState,
+    TResult? Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
   }

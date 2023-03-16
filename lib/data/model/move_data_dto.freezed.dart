@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'move_data_dto.dart';
 
@@ -45,7 +45,8 @@ mixin _$MoveDataDTO {
 abstract class $MoveDataDTOCopyWith<$Res> {
   factory $MoveDataDTOCopyWith(
           MoveDataDTO value, $Res Function(MoveDataDTO) then) =
-      _$MoveDataDTOCopyWithImpl<$Res>;
+      _$MoveDataDTOCopyWithImpl<$Res, MoveDataDTO>;
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'sender_id') int? senderId,
@@ -60,16 +61,19 @@ abstract class $MoveDataDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoveDataDTOCopyWithImpl<$Res> implements $MoveDataDTOCopyWith<$Res> {
+class _$MoveDataDTOCopyWithImpl<$Res, $Val extends MoveDataDTO>
+    implements $MoveDataDTOCopyWith<$Res> {
   _$MoveDataDTOCopyWithImpl(this._value, this._then);
 
-  final MoveDataDTO _value;
   // ignore: unused_field
-  final $Res Function(MoveDataDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? senderId = freezed,
     Object? recipientId = freezed,
     Object? createdAt = freezed,
@@ -81,47 +85,47 @@ class _$MoveDataDTOCopyWithImpl<$Res> implements $MoveDataDTOCopyWith<$Res> {
     Object? accept = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      senderId: senderId == freezed
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      recipientId: recipientId == freezed
+      recipientId: freezed == recipientId
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      date: date == freezed
+      date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String?,
-      comment: comment == freezed
+      comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
-      send: send == freezed
+      send: freezed == send
           ? _value.send
           : send // ignore: cast_nullable_to_non_nullable
               as int?,
-      accept: accept == freezed
+      accept: freezed == accept
           ? _value.accept
           : accept // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -132,6 +136,7 @@ abstract class _$$_MoveDataDTOCopyWith<$Res>
           _$_MoveDataDTO value, $Res Function(_$_MoveDataDTO) then) =
       __$$_MoveDataDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'sender_id') int? senderId,
@@ -146,18 +151,17 @@ abstract class _$$_MoveDataDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MoveDataDTOCopyWithImpl<$Res> extends _$MoveDataDTOCopyWithImpl<$Res>
+class __$$_MoveDataDTOCopyWithImpl<$Res>
+    extends _$MoveDataDTOCopyWithImpl<$Res, _$_MoveDataDTO>
     implements _$$_MoveDataDTOCopyWith<$Res> {
   __$$_MoveDataDTOCopyWithImpl(
       _$_MoveDataDTO _value, $Res Function(_$_MoveDataDTO) _then)
-      : super(_value, (v) => _then(v as _$_MoveDataDTO));
+      : super(_value, _then);
 
-  @override
-  _$_MoveDataDTO get _value => super._value as _$_MoveDataDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? senderId = freezed,
     Object? recipientId = freezed,
     Object? createdAt = freezed,
@@ -169,43 +173,43 @@ class __$$_MoveDataDTOCopyWithImpl<$Res> extends _$MoveDataDTOCopyWithImpl<$Res>
     Object? accept = freezed,
   }) {
     return _then(_$_MoveDataDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      senderId: senderId == freezed
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      recipientId: recipientId == freezed
+      recipientId: freezed == recipientId
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      date: date == freezed
+      date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String?,
-      comment: comment == freezed
+      comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
-      send: send == freezed
+      send: freezed == send
           ? _value.send
           : send // ignore: cast_nullable_to_non_nullable
               as int?,
-      accept: accept == freezed
+      accept: freezed == accept
           ? _value.accept
           : accept // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -266,36 +270,30 @@ class _$_MoveDataDTO implements _MoveDataDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MoveDataDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.senderId, senderId) &&
-            const DeepCollectionEquality()
-                .equals(other.recipientId, recipientId) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality().equals(other.comment, comment) &&
-            const DeepCollectionEquality().equals(other.send, send) &&
-            const DeepCollectionEquality().equals(other.accept, accept));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.recipientId, recipientId) ||
+                other.recipientId == recipientId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.send, send) || other.send == send) &&
+            (identical(other.accept, accept) || other.accept == accept));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(senderId),
-      const DeepCollectionEquality().hash(recipientId),
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(comment),
-      const DeepCollectionEquality().hash(send),
-      const DeepCollectionEquality().hash(accept));
+  int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
+      createdAt, updatedAt, status, date, comment, send, accept);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MoveDataDTOCopyWith<_$_MoveDataDTO> get copyWith =>
       __$$_MoveDataDTOCopyWithImpl<_$_MoveDataDTO>(this, _$identity);
 

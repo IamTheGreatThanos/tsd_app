@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'move_order_cat_cubit.dart';
 
@@ -25,9 +25,9 @@ mixin _$MoveOrderCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accept,
-    TResult Function()? send,
-    TResult Function()? alreadyAccepted,
+    TResult? Function()? accept,
+    TResult? Function()? send,
+    TResult? Function()? alreadyAccepted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$MoveOrderCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Accept value)? accept,
-    TResult Function(_Send value)? send,
-    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
+    TResult? Function(_Accept value)? accept,
+    TResult? Function(_Send value)? send,
+    TResult? Function(_AlreadyAccepted value)? alreadyAccepted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$MoveOrderCatState {
 abstract class $MoveOrderCatStateCopyWith<$Res> {
   factory $MoveOrderCatStateCopyWith(
           MoveOrderCatState value, $Res Function(MoveOrderCatState) then) =
-      _$MoveOrderCatStateCopyWithImpl<$Res>;
+      _$MoveOrderCatStateCopyWithImpl<$Res, MoveOrderCatState>;
 }
 
 /// @nodoc
-class _$MoveOrderCatStateCopyWithImpl<$Res>
+class _$MoveOrderCatStateCopyWithImpl<$Res, $Val extends MoveOrderCatState>
     implements $MoveOrderCatStateCopyWith<$Res> {
   _$MoveOrderCatStateCopyWithImpl(this._value, this._then);
 
-  final MoveOrderCatState _value;
   // ignore: unused_field
-  final $Res Function(MoveOrderCatState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -87,13 +88,10 @@ abstract class _$$_AcceptCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AcceptCopyWithImpl<$Res>
-    extends _$MoveOrderCatStateCopyWithImpl<$Res>
+    extends _$MoveOrderCatStateCopyWithImpl<$Res, _$_Accept>
     implements _$$_AcceptCopyWith<$Res> {
   __$$_AcceptCopyWithImpl(_$_Accept _value, $Res Function(_$_Accept) _then)
-      : super(_value, (v) => _then(v as _$_Accept));
-
-  @override
-  _$_Accept get _value => super._value as _$_Accept;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -128,9 +126,9 @@ class _$_Accept implements _Accept {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accept,
-    TResult Function()? send,
-    TResult Function()? alreadyAccepted,
+    TResult? Function()? accept,
+    TResult? Function()? send,
+    TResult? Function()? alreadyAccepted,
   }) {
     return accept?.call();
   }
@@ -162,9 +160,9 @@ class _$_Accept implements _Accept {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Accept value)? accept,
-    TResult Function(_Send value)? send,
-    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
+    TResult? Function(_Accept value)? accept,
+    TResult? Function(_Send value)? send,
+    TResult? Function(_AlreadyAccepted value)? alreadyAccepted,
   }) {
     return accept?.call(this);
   }
@@ -195,13 +193,11 @@ abstract class _$$_SendCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SendCopyWithImpl<$Res> extends _$MoveOrderCatStateCopyWithImpl<$Res>
+class __$$_SendCopyWithImpl<$Res>
+    extends _$MoveOrderCatStateCopyWithImpl<$Res, _$_Send>
     implements _$$_SendCopyWith<$Res> {
   __$$_SendCopyWithImpl(_$_Send _value, $Res Function(_$_Send) _then)
-      : super(_value, (v) => _then(v as _$_Send));
-
-  @override
-  _$_Send get _value => super._value as _$_Send;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -236,9 +232,9 @@ class _$_Send implements _Send {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accept,
-    TResult Function()? send,
-    TResult Function()? alreadyAccepted,
+    TResult? Function()? accept,
+    TResult? Function()? send,
+    TResult? Function()? alreadyAccepted,
   }) {
     return send?.call();
   }
@@ -270,9 +266,9 @@ class _$_Send implements _Send {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Accept value)? accept,
-    TResult Function(_Send value)? send,
-    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
+    TResult? Function(_Accept value)? accept,
+    TResult? Function(_Send value)? send,
+    TResult? Function(_AlreadyAccepted value)? alreadyAccepted,
   }) {
     return send?.call(this);
   }
@@ -305,14 +301,11 @@ abstract class _$$_AlreadyAcceptedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AlreadyAcceptedCopyWithImpl<$Res>
-    extends _$MoveOrderCatStateCopyWithImpl<$Res>
+    extends _$MoveOrderCatStateCopyWithImpl<$Res, _$_AlreadyAccepted>
     implements _$$_AlreadyAcceptedCopyWith<$Res> {
   __$$_AlreadyAcceptedCopyWithImpl(
       _$_AlreadyAccepted _value, $Res Function(_$_AlreadyAccepted) _then)
-      : super(_value, (v) => _then(v as _$_AlreadyAccepted));
-
-  @override
-  _$_AlreadyAccepted get _value => super._value as _$_AlreadyAccepted;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -347,9 +340,9 @@ class _$_AlreadyAccepted implements _AlreadyAccepted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accept,
-    TResult Function()? send,
-    TResult Function()? alreadyAccepted,
+    TResult? Function()? accept,
+    TResult? Function()? send,
+    TResult? Function()? alreadyAccepted,
   }) {
     return alreadyAccepted?.call();
   }
@@ -381,9 +374,9 @@ class _$_AlreadyAccepted implements _AlreadyAccepted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Accept value)? accept,
-    TResult Function(_Send value)? send,
-    TResult Function(_AlreadyAccepted value)? alreadyAccepted,
+    TResult? Function(_Accept value)? accept,
+    TResult? Function(_Send value)? send,
+    TResult? Function(_AlreadyAccepted value)? alreadyAccepted,
   }) {
     return alreadyAccepted?.call(this);
   }

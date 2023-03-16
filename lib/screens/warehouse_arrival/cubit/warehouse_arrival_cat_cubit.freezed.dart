@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'warehouse_arrival_cat_cubit.dart';
 
@@ -24,8 +24,8 @@ mixin _$WarehouseArrivalCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? newOrdersCatState,
-    TResult Function()? discrepancyCatState,
+    TResult? Function()? newOrdersCatState,
+    TResult? Function()? discrepancyCatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$WarehouseArrivalCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NewOrdersCatState value)? newOrdersCatState,
-    TResult Function(_DiscrepancyCatState value)? discrepancyCatState,
+    TResult? Function(_NewOrdersCatState value)? newOrdersCatState,
+    TResult? Function(_DiscrepancyCatState value)? discrepancyCatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,19 @@ mixin _$WarehouseArrivalCatState {
 abstract class $WarehouseArrivalCatStateCopyWith<$Res> {
   factory $WarehouseArrivalCatStateCopyWith(WarehouseArrivalCatState value,
           $Res Function(WarehouseArrivalCatState) then) =
-      _$WarehouseArrivalCatStateCopyWithImpl<$Res>;
+      _$WarehouseArrivalCatStateCopyWithImpl<$Res, WarehouseArrivalCatState>;
 }
 
 /// @nodoc
-class _$WarehouseArrivalCatStateCopyWithImpl<$Res>
+class _$WarehouseArrivalCatStateCopyWithImpl<$Res,
+        $Val extends WarehouseArrivalCatState>
     implements $WarehouseArrivalCatStateCopyWith<$Res> {
   _$WarehouseArrivalCatStateCopyWithImpl(this._value, this._then);
 
-  final WarehouseArrivalCatState _value;
   // ignore: unused_field
-  final $Res Function(WarehouseArrivalCatState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -82,14 +84,11 @@ abstract class _$$_NewOrdersCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_NewOrdersCatStateCopyWithImpl<$Res>
-    extends _$WarehouseArrivalCatStateCopyWithImpl<$Res>
+    extends _$WarehouseArrivalCatStateCopyWithImpl<$Res, _$_NewOrdersCatState>
     implements _$$_NewOrdersCatStateCopyWith<$Res> {
   __$$_NewOrdersCatStateCopyWithImpl(
       _$_NewOrdersCatState _value, $Res Function(_$_NewOrdersCatState) _then)
-      : super(_value, (v) => _then(v as _$_NewOrdersCatState));
-
-  @override
-  _$_NewOrdersCatState get _value => super._value as _$_NewOrdersCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -123,8 +122,8 @@ class _$_NewOrdersCatState implements _NewOrdersCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? newOrdersCatState,
-    TResult Function()? discrepancyCatState,
+    TResult? Function()? newOrdersCatState,
+    TResult? Function()? discrepancyCatState,
   }) {
     return newOrdersCatState?.call();
   }
@@ -154,8 +153,8 @@ class _$_NewOrdersCatState implements _NewOrdersCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NewOrdersCatState value)? newOrdersCatState,
-    TResult Function(_DiscrepancyCatState value)? discrepancyCatState,
+    TResult? Function(_NewOrdersCatState value)? newOrdersCatState,
+    TResult? Function(_DiscrepancyCatState value)? discrepancyCatState,
   }) {
     return newOrdersCatState?.call(this);
   }
@@ -187,14 +186,11 @@ abstract class _$$_DiscrepancyCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_DiscrepancyCatStateCopyWithImpl<$Res>
-    extends _$WarehouseArrivalCatStateCopyWithImpl<$Res>
+    extends _$WarehouseArrivalCatStateCopyWithImpl<$Res, _$_DiscrepancyCatState>
     implements _$$_DiscrepancyCatStateCopyWith<$Res> {
   __$$_DiscrepancyCatStateCopyWithImpl(_$_DiscrepancyCatState _value,
       $Res Function(_$_DiscrepancyCatState) _then)
-      : super(_value, (v) => _then(v as _$_DiscrepancyCatState));
-
-  @override
-  _$_DiscrepancyCatState get _value => super._value as _$_DiscrepancyCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -228,8 +224,8 @@ class _$_DiscrepancyCatState implements _DiscrepancyCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? newOrdersCatState,
-    TResult Function()? discrepancyCatState,
+    TResult? Function()? newOrdersCatState,
+    TResult? Function()? discrepancyCatState,
   }) {
     return discrepancyCatState?.call();
   }
@@ -259,8 +255,8 @@ class _$_DiscrepancyCatState implements _DiscrepancyCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NewOrdersCatState value)? newOrdersCatState,
-    TResult Function(_DiscrepancyCatState value)? discrepancyCatState,
+    TResult? Function(_NewOrdersCatState value)? newOrdersCatState,
+    TResult? Function(_DiscrepancyCatState value)? discrepancyCatState,
   }) {
     return discrepancyCatState?.call(this);
   }

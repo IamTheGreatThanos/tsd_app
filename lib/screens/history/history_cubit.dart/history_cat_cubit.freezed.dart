@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'history_cat_cubit.dart';
 
@@ -26,10 +26,10 @@ mixin _$HistoryCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? pharmacyHistoryCatState,
-    TResult Function()? warehouseHistoryCatState,
-    TResult Function()? movingHistoryCatState,
-    TResult Function()? refundHistoryCatState,
+    TResult? Function()? pharmacyHistoryCatState,
+    TResult? Function()? warehouseHistoryCatState,
+    TResult? Function()? movingHistoryCatState,
+    TResult? Function()? refundHistoryCatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,10 +55,11 @@ mixin _$HistoryCatState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
-    TResult Function(_WarehouseHistoryCatState value)? warehouseHistoryCatState,
-    TResult Function(_MoveingHistoryCatState value)? movingHistoryCatState,
-    TResult Function(_RefundHistoryCatState value)? refundHistoryCatState,
+    TResult? Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
+    TResult? Function(_WarehouseHistoryCatState value)?
+        warehouseHistoryCatState,
+    TResult? Function(_MoveingHistoryCatState value)? movingHistoryCatState,
+    TResult? Function(_RefundHistoryCatState value)? refundHistoryCatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -76,17 +77,18 @@ mixin _$HistoryCatState {
 abstract class $HistoryCatStateCopyWith<$Res> {
   factory $HistoryCatStateCopyWith(
           HistoryCatState value, $Res Function(HistoryCatState) then) =
-      _$HistoryCatStateCopyWithImpl<$Res>;
+      _$HistoryCatStateCopyWithImpl<$Res, HistoryCatState>;
 }
 
 /// @nodoc
-class _$HistoryCatStateCopyWithImpl<$Res>
+class _$HistoryCatStateCopyWithImpl<$Res, $Val extends HistoryCatState>
     implements $HistoryCatStateCopyWith<$Res> {
   _$HistoryCatStateCopyWithImpl(this._value, this._then);
 
-  final HistoryCatState _value;
   // ignore: unused_field
-  final $Res Function(HistoryCatState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -98,15 +100,11 @@ abstract class _$$_PharmacyHistoryCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_PharmacyHistoryCatStateCopyWithImpl<$Res>
-    extends _$HistoryCatStateCopyWithImpl<$Res>
+    extends _$HistoryCatStateCopyWithImpl<$Res, _$_PharmacyHistoryCatState>
     implements _$$_PharmacyHistoryCatStateCopyWith<$Res> {
   __$$_PharmacyHistoryCatStateCopyWithImpl(_$_PharmacyHistoryCatState _value,
       $Res Function(_$_PharmacyHistoryCatState) _then)
-      : super(_value, (v) => _then(v as _$_PharmacyHistoryCatState));
-
-  @override
-  _$_PharmacyHistoryCatState get _value =>
-      super._value as _$_PharmacyHistoryCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -143,10 +141,10 @@ class _$_PharmacyHistoryCatState implements _PharmacyHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? pharmacyHistoryCatState,
-    TResult Function()? warehouseHistoryCatState,
-    TResult Function()? movingHistoryCatState,
-    TResult Function()? refundHistoryCatState,
+    TResult? Function()? pharmacyHistoryCatState,
+    TResult? Function()? warehouseHistoryCatState,
+    TResult? Function()? movingHistoryCatState,
+    TResult? Function()? refundHistoryCatState,
   }) {
     return pharmacyHistoryCatState?.call();
   }
@@ -184,10 +182,11 @@ class _$_PharmacyHistoryCatState implements _PharmacyHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
-    TResult Function(_WarehouseHistoryCatState value)? warehouseHistoryCatState,
-    TResult Function(_MoveingHistoryCatState value)? movingHistoryCatState,
-    TResult Function(_RefundHistoryCatState value)? refundHistoryCatState,
+    TResult? Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
+    TResult? Function(_WarehouseHistoryCatState value)?
+        warehouseHistoryCatState,
+    TResult? Function(_MoveingHistoryCatState value)? movingHistoryCatState,
+    TResult? Function(_RefundHistoryCatState value)? refundHistoryCatState,
   }) {
     return pharmacyHistoryCatState?.call(this);
   }
@@ -222,15 +221,11 @@ abstract class _$$_WarehouseHistoryCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_WarehouseHistoryCatStateCopyWithImpl<$Res>
-    extends _$HistoryCatStateCopyWithImpl<$Res>
+    extends _$HistoryCatStateCopyWithImpl<$Res, _$_WarehouseHistoryCatState>
     implements _$$_WarehouseHistoryCatStateCopyWith<$Res> {
   __$$_WarehouseHistoryCatStateCopyWithImpl(_$_WarehouseHistoryCatState _value,
       $Res Function(_$_WarehouseHistoryCatState) _then)
-      : super(_value, (v) => _then(v as _$_WarehouseHistoryCatState));
-
-  @override
-  _$_WarehouseHistoryCatState get _value =>
-      super._value as _$_WarehouseHistoryCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -267,10 +262,10 @@ class _$_WarehouseHistoryCatState implements _WarehouseHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? pharmacyHistoryCatState,
-    TResult Function()? warehouseHistoryCatState,
-    TResult Function()? movingHistoryCatState,
-    TResult Function()? refundHistoryCatState,
+    TResult? Function()? pharmacyHistoryCatState,
+    TResult? Function()? warehouseHistoryCatState,
+    TResult? Function()? movingHistoryCatState,
+    TResult? Function()? refundHistoryCatState,
   }) {
     return warehouseHistoryCatState?.call();
   }
@@ -308,10 +303,11 @@ class _$_WarehouseHistoryCatState implements _WarehouseHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
-    TResult Function(_WarehouseHistoryCatState value)? warehouseHistoryCatState,
-    TResult Function(_MoveingHistoryCatState value)? movingHistoryCatState,
-    TResult Function(_RefundHistoryCatState value)? refundHistoryCatState,
+    TResult? Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
+    TResult? Function(_WarehouseHistoryCatState value)?
+        warehouseHistoryCatState,
+    TResult? Function(_MoveingHistoryCatState value)? movingHistoryCatState,
+    TResult? Function(_RefundHistoryCatState value)? refundHistoryCatState,
   }) {
     return warehouseHistoryCatState?.call(this);
   }
@@ -345,15 +341,11 @@ abstract class _$$_MoveingHistoryCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_MoveingHistoryCatStateCopyWithImpl<$Res>
-    extends _$HistoryCatStateCopyWithImpl<$Res>
+    extends _$HistoryCatStateCopyWithImpl<$Res, _$_MoveingHistoryCatState>
     implements _$$_MoveingHistoryCatStateCopyWith<$Res> {
   __$$_MoveingHistoryCatStateCopyWithImpl(_$_MoveingHistoryCatState _value,
       $Res Function(_$_MoveingHistoryCatState) _then)
-      : super(_value, (v) => _then(v as _$_MoveingHistoryCatState));
-
-  @override
-  _$_MoveingHistoryCatState get _value =>
-      super._value as _$_MoveingHistoryCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -390,10 +382,10 @@ class _$_MoveingHistoryCatState implements _MoveingHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? pharmacyHistoryCatState,
-    TResult Function()? warehouseHistoryCatState,
-    TResult Function()? movingHistoryCatState,
-    TResult Function()? refundHistoryCatState,
+    TResult? Function()? pharmacyHistoryCatState,
+    TResult? Function()? warehouseHistoryCatState,
+    TResult? Function()? movingHistoryCatState,
+    TResult? Function()? refundHistoryCatState,
   }) {
     return movingHistoryCatState?.call();
   }
@@ -431,10 +423,11 @@ class _$_MoveingHistoryCatState implements _MoveingHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
-    TResult Function(_WarehouseHistoryCatState value)? warehouseHistoryCatState,
-    TResult Function(_MoveingHistoryCatState value)? movingHistoryCatState,
-    TResult Function(_RefundHistoryCatState value)? refundHistoryCatState,
+    TResult? Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
+    TResult? Function(_WarehouseHistoryCatState value)?
+        warehouseHistoryCatState,
+    TResult? Function(_MoveingHistoryCatState value)? movingHistoryCatState,
+    TResult? Function(_RefundHistoryCatState value)? refundHistoryCatState,
   }) {
     return movingHistoryCatState?.call(this);
   }
@@ -468,15 +461,11 @@ abstract class _$$_RefundHistoryCatStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_RefundHistoryCatStateCopyWithImpl<$Res>
-    extends _$HistoryCatStateCopyWithImpl<$Res>
+    extends _$HistoryCatStateCopyWithImpl<$Res, _$_RefundHistoryCatState>
     implements _$$_RefundHistoryCatStateCopyWith<$Res> {
   __$$_RefundHistoryCatStateCopyWithImpl(_$_RefundHistoryCatState _value,
       $Res Function(_$_RefundHistoryCatState) _then)
-      : super(_value, (v) => _then(v as _$_RefundHistoryCatState));
-
-  @override
-  _$_RefundHistoryCatState get _value =>
-      super._value as _$_RefundHistoryCatState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -512,10 +501,10 @@ class _$_RefundHistoryCatState implements _RefundHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? pharmacyHistoryCatState,
-    TResult Function()? warehouseHistoryCatState,
-    TResult Function()? movingHistoryCatState,
-    TResult Function()? refundHistoryCatState,
+    TResult? Function()? pharmacyHistoryCatState,
+    TResult? Function()? warehouseHistoryCatState,
+    TResult? Function()? movingHistoryCatState,
+    TResult? Function()? refundHistoryCatState,
   }) {
     return refundHistoryCatState?.call();
   }
@@ -553,10 +542,11 @@ class _$_RefundHistoryCatState implements _RefundHistoryCatState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
-    TResult Function(_WarehouseHistoryCatState value)? warehouseHistoryCatState,
-    TResult Function(_MoveingHistoryCatState value)? movingHistoryCatState,
-    TResult Function(_RefundHistoryCatState value)? refundHistoryCatState,
+    TResult? Function(_PharmacyHistoryCatState value)? pharmacyHistoryCatState,
+    TResult? Function(_WarehouseHistoryCatState value)?
+        warehouseHistoryCatState,
+    TResult? Function(_MoveingHistoryCatState value)? movingHistoryCatState,
+    TResult? Function(_RefundHistoryCatState value)? refundHistoryCatState,
   }) {
     return refundHistoryCatState?.call(this);
   }

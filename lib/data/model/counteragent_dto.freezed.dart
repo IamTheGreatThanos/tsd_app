@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'counteragent_dto.dart';
 
@@ -33,34 +33,37 @@ mixin _$CounteragentDTO {
 abstract class $CounteragentDTOCopyWith<$Res> {
   factory $CounteragentDTOCopyWith(
           CounteragentDTO value, $Res Function(CounteragentDTO) then) =
-      _$CounteragentDTOCopyWithImpl<$Res>;
+      _$CounteragentDTOCopyWithImpl<$Res, CounteragentDTO>;
+  @useResult
   $Res call({int id, String? name});
 }
 
 /// @nodoc
-class _$CounteragentDTOCopyWithImpl<$Res>
+class _$CounteragentDTOCopyWithImpl<$Res, $Val extends CounteragentDTO>
     implements $CounteragentDTOCopyWith<$Res> {
   _$CounteragentDTOCopyWithImpl(this._value, this._then);
 
-  final CounteragentDTO _value;
   // ignore: unused_field
-  final $Res Function(CounteragentDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -71,31 +74,30 @@ abstract class _$$_CounteragentDTOCopyWith<$Res>
           _$_CounteragentDTO value, $Res Function(_$_CounteragentDTO) then) =
       __$$_CounteragentDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, String? name});
 }
 
 /// @nodoc
 class __$$_CounteragentDTOCopyWithImpl<$Res>
-    extends _$CounteragentDTOCopyWithImpl<$Res>
+    extends _$CounteragentDTOCopyWithImpl<$Res, _$_CounteragentDTO>
     implements _$$_CounteragentDTOCopyWith<$Res> {
   __$$_CounteragentDTOCopyWithImpl(
       _$_CounteragentDTO _value, $Res Function(_$_CounteragentDTO) _then)
-      : super(_value, (v) => _then(v as _$_CounteragentDTO));
+      : super(_value, _then);
 
-  @override
-  _$_CounteragentDTO get _value => super._value as _$_CounteragentDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = freezed,
   }) {
     return _then(_$_CounteragentDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -126,19 +128,17 @@ class _$_CounteragentDTO implements _CounteragentDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CounteragentDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CounteragentDTOCopyWith<_$_CounteragentDTO> get copyWith =>
       __$$_CounteragentDTOCopyWithImpl<_$_CounteragentDTO>(this, _$identity);
 

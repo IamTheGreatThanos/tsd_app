@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 
-class SuccessfullySend extends StatelessWidget {
-  const SuccessfullySend({super.key});
+class SuccessfullySendScreen extends StatelessWidget {
+  const SuccessfullySendScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'warehouse_order_dto.dart';
 
@@ -42,7 +42,8 @@ mixin _$WarehouseOrderDTO {
 abstract class $WarehouseOrderDTOCopyWith<$Res> {
   factory $WarehouseOrderDTOCopyWith(
           WarehouseOrderDTO value, $Res Function(WarehouseOrderDTO) then) =
-      _$WarehouseOrderDTOCopyWithImpl<$Res>;
+      _$WarehouseOrderDTOCopyWithImpl<$Res, WarehouseOrderDTO>;
+  @useResult
   $Res call(
       {int id,
       int? status,
@@ -57,17 +58,19 @@ abstract class $WarehouseOrderDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WarehouseOrderDTOCopyWithImpl<$Res>
+class _$WarehouseOrderDTOCopyWithImpl<$Res, $Val extends WarehouseOrderDTO>
     implements $WarehouseOrderDTOCopyWith<$Res> {
   _$WarehouseOrderDTOCopyWithImpl(this._value, this._then);
 
-  final WarehouseOrderDTO _value;
   // ignore: unused_field
-  final $Res Function(WarehouseOrderDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? status = freezed,
     Object? number = freezed,
     Object? counteragentId = freezed,
@@ -77,49 +80,50 @@ class _$WarehouseOrderDTOCopyWithImpl<$Res>
     Object? counteragent = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      number: number == freezed
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as String?,
-      counteragentId: counteragentId == freezed
+      counteragentId: freezed == counteragentId
           ? _value.counteragentId
           : counteragentId // ignore: cast_nullable_to_non_nullable
               as int?,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      container: container == freezed
+      container: freezed == container
           ? _value.container
           : container // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      counteragent: counteragent == freezed
+      counteragent: freezed == counteragent
           ? _value.counteragent
           : counteragent // ignore: cast_nullable_to_non_nullable
               as CounteragentDTO?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CounteragentDTOCopyWith<$Res>? get counteragent {
     if (_value.counteragent == null) {
       return null;
     }
 
     return $CounteragentDTOCopyWith<$Res>(_value.counteragent!, (value) {
-      return _then(_value.copyWith(counteragent: value));
+      return _then(_value.copyWith(counteragent: value) as $Val);
     });
   }
 }
@@ -131,6 +135,7 @@ abstract class _$$_WarehouseOrderDTOCopyWith<$Res>
           $Res Function(_$_WarehouseOrderDTO) then) =
       __$$_WarehouseOrderDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       int? status,
@@ -147,18 +152,16 @@ abstract class _$$_WarehouseOrderDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_WarehouseOrderDTOCopyWithImpl<$Res>
-    extends _$WarehouseOrderDTOCopyWithImpl<$Res>
+    extends _$WarehouseOrderDTOCopyWithImpl<$Res, _$_WarehouseOrderDTO>
     implements _$$_WarehouseOrderDTOCopyWith<$Res> {
   __$$_WarehouseOrderDTOCopyWithImpl(
       _$_WarehouseOrderDTO _value, $Res Function(_$_WarehouseOrderDTO) _then)
-      : super(_value, (v) => _then(v as _$_WarehouseOrderDTO));
+      : super(_value, _then);
 
-  @override
-  _$_WarehouseOrderDTO get _value => super._value as _$_WarehouseOrderDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? status = freezed,
     Object? number = freezed,
     Object? counteragentId = freezed,
@@ -168,35 +171,35 @@ class __$$_WarehouseOrderDTOCopyWithImpl<$Res>
     Object? counteragent = freezed,
   }) {
     return _then(_$_WarehouseOrderDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      number: number == freezed
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as String?,
-      counteragentId: counteragentId == freezed
+      counteragentId: freezed == counteragentId
           ? _value.counteragentId
           : counteragentId // ignore: cast_nullable_to_non_nullable
               as int?,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      container: container == freezed
+      container: freezed == container
           ? _value.container
           : container // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      counteragent: counteragent == freezed
+      counteragent: freezed == counteragent
           ? _value.counteragent
           : counteragent // ignore: cast_nullable_to_non_nullable
               as CounteragentDTO?,
@@ -250,33 +253,28 @@ class _$_WarehouseOrderDTO implements _WarehouseOrderDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WarehouseOrderDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.number, number) &&
-            const DeepCollectionEquality()
-                .equals(other.counteragentId, counteragentId) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.container, container) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality()
-                .equals(other.counteragent, counteragent));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.number, number) || other.number == number) &&
+            (identical(other.counteragentId, counteragentId) ||
+                other.counteragentId == counteragentId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.container, container) ||
+                other.container == container) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.counteragent, counteragent) ||
+                other.counteragent == counteragent));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(number),
-      const DeepCollectionEquality().hash(counteragentId),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(container),
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(counteragent));
+  int get hashCode => Object.hash(runtimeType, id, status, number,
+      counteragentId, userId, container, createdAt, counteragent);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WarehouseOrderDTOCopyWith<_$_WarehouseOrderDTO> get copyWith =>
       __$$_WarehouseOrderDTOCopyWithImpl<_$_WarehouseOrderDTO>(
           this, _$identity);

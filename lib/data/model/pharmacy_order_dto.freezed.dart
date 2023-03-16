@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'pharmacy_order_dto.dart';
 
@@ -72,7 +72,8 @@ mixin _$PharmacyOrderDTO {
 abstract class $PharmacyOrderDTOCopyWith<$Res> {
   factory $PharmacyOrderDTOCopyWith(
           PharmacyOrderDTO value, $Res Function(PharmacyOrderDTO) then) =
-      _$PharmacyOrderDTOCopyWithImpl<$Res>;
+      _$PharmacyOrderDTOCopyWithImpl<$Res, PharmacyOrderDTO>;
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'user_id') int? userId,
@@ -106,17 +107,19 @@ abstract class $PharmacyOrderDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PharmacyOrderDTOCopyWithImpl<$Res>
+class _$PharmacyOrderDTOCopyWithImpl<$Res, $Val extends PharmacyOrderDTO>
     implements $PharmacyOrderDTOCopyWith<$Res> {
   _$PharmacyOrderDTOCopyWithImpl(this._value, this._then);
 
-  final PharmacyOrderDTO _value;
   // ignore: unused_field
-  final $Res Function(PharmacyOrderDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? userId = freezed,
     Object? driverId = freezed,
     Object? senderId = freezed,
@@ -143,139 +146,142 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res>
     Object? refundStatus = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      driverId: driverId == freezed
+      driverId: freezed == driverId
           ? _value.driverId
           : driverId // ignore: cast_nullable_to_non_nullable
               as int?,
-      senderId: senderId == freezed
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      recipientId: recipientId == freezed
+      recipientId: freezed == recipientId
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as int?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      number: number == freezed
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as String?,
-      container: container == freezed
+      container: freezed == container
           ? _value.container
           : container // ignore: cast_nullable_to_non_nullable
               as int?,
-      departureTime: departureTime == freezed
+      departureTime: freezed == departureTime
           ? _value.departureTime
           : departureTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromAddress: fromAddress == freezed
+      fromAddress: freezed == fromAddress
           ? _value.fromAddress
           : fromAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromCityName: fromCityName == freezed
+      fromCityName: freezed == fromCityName
           ? _value.fromCityName
           : fromCityName // ignore: cast_nullable_to_non_nullable
               as String?,
-      toAddress: toAddress == freezed
+      toAddress: freezed == toAddress
           ? _value.toAddress
           : toAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      toCityName: toCityName == freezed
+      toCityName: freezed == toCityName
           ? _value.toCityName
           : toCityName // ignore: cast_nullable_to_non_nullable
               as String?,
-      amount: amount == freezed
+      amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String?,
-      incomingNumber: incomingNumber == freezed
+      incomingNumber: freezed == incomingNumber
           ? _value.incomingNumber
           : incomingNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      incomingDate: incomingDate == freezed
+      incomingDate: freezed == incomingDate
           ? _value.incomingDate
           : incomingDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      bin: bin == freezed
+      bin: freezed == bin
           ? _value.bin
           : bin // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceDate: invoiceDate == freezed
+      invoiceDate: freezed == invoiceDate
           ? _value.invoiceDate
           : invoiceDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      driver: driver == freezed
+      driver: freezed == driver
           ? _value.driver
           : driver // ignore: cast_nullable_to_non_nullable
               as User?,
-      sender: sender == freezed
+      sender: freezed == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as CounteragentDTO?,
-      recipient: recipient == freezed
+      recipient: freezed == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as CounteragentDTO?,
-      totalStatus: totalStatus == freezed
+      totalStatus: freezed == totalStatus
           ? _value.totalStatus
           : totalStatus // ignore: cast_nullable_to_non_nullable
               as int?,
-      yandexTime: yandexTime == freezed
+      yandexTime: freezed == yandexTime
           ? _value.yandexTime
           : yandexTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      refundStatus: refundStatus == freezed
+      refundStatus: freezed == refundStatus
           ? _value.refundStatus
           : refundStatus // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserCopyWith<$Res>? get driver {
     if (_value.driver == null) {
       return null;
     }
 
     return $UserCopyWith<$Res>(_value.driver!, (value) {
-      return _then(_value.copyWith(driver: value));
+      return _then(_value.copyWith(driver: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CounteragentDTOCopyWith<$Res>? get sender {
     if (_value.sender == null) {
       return null;
     }
 
     return $CounteragentDTOCopyWith<$Res>(_value.sender!, (value) {
-      return _then(_value.copyWith(sender: value));
+      return _then(_value.copyWith(sender: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CounteragentDTOCopyWith<$Res>? get recipient {
     if (_value.recipient == null) {
       return null;
     }
 
     return $CounteragentDTOCopyWith<$Res>(_value.recipient!, (value) {
-      return _then(_value.copyWith(recipient: value));
+      return _then(_value.copyWith(recipient: value) as $Val);
     });
   }
 }
@@ -287,6 +293,7 @@ abstract class _$$_PharmacyOrderDTOCopyWith<$Res>
           _$_PharmacyOrderDTO value, $Res Function(_$_PharmacyOrderDTO) then) =
       __$$_PharmacyOrderDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'user_id') int? userId,
@@ -324,18 +331,16 @@ abstract class _$$_PharmacyOrderDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
-    extends _$PharmacyOrderDTOCopyWithImpl<$Res>
+    extends _$PharmacyOrderDTOCopyWithImpl<$Res, _$_PharmacyOrderDTO>
     implements _$$_PharmacyOrderDTOCopyWith<$Res> {
   __$$_PharmacyOrderDTOCopyWithImpl(
       _$_PharmacyOrderDTO _value, $Res Function(_$_PharmacyOrderDTO) _then)
-      : super(_value, (v) => _then(v as _$_PharmacyOrderDTO));
+      : super(_value, _then);
 
-  @override
-  _$_PharmacyOrderDTO get _value => super._value as _$_PharmacyOrderDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? userId = freezed,
     Object? driverId = freezed,
     Object? senderId = freezed,
@@ -362,103 +367,103 @@ class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
     Object? refundStatus = freezed,
   }) {
     return _then(_$_PharmacyOrderDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      driverId: driverId == freezed
+      driverId: freezed == driverId
           ? _value.driverId
           : driverId // ignore: cast_nullable_to_non_nullable
               as int?,
-      senderId: senderId == freezed
+      senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      recipientId: recipientId == freezed
+      recipientId: freezed == recipientId
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as int?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      number: number == freezed
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as String?,
-      container: container == freezed
+      container: freezed == container
           ? _value.container
           : container // ignore: cast_nullable_to_non_nullable
               as int?,
-      departureTime: departureTime == freezed
+      departureTime: freezed == departureTime
           ? _value.departureTime
           : departureTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromAddress: fromAddress == freezed
+      fromAddress: freezed == fromAddress
           ? _value.fromAddress
           : fromAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromCityName: fromCityName == freezed
+      fromCityName: freezed == fromCityName
           ? _value.fromCityName
           : fromCityName // ignore: cast_nullable_to_non_nullable
               as String?,
-      toAddress: toAddress == freezed
+      toAddress: freezed == toAddress
           ? _value.toAddress
           : toAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      toCityName: toCityName == freezed
+      toCityName: freezed == toCityName
           ? _value.toCityName
           : toCityName // ignore: cast_nullable_to_non_nullable
               as String?,
-      amount: amount == freezed
+      amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String?,
-      incomingNumber: incomingNumber == freezed
+      incomingNumber: freezed == incomingNumber
           ? _value.incomingNumber
           : incomingNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      incomingDate: incomingDate == freezed
+      incomingDate: freezed == incomingDate
           ? _value.incomingDate
           : incomingDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      bin: bin == freezed
+      bin: freezed == bin
           ? _value.bin
           : bin // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceDate: invoiceDate == freezed
+      invoiceDate: freezed == invoiceDate
           ? _value.invoiceDate
           : invoiceDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      driver: driver == freezed
+      driver: freezed == driver
           ? _value.driver
           : driver // ignore: cast_nullable_to_non_nullable
               as User?,
-      sender: sender == freezed
+      sender: freezed == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as CounteragentDTO?,
-      recipient: recipient == freezed
+      recipient: freezed == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as CounteragentDTO?,
-      totalStatus: totalStatus == freezed
+      totalStatus: freezed == totalStatus
           ? _value.totalStatus
           : totalStatus // ignore: cast_nullable_to_non_nullable
               as int?,
-      yandexTime: yandexTime == freezed
+      yandexTime: freezed == yandexTime
           ? _value.yandexTime
           : yandexTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      refundStatus: refundStatus == freezed
+      refundStatus: freezed == refundStatus
           ? _value.refundStatus
           : refundStatus // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -577,77 +582,84 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PharmacyOrderDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.driverId, driverId) &&
-            const DeepCollectionEquality().equals(other.senderId, senderId) &&
-            const DeepCollectionEquality()
-                .equals(other.recipientId, recipientId) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.number, number) &&
-            const DeepCollectionEquality().equals(other.container, container) &&
-            const DeepCollectionEquality()
-                .equals(other.departureTime, departureTime) &&
-            const DeepCollectionEquality()
-                .equals(other.fromAddress, fromAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.fromCityName, fromCityName) &&
-            const DeepCollectionEquality().equals(other.toAddress, toAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.toCityName, toCityName) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality()
-                .equals(other.incomingNumber, incomingNumber) &&
-            const DeepCollectionEquality()
-                .equals(other.incomingDate, incomingDate) &&
-            const DeepCollectionEquality().equals(other.bin, bin) &&
-            const DeepCollectionEquality()
-                .equals(other.invoiceDate, invoiceDate) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.driver, driver) &&
-            const DeepCollectionEquality().equals(other.sender, sender) &&
-            const DeepCollectionEquality().equals(other.recipient, recipient) &&
-            const DeepCollectionEquality()
-                .equals(other.totalStatus, totalStatus) &&
-            const DeepCollectionEquality()
-                .equals(other.yandexTime, yandexTime) &&
-            const DeepCollectionEquality()
-                .equals(other.refundStatus, refundStatus));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.driverId, driverId) ||
+                other.driverId == driverId) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.recipientId, recipientId) ||
+                other.recipientId == recipientId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.number, number) || other.number == number) &&
+            (identical(other.container, container) ||
+                other.container == container) &&
+            (identical(other.departureTime, departureTime) ||
+                other.departureTime == departureTime) &&
+            (identical(other.fromAddress, fromAddress) ||
+                other.fromAddress == fromAddress) &&
+            (identical(other.fromCityName, fromCityName) ||
+                other.fromCityName == fromCityName) &&
+            (identical(other.toAddress, toAddress) ||
+                other.toAddress == toAddress) &&
+            (identical(other.toCityName, toCityName) ||
+                other.toCityName == toCityName) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.incomingNumber, incomingNumber) ||
+                other.incomingNumber == incomingNumber) &&
+            (identical(other.incomingDate, incomingDate) ||
+                other.incomingDate == incomingDate) &&
+            (identical(other.bin, bin) || other.bin == bin) &&
+            (identical(other.invoiceDate, invoiceDate) ||
+                other.invoiceDate == invoiceDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.driver, driver) || other.driver == driver) &&
+            (identical(other.sender, sender) || other.sender == sender) &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient) &&
+            (identical(other.totalStatus, totalStatus) ||
+                other.totalStatus == totalStatus) &&
+            (identical(other.yandexTime, yandexTime) ||
+                other.yandexTime == yandexTime) &&
+            (identical(other.refundStatus, refundStatus) ||
+                other.refundStatus == refundStatus));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(userId),
-        const DeepCollectionEquality().hash(driverId),
-        const DeepCollectionEquality().hash(senderId),
-        const DeepCollectionEquality().hash(recipientId),
-        const DeepCollectionEquality().hash(status),
-        const DeepCollectionEquality().hash(number),
-        const DeepCollectionEquality().hash(container),
-        const DeepCollectionEquality().hash(departureTime),
-        const DeepCollectionEquality().hash(fromAddress),
-        const DeepCollectionEquality().hash(fromCityName),
-        const DeepCollectionEquality().hash(toAddress),
-        const DeepCollectionEquality().hash(toCityName),
-        const DeepCollectionEquality().hash(amount),
-        const DeepCollectionEquality().hash(incomingNumber),
-        const DeepCollectionEquality().hash(incomingDate),
-        const DeepCollectionEquality().hash(bin),
-        const DeepCollectionEquality().hash(invoiceDate),
-        const DeepCollectionEquality().hash(createdAt),
-        const DeepCollectionEquality().hash(driver),
-        const DeepCollectionEquality().hash(sender),
-        const DeepCollectionEquality().hash(recipient),
-        const DeepCollectionEquality().hash(totalStatus),
-        const DeepCollectionEquality().hash(yandexTime),
-        const DeepCollectionEquality().hash(refundStatus)
+        id,
+        userId,
+        driverId,
+        senderId,
+        recipientId,
+        status,
+        number,
+        container,
+        departureTime,
+        fromAddress,
+        fromCityName,
+        toAddress,
+        toCityName,
+        amount,
+        incomingNumber,
+        incomingDate,
+        bin,
+        invoiceDate,
+        createdAt,
+        driver,
+        sender,
+        recipient,
+        totalStatus,
+        yandexTime,
+        refundStatus
       ]);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PharmacyOrderDTOCopyWith<_$_PharmacyOrderDTO> get copyWith =>
       __$$_PharmacyOrderDTOCopyWithImpl<_$_PharmacyOrderDTO>(this, _$identity);
 

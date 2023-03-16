@@ -9,6 +9,7 @@ import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
+import 'package:pharmacy_arrival/screens/common/defect_screen.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/cubit/move_goods_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/move_goods_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/common/goods_list/ui/widgets/build_move_goods_detail.dart';
@@ -16,7 +17,6 @@ import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_prod
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_alert_dialog.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/defect_screen.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

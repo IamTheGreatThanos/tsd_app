@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:pharmacy_arrival/app/main/login_bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/login_bloc.dart';
 import 'package:pharmacy_arrival/app/network/models/dto_models/encodable.dart';
 import 'package:pharmacy_arrival/app/network/models/dto_models/response/dto_tokens_reaponse.dart';
 import 'package:pharmacy_arrival/app/network/repository/global_repository.dart';
@@ -26,8 +26,6 @@ class DioWrapper {
   }) async {
     _dio.options.baseUrl = baseURL;
 
-
-
     _dio.interceptors.requestLock.lock();
     _dio.interceptors.clear();
     _dio.options.connectTimeout = 40000;
@@ -42,8 +40,9 @@ class DioWrapper {
         loginBloc: loginBloc,
       ),
       LogInterceptor(
-          requestBody: true,
-          responseBody: true,),
+        requestBody: true,
+        responseBody: true,
+      ),
     ]);
 
     _dio.interceptors.requestLock.unlock();
@@ -222,7 +221,8 @@ class DioWrapper {
   }
 
   String _transformQueryParametersToString(
-      Map<String, dynamic> queryParameters,) {
+    Map<String, dynamic> queryParameters,
+  ) {
     String query = '';
     queryParameters.forEach((key, value) {
       query += '$key=$value&';
@@ -265,7 +265,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
-    if(err.response?.statusCode == 302){
+    if (err.response?.statusCode == 302) {
       loginBloc.add(LogOutEvent());
     }
     if (err.response?.statusCode == 401) {
@@ -292,10 +292,9 @@ class AuthInterceptor extends InterceptorsWrapper {
     try {
       final response = await dioRefresher
           .get('auth/refresh', queryParameters: {"token": refreshToken});
-      return DTOTokensResponse.fromJson(response.data as Map<String,dynamic>);
+      return DTOTokensResponse.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
-      if (e is DioError &&
-          e.response?.statusCode == 404) {
+      if (e is DioError && e.response?.statusCode == 404) {
         loginBloc.add(LogOutEvent());
       }
     }

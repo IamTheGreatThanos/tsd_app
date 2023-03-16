@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'return_cubit.dart';
 
@@ -26,10 +26,10 @@ mixin _$ReturnState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function()? activeState,
-    TResult Function()? passiveState,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function()? activeState,
+    TResult? Function()? passiveState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$ReturnState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_ActiveState value)? activeState,
-    TResult Function(_PassiveState value)? passiveState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_ActiveState value)? activeState,
+    TResult? Function(_PassiveState value)? passiveState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,16 +72,18 @@ mixin _$ReturnState {
 abstract class $ReturnStateCopyWith<$Res> {
   factory $ReturnStateCopyWith(
           ReturnState value, $Res Function(ReturnState) then) =
-      _$ReturnStateCopyWithImpl<$Res>;
+      _$ReturnStateCopyWithImpl<$Res, ReturnState>;
 }
 
 /// @nodoc
-class _$ReturnStateCopyWithImpl<$Res> implements $ReturnStateCopyWith<$Res> {
+class _$ReturnStateCopyWithImpl<$Res, $Val extends ReturnState>
+    implements $ReturnStateCopyWith<$Res> {
   _$ReturnStateCopyWithImpl(this._value, this._then);
 
-  final ReturnState _value;
   // ignore: unused_field
-  final $Res Function(ReturnState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -93,14 +95,11 @@ abstract class _$$_InitialStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialStateCopyWithImpl<$Res>
-    extends _$ReturnStateCopyWithImpl<$Res>
+    extends _$ReturnStateCopyWithImpl<$Res, _$_InitialState>
     implements _$$_InitialStateCopyWith<$Res> {
   __$$_InitialStateCopyWithImpl(
       _$_InitialState _value, $Res Function(_$_InitialState) _then)
-      : super(_value, (v) => _then(v as _$_InitialState));
-
-  @override
-  _$_InitialState get _value => super._value as _$_InitialState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -136,10 +135,10 @@ class _$_InitialState implements _InitialState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function()? activeState,
-    TResult Function()? passiveState,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function()? activeState,
+    TResult? Function()? passiveState,
   }) {
     return initialState?.call();
   }
@@ -173,10 +172,10 @@ class _$_InitialState implements _InitialState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_ActiveState value)? activeState,
-    TResult Function(_PassiveState value)? passiveState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_ActiveState value)? activeState,
+    TResult? Function(_PassiveState value)? passiveState,
   }) {
     return initialState?.call(this);
   }
@@ -210,14 +209,11 @@ abstract class _$$_LoadingStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$ReturnStateCopyWithImpl<$Res>
+    extends _$ReturnStateCopyWithImpl<$Res, _$_LoadingState>
     implements _$$_LoadingStateCopyWith<$Res> {
   __$$_LoadingStateCopyWithImpl(
       _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
-      : super(_value, (v) => _then(v as _$_LoadingState));
-
-  @override
-  _$_LoadingState get _value => super._value as _$_LoadingState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -253,10 +249,10 @@ class _$_LoadingState implements _LoadingState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function()? activeState,
-    TResult Function()? passiveState,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function()? activeState,
+    TResult? Function()? passiveState,
   }) {
     return loadingState?.call();
   }
@@ -290,10 +286,10 @@ class _$_LoadingState implements _LoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_ActiveState value)? activeState,
-    TResult Function(_PassiveState value)? passiveState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_ActiveState value)? activeState,
+    TResult? Function(_PassiveState value)? passiveState,
   }) {
     return loadingState?.call(this);
   }
@@ -326,14 +322,12 @@ abstract class _$$_ActiveStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ActiveStateCopyWithImpl<$Res> extends _$ReturnStateCopyWithImpl<$Res>
+class __$$_ActiveStateCopyWithImpl<$Res>
+    extends _$ReturnStateCopyWithImpl<$Res, _$_ActiveState>
     implements _$$_ActiveStateCopyWith<$Res> {
   __$$_ActiveStateCopyWithImpl(
       _$_ActiveState _value, $Res Function(_$_ActiveState) _then)
-      : super(_value, (v) => _then(v as _$_ActiveState));
-
-  @override
-  _$_ActiveState get _value => super._value as _$_ActiveState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -369,10 +363,10 @@ class _$_ActiveState implements _ActiveState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function()? activeState,
-    TResult Function()? passiveState,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function()? activeState,
+    TResult? Function()? passiveState,
   }) {
     return activeState?.call();
   }
@@ -406,10 +400,10 @@ class _$_ActiveState implements _ActiveState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_ActiveState value)? activeState,
-    TResult Function(_PassiveState value)? passiveState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_ActiveState value)? activeState,
+    TResult? Function(_PassiveState value)? passiveState,
   }) {
     return activeState?.call(this);
   }
@@ -443,14 +437,11 @@ abstract class _$$_PassiveStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_PassiveStateCopyWithImpl<$Res>
-    extends _$ReturnStateCopyWithImpl<$Res>
+    extends _$ReturnStateCopyWithImpl<$Res, _$_PassiveState>
     implements _$$_PassiveStateCopyWith<$Res> {
   __$$_PassiveStateCopyWithImpl(
       _$_PassiveState _value, $Res Function(_$_PassiveState) _then)
-      : super(_value, (v) => _then(v as _$_PassiveState));
-
-  @override
-  _$_PassiveState get _value => super._value as _$_PassiveState;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -486,10 +477,10 @@ class _$_PassiveState implements _PassiveState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function()? activeState,
-    TResult Function()? passiveState,
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function()? activeState,
+    TResult? Function()? passiveState,
   }) {
     return passiveState?.call();
   }
@@ -523,10 +514,10 @@ class _$_PassiveState implements _PassiveState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialState value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_ActiveState value)? activeState,
-    TResult Function(_PassiveState value)? passiveState,
+    TResult? Function(_InitialState value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_ActiveState value)? activeState,
+    TResult? Function(_PassiveState value)? passiveState,
   }) {
     return passiveState?.call(this);
   }

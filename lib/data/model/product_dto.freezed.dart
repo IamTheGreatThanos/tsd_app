@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'product_dto.dart';
 
@@ -60,7 +60,8 @@ mixin _$ProductDTO {
 abstract class $ProductDTOCopyWith<$Res> {
   factory $ProductDTOCopyWith(
           ProductDTO value, $Res Function(ProductDTO) then) =
-      _$ProductDTOCopyWithImpl<$Res>;
+      _$ProductDTOCopyWithImpl<$Res, ProductDTO>;
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'arrival_pharmacy_id') int? arrivalPharmacyId,
@@ -87,16 +88,19 @@ abstract class $ProductDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
+class _$ProductDTOCopyWithImpl<$Res, $Val extends ProductDTO>
+    implements $ProductDTOCopyWith<$Res> {
   _$ProductDTOCopyWithImpl(this._value, this._then);
 
-  final ProductDTO _value;
   // ignore: unused_field
-  final $Res Function(ProductDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? arrivalPharmacyId = freezed,
     Object? movingId = freezed,
     Object? name = freezed,
@@ -120,95 +124,95 @@ class _$ProductDTOCopyWithImpl<$Res> implements $ProductDTOCopyWith<$Res> {
     Object? refund = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      arrivalPharmacyId: arrivalPharmacyId == freezed
+      arrivalPharmacyId: freezed == arrivalPharmacyId
           ? _value.arrivalPharmacyId
           : arrivalPharmacyId // ignore: cast_nullable_to_non_nullable
               as int?,
-      movingId: movingId == freezed
+      movingId: freezed == movingId
           ? _value.movingId
           : movingId // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      totalCount: totalCount == freezed
+      totalCount: freezed == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      scanCount: scanCount == freezed
+      scanCount: freezed == scanCount
           ? _value.scanCount
           : scanCount // ignore: cast_nullable_to_non_nullable
               as double?,
-      producer: producer == freezed
+      producer: freezed == producer
           ? _value.producer
           : producer // ignore: cast_nullable_to_non_nullable
               as String?,
-      series: series == freezed
+      series: freezed == series
           ? _value.series
           : series // ignore: cast_nullable_to_non_nullable
               as String?,
-      defective: defective == freezed
+      defective: freezed == defective
           ? _value.defective
           : defective // ignore: cast_nullable_to_non_nullable
               as int?,
-      surplus: surplus == freezed
+      surplus: freezed == surplus
           ? _value.surplus
           : surplus // ignore: cast_nullable_to_non_nullable
               as int?,
-      underachievement: underachievement == freezed
+      underachievement: freezed == underachievement
           ? _value.underachievement
           : underachievement // ignore: cast_nullable_to_non_nullable
               as int?,
-      reSorting: reSorting == freezed
+      reSorting: freezed == reSorting
           ? _value.reSorting
           : reSorting // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      isReady: isReady == freezed
+      isReady: freezed == isReady
           ? _value.isReady
           : isReady // ignore: cast_nullable_to_non_nullable
               as bool?,
-      orderID: orderID == freezed
+      orderID: freezed == orderID
           ? _value.orderID
           : orderID // ignore: cast_nullable_to_non_nullable
               as int?,
-      overdue: overdue == freezed
+      overdue: freezed == overdue
           ? _value.overdue
           : overdue // ignore: cast_nullable_to_non_nullable
               as int?,
-      netovar: netovar == freezed
+      netovar: freezed == netovar
           ? _value.netovar
           : netovar // ignore: cast_nullable_to_non_nullable
               as int?,
-      refund: refund == freezed
+      refund: freezed == refund
           ? _value.refund
           : refund // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -219,6 +223,7 @@ abstract class _$$_ProductDTOCopyWith<$Res>
           _$_ProductDTO value, $Res Function(_$_ProductDTO) then) =
       __$$_ProductDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       @JsonKey(name: 'arrival_pharmacy_id') int? arrivalPharmacyId,
@@ -245,18 +250,17 @@ abstract class _$$_ProductDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
+class __$$_ProductDTOCopyWithImpl<$Res>
+    extends _$ProductDTOCopyWithImpl<$Res, _$_ProductDTO>
     implements _$$_ProductDTOCopyWith<$Res> {
   __$$_ProductDTOCopyWithImpl(
       _$_ProductDTO _value, $Res Function(_$_ProductDTO) _then)
-      : super(_value, (v) => _then(v as _$_ProductDTO));
+      : super(_value, _then);
 
-  @override
-  _$_ProductDTO get _value => super._value as _$_ProductDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? arrivalPharmacyId = freezed,
     Object? movingId = freezed,
     Object? name = freezed,
@@ -280,91 +284,91 @@ class __$$_ProductDTOCopyWithImpl<$Res> extends _$ProductDTOCopyWithImpl<$Res>
     Object? refund = freezed,
   }) {
     return _then(_$_ProductDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      arrivalPharmacyId: arrivalPharmacyId == freezed
+      arrivalPharmacyId: freezed == arrivalPharmacyId
           ? _value.arrivalPharmacyId
           : arrivalPharmacyId // ignore: cast_nullable_to_non_nullable
               as int?,
-      movingId: movingId == freezed
+      movingId: freezed == movingId
           ? _value.movingId
           : movingId // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
-      totalCount: totalCount == freezed
+      totalCount: freezed == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      scanCount: scanCount == freezed
+      scanCount: freezed == scanCount
           ? _value.scanCount
           : scanCount // ignore: cast_nullable_to_non_nullable
               as double?,
-      producer: producer == freezed
+      producer: freezed == producer
           ? _value.producer
           : producer // ignore: cast_nullable_to_non_nullable
               as String?,
-      series: series == freezed
+      series: freezed == series
           ? _value.series
           : series // ignore: cast_nullable_to_non_nullable
               as String?,
-      defective: defective == freezed
+      defective: freezed == defective
           ? _value.defective
           : defective // ignore: cast_nullable_to_non_nullable
               as int?,
-      surplus: surplus == freezed
+      surplus: freezed == surplus
           ? _value.surplus
           : surplus // ignore: cast_nullable_to_non_nullable
               as int?,
-      underachievement: underachievement == freezed
+      underachievement: freezed == underachievement
           ? _value.underachievement
           : underachievement // ignore: cast_nullable_to_non_nullable
               as int?,
-      reSorting: reSorting == freezed
+      reSorting: freezed == reSorting
           ? _value.reSorting
           : reSorting // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      isReady: isReady == freezed
+      isReady: freezed == isReady
           ? _value.isReady
           : isReady // ignore: cast_nullable_to_non_nullable
               as bool?,
-      orderID: orderID == freezed
+      orderID: freezed == orderID
           ? _value.orderID
           : orderID // ignore: cast_nullable_to_non_nullable
               as int?,
-      overdue: overdue == freezed
+      overdue: freezed == overdue
           ? _value.overdue
           : overdue // ignore: cast_nullable_to_non_nullable
               as int?,
-      netovar: netovar == freezed
+      netovar: freezed == netovar
           ? _value.netovar
           : netovar // ignore: cast_nullable_to_non_nullable
               as int?,
-      refund: refund == freezed
+      refund: freezed == refund
           ? _value.refund
           : refund // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -464,63 +468,71 @@ class _$_ProductDTO implements _ProductDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProductDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.arrivalPharmacyId, arrivalPharmacyId) &&
-            const DeepCollectionEquality().equals(other.movingId, movingId) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.image, image) &&
-            const DeepCollectionEquality().equals(other.barcode, barcode) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.totalCount, totalCount) &&
-            const DeepCollectionEquality().equals(other.scanCount, scanCount) &&
-            const DeepCollectionEquality().equals(other.producer, producer) &&
-            const DeepCollectionEquality().equals(other.series, series) &&
-            const DeepCollectionEquality().equals(other.defective, defective) &&
-            const DeepCollectionEquality().equals(other.surplus, surplus) &&
-            const DeepCollectionEquality()
-                .equals(other.underachievement, underachievement) &&
-            const DeepCollectionEquality().equals(other.reSorting, reSorting) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.isReady, isReady) &&
-            const DeepCollectionEquality().equals(other.orderID, orderID) &&
-            const DeepCollectionEquality().equals(other.overdue, overdue) &&
-            const DeepCollectionEquality().equals(other.netovar, netovar) &&
-            const DeepCollectionEquality().equals(other.refund, refund));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.arrivalPharmacyId, arrivalPharmacyId) ||
+                other.arrivalPharmacyId == arrivalPharmacyId) &&
+            (identical(other.movingId, movingId) ||
+                other.movingId == movingId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
+            (identical(other.scanCount, scanCount) ||
+                other.scanCount == scanCount) &&
+            (identical(other.producer, producer) ||
+                other.producer == producer) &&
+            (identical(other.series, series) || other.series == series) &&
+            (identical(other.defective, defective) ||
+                other.defective == defective) &&
+            (identical(other.surplus, surplus) || other.surplus == surplus) &&
+            (identical(other.underachievement, underachievement) ||
+                other.underachievement == underachievement) &&
+            (identical(other.reSorting, reSorting) ||
+                other.reSorting == reSorting) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.isReady, isReady) || other.isReady == isReady) &&
+            (identical(other.orderID, orderID) || other.orderID == orderID) &&
+            (identical(other.overdue, overdue) || other.overdue == overdue) &&
+            (identical(other.netovar, netovar) || other.netovar == netovar) &&
+            (identical(other.refund, refund) || other.refund == refund));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(arrivalPharmacyId),
-        const DeepCollectionEquality().hash(movingId),
-        const DeepCollectionEquality().hash(name),
-        const DeepCollectionEquality().hash(image),
-        const DeepCollectionEquality().hash(barcode),
-        const DeepCollectionEquality().hash(status),
-        const DeepCollectionEquality().hash(totalCount),
-        const DeepCollectionEquality().hash(scanCount),
-        const DeepCollectionEquality().hash(producer),
-        const DeepCollectionEquality().hash(series),
-        const DeepCollectionEquality().hash(defective),
-        const DeepCollectionEquality().hash(surplus),
-        const DeepCollectionEquality().hash(underachievement),
-        const DeepCollectionEquality().hash(reSorting),
-        const DeepCollectionEquality().hash(createdAt),
-        const DeepCollectionEquality().hash(updatedAt),
-        const DeepCollectionEquality().hash(isReady),
-        const DeepCollectionEquality().hash(orderID),
-        const DeepCollectionEquality().hash(overdue),
-        const DeepCollectionEquality().hash(netovar),
-        const DeepCollectionEquality().hash(refund)
+        id,
+        arrivalPharmacyId,
+        movingId,
+        name,
+        image,
+        barcode,
+        status,
+        totalCount,
+        scanCount,
+        producer,
+        series,
+        defective,
+        surplus,
+        underachievement,
+        reSorting,
+        createdAt,
+        updatedAt,
+        isReady,
+        orderID,
+        overdue,
+        netovar,
+        refund
       ]);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ProductDTOCopyWith<_$_ProductDTO> get copyWith =>
       __$$_ProductDTOCopyWithImpl<_$_ProductDTO>(this, _$identity);
 

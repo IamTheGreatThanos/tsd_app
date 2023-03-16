@@ -8,9 +8,9 @@ import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/refund_data_dto.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_products_cubit/return_products_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_barcode_screen.dart';
+import 'package:pharmacy_arrival/screens/return_data/ui/successfully_send_screen.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
-import 'package:pharmacy_arrival/widgets/successfully_send_screen.dart';
 
 class ReturnProductsScreen extends StatefulWidget {
   const ReturnProductsScreen();
@@ -59,7 +59,7 @@ class _ReturnProductsScreenState extends State<ReturnProductsScreen> {
               finishedState: () {
                 AppRouter.pushAndRemoveUntilRoot(
                   context,
-                  const SuccessfullySend(),
+                  const SuccessfullySendScreen(),
                 );
               },
               orElse: () {},

@@ -5,18 +5,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_arrival/app/main/counteragent_cubit/counteragent_cubit.dart';
-import 'package:pharmacy_arrival/app/main/dependency_initializer/dependency_initializer.dart';
-import 'package:pharmacy_arrival/app/main/dependency_provider/dependency_provider.dart';
-import 'package:pharmacy_arrival/app/main/login_bloc/login_bloc.dart';
-import 'package:pharmacy_arrival/app/main/organization_cubit/organization_cubit.dart';
-import 'package:pharmacy_arrival/app/main/top_level_blocs/top_level_blocs.dart';
+import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/login_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/organization_cubit.dart';
 import 'package:pharmacy_arrival/app/network/dio_wrapper/dio_wrapper.dart';
 import 'package:pharmacy_arrival/app/network/services/network_service.dart';
+import 'package:pharmacy_arrival/app/settings/dependency_initializer.dart';
+import 'package:pharmacy_arrival/app/settings/dependency_provider.dart';
+import 'package:pharmacy_arrival/app/settings/top_level_blocs.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
-import 'package:pharmacy_arrival/widgets/dynamic_link_layer/dynamic_link_layer.dart';
-
+import 'package:pharmacy_arrival/screens/auth/ui/sign_in/signin_screen.dart';
+import 'package:pharmacy_arrival/screens/menu/main_menu_screen.dart';
 
 void main() async {
   ///Global managers initialization
@@ -29,13 +29,6 @@ void main() async {
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]);
-      /// TODO
-      // await Firebase.initializeApp();
-      // context.read<ErrorHandler>().initialize(S.of(context));
-
-
-      // await context.read<FirebaseMessagingRepository>().init();
-
       context.read<NetworkService>().init(context.read<DioWrapper>());
     } catch (e) {
       if (kDebugMode) {
@@ -51,14 +44,6 @@ void main() async {
         child: TopLevelBlocs(
           child: MaterialApp(
             builder: BotToastInit(),
-
-            // builder: (context, child) {
-            //   return ScrollConfiguration(
-            //     behavior: DisableGlowScrollBehavior(),
-            //     child: child!,
-            //   );
-            //
-            // },
             title: 'Europharm',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -108,10 +93,6 @@ class _MainAuthorizationState extends State<MainAuthorization> {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is AuthorizedState) {
-          // Navigator.of(context).pushAndRemoveUntil(
-          //     MaterialPageRoute(builder: (_) => MainAuthorization()),
-          //     (route) => route.isFirst);
-          // Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },
@@ -130,34 +111,14 @@ class _MainAuthorizationState extends State<MainAuthorization> {
           );
         }
         if (state is UnauthorizedState) {
-          return const Application(
-            isAuthenticated: false,
-            key: ValueKey(0),
-          );
+          return const SignInScreen();
         }
         if (state is AuthorizedState) {
-          return const Application(
-            isAuthenticated: true,
-            key: ValueKey(1),
-          );
+          return const MainMenuScreen();
         }
         return const SizedBox.shrink();
       },
     );
-  }
-}
-
-class Application extends StatelessWidget {
-  final bool isAuthenticated;
-
-  const Application({
-    required this.isAuthenticated,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DynamicLinkLayer(isAuthenticated: isAuthenticated);
   }
 }
 
