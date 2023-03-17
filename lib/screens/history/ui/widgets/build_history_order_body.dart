@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
+import 'package:pharmacy_arrival/core/utils/constants.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 
@@ -43,7 +44,7 @@ class BuildHistoryOrderData extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '№.$orderId $orderNumber',
+                    '№ $orderNumber',
                     style: ThemeTextStyle.textStyle20w600,
                   ),
                 ),
@@ -94,6 +95,11 @@ class BuildHistoryOrderData extends StatelessWidget {
               icon: "stock_ic",
               title: "Склад",
               data: counteragent?.name ?? "No data",
+            ),
+             BuildOrderDetailItem(
+              icon: "document",
+              title: "Сумма",
+              data: "${moneyFormatter(pharmacyOrderDTO?.amount??"0")} ₸",
             ),
             const SizedBox(
               height: 25,

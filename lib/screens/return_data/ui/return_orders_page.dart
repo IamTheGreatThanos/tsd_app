@@ -505,7 +505,7 @@ class _BuildOrderData extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "№.${orderData.id} ${orderData.number}",
+                    "№ ${orderData.number}",
                     style: ThemeTextStyle.textStyle20w600,
                   ),
                 ),

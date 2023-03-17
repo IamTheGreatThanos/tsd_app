@@ -91,21 +91,22 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 32,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: MainButton(
-                          color: ColorPalette.white,
-                          // width: 204,
-                          icon: "assets/images/svg/scan.svg",
-                          title: "Сканировать QR",
-                          borderRadius: 8,
-                          textColor: Colors.black,
-                          onTap: () {},
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                      // Expanded(
+                      //   child: MainButton(
+                      //     color: ColorPalette.white,
+                      //     // width: 204,
+                      //     icon: "assets/images/svg/scan.svg",
+                      //     title: "Сканировать QR",
+                      //     borderRadius: 8,
+                      //     textColor: Colors.black,
+                      //     onTap: () {},
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   width: 8,
+                      // ),
                       MainButton(
                         color: ColorPalette.orange,
                         width: 120,
