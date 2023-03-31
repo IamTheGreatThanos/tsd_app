@@ -777,34 +777,46 @@ class _BuildOrderDetailItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
         children: [
-          SvgPicture.asset(
-            "assets/images/svg/$icon.svg",
-            height: 18,
-            width: 18,
+          Row(
+            children: [
+              SvgPicture.asset(
+                "assets/images/svg/$icon.svg",
+                height: 18,
+                width: 18,
+              ),
+              const SizedBox(
+                width: 14,
+              ),
+              Text(
+                title,
+                style: ThemeTextStyle.textStyle14w400
+                    .copyWith(color: ColorPalette.grey400),
+              ),
+            ],
           ),
-          const SizedBox(
-            width: 14,
-          ),
+          const SizedBox(width: 14,),
           Expanded(
-            child: Text(
-              title,
-              style: ThemeTextStyle.textStyle14w400
-                  .copyWith(color: ColorPalette.grey400),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    data,
+                    style: ThemeTextStyle.textStyle16w500,
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+            if (hasImage)
+              Image.asset(
+                "assets/images/png/akniet_stock.png",
+                width: 32,
+                height: 32,
+              ),
+              ],
             ),
           ),
-          Text(
-            data,
-            style: ThemeTextStyle.textStyle16w500,
-          ),
-          const SizedBox(
-            width: 12,
-          ),
-          if (hasImage)
-            Image.asset(
-              "assets/images/png/akniet_stock.png",
-              width: 32,
-              height: 32,
-            ),
         ],
       ),
     );
