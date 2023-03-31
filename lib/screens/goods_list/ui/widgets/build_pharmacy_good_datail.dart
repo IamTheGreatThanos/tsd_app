@@ -87,27 +87,31 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        (good.barcode?.length ?? 0) <= 2
-                            ? "${good.scanCount!}"
-                            : "${good.scanCount!.toStringAsFixed(0)}x",
-                        style: ThemeTextStyle.textStyle14w400
-                            .copyWith(color: ColorPalette.black),
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Expanded(
-                        child: Text(
-                          good.barcode ?? 'null',
-                          style: ThemeTextStyle.textStyle14w600
-                              .copyWith(color: ColorPalette.grayText),
+                  SizedBox(
+                    height: 32,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          (good.barcode?.length ?? 0) <= 2
+                              ? "${good.scanCount!}"
+                              : "${good.scanCount!.toStringAsFixed(0)}x",
+                          style: ThemeTextStyle.textStyle14w400
+                              .copyWith(color: ColorPalette.black),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                          child: Text(
+                            good.barcode ?? 'null',
+                            style: ThemeTextStyle.textStyle14w600
+                                .copyWith(color: ColorPalette.grayText),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 8,

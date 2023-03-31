@@ -16,6 +16,7 @@ class WarehouseOrderDTO with _$WarehouseOrderDTO {
     @JsonKey(name: 'user_id') int? userId,
     int? container,
     @JsonKey(name: 'created_at') String? createdAt,
+    String? provider,
     CounteragentDTO? counteragent,
   }) = _WarehouseOrderDTO;
 

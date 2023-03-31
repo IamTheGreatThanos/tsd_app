@@ -61,6 +61,7 @@ mixin _$PharmacyOrderDTO {
   String? get yandexTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'refund_status')
   int? get refundStatus => throw _privateConstructorUsedError;
+  String? get provider => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -99,7 +100,8 @@ abstract class $PharmacyOrderDTOCopyWith<$Res> {
       CounteragentDTO? recipient,
       @JsonKey(name: 'total_status') int? totalStatus,
       @JsonKey(name: 'yandex_time') String? yandexTime,
-      @JsonKey(name: 'refund_status') int? refundStatus});
+      @JsonKey(name: 'refund_status') int? refundStatus,
+      String? provider});
 
   $UserCopyWith<$Res>? get driver;
   $CounteragentDTOCopyWith<$Res>? get sender;
@@ -144,6 +146,7 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res, $Val extends PharmacyOrderDTO>
     Object? totalStatus = freezed,
     Object? yandexTime = freezed,
     Object? refundStatus = freezed,
+    Object? provider = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -246,6 +249,10 @@ class _$PharmacyOrderDTOCopyWithImpl<$Res, $Val extends PharmacyOrderDTO>
           ? _value.refundStatus
           : refundStatus // ignore: cast_nullable_to_non_nullable
               as int?,
+      provider: freezed == provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -319,7 +326,8 @@ abstract class _$$_PharmacyOrderDTOCopyWith<$Res>
       CounteragentDTO? recipient,
       @JsonKey(name: 'total_status') int? totalStatus,
       @JsonKey(name: 'yandex_time') String? yandexTime,
-      @JsonKey(name: 'refund_status') int? refundStatus});
+      @JsonKey(name: 'refund_status') int? refundStatus,
+      String? provider});
 
   @override
   $UserCopyWith<$Res>? get driver;
@@ -365,6 +373,7 @@ class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
     Object? totalStatus = freezed,
     Object? yandexTime = freezed,
     Object? refundStatus = freezed,
+    Object? provider = freezed,
   }) {
     return _then(_$_PharmacyOrderDTO(
       id: null == id
@@ -467,6 +476,10 @@ class __$$_PharmacyOrderDTOCopyWithImpl<$Res>
           ? _value.refundStatus
           : refundStatus // ignore: cast_nullable_to_non_nullable
               as int?,
+      provider: freezed == provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -499,7 +512,8 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
       this.recipient,
       @JsonKey(name: 'total_status') this.totalStatus,
       @JsonKey(name: 'yandex_time') this.yandexTime,
-      @JsonKey(name: 'refund_status') this.refundStatus});
+      @JsonKey(name: 'refund_status') this.refundStatus,
+      this.provider});
 
   factory _$_PharmacyOrderDTO.fromJson(Map<String, dynamic> json) =>
       _$$_PharmacyOrderDTOFromJson(json);
@@ -571,10 +585,12 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
   @override
   @JsonKey(name: 'refund_status')
   final int? refundStatus;
+  @override
+  final String? provider;
 
   @override
   String toString() {
-    return 'PharmacyOrderDTO(id: $id, userId: $userId, driverId: $driverId, senderId: $senderId, recipientId: $recipientId, status: $status, number: $number, container: $container, departureTime: $departureTime, fromAddress: $fromAddress, fromCityName: $fromCityName, toAddress: $toAddress, toCityName: $toCityName, amount: $amount, incomingNumber: $incomingNumber, incomingDate: $incomingDate, bin: $bin, invoiceDate: $invoiceDate, createdAt: $createdAt, driver: $driver, sender: $sender, recipient: $recipient, totalStatus: $totalStatus, yandexTime: $yandexTime, refundStatus: $refundStatus)';
+    return 'PharmacyOrderDTO(id: $id, userId: $userId, driverId: $driverId, senderId: $senderId, recipientId: $recipientId, status: $status, number: $number, container: $container, departureTime: $departureTime, fromAddress: $fromAddress, fromCityName: $fromCityName, toAddress: $toAddress, toCityName: $toCityName, amount: $amount, incomingNumber: $incomingNumber, incomingDate: $incomingDate, bin: $bin, invoiceDate: $invoiceDate, createdAt: $createdAt, driver: $driver, sender: $sender, recipient: $recipient, totalStatus: $totalStatus, yandexTime: $yandexTime, refundStatus: $refundStatus, provider: $provider)';
   }
 
   @override
@@ -623,7 +639,9 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
             (identical(other.yandexTime, yandexTime) ||
                 other.yandexTime == yandexTime) &&
             (identical(other.refundStatus, refundStatus) ||
-                other.refundStatus == refundStatus));
+                other.refundStatus == refundStatus) &&
+            (identical(other.provider, provider) ||
+                other.provider == provider));
   }
 
   @JsonKey(ignore: true)
@@ -654,7 +672,8 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
         recipient,
         totalStatus,
         yandexTime,
-        refundStatus
+        refundStatus,
+        provider
       ]);
 
   @JsonKey(ignore: true)
@@ -673,32 +692,32 @@ class _$_PharmacyOrderDTO implements _PharmacyOrderDTO {
 
 abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
   const factory _PharmacyOrderDTO(
-          {required final int id,
-          @JsonKey(name: 'user_id') final int? userId,
-          @JsonKey(name: 'driver_id') final int? driverId,
-          @JsonKey(name: 'sender_id') final int? senderId,
-          @JsonKey(name: 'recipient_id') final int? recipientId,
-          final int? status,
-          final String? number,
-          final int? container,
-          @JsonKey(name: 'departure_time') final String? departureTime,
-          @JsonKey(name: 'from_address') final String? fromAddress,
-          @JsonKey(name: 'from_city_name') final String? fromCityName,
-          @JsonKey(name: 'to_address') final String? toAddress,
-          @JsonKey(name: 'to_city_name') final String? toCityName,
-          final String? amount,
-          @JsonKey(name: 'incoming_number') final String? incomingNumber,
-          @JsonKey(name: 'incoming_date') final String? incomingDate,
-          final String? bin,
-          @JsonKey(name: 'invoice_date') final String? invoiceDate,
-          @JsonKey(name: 'created_at') final String? createdAt,
-          final User? driver,
-          final CounteragentDTO? sender,
-          final CounteragentDTO? recipient,
-          @JsonKey(name: 'total_status') final int? totalStatus,
-          @JsonKey(name: 'yandex_time') final String? yandexTime,
-          @JsonKey(name: 'refund_status') final int? refundStatus}) =
-      _$_PharmacyOrderDTO;
+      {required final int id,
+      @JsonKey(name: 'user_id') final int? userId,
+      @JsonKey(name: 'driver_id') final int? driverId,
+      @JsonKey(name: 'sender_id') final int? senderId,
+      @JsonKey(name: 'recipient_id') final int? recipientId,
+      final int? status,
+      final String? number,
+      final int? container,
+      @JsonKey(name: 'departure_time') final String? departureTime,
+      @JsonKey(name: 'from_address') final String? fromAddress,
+      @JsonKey(name: 'from_city_name') final String? fromCityName,
+      @JsonKey(name: 'to_address') final String? toAddress,
+      @JsonKey(name: 'to_city_name') final String? toCityName,
+      final String? amount,
+      @JsonKey(name: 'incoming_number') final String? incomingNumber,
+      @JsonKey(name: 'incoming_date') final String? incomingDate,
+      final String? bin,
+      @JsonKey(name: 'invoice_date') final String? invoiceDate,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      final User? driver,
+      final CounteragentDTO? sender,
+      final CounteragentDTO? recipient,
+      @JsonKey(name: 'total_status') final int? totalStatus,
+      @JsonKey(name: 'yandex_time') final String? yandexTime,
+      @JsonKey(name: 'refund_status') final int? refundStatus,
+      final String? provider}) = _$_PharmacyOrderDTO;
 
   factory _PharmacyOrderDTO.fromJson(Map<String, dynamic> json) =
       _$_PharmacyOrderDTO.fromJson;
@@ -769,6 +788,8 @@ abstract class _PharmacyOrderDTO implements PharmacyOrderDTO {
   @override
   @JsonKey(name: 'refund_status')
   int? get refundStatus;
+  @override
+  String? get provider;
   @override
   @JsonKey(ignore: true)
   _$$_PharmacyOrderDTOCopyWith<_$_PharmacyOrderDTO> get copyWith =>

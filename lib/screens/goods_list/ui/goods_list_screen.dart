@@ -462,7 +462,7 @@ class _BuildBodyState extends State<_BuildBody> {
               ) async {
                 for (int i = 0; i < unscannedProducts.length; i++) {
                   if (unscannedProducts[i].id == selectedProduct.id) {
-                    _animateToIndex(i, 365);
+                    _animateToIndex(i, 381);
                   }
                 }
               },
@@ -543,7 +543,7 @@ class _BuildBodyState extends State<_BuildBody> {
                             }
                           },
                           child: SizedBox(
-                            height: 365,
+                            height: 381,
                             child: BuildPharmacyGoodDetails(
                               searchController: widget.searchController,
                               currentIndex: currentIndex,

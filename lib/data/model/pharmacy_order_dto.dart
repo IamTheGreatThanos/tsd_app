@@ -37,6 +37,7 @@ class PharmacyOrderDTO with _$PharmacyOrderDTO {
     @JsonKey(name: 'total_status') int? totalStatus,
     @JsonKey(name: 'yandex_time') String? yandexTime,
     @JsonKey(name: 'refund_status') int? refundStatus,
+    String? provider,
     
   }) = _PharmacyOrderDTO;
 

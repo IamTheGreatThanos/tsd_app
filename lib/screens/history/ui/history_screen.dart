@@ -491,7 +491,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     orderId: orders[index].id,
                                     container: orders[index].container ?? 0,
                                     createdAt: orders[index].createdAt,
-                                    counteragent: orders[index].sender,
+                                    counteragent: orders[index].provider,
                                   ),
                                 ),
                               ),
@@ -571,7 +571,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             container:
                                                 orders[index].container ?? 0,
                                             createdAt: orders[index].createdAt,
-                                            counteragent: orders[index].sender,
+                                            counteragent: orders[index].provider,
                                             incomingNumber:
                                                 orders[index].incomingNumber,
                                           ),
@@ -632,7 +632,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               orders[index].container ?? 0,
                                           createdAt: orders[index].createdAt,
                                           counteragent:
-                                              orders[index].counteragent,
+                                              orders[index].provider,
                                         ),
                                       ),
                                     );
@@ -860,7 +860,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             container:
                                                 orders[index].container ?? 0,
                                             createdAt: orders[index].createdAt,
-                                            counteragent: orders[index].sender,
+                                            counteragent: orders[index].provider,
                                           ),
                                         ),
                                       ),

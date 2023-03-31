@@ -39,6 +39,7 @@ _$_PharmacyOrderDTO _$$_PharmacyOrderDTOFromJson(Map<String, dynamic> json) =>
       totalStatus: json['total_status'] as int?,
       yandexTime: json['yandex_time'] as String?,
       refundStatus: json['refund_status'] as int?,
+      provider: json['provider'] as String?,
     );
 
 Map<String, dynamic> _$$_PharmacyOrderDTOToJson(_$_PharmacyOrderDTO instance) =>
@@ -68,4 +69,5 @@ Map<String, dynamic> _$$_PharmacyOrderDTOToJson(_$_PharmacyOrderDTO instance) =>
       'total_status': instance.totalStatus,
       'yandex_time': instance.yandexTime,
       'refund_status': instance.refundStatus,
+      'provider': instance.provider,
     };

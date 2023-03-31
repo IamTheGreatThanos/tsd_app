@@ -12,7 +12,7 @@ class BuildHistoryOrderData extends StatelessWidget {
   final int orderId;
   final int container;
   final String? createdAt;
-  final CounteragentDTO? counteragent;
+  final String? counteragent;
   final PharmacyOrderDTO? pharmacyOrderDTO;
   final String? incomingNumber;
   const BuildHistoryOrderData({
@@ -94,7 +94,7 @@ class BuildHistoryOrderData extends StatelessWidget {
             BuildOrderDetailItem(
               icon: "stock_ic",
               title: "Склад",
-              data: counteragent?.name ?? "No data",
+              data: counteragent ?? "No data",
             ),
              BuildOrderDetailItem(
               icon: "document",
@@ -129,20 +129,32 @@ class BuildOrderDetailItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SvgPicture.asset("assets/images/svg/$icon.svg"),
-          const SizedBox(
-            width: 14,
+          Row(
+            children: [
+              SvgPicture.asset("assets/images/svg/$icon.svg"),
+              const SizedBox(
+                width: 14,
+              ),
+              Text(
+                title,
+                style: ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grey400),
+              ),
+            ],
+          ),
+           const SizedBox(
+            width: 16,
           ),
           Expanded(
-            child: Text(
-              title,
-              style: ThemeTextStyle.textStyle14w400.copyWith(color: ColorPalette.grey400),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                data,
+                style: ThemeTextStyle.textStyle16w500,
+                textAlign: TextAlign.end,
+              ),
             ),
-          ),
-          Text(
-            data,
-            style: ThemeTextStyle.textStyle16w500,
           ),
         ],
       ),

@@ -15,6 +15,7 @@ _$_WarehouseOrderDTO _$$_WarehouseOrderDTOFromJson(Map<String, dynamic> json) =>
       userId: json['user_id'] as int?,
       container: json['container'] as int?,
       createdAt: json['created_at'] as String?,
+      provider: json['provider'] as String?,
       counteragent: json['counteragent'] == null
           ? null
           : CounteragentDTO.fromJson(
@@ -31,5 +32,6 @@ Map<String, dynamic> _$$_WarehouseOrderDTOToJson(
       'user_id': instance.userId,
       'container': instance.container,
       'created_at': instance.createdAt,
+      'provider': instance.provider,
       'counteragent': instance.counteragent,
     };

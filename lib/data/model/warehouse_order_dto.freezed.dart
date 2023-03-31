@@ -30,6 +30,7 @@ mixin _$WarehouseOrderDTO {
   int? get container => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
+  String? get provider => throw _privateConstructorUsedError;
   CounteragentDTO? get counteragent => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,6 +53,7 @@ abstract class $WarehouseOrderDTOCopyWith<$Res> {
       @JsonKey(name: 'user_id') int? userId,
       int? container,
       @JsonKey(name: 'created_at') String? createdAt,
+      String? provider,
       CounteragentDTO? counteragent});
 
   $CounteragentDTOCopyWith<$Res>? get counteragent;
@@ -77,6 +79,7 @@ class _$WarehouseOrderDTOCopyWithImpl<$Res, $Val extends WarehouseOrderDTO>
     Object? userId = freezed,
     Object? container = freezed,
     Object? createdAt = freezed,
+    Object? provider = freezed,
     Object? counteragent = freezed,
   }) {
     return _then(_value.copyWith(
@@ -107,6 +110,10 @@ class _$WarehouseOrderDTOCopyWithImpl<$Res, $Val extends WarehouseOrderDTO>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provider: freezed == provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
               as String?,
       counteragent: freezed == counteragent
           ? _value.counteragent
@@ -144,6 +151,7 @@ abstract class _$$_WarehouseOrderDTOCopyWith<$Res>
       @JsonKey(name: 'user_id') int? userId,
       int? container,
       @JsonKey(name: 'created_at') String? createdAt,
+      String? provider,
       CounteragentDTO? counteragent});
 
   @override
@@ -168,6 +176,7 @@ class __$$_WarehouseOrderDTOCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? container = freezed,
     Object? createdAt = freezed,
+    Object? provider = freezed,
     Object? counteragent = freezed,
   }) {
     return _then(_$_WarehouseOrderDTO(
@@ -199,6 +208,10 @@ class __$$_WarehouseOrderDTOCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      provider: freezed == provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
       counteragent: freezed == counteragent
           ? _value.counteragent
           : counteragent // ignore: cast_nullable_to_non_nullable
@@ -218,6 +231,7 @@ class _$_WarehouseOrderDTO implements _WarehouseOrderDTO {
       @JsonKey(name: 'user_id') this.userId,
       this.container,
       @JsonKey(name: 'created_at') this.createdAt,
+      this.provider,
       this.counteragent});
 
   factory _$_WarehouseOrderDTO.fromJson(Map<String, dynamic> json) =>
@@ -241,11 +255,13 @@ class _$_WarehouseOrderDTO implements _WarehouseOrderDTO {
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @override
+  final String? provider;
+  @override
   final CounteragentDTO? counteragent;
 
   @override
   String toString() {
-    return 'WarehouseOrderDTO(id: $id, status: $status, number: $number, counteragentId: $counteragentId, userId: $userId, container: $container, createdAt: $createdAt, counteragent: $counteragent)';
+    return 'WarehouseOrderDTO(id: $id, status: $status, number: $number, counteragentId: $counteragentId, userId: $userId, container: $container, createdAt: $createdAt, provider: $provider, counteragent: $counteragent)';
   }
 
   @override
@@ -263,6 +279,8 @@ class _$_WarehouseOrderDTO implements _WarehouseOrderDTO {
                 other.container == container) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.provider, provider) ||
+                other.provider == provider) &&
             (identical(other.counteragent, counteragent) ||
                 other.counteragent == counteragent));
   }
@@ -270,7 +288,7 @@ class _$_WarehouseOrderDTO implements _WarehouseOrderDTO {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, status, number,
-      counteragentId, userId, container, createdAt, counteragent);
+      counteragentId, userId, container, createdAt, provider, counteragent);
 
   @JsonKey(ignore: true)
   @override
@@ -296,6 +314,7 @@ abstract class _WarehouseOrderDTO implements WarehouseOrderDTO {
       @JsonKey(name: 'user_id') final int? userId,
       final int? container,
       @JsonKey(name: 'created_at') final String? createdAt,
+      final String? provider,
       final CounteragentDTO? counteragent}) = _$_WarehouseOrderDTO;
 
   factory _WarehouseOrderDTO.fromJson(Map<String, dynamic> json) =
@@ -318,6 +337,8 @@ abstract class _WarehouseOrderDTO implements WarehouseOrderDTO {
   @override
   @JsonKey(name: 'created_at')
   String? get createdAt;
+  @override
+  String? get provider;
   @override
   CounteragentDTO? get counteragent;
   @override
