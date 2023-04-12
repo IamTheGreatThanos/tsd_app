@@ -15,6 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TextStyle? textStyle;
   final Color? leadingColor;
   final List<Widget>? actions;
+  final Function()? onBackTap;
 
   const CustomAppBar({
     super.key,
@@ -27,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.textStyle,
     this.leadingColor,
-    this.actions,
+    this.actions, this.onBackTap,
   });
 
   @override
@@ -60,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             BlendMode.srcIn,
           ),
         ),
-        onPressed: () {
+        onPressed: onBackTap??() {
           Navigator.of(context, rootNavigator: rootNavigator).pop();
         },
       ),

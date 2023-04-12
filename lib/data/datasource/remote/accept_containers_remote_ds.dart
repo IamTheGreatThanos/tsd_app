@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_helper.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
+
 //TODO Прием контейнеров ДС
 abstract class AcceptContainersRemoteDs {
   Future<List<ProductDTO>> getContaiersByAng({
@@ -16,6 +17,11 @@ abstract class AcceptContainersRemoteDs {
     required String accessToken,
     required String name,
     required int status,
+  });
+
+  Future<String> refundContainer({
+    required String accessToken,
+    required List<String> names,
   });
 }
 
@@ -81,6 +87,37 @@ class AcceptContainersRemoteDsImpl extends AcceptContainersRemoteDs {
       return ProductDTO.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       log('##### updateContainer api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<String> refundContainer(
+      {required String accessToken, required List<String> names}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+
+    try {
+      final response = await dio.post(
+        '$SERVER_/api/arrival-pharmacy/backcontainer',
+        data: {
+          "name": names,
+        },
+      );
+      log('##### refundContainer api:: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        return 'Успешно возвращен';
+      } else {
+        throw ServerException(
+          message: (response.data as Map<String, dynamic>)['message'] as String,
+        );
+      }
+    } on DioError catch (e) {
+      log('##### refundContainer api error::: ${e.response}, ${e.error}');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

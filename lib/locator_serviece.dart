@@ -85,6 +85,7 @@ import 'package:pharmacy_arrival/screens/move_data/move_products_cubit/move_prod
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/refund_containers/bloc/refund_container_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
@@ -165,6 +166,7 @@ Future<void> initLocator() async {
   sl.registerFactory(() => AcceptContLaunchCubit(sl()));
   sl.registerFactory(() => AcceptContQrCubit(sl()));
   sl.registerFactory(() => AcceptContListCubit(sl()));
+  sl.registerFactory(() => RefundContainerCubit(sl()));
   // sl.registerFactory(() => LoginBloc(sl()));
 
   ///

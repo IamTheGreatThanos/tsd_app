@@ -9,6 +9,7 @@ import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/remote/accept_containers_remote_ds.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
+
 //TODO Репо для прием контейнеров
 abstract class AcceptContainersRepository {
   Future<Either<Failure, List<ProductDTO>>> getContainersByAng({
@@ -27,6 +28,10 @@ abstract class AcceptContainersRepository {
   });
 
   Future<Either<Failure, String>> deleteContainerNumberFromCache();
+
+  Future<Either<Failure, String>> refundContainer({
+    required List<String> names,
+  });
 }
 
 class AcceptContainersRepositoryImpl extends AcceptContainersRepository {
@@ -56,7 +61,11 @@ class AcceptContainersRepositoryImpl extends AcceptContainersRepository {
         );
         log(products.length.toString());
         if (products.isEmpty) {
-          return Left(ServerFailure(message: 'Данный контейнер пустой или такого контейнера нету'));
+          return Left(
+            ServerFailure(
+              message: 'Данный контейнер пустой или такого контейнера нету',
+            ),
+          );
         } else {
           return Right(products);
         }
@@ -121,6 +130,26 @@ class AcceptContainersRepositoryImpl extends AcceptContainersRepository {
       return const Right('Container Number Succesfully saved to cache');
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> refundContainer({
+    required List<String> names,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await authLocalDS.getUserFromCache();
+        final String result = await acceptContainersRemoteDs.refundContainer(
+          accessToken: user.accessToken!,
+          names: names,
+        );
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }

@@ -11,12 +11,14 @@ import 'package:pharmacy_arrival/screens/history/ui/history_screen.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/move_data/ui/move_orders_page.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
+import 'package:pharmacy_arrival/screens/refund_containers/ui/refund_containers_page.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/_vmodel.dart';
 import 'package:pharmacy_arrival/screens/return_data/ui/return_orders_page.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/ui/warehouse_arrival_screen.dart';
 import 'package:pharmacy_arrival/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
-//TODO Главная страница 
+
+//TODO Главная страница
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen();
 
@@ -217,7 +219,19 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                               context,
                               const AcceptContLauchPage(),
                             ),
-                          )
+                          ),
+                          _BuildMenuOption(
+                            icon: "return_logo",
+                            title: "Возврат \nконтейнеров",
+                            color: const Color.fromARGB(255, 3, 19, 238),
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const RefundContainersPage(),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],

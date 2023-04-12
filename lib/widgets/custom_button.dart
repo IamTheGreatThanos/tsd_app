@@ -67,7 +67,8 @@ ButtonStyle blackButtonStyle() {
     shadowColor: MaterialStateProperty.all<Color>(
       const Color.fromRGBO(255, 255, 255, 1),
     ),
-    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(0, 0, 0, 1.0)),
+    backgroundColor:
+        MaterialStateProperty.all<Color>(const Color.fromRGBO(0, 0, 0, 1.0)),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -122,6 +123,23 @@ ButtonStyle yellowButtonStyle() {
   return ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(
       const Color.fromRGBO(255, 221, 0, 1),
+    ),
+    shadowColor: MaterialStateProperty.all<Color>(
+      const Color.fromRGBO(255, 255, 255, 0),
+    ),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7),
+        // side: BorderSide(color: Colors.black),
+      ),
+    ),
+  );
+}
+
+ButtonStyle redButtonStyle() {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+      Colors.red,
     ),
     shadowColor: MaterialStateProperty.all<Color>(
       const Color.fromRGBO(255, 255, 255, 0),

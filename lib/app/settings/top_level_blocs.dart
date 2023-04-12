@@ -24,6 +24,7 @@ import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_qr_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/vmodel/pharmacy_filter_vmodel.dart';
+import 'package:pharmacy_arrival/screens/refund_containers/bloc/refund_container_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/return_data/return_cubit/return_order_page_cubit.dart';
@@ -133,6 +134,9 @@ class TopLevelBlocs extends StatelessWidget {
           ),
            BlocProvider<AcceptContListCubit>(
             create: (context) => sl<AcceptContListCubit>(),
+          ),
+           BlocProvider<RefundContainerCubit>(
+            create: (context) => sl<RefundContainerCubit>(),
           ),
         ],
         child: child,
