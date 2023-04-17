@@ -12,14 +12,17 @@ class CounteragentsCubit extends Cubit<CounteragentState> {
   CounteragentsCubit(this._getCounteragents)
       : super(const CounteragentState.initialState());
 
-  Future<void> loadCounteragents() async {
+  Future<void> loadCounteragents({
+    int? userId,
+  }) async {
     emit(const CounteragentState.loadingState());
-    final result = await _getCounteragents.call();
+    final result = await _getCounteragents.call(
+      userId: userId,
+    );
     result.fold(
         (l) =>
             emit(CounteragentState.errorState(message: mapFailureToMessage(l))),
         (r) {
-          
       emit(CounteragentState.loadedState(counteragents: r));
     });
   }

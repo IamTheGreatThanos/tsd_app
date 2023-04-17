@@ -145,6 +145,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                                   loadedState: (user) => user.warehouseName,
                                 ) ??
                                 "",
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                       );

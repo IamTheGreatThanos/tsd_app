@@ -8,7 +8,11 @@ class GetCountragents extends UseCaseOnly<List<CounteragentDTO>> {
   final AuthRepository _authRepository;
   GetCountragents(this._authRepository);
   @override
-  Future<Either<Failure, List<CounteragentDTO>>> call() {
-    return _authRepository.getCountragents();
+  Future<Either<Failure, List<CounteragentDTO>>> call({
+    int? userId,
+  }) {
+    return _authRepository.getCountragents(
+      userId: userId,
+    );
   }
 }

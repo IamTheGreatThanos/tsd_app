@@ -3,10 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/counteragent_of_user_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/profile_cubit.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/data/model/move_data_dto.dart';
+import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/move_goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/history/ui/history_move_screen_detail.dart';
 import 'package:pharmacy_arrival/screens/move_data/move_orders_cubit/move_order_cat_cubit.dart';
@@ -66,15 +70,27 @@ class _MoveOrdersPageState extends State<MoveOrdersPage> {
             floatingActionButton: SizedBox(
               height: 80,
               width: 80,
-              child: FloatingActionButton(
-                onPressed: () {
-                  AppRouter.push(
-                    context,
-                    const MoveDataScreen(),
+              child: BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  return FloatingActionButton(
+                    onPressed: () {
+                      AppRouter.push(
+                        context,
+                        BlocProvider(
+                          create: (context) => CounteragentOfUserCubit(sl())
+                            ..loadCounteragents(
+                              userId: state.whenOrNull(
+                                loadedState: (user) => user.id,
+                              ),
+                            ),
+                          child: const MoveDataScreen(),
+                        ),
+                      );
+                    },
+                    backgroundColor: ColorPalette.orange,
+                    child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
                   );
                 },
-                backgroundColor: ColorPalette.orange,
-                child: SvgPicture.asset("assets/images/svg/move_plus.svg"),
               ),
             ),
             appBar: CustomAppBar(
@@ -744,7 +760,7 @@ class _BuildOrderDetailItem extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.data,
-     this.hasImage = false,
+    this.hasImage = false,
   });
 
   @override

@@ -77,11 +77,15 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, List<CounteragentDTO>>> getCountragents() async {
+  Future<Either<Failure, List<CounteragentDTO>>> getCountragents({
+    int? userId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final List<CounteragentDTO> organizations =
-            await remoteDS.getCountragents();
+            await remoteDS.getCountragents(
+          userId: userId,
+        );
         return Right(organizations);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

@@ -14,7 +14,9 @@ abstract class AuthRemoteDS {
   });
 
   Future<List<CounteragentDTO>> getOrganizations();
-  Future<List<CounteragentDTO>> getCountragents();
+  Future<List<CounteragentDTO>> getCountragents({
+    int? userId,
+  });
   Future<User> getProfile({
     required String accessToken,
   });
@@ -78,11 +80,18 @@ class AuthRemoteDSImpl extends AuthRemoteDS {
   }
 
   @override
-  Future<List<CounteragentDTO>> getCountragents() async {
+  Future<List<CounteragentDTO>> getCountragents({
+    int? userId,
+  }) async {
     dio.options.headers['Accept'] = "application/json";
 
     try {
-      final response = await dio.get('$SERVER_/api/counteragent');
+      final response = await dio.get(
+        '$SERVER_/api/counteragent',
+        queryParameters: {
+          if (userId != null) 'user_id': userId,
+        },
+      );
       log('##### getCountragents api:: ${response.statusCode}');
 
       return compute<List, List<CounteragentDTO>>(

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart'
     as countragents;
+import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/counteragent_of_user_cubit.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/app_router.dart';
@@ -112,8 +114,7 @@ class __BuildMoveScreenBodyState extends State<_BuildMoveScreenBody> {
                     ),
                     child: Column(
                       children: [
-                        BlocBuilder<countragents.CounteragentsCubit,
-                            countragents.CounteragentState>(
+                        BlocBuilder<CounteragentOfUserCubit, CounteragentOfUserState>(
                           builder: (context, state) {
                             return state.maybeWhen(
                               loadingState: () =>
