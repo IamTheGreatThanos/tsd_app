@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_arrival/app/bloc/auth_bloc.dart';
+import 'package:pharmacy_arrival/app/bloc/profile_cubit.dart';
 import 'package:pharmacy_arrival/core/styles/color_palette.dart';
 import 'package:pharmacy_arrival/core/styles/text_styles.dart';
 import 'package:pharmacy_arrival/core/utils/app_router.dart';
@@ -49,6 +50,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
       ),
     );
     BlocProvider.of<SignInCubit>(context).getUserFromCache();
+    BlocProvider.of<ProfileCubit>(context).getProfile();
     super.initState();
   }
 
@@ -79,65 +81,72 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
               right: 12,
               child: ListView(
                 children: [
-                  BlocBuilder<SignInCubit, SignInState>(
+                  BlocBuilder<ProfileCubit, ProfileState>(
                     builder: (context, state) {
-                      return state.maybeWhen(
-                        orElse: () {
-                          return const SizedBox();
-                        },
-                        loadedState: (user) {
-                          return ListTile(
-                            contentPadding:
-                                const EdgeInsets.fromLTRB(16, 0, 6, 0),
-                            leading: const Icon(
-                              Icons.person,
-                              color: ColorPalette.gray,
-                              size: 50,
-                            ),
-                            title: Transform.translate(
-                              offset: const Offset(-10, 0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${user.name}",
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Text("${user.login}"),
-                                      ],
+                      return ListTile(
+                        contentPadding: const EdgeInsets.fromLTRB(16, 0, 6, 0),
+                        leading: const Icon(
+                          Icons.person,
+                          color: ColorPalette.gray,
+                          size: 60,
+                        ),
+                        title: Transform.translate(
+                          offset: const Offset(-10, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      state.whenOrNull(
+                                            loadedState: (user) => user.name,
+                                          ) ??
+                                          "",
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  CustomButton(
-                                    width: 100,
-                                    style: pinkButtonStyle(),
-                                    onClick: () {
-                                      BlocProvider.of<AuthBloc>(context)
-                                          .add(LogOutEvent());
-                                    },
-                                    body: Row(
-                                      children: const [
-                                        Text("Выйти"),
-                                        Icon(
-                                          Icons.exit_to_app_outlined,
-                                          color: ColorPalette.white,
-                                        ),
-                                      ],
+                                    Text(
+                                      state.whenOrNull(
+                                            loadedState: (user) => user.login,
+                                          ) ??
+                                          "",
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                              CustomButton(
+                                width: 100,
+                                style: pinkButtonStyle(),
+                                onClick: () {
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(LogOutEvent());
+                                },
+                                body: Row(
+                                  children: const [
+                                    Text("Выйти"),
+                                    Icon(
+                                      Icons.exit_to_app_outlined,
+                                      color: ColorPalette.white,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        subtitle: Transform.translate(
+                          offset: const Offset(-10, 0),
+                          child: Text(
+                            state.whenOrNull(
+                                  loadedState: (user) => user.warehouseName,
+                                ) ??
+                                "",
+                          ),
+                        ),
                       );
                     },
                   ),

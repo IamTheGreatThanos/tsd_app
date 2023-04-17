@@ -15,6 +15,9 @@ abstract class AuthRemoteDS {
 
   Future<List<CounteragentDTO>> getOrganizations();
   Future<List<CounteragentDTO>> getCountragents();
+  Future<User> getProfile({
+    required String accessToken,
+  });
 }
 
 class AuthRemoteDSImpl extends AuthRemoteDS {
@@ -73,7 +76,7 @@ class AuthRemoteDSImpl extends AuthRemoteDS {
       );
     }
   }
-  
+
   @override
   Future<List<CounteragentDTO>> getCountragents() async {
     dio.options.headers['Accept'] = "application/json";
@@ -92,6 +95,28 @@ class AuthRemoteDSImpl extends AuthRemoteDS {
       );
     } on DioError catch (e) {
       log('##### getWarehouseArrivalOrders api error::: ${e.response}, ${e.error}');
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<User> getProfile({required String accessToken}) async {
+    dio.options.headers['authorization'] = 'Bearer $accessToken';
+    dio.options.headers['Accept'] = "application/json";
+    try {
+      final response = await dio.post(
+        '$SERVER_/api/profile',
+      );
+
+      log("##### getProfile api:: ${response.statusCode},${response.data}");
+      return User.fromJson(
+        (response.data as Map<String, dynamic>)['user'] as Map<String, dynamic>,
+      );
+    } on DioError catch (e) {
+      log('$e');
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

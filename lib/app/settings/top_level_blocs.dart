@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_arrival/app/bloc/auth_bloc.dart';
 import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/app/bloc/organization_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/profile_cubit.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
 import 'package:pharmacy_arrival/locator_serviece.dart';
 import 'package:pharmacy_arrival/screens/accept_containers/bloc/accept_cont_launch_cubit/accept_cont_launch_cubit.dart';
@@ -59,6 +60,9 @@ class TopLevelBlocs extends StatelessWidget {
           ),
           BlocProvider<SignInCubit>(
             create: (context) => sl<SignInCubit>(),
+          ),
+          BlocProvider<ProfileCubit>(
+            create: (context) => sl<ProfileCubit>(),
           ),
           BlocProvider<WarehouseArrivalScreenCubit>(
             create: (context) => sl<WarehouseArrivalScreenCubit>(),
@@ -132,10 +136,10 @@ class TopLevelBlocs extends StatelessWidget {
           BlocProvider<AcceptContQrCubit>(
             create: (context) => sl<AcceptContQrCubit>(),
           ),
-           BlocProvider<AcceptContListCubit>(
+          BlocProvider<AcceptContListCubit>(
             create: (context) => sl<AcceptContListCubit>(),
           ),
-           BlocProvider<RefundContainerCubit>(
+          BlocProvider<RefundContainerCubit>(
             create: (context) => sl<RefundContainerCubit>(),
           ),
         ],

@@ -22,6 +22,7 @@ class _RefundContainerBarcodeScreenState
       ),
       body: SafeArea(
         child: BarcodeScannerWidget(
+          hasTextField: true,
           topPos: MediaQuery.of(context).size.height / 4,
           title: 'Отсканируйте штрихкод товара',
           height: (MediaQuery.of(context).size.width - 26) / 1.5,

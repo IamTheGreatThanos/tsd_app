@@ -9,6 +9,7 @@ import 'package:pharmacy_arrival/data/datasource/remote/auth_remote_ds.dart';
 import 'package:pharmacy_arrival/data/model/counteragent_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 import 'package:pharmacy_arrival/domain/repositories/auth_repository.dart';
+
 //TODO Репо для прием авторизации
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDS remoteDS;
@@ -109,6 +110,23 @@ class AuthRepositoryImpl extends AuthRepository {
       return Right(user);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> getProfile() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final User user = await localDS.getUserFromCache();
+        final User moveDataDTO = await remoteDS.getProfile(
+          accessToken: user.accessToken ?? "",
+        );
+        return Right(moveDataDTO);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: 'Нет подключение к интернету!'));
     }
   }
 }

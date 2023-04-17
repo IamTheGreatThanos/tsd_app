@@ -16,4 +16,5 @@ abstract class AuthRepository {
   Future<Either<Failure,String>> logout();
   Future<Either<Failure, List<CounteragentDTO>>> getOrganizations();
   Future<Either<Failure, List<CounteragentDTO>>> getCountragents();
+  Future<Either<Failure,User>> getProfile();
 }

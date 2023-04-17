@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pharmacy_arrival/app/bloc/counteragent_cubit.dart';
 import 'package:pharmacy_arrival/app/bloc/organization_cubit.dart';
+import 'package:pharmacy_arrival/app/bloc/profile_cubit.dart';
 import 'package:pharmacy_arrival/core/platform/network_info.dart';
 import 'package:pharmacy_arrival/data/datasource/local/accept_containers_local_ds.dart';
 import 'package:pharmacy_arrival/data/datasource/local/auth_local_ds.dart';
@@ -101,6 +102,7 @@ final sl = GetIt.instance;
 Future<void> initLocator() async {
   // BLoC / Cubit
   sl.registerFactory(() => SignInCubit(sl(), sl()));
+  sl.registerFactory(() => ProfileCubit(sl(),));
   sl.registerFactory(() => WarehouseArrivalScreenCubit(sl(), sl()));
   sl.registerFactory(() => PharmacyArrivalScreenCubit(sl(), sl(), sl()));
   sl.registerFactory(() => GoodsListScreenCubit(sl(), sl(), sl(), sl()));

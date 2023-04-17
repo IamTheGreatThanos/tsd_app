@@ -28,6 +28,9 @@ mixin _$User {
   String? get phone => throw _privateConstructorUsedError;
   int? get role => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
+  int? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'warehouse_name')
+  String? get warehouseName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +50,9 @@ abstract class $UserCopyWith<$Res> {
       String? password,
       String? phone,
       int? role,
-      String? avatar});
+      String? avatar,
+      int? status,
+      @JsonKey(name: 'warehouse_name') String? warehouseName});
 }
 
 /// @nodoc
@@ -71,6 +76,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? phone = freezed,
     Object? role = freezed,
     Object? avatar = freezed,
+    Object? status = freezed,
+    Object? warehouseName = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -105,6 +112,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      warehouseName: freezed == warehouseName
+          ? _value.warehouseName
+          : warehouseName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -123,7 +138,9 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? password,
       String? phone,
       int? role,
-      String? avatar});
+      String? avatar,
+      int? status,
+      @JsonKey(name: 'warehouse_name') String? warehouseName});
 }
 
 /// @nodoc
@@ -143,6 +160,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? phone = freezed,
     Object? role = freezed,
     Object? avatar = freezed,
+    Object? status = freezed,
+    Object? warehouseName = freezed,
   }) {
     return _then(_$_User(
       id: null == id
@@ -177,6 +196,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      warehouseName: freezed == warehouseName
+          ? _value.warehouseName
+          : warehouseName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -192,7 +219,9 @@ class _$_User implements _User {
       this.password,
       this.phone,
       this.role,
-      this.avatar});
+      this.avatar,
+      this.status,
+      @JsonKey(name: 'warehouse_name') this.warehouseName});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -212,10 +241,15 @@ class _$_User implements _User {
   final int? role;
   @override
   final String? avatar;
+  @override
+  final int? status;
+  @override
+  @JsonKey(name: 'warehouse_name')
+  final String? warehouseName;
 
   @override
   String toString() {
-    return 'User(id: $id, accessToken: $accessToken, name: $name, login: $login, password: $password, phone: $phone, role: $role, avatar: $avatar)';
+    return 'User(id: $id, accessToken: $accessToken, name: $name, login: $login, password: $password, phone: $phone, role: $role, avatar: $avatar, status: $status, warehouseName: $warehouseName)';
   }
 
   @override
@@ -232,13 +266,16 @@ class _$_User implements _User {
                 other.password == password) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.warehouseName, warehouseName) ||
+                other.warehouseName == warehouseName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, accessToken, name, login, password, phone, role, avatar);
+  int get hashCode => Object.hash(runtimeType, id, accessToken, name, login,
+      password, phone, role, avatar, status, warehouseName);
 
   @JsonKey(ignore: true)
   @override
@@ -263,7 +300,9 @@ abstract class _User implements User {
       final String? password,
       final String? phone,
       final int? role,
-      final String? avatar}) = _$_User;
+      final String? avatar,
+      final int? status,
+      @JsonKey(name: 'warehouse_name') final String? warehouseName}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -283,6 +322,11 @@ abstract class _User implements User {
   int? get role;
   @override
   String? get avatar;
+  @override
+  int? get status;
+  @override
+  @JsonKey(name: 'warehouse_name')
+  String? get warehouseName;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
