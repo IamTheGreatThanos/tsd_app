@@ -47,7 +47,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.thousand.pharmacy_arrival"
+        applicationId "com.satti.tsd"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
