@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Europharm Flutter</string>
+	<string>TSD Europharma</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
@@ -36,6 +36,8 @@
 	<string>Разрешить доступ к камере для сканирования товаров</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Разрешить доступ к микрофону</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Разрешить доступ к галерее для сканирования товаров</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
