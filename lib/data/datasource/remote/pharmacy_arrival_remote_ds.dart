@@ -7,6 +7,7 @@ import 'package:pharmacy_arrival/core/error/excepteion.dart';
 import 'package:pharmacy_arrival/core/platform/network_helper.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
+
 //TODO Приход аптека ДС
 abstract class PharmacyArrivalRemoteDS {
   Future<List<PharmacyOrderDTO>> getPharmacyArrivalOrders({
@@ -45,6 +46,7 @@ abstract class PharmacyArrivalRemoteDS {
     int? overdue,
     int? netovar,
     int? refund,
+    int? srok,
   });
 
   Future<PharmacyOrderDTO> updatePharmacyStatusOfOrder({
@@ -111,20 +113,21 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
 
     try {
       final response = await dio.get(
-          '$SERVER_/api/arrival-pharmacy?page=$page&status=$status',
-          queryParameters: {
-            "page": page,
-            "status": status,
-            if (incomingDate != null) "incoming_date": incomingDate,
-            if (incomingNumber != null) "incoming_number": incomingNumber,
-            if (refundStatus != null) "refund_status": refundStatus,
-            if (number != null) "number": number,
-            if (senderId != null) "sender_id": senderId,
-            if (departureDate != null) "departure_time": departureDate,
-            if (sortType != null) "sort": sort,
-            if (amountStart != null) "amount_start": amountStart,
-            if (amountEnd != null) "amount_end": amountEnd,
-          },);
+        '$SERVER_/api/arrival-pharmacy?page=$page&status=$status',
+        queryParameters: {
+          "page": page,
+          "status": status,
+          if (incomingDate != null) "incoming_date": incomingDate,
+          if (incomingNumber != null) "incoming_number": incomingNumber,
+          if (refundStatus != null) "refund_status": refundStatus,
+          if (number != null) "number": number,
+          if (senderId != null) "sender_id": senderId,
+          if (departureDate != null) "departure_time": departureDate,
+          if (sortType != null) "sort": sort,
+          if (amountStart != null) "amount_start": amountStart,
+          if (amountEnd != null) "amount_end": amountEnd,
+        },
+      );
       log('##### getPharmacyArrivalOrders api:: ${response.statusCode}');
 
       return compute<List, List<PharmacyOrderDTO>>(
@@ -157,6 +160,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
     int? overdue,
     int? netovar,
     int? refund,
+    int? srok,
   }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
@@ -173,6 +177,7 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
           if (underachievement != null) 'overdue': overdue,
           if (reSorting != null) 'netovar': netovar,
           if (refund != null) "refund": refund,
+          if (srok != null) "wrong_time": srok,
         },
       );
 
@@ -339,10 +344,11 @@ class PharmacyArrivalRemoteDSImpl extends PharmacyArrivalRemoteDS {
   }
 
   @override
-  Future<List<PharmacyOrderDTO>> getRefundOrderByIncoming(
-      {required String accessToken,
-      String? incomingNumber,
-      String? incomingDate,}) async {
+  Future<List<PharmacyOrderDTO>> getRefundOrderByIncoming({
+    required String accessToken,
+    String? incomingNumber,
+    String? incomingDate,
+  }) async {
     dio.options.headers['authorization'] = 'Bearer $accessToken';
     dio.options.headers['Accept'] = "application/json";
 

@@ -116,6 +116,19 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
+                  Text(
+                    'Серия № ${good.series ?? 'null'}',
+                    style: ThemeTextStyle.textStyle14w600
+                        .copyWith(color: ColorPalette.grayText),
+                  ),
+                  Text(
+                    'Серийный № ${good.serialCode ?? 'null'}',
+                    style: ThemeTextStyle.textStyle14w600
+                        .copyWith(color: ColorPalette.grayText),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   SizedBox(
                     height: 80,
                     child: Text(
@@ -264,6 +277,9 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                       ),
                       Text(
                         'Пересорт серий:   ${good.reSorting}'.toUpperCase(),
+                      ),
+                      Text(
+                        'Неподходящий срок:   ${good.srok}'.toUpperCase(),
                       ),
                     ],
                   )

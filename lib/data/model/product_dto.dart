@@ -11,16 +11,17 @@ part 'product_dto.g.dart';
 class ProductDTO with _$ProductDTO {
   const factory ProductDTO({
     required int id,
-    @JsonKey(name:'arrival_pharmacy_id') int? arrivalPharmacyId,
-    @JsonKey(name:'moving_id') int? movingId,
+    @JsonKey(name: 'arrival_pharmacy_id') int? arrivalPharmacyId,
+    @JsonKey(name: 'moving_id') int? movingId,
     String? name,
     String? image,
     String? barcode,
     int? status,
-    @JsonKey(name:'total_count') int? totalCount,
+    @JsonKey(name: 'total_count') int? totalCount,
     @JsonKey(name: 'scan_count') double? scanCount,
     String? producer,
     String? series,
+    @JsonKey(name: 'serial_code') String? serialCode,
     int? defective,
     int? surplus,
     int? underachievement,
@@ -32,16 +33,18 @@ class ProductDTO with _$ProductDTO {
     int? overdue,
     int? netovar,
     int? refund,
+    @JsonKey(name: 'wrong_time') int? srok,
   }) = _ProductDTO;
 
-  factory ProductDTO.fromJson(Map<String, dynamic> json) => _$ProductDTOFromJson(json);
+  factory ProductDTO.fromJson(Map<String, dynamic> json) =>
+      _$ProductDTOFromJson(json);
 
-    static String encode(List<ProductDTO> list) => jsonEncode(
+  static String encode(List<ProductDTO> list) => jsonEncode(
         list.map<Map<String, dynamic>>((ProductDTO e) => e.toJson()).toList(),
       );
 
-  static List<ProductDTO> decode(String list) => (jsonDecode(list) as List<dynamic>)
+  static List<ProductDTO> decode(String list) => (jsonDecode(list)
+          as List<dynamic>)
       .map<ProductDTO>((e) => ProductDTO.fromJson(e as Map<String, dynamic>))
       .toList();
-
 }

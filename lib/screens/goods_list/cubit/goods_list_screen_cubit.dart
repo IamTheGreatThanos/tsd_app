@@ -9,8 +9,8 @@ import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/get_products_
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/save_pharmacy_selected_product.dart';
 import 'package:pharmacy_arrival/domain/usecases/pharmacy_usecases/update_pharmacy_product_by_id.dart';
 
-part 'goods_list_screen_state.dart';
 part 'goods_list_screen_cubit.freezed.dart';
+part 'goods_list_screen_state.dart';
 
 class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
   List<ProductDTO> allProducts = [];
@@ -38,6 +38,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     int? reSorting,
     int? overdue,
     int? netovar,
+    int? srok,
     String? search,
     int? refund,
   }) async {
@@ -53,6 +54,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
         overdue: overdue,
         netovar: netovar,
         refund: refund,
+        srok: srok,
       ),
     );
 
@@ -137,6 +139,7 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       search: search,
     );
   }
+
 //TODO Логика сканирование и получение товаров в определенном заказе
 //получение продуктов
   Future<void> _getPharmacyProducts({
@@ -251,13 +254,14 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
     log("SELECTED PRODUCT ID: ${selectedProduct.id}");
     if (selectedProduct.id == -1) {
       await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-      if (scanType==0&&productDTO.totalCount! <=
-          (productDTO.scanCount ?? 0) +
-              (productDTO.defective ?? 0) +
-              (productDTO.underachievement ?? 0) +
-              (productDTO.reSorting ?? 0) +
-              (productDTO.netovar ?? 0) +
-              (productDTO.overdue ?? 0)) {
+      if (scanType == 0 &&
+          productDTO.totalCount! <=
+              (productDTO.scanCount ?? 0) +
+                  (productDTO.defective ?? 0) +
+                  (productDTO.underachievement ?? 0) +
+                  (productDTO.reSorting ?? 0) +
+                  (productDTO.netovar ?? 0) +
+                  (productDTO.overdue ?? 0)) {
         emit(
           const GoodsListScreenState.errorState(
             message: 'Продукты уже отсканированы!',
@@ -276,13 +280,14 @@ class GoodsListScreenCubit extends Cubit<GoodsListScreenState> {
       }
     } else {
       await savePharmacySelectedProductToCache(selectedProduct: productDTO);
-      if (scanType==0&&productDTO.totalCount! <=
-          (productDTO.scanCount ?? 0) +
-              (productDTO.defective ?? 0) +
-              (productDTO.underachievement ?? 0) +
-              (productDTO.reSorting ?? 0) +
-              (productDTO.netovar ?? 0) +
-              (productDTO.overdue ?? 0)) {
+      if (scanType == 0 &&
+          productDTO.totalCount! <=
+              (productDTO.scanCount ?? 0) +
+                  (productDTO.defective ?? 0) +
+                  (productDTO.underachievement ?? 0) +
+                  (productDTO.reSorting ?? 0) +
+                  (productDTO.netovar ?? 0) +
+                  (productDTO.overdue ?? 0)) {
         emit(
           const GoodsListScreenState.errorState(
             message: 'Продукты уже отсканированы!',

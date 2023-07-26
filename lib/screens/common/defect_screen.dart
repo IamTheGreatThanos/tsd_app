@@ -9,8 +9,9 @@ import 'package:pharmacy_arrival/screens/goods_list/cubit/move_goods_screen_cubi
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/snackbar/custom_snackbars.dart';
+
 // TODO в папке common размещены страницы которые используется в нескольких местах
-// TODO Defect Screen детальная страница брака 
+// TODO Defect Screen детальная страница брака
 class DefectScreen extends StatefulWidget {
   final bool isFromPharmacyPage;
   final ProductDTO product;
@@ -36,9 +37,11 @@ class _DefectScreenState extends State<DefectScreen> {
   int reSorting = 0;
   int overdue = 0;
   int netovar = 0;
+  int srok = 0;
   int allCount = 0;
   bool isAll = false;
   List<TextEditingController> defectControllers = [
+    TextEditingController(),
     TextEditingController(),
     TextEditingController(),
     TextEditingController(),
@@ -53,6 +56,7 @@ class _DefectScreenState extends State<DefectScreen> {
     "Пересорт серий",
     "Просрочен",
     "Нетоварный вид",
+    "Неподходящий срок",
   ];
 
   @override
@@ -64,7 +68,9 @@ class _DefectScreenState extends State<DefectScreen> {
     productInfo = widget.product;
     overdue = widget.product.overdue ?? 0;
     netovar = widget.product.netovar ?? 0;
-    allCount = defective + underachievement + reSorting + overdue + netovar;
+    srok = widget.product.srok ?? 0;
+    allCount =
+        defective + underachievement + reSorting + overdue + netovar + srok;
     if (allCount == productInfo.totalCount! - productInfo.scanCount!) {
       isAll = true;
     } else {
@@ -209,7 +215,7 @@ class _DefectScreenState extends State<DefectScreen> {
                                 height: 4,
                               ),
                               Text(
-                                "${productInfo.totalCount ?? 0}",
+                                "${(productInfo.totalCount ?? 0) - underachievement}",
                                 style: ThemeTextStyle.textTitleDella40w400
                                     .copyWith(color: ColorPalette.black),
                               ),
@@ -450,7 +456,43 @@ class _DefectScreenState extends State<DefectScreen> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Container(
+                        height: 3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: ColorPalette.borderGrey,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Неподходящий срок",
+                                textAlign: TextAlign.center,
+                                style: ThemeTextStyle.textStyle14w400
+                                    .copyWith(color: ColorPalette.grayText),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "$srok",
+                                style: ThemeTextStyle.textTitleDella40w400
+                                    .copyWith(
+                                  color: ColorPalette.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -474,7 +516,8 @@ class _DefectScreenState extends State<DefectScreen> {
                           underachievement +
                           reSorting +
                           netovar +
-                          overdue;
+                          overdue +
+                          srok;
                       if (isFromTextField &&
                           overdue >
                               productInfo.totalCount! -
@@ -482,7 +525,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                   defective -
                                   underachievement -
                                   reSorting -
-                                  netovar) {
+                                  netovar -
+                                  srok) {
                         buildErrorCustomSnackBar(
                           context,
                           "Количество просроченных товаров не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - reSorting - netovar} шт",
@@ -492,7 +536,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                 defective -
                                 underachievement -
                                 reSorting -
-                                netovar)
+                                netovar -
+                                srok)
                             .toString();
                         overdue = int.parse(defectControllers[4].text);
                         isAll = true;
@@ -520,7 +565,8 @@ class _DefectScreenState extends State<DefectScreen> {
                           underachievement +
                           reSorting +
                           overdue +
-                          netovar;
+                          netovar +
+                          srok;
                       if (isFromTextField &&
                           netovar >
                               productInfo.totalCount! -
@@ -528,7 +574,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                   defective -
                                   underachievement -
                                   reSorting -
-                                  overdue) {
+                                  overdue -
+                                  srok) {
                         buildErrorCustomSnackBar(
                           context,
                           "Количество товаров c неварным видом не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - reSorting - overdue} шт",
@@ -538,7 +585,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                 defective -
                                 underachievement -
                                 reSorting -
-                                overdue)
+                                overdue -
+                                srok)
                             .toString();
                         netovar = int.parse(defectControllers[5].text);
                         isAll = true;
@@ -566,7 +614,8 @@ class _DefectScreenState extends State<DefectScreen> {
                           underachievement +
                           reSorting +
                           overdue +
-                          netovar;
+                          netovar +
+                          srok;
                       if (isFromTextField &&
                           defective >
                               productInfo.totalCount! -
@@ -574,7 +623,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                   underachievement -
                                   reSorting -
                                   overdue -
-                                  netovar) {
+                                  netovar -
+                                  srok) {
                         buildErrorCustomSnackBar(
                           context,
                           "Количество браков не может превышать ${productInfo.totalCount! - productInfo.scanCount! - underachievement - reSorting - overdue - netovar} шт",
@@ -584,7 +634,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                 underachievement -
                                 reSorting -
                                 overdue -
-                                netovar)
+                                netovar -
+                                srok)
                             .toString();
                         defective = int.parse(defectControllers[0].text);
                         isAll = true;
@@ -633,7 +684,8 @@ class _DefectScreenState extends State<DefectScreen> {
                           underachievement +
                           reSorting +
                           overdue +
-                          netovar;
+                          netovar +
+                          srok;
                       if (isFromTextField &&
                           underachievement >
                               productInfo.totalCount! -
@@ -641,7 +693,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                   defective -
                                   reSorting -
                                   overdue -
-                                  netovar) {
+                                  netovar -
+                                  srok) {
                         buildErrorCustomSnackBar(
                           context,
                           "Количество недостач не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - reSorting - overdue - netovar} шт",
@@ -651,7 +704,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                 defective -
                                 reSorting -
                                 overdue -
-                                netovar)
+                                netovar -
+                                srok)
                             .toString();
                         underachievement = int.parse(defectControllers[2].text);
                         isAll = true;
@@ -679,7 +733,8 @@ class _DefectScreenState extends State<DefectScreen> {
                           underachievement +
                           reSorting +
                           overdue +
-                          netovar;
+                          netovar +
+                          srok;
                       if (isFromTextField &&
                           reSorting >
                               productInfo.totalCount! -
@@ -687,7 +742,8 @@ class _DefectScreenState extends State<DefectScreen> {
                                   defective -
                                   underachievement -
                                   overdue -
-                                  netovar) {
+                                  netovar -
+                                  srok) {
                         buildErrorCustomSnackBar(
                           context,
                           "Количество паспорт серий не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - overdue - netovar} шт",
@@ -697,9 +753,59 @@ class _DefectScreenState extends State<DefectScreen> {
                                 underachievement -
                                 defective -
                                 overdue -
-                                netovar)
+                                netovar -
+                                srok)
                             .toString();
                         reSorting = int.parse(defectControllers[3].text);
+                        isAll = true;
+                      } else {
+                        if (allCount ==
+                            productInfo.totalCount! - productInfo.scanCount!) {
+                          isAll = true;
+                        } else {
+                          isAll = false;
+                        }
+                      }
+                      setState(() {});
+                    }
+                  },
+                  showDivider: 3 != defectDetails.length - 1,
+                ),
+                _BuildDefectiveDetail(
+                  textFieldController: defectControllers[6],
+                  isAll: isAll,
+                  title: defectDetails[6],
+                  onChanged: (index, isChecked, isFromTextField) {
+                    if (isChecked) {
+                      srok = index;
+                      allCount = defective +
+                          underachievement +
+                          reSorting +
+                          overdue +
+                          netovar +
+                          srok;
+                      if (isFromTextField &&
+                          reSorting >
+                              productInfo.totalCount! -
+                                  productInfo.scanCount! -
+                                  defective -
+                                  underachievement -
+                                  overdue -
+                                  netovar -
+                                  srok) {
+                        buildErrorCustomSnackBar(
+                          context,
+                          "Количество паспорт серий не может превышать ${productInfo.totalCount! - productInfo.scanCount! - defective - underachievement - overdue - netovar - srok} шт",
+                        );
+                        defectControllers[6].text = (productInfo.totalCount! -
+                                productInfo.scanCount! -
+                                underachievement -
+                                defective -
+                                overdue -
+                                netovar -
+                                srok)
+                            .toString();
+                        srok = int.parse(defectControllers[6].text);
                         isAll = true;
                       } else {
                         if (allCount ==
@@ -742,6 +848,7 @@ class _DefectScreenState extends State<DefectScreen> {
                       reSorting: reSorting,
                       overdue: overdue,
                       netovar: netovar,
+                      srok: srok,
                     );
                   } else {
                     BlocProvider.of<MoveGoodsScreenCubit>(context)

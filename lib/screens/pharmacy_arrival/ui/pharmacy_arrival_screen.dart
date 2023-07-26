@@ -13,8 +13,8 @@ import 'package:pharmacy_arrival/core/utils/app_router.dart';
 import 'package:pharmacy_arrival/core/utils/constants.dart';
 import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
+import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_vmodel.dart';
-import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_cat_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_filter_page.dart';
@@ -668,11 +668,19 @@ class _BuildOrderData extends StatelessWidget {
                       context.read<FillInvoiceVModel>().init();
                       AppRouter.push(
                         context,
-                        GoodsListScreen(
+                        FillInvoiceScreen(
                           isFromPharmacyPage: true,
                           pharmacyOrder: orderData,
                         ),
                       );
+                      // TODO: First goods list
+                      // AppRouter.push(
+                      //   context,
+                      //   GoodsListScreen(
+                      //     isFromPharmacyPage: true,
+                      //     pharmacyOrder: orderData,
+                      //   ),
+                      // );
                     },
                     child: Container(
                       height: 44,
@@ -794,7 +802,9 @@ class _BuildOrderDetailItem extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(width: 14,),
+          const SizedBox(
+            width: 14,
+          ),
           Expanded(
             child: Row(
               children: [
@@ -808,12 +818,12 @@ class _BuildOrderDetailItem extends StatelessWidget {
                 const SizedBox(
                   width: 12,
                 ),
-            if (hasImage)
-              Image.asset(
-                "assets/images/png/akniet_stock.png",
-                width: 32,
-                height: 32,
-              ),
+                if (hasImage)
+                  Image.asset(
+                    "assets/images/png/akniet_stock.png",
+                    width: 32,
+                    height: 32,
+                  ),
               ],
             ),
           ),

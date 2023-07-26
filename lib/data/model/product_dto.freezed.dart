@@ -35,6 +35,8 @@ mixin _$ProductDTO {
   double? get scanCount => throw _privateConstructorUsedError;
   String? get producer => throw _privateConstructorUsedError;
   String? get series => throw _privateConstructorUsedError;
+  @JsonKey(name: 'serial_code')
+  String? get serialCode => throw _privateConstructorUsedError;
   int? get defective => throw _privateConstructorUsedError;
   int? get surplus => throw _privateConstructorUsedError;
   int? get underachievement => throw _privateConstructorUsedError;
@@ -49,6 +51,8 @@ mixin _$ProductDTO {
   int? get overdue => throw _privateConstructorUsedError;
   int? get netovar => throw _privateConstructorUsedError;
   int? get refund => throw _privateConstructorUsedError;
+  @JsonKey(name: 'wrong_time')
+  int? get srok => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,6 +78,7 @@ abstract class $ProductDTOCopyWith<$Res> {
       @JsonKey(name: 'scan_count') double? scanCount,
       String? producer,
       String? series,
+      @JsonKey(name: 'serial_code') String? serialCode,
       int? defective,
       int? surplus,
       int? underachievement,
@@ -84,7 +89,8 @@ abstract class $ProductDTOCopyWith<$Res> {
       int? orderID,
       int? overdue,
       int? netovar,
-      int? refund});
+      int? refund,
+      @JsonKey(name: 'wrong_time') int? srok});
 }
 
 /// @nodoc
@@ -111,6 +117,7 @@ class _$ProductDTOCopyWithImpl<$Res, $Val extends ProductDTO>
     Object? scanCount = freezed,
     Object? producer = freezed,
     Object? series = freezed,
+    Object? serialCode = freezed,
     Object? defective = freezed,
     Object? surplus = freezed,
     Object? underachievement = freezed,
@@ -122,6 +129,7 @@ class _$ProductDTOCopyWithImpl<$Res, $Val extends ProductDTO>
     Object? overdue = freezed,
     Object? netovar = freezed,
     Object? refund = freezed,
+    Object? srok = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -168,6 +176,10 @@ class _$ProductDTOCopyWithImpl<$Res, $Val extends ProductDTO>
           ? _value.series
           : series // ignore: cast_nullable_to_non_nullable
               as String?,
+      serialCode: freezed == serialCode
+          ? _value.serialCode
+          : serialCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       defective: freezed == defective
           ? _value.defective
           : defective // ignore: cast_nullable_to_non_nullable
@@ -212,6 +224,10 @@ class _$ProductDTOCopyWithImpl<$Res, $Val extends ProductDTO>
           ? _value.refund
           : refund // ignore: cast_nullable_to_non_nullable
               as int?,
+      srok: freezed == srok
+          ? _value.srok
+          : srok // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -236,6 +252,7 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       @JsonKey(name: 'scan_count') double? scanCount,
       String? producer,
       String? series,
+      @JsonKey(name: 'serial_code') String? serialCode,
       int? defective,
       int? surplus,
       int? underachievement,
@@ -246,7 +263,8 @@ abstract class _$$_ProductDTOCopyWith<$Res>
       int? orderID,
       int? overdue,
       int? netovar,
-      int? refund});
+      int? refund,
+      @JsonKey(name: 'wrong_time') int? srok});
 }
 
 /// @nodoc
@@ -271,6 +289,7 @@ class __$$_ProductDTOCopyWithImpl<$Res>
     Object? scanCount = freezed,
     Object? producer = freezed,
     Object? series = freezed,
+    Object? serialCode = freezed,
     Object? defective = freezed,
     Object? surplus = freezed,
     Object? underachievement = freezed,
@@ -282,6 +301,7 @@ class __$$_ProductDTOCopyWithImpl<$Res>
     Object? overdue = freezed,
     Object? netovar = freezed,
     Object? refund = freezed,
+    Object? srok = freezed,
   }) {
     return _then(_$_ProductDTO(
       id: null == id
@@ -328,6 +348,10 @@ class __$$_ProductDTOCopyWithImpl<$Res>
           ? _value.series
           : series // ignore: cast_nullable_to_non_nullable
               as String?,
+      serialCode: freezed == serialCode
+          ? _value.serialCode
+          : serialCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       defective: freezed == defective
           ? _value.defective
           : defective // ignore: cast_nullable_to_non_nullable
@@ -372,6 +396,10 @@ class __$$_ProductDTOCopyWithImpl<$Res>
           ? _value.refund
           : refund // ignore: cast_nullable_to_non_nullable
               as int?,
+      srok: freezed == srok
+          ? _value.srok
+          : srok // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -391,6 +419,7 @@ class _$_ProductDTO implements _ProductDTO {
       @JsonKey(name: 'scan_count') this.scanCount,
       this.producer,
       this.series,
+      @JsonKey(name: 'serial_code') this.serialCode,
       this.defective,
       this.surplus,
       this.underachievement,
@@ -401,7 +430,8 @@ class _$_ProductDTO implements _ProductDTO {
       this.orderID,
       this.overdue,
       this.netovar,
-      this.refund});
+      this.refund,
+      @JsonKey(name: 'wrong_time') this.srok});
 
   factory _$_ProductDTO.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDTOFromJson(json);
@@ -433,6 +463,9 @@ class _$_ProductDTO implements _ProductDTO {
   @override
   final String? series;
   @override
+  @JsonKey(name: 'serial_code')
+  final String? serialCode;
+  @override
   final int? defective;
   @override
   final int? surplus;
@@ -457,10 +490,13 @@ class _$_ProductDTO implements _ProductDTO {
   final int? netovar;
   @override
   final int? refund;
+  @override
+  @JsonKey(name: 'wrong_time')
+  final int? srok;
 
   @override
   String toString() {
-    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, movingId: $movingId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID, overdue: $overdue, netovar: $netovar, refund: $refund)';
+    return 'ProductDTO(id: $id, arrivalPharmacyId: $arrivalPharmacyId, movingId: $movingId, name: $name, image: $image, barcode: $barcode, status: $status, totalCount: $totalCount, scanCount: $scanCount, producer: $producer, series: $series, serialCode: $serialCode, defective: $defective, surplus: $surplus, underachievement: $underachievement, reSorting: $reSorting, createdAt: $createdAt, updatedAt: $updatedAt, isReady: $isReady, orderID: $orderID, overdue: $overdue, netovar: $netovar, refund: $refund, srok: $srok)';
   }
 
   @override
@@ -484,6 +520,8 @@ class _$_ProductDTO implements _ProductDTO {
             (identical(other.producer, producer) ||
                 other.producer == producer) &&
             (identical(other.series, series) || other.series == series) &&
+            (identical(other.serialCode, serialCode) ||
+                other.serialCode == serialCode) &&
             (identical(other.defective, defective) ||
                 other.defective == defective) &&
             (identical(other.surplus, surplus) || other.surplus == surplus) &&
@@ -499,7 +537,8 @@ class _$_ProductDTO implements _ProductDTO {
             (identical(other.orderID, orderID) || other.orderID == orderID) &&
             (identical(other.overdue, overdue) || other.overdue == overdue) &&
             (identical(other.netovar, netovar) || other.netovar == netovar) &&
-            (identical(other.refund, refund) || other.refund == refund));
+            (identical(other.refund, refund) || other.refund == refund) &&
+            (identical(other.srok, srok) || other.srok == srok));
   }
 
   @JsonKey(ignore: true)
@@ -517,6 +556,7 @@ class _$_ProductDTO implements _ProductDTO {
         scanCount,
         producer,
         series,
+        serialCode,
         defective,
         surplus,
         underachievement,
@@ -527,7 +567,8 @@ class _$_ProductDTO implements _ProductDTO {
         orderID,
         overdue,
         netovar,
-        refund
+        refund,
+        srok
       ]);
 
   @JsonKey(ignore: true)
@@ -557,6 +598,7 @@ abstract class _ProductDTO implements ProductDTO {
       @JsonKey(name: 'scan_count') final double? scanCount,
       final String? producer,
       final String? series,
+      @JsonKey(name: 'serial_code') final String? serialCode,
       final int? defective,
       final int? surplus,
       final int? underachievement,
@@ -567,7 +609,8 @@ abstract class _ProductDTO implements ProductDTO {
       final int? orderID,
       final int? overdue,
       final int? netovar,
-      final int? refund}) = _$_ProductDTO;
+      final int? refund,
+      @JsonKey(name: 'wrong_time') final int? srok}) = _$_ProductDTO;
 
   factory _ProductDTO.fromJson(Map<String, dynamic> json) =
       _$_ProductDTO.fromJson;
@@ -599,6 +642,9 @@ abstract class _ProductDTO implements ProductDTO {
   @override
   String? get series;
   @override
+  @JsonKey(name: 'serial_code')
+  String? get serialCode;
+  @override
   int? get defective;
   @override
   int? get surplus;
@@ -623,6 +669,9 @@ abstract class _ProductDTO implements ProductDTO {
   int? get netovar;
   @override
   int? get refund;
+  @override
+  @JsonKey(name: 'wrong_time')
+  int? get srok;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDTOCopyWith<_$_ProductDTO> get copyWith =>

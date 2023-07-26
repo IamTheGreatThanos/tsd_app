@@ -12,10 +12,10 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/defect_screen.dart';
-import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_screen.dart';
 import 'package:pharmacy_arrival/screens/goods_list/cubit/goods_list_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/goods_barcode_screen.dart';
 import 'package:pharmacy_arrival/screens/goods_list/ui/widgets/build_pharmacy_good_datail.dart';
+import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
 import 'package:pharmacy_arrival/widgets/main_text_field/app_text_field.dart';
@@ -40,7 +40,6 @@ class GoodsListScreen extends StatefulWidget {
 }
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
-
   bool isFloatingButtonVisible = true;
   String _currentScan = '';
   FocusNode focusNode = FocusNode();
@@ -141,7 +140,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
           backgroundColor: ColorPalette.main,
           appBar: CustomAppBar(
             title: "Список товаров".toUpperCase(),
-           
           ),
           body: Column(
             children: [
@@ -195,7 +193,8 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
                   fillColor: ColorPalette.white,
                   prefixIcon: SvgPicture.asset(
                     "assets/images/svg/search.svg",
-                    colorFilter: const ColorFilter.mode(ColorPalette.grey400, BlendMode.srcIn),
+                    colorFilter: const ColorFilter.mode(
+                        ColorPalette.grey400, BlendMode.srcIn),
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 17,
@@ -321,7 +320,6 @@ class _BuildBodyState extends State<_BuildBody> {
   int currentIndex = 0;
   RefreshController controller = RefreshController();
   int itemCount = 0;
-
 
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
@@ -543,7 +541,7 @@ class _BuildBodyState extends State<_BuildBody> {
                             }
                           },
                           child: SizedBox(
-                            height: 381,
+                            // height: 395,
                             child: BuildPharmacyGoodDetails(
                               searchController: widget.searchController,
                               currentIndex: currentIndex,
@@ -575,14 +573,19 @@ class _BuildBodyState extends State<_BuildBody> {
               height: 40,
               color: ColorPalette.orange,
               onPressed: () {
-                AppRouter.push(
+                AppRouter.pushAndRemoveUntilRoot(
                   context,
-                  FillInvoiceScreen(
-                    isFromPharmacyPage: widget.isFromPharmacyPage,
-                    pharmacyOrder: widget.pharmacyOrder,
-                    warehouseOrder: widget.warehouseOrder,
-                  ),
+                  const PharmacyArrivalScreen(),
                 );
+                // TODO: First goods list
+                // AppRouter.push(
+                //   context,
+                //   FillInvoiceScreen(
+                //     isFromPharmacyPage: widget.isFromPharmacyPage,
+                //     pharmacyOrder: widget.pharmacyOrder,
+                //     warehouseOrder: widget.warehouseOrder,
+                //   ),
+                // );
               },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

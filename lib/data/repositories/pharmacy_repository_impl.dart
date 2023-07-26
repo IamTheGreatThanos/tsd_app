@@ -12,6 +12,7 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/product_dto.dart';
 import 'package:pharmacy_arrival/data/model/user.dart';
 import 'package:pharmacy_arrival/domain/repositories/pharmacy_repository.dart';
+
 //TODO Репо для приход аптека
 class PharmacyRepositoryImpl extends PharmacyRepository {
   final PharmacyArrivalRemoteDS arrivalRemoteDS;
@@ -106,6 +107,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
     int? overdue,
     int? netovar,
     int? refund,
+    int? srok,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -123,6 +125,7 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           overdue: overdue,
           netovar: netovar,
           refund: refund,
+          srok: srok,
         );
         return Right(product);
       } on ServerException catch (e) {
@@ -337,7 +340,8 @@ class PharmacyRepositoryImpl extends PharmacyRepository {
           return Left(ServerFailure(message: 'Нет такого заказа!'));
         } else {
           if (orders.first.refundStatus != 0) {
-            return Left(ServerFailure(message: 'Для этого заказа возврат уже создан!'));
+            return Left(
+                ServerFailure(message: 'Для этого заказа возврат уже создан!'));
           } else {
             return Right(orders);
           }

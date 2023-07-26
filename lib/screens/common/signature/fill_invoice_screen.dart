@@ -9,8 +9,8 @@ import 'package:pharmacy_arrival/data/model/pharmacy_order_dto.dart';
 import 'package:pharmacy_arrival/data/model/warehouse_order_dto.dart';
 import 'package:pharmacy_arrival/screens/common/signature/cubit/signature_screen_cubit.dart';
 import 'package:pharmacy_arrival/screens/common/signature/fill_invoice_vmodel.dart';
+import 'package:pharmacy_arrival/screens/goods_list/ui/goods_list_screen.dart';
 import 'package:pharmacy_arrival/screens/pharmacy_arrival/cubit/pharmacy_arrival_screen_cubit.dart';
-import 'package:pharmacy_arrival/screens/pharmacy_arrival/ui/pharmacy_arrival_screen.dart';
 import 'package:pharmacy_arrival/screens/warehouse_arrival/cubit/warehouse_arrival_screen_cubit.dart';
 import 'package:pharmacy_arrival/widgets/app_loader_overlay.dart';
 import 'package:pharmacy_arrival/widgets/custom_app_bar.dart';
@@ -70,10 +70,18 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                       .onRefreshOrders(status: 1)
                   : BlocProvider.of<WarehouseArrivalScreenCubit>(context)
                       .onRefreshOrders(status: 1);
-              AppRouter.pushAndRemoveUntilRoot(
+              AppRouter.push(
                 context,
-                const PharmacyArrivalScreen(),
+                GoodsListScreen(
+                  isFromPharmacyPage: true,
+                  pharmacyOrder: widget.pharmacyOrder,
+                ),
               );
+              // TODO: First goods list
+              // AppRouter.pushAndRemoveUntilRoot(
+              //   context,
+              //   const PharmacyArrivalScreen(),
+              // );
             },
             errorState: (message) {
               context.loaderOverlay.hide();
@@ -273,33 +281,40 @@ class _FillInvoiceScreenState extends State<FillInvoiceScreen> {
                               widget.isFromPharmacyPage
                                   ? BlocProvider.of<SignatureScreenCubit>(
                                       context,
-                                    ).updatePharmacyOrderStatus(
-                                      orderId: widget.isFromPharmacyPage
-                                          ? widget.pharmacyOrder!.id
-                                          : widget.warehouseOrder!.id,
-                                      status: 3,
-                                      incomingNumber: vmodel.incomeNumber
-                                              .controller.text.isEmpty
-                                          ? null
-                                          : vmodel.incomeNumber.controller.text,
-                                      incomingDate: vmodel
-                                              .incomeNumberDateController
-                                              .text
-                                              .isEmpty
-                                          ? null
-                                          : vmodel
-                                              .incomeNumberDateController.text,
-                                      bin: vmodel.bin.controller.text.isEmpty
-                                          ? null
-                                          : vmodel.bin.controller.text,
-                                      invoiceDate:
-                                          vmodel.invoiceDate.text.isEmpty
-                                              ? null
-                                              : vmodel.invoiceDate.text,
-                                      recipientId: vmodel.recipientId == -1
-                                          ? null
-                                          : vmodel.recipientId,
                                     )
+                                      .updatePharmacyOrderStatus(
+                                        orderId: widget.isFromPharmacyPage
+                                            ? widget.pharmacyOrder!.id
+                                            : widget.warehouseOrder!.id,
+                                        status: 3,
+                                        incomingNumber: vmodel.incomeNumber
+                                                .controller.text.isEmpty
+                                            ? null
+                                            : vmodel
+                                                .incomeNumber.controller.text,
+                                        incomingDate: vmodel
+                                                .incomeNumberDateController
+                                                .text
+                                                .isEmpty
+                                            ? null
+                                            : vmodel.incomeNumberDateController
+                                                .text,
+                                        bin: vmodel.bin.controller.text.isEmpty
+                                            ? null
+                                            : vmodel.bin.controller.text,
+                                        invoiceDate:
+                                            vmodel.invoiceDate.text.isEmpty
+                                                ? null
+                                                : vmodel.invoiceDate.text,
+                                        recipientId: vmodel.recipientId == -1
+                                            ? null
+                                            : vmodel.recipientId,
+                                      )
+                                      .onError((error, stackTrace) =>
+                                          buildErrorCustomSnackBar(
+                                            context,
+                                            "Укажите корректную дату.",
+                                          ))
                                   : BlocProvider.of<SignatureScreenCubit>(
                                       context,
                                     ).updateWarehouseOrderStatus(

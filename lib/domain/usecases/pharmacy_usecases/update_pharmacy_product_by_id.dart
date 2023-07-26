@@ -24,6 +24,7 @@ class UpdatePharmacyProductById
       overdue: params.overdue,
       netovar: params.netovar,
       refund: params.refund,
+      srok: params.srok,
     );
   }
 }
@@ -39,6 +40,7 @@ class UpdatePharmacyProductByIdParams {
   final int? overdue;
   final int? netovar;
   final int? refund;
+  final int? srok;
   UpdatePharmacyProductByIdParams({
     required this.productId,
     this.status,
@@ -50,5 +52,6 @@ class UpdatePharmacyProductByIdParams {
     this.overdue,
     this.netovar,
     this.refund,
+    this.srok,
   });
 }

@@ -49,6 +49,7 @@ abstract class PharmacyRepository {
     int? overdue,
     int? netovar,
     int? refund,
+    int? srok,
   });
 
   Future<Either<Failure, ProductDTO>> getPharmacySelectedProductFromCahce({

@@ -19,6 +19,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       scanCount: (json['scan_count'] as num?)?.toDouble(),
       producer: json['producer'] as String?,
       series: json['series'] as String?,
+      serialCode: json['serial_code'] as String?,
       defective: json['defective'] as int?,
       surplus: json['surplus'] as int?,
       underachievement: json['underachievement'] as int?,
@@ -30,6 +31,7 @@ _$_ProductDTO _$$_ProductDTOFromJson(Map<String, dynamic> json) =>
       overdue: json['overdue'] as int?,
       netovar: json['netovar'] as int?,
       refund: json['refund'] as int?,
+      srok: json['wrong_time'] as int?,
     );
 
 Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
@@ -45,6 +47,7 @@ Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
       'scan_count': instance.scanCount,
       'producer': instance.producer,
       'series': instance.series,
+      'serial_code': instance.serialCode,
       'defective': instance.defective,
       'surplus': instance.surplus,
       'underachievement': instance.underachievement,
@@ -56,4 +59,5 @@ Map<String, dynamic> _$$_ProductDTOToJson(_$_ProductDTO instance) =>
       'overdue': instance.overdue,
       'netovar': instance.netovar,
       'refund': instance.refund,
+      'wrong_time': instance.srok,
     };
