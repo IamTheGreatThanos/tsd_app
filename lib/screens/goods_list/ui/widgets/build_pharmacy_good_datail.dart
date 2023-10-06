@@ -279,7 +279,7 @@ class BuildPharmacyGoodDetails extends StatelessWidget {
                         'Пересорт серий:   ${good.reSorting}'.toUpperCase(),
                       ),
                       Text(
-                        'Неподходящий срок:   ${good.srok}'.toUpperCase(),
+                        'Подходящий срок:   ${good.srok}'.toUpperCase(),
                       ),
                     ],
                   )

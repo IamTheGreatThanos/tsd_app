@@ -56,7 +56,7 @@ class _DefectScreenState extends State<DefectScreen> {
     "Пересорт серий",
     "Просрочен",
     "Нетоварный вид",
-    "Неподходящий срок",
+    "Подходящий срок",
   ];
 
   @override
@@ -473,7 +473,7 @@ class _DefectScreenState extends State<DefectScreen> {
                           child: Column(
                             children: [
                               Text(
-                                "Неподходящий срок",
+                                "Подходящий срок",
                                 textAlign: TextAlign.center,
                                 style: ThemeTextStyle.textStyle14w400
                                     .copyWith(color: ColorPalette.grayText),
